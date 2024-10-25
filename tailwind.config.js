@@ -10,9 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Light Mode Colors
         light: {
-          //Backgrounds
           bg: {
             primary: "#FFFFFF",
             secondary: "#F6F8FA",
@@ -21,7 +19,6 @@ module.exports = {
             button: "#F6F8FA",
             hover: "#EAEDF0",
           },
-          // Accent (borders, icons, etc...)
           accent: {
             border: "#D1D9E0",
             active: "#FD8C73",
@@ -29,16 +26,13 @@ module.exports = {
             extra: "#0969DA",
             extraBorder: "#0D5EC0",
           },
-          // Text
           text: {
             primary: "#1F2328",
             secondary: "#6B747E",
             link: "#4493F8",
           },
         },
-        // Dark Mode Colors
         dark: {
-          //Backgrounds
           bg: {
             primary: "#0D1117",
             secondary: "#010409",
@@ -47,14 +41,12 @@ module.exports = {
             button: "#212830",
             hover: "#15191F",
           },
-          // Accent (borders, icons, etc...)
           accent: {
             border: "#2F353D",
             active: "#F78166",
-            icon: "#7F868E",
+            icon: "#9198A1",
             extra: "#238636",
           },
-          // Text
           text: {
             primary: "#F0F6FC",
             secondary: "#858C95",
@@ -79,13 +71,13 @@ module.exports = {
         sans: [
           "-apple-system",
           "BlinkMacSystemFont",
-          '"Segoe UI"',
+          'Segoe UI"',
           "Noto Sans",
           "Helvetica",
           "Arial",
           "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
+          'Apple Color Emoji"',
+          'Segoe UI Emoji"',
         ],
       },
       backgroundImage: {
@@ -93,7 +85,13 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        s: "0.375rem",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
