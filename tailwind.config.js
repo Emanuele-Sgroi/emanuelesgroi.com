@@ -63,15 +63,17 @@ module.exports = {
         },
       },
       fontSize: {
-        xs: "12px", // Extra small text
-        sm: "14px", // Small text
-        base: "16px", // Base text (typically for paragraphs)
-        lg: "18px", // Large text
-        xl: "20px", // Extra large text
-        "2xl": "21px", // 2x large text
-        "3xl": "24px", // 3x large text
-        "4xl": "28px", // 4x large text
-        "5xl": "32px", // 5x large text (for larger headings)
+        xs: "12px",
+        sm: "14px",
+        base: "16px",
+        lg: "18px",
+        xl: "20px",
+        "2xl": "21px",
+        "3xl": "24px",
+        "4xl": "28px",
+        "5xl": "32px",
+        "6xl": "36px",
+        "7xl": "42px",
       },
       fontFamily: {
         sans: [

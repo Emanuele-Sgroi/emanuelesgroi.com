@@ -116,6 +116,90 @@ a {
   color: var(--text-link);
 }
 
+/* Flex styles */
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Splash styles */
+
+.splash-container {
+  background-color: var(--bg-primary);
+  opacity: 1;
+  animation: end-splash 0.6s forwards;
+  animation-delay: 2.4s;
+  position: fixed;
+  top: 0;
+  z-index: 999999;
+}
+
+@keyframes end-splash {
+  to {
+    opacity: 0;
+  }
+}
+
+.splash-text {
+  color: var(--text-primary);
+  margin: 0 auto;
+}
+
+.splash-text span {
+  opacity: 0;
+  animation: appear 1.5s forwards;
+}
+
+/* Keyframes for appearance */
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Adding delay to each span */
+.splash-text span:nth-child(1) {
+  animation-delay: 0.4s;
+}
+.splash-text span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.splash-text span:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.splash-text span:nth-child(4) {
+  animation-delay: 1s;
+}
+.splash-text span:nth-child(5) {
+  animation-delay: 1.2s;
+}
+
+/* Splash text animation */
+
+@keyframes animated-text {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100px;
+  }
+}
+
+/* Splash cursor animations */
+
+@keyframes animated-cursor {
+  from {
+    border-right-color: var(var(--text-primary));
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
+/* Tailwind */
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

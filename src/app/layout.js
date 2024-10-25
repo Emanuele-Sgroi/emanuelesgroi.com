@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
+import { SplashScreenProvider } from "@/context/SplashScreenProvider";
+import SplashScreen from "@/components/SplashScreen/SplashScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,8 +12,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html>
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <SplashScreenProvider>
+          <SplashScreen />
+          {children}
+        </SplashScreenProvider>
+      </body>
     </html>
   );
 }
