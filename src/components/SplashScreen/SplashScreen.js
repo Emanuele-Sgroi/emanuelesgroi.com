@@ -10,7 +10,7 @@ const SplashScreen = () => {
     if (showSplash) {
       setTimeout(() => {
         hideSplashScreen();
-      }, 3700);
+      }, 2100);
     }
   }, [showSplash, hideSplashScreen]);
 

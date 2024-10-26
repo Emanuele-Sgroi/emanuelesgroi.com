@@ -1,6 +1,7 @@
 // src/app/writings/layout.js
 
 import React from "react";
+import Link from "next/link";
 
 const WritingsLayout = ({ children }) => {
   return (
@@ -10,10 +11,10 @@ const WritingsLayout = ({ children }) => {
         <nav>
           <ul className="flex space-x-4">
             <li>
-              <a href="/writings/blog">Blog</a>
+              <Link href="/writings/blog">Blog</Link>
             </li>
             <li>
-              <a href="/writings/academic">Academic</a>
+              <Link href="/writings/academic">Academic</Link>
             </li>
           </ul>
         </nav>
