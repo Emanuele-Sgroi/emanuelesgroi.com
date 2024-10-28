@@ -67,19 +67,19 @@ module.exports = {
         "6xl": "36px",
         "7xl": "42px",
       },
-      fontFamily: {
-        sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          'Segoe UI"',
-          "Noto Sans",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-          'Apple Color Emoji"',
-          'Segoe UI Emoji"',
-        ],
-      },
+      // fontFamily: {
+      //   sans: [
+      //     "-apple-system",
+      //     "BlinkMacSystemFont",
+      //     'Segoe UI"',
+      //     "Noto Sans",
+      //     "Helvetica",
+      //     "Arial",
+      //     "sans-serif",
+      //     'Apple Color Emoji"',
+      //     'Segoe UI Emoji"',
+      //   ],
+      // },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
