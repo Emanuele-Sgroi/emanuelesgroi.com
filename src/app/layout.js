@@ -17,11 +17,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body>
         <ThemeProvider>
-          <SplashScreenProvider>
-            <SplashScreen />
-            <Navbar />
-            {children}
-          </SplashScreenProvider>
+          <Navbar />
+          {children}
         </ThemeProvider>
       </body>
     </html>
