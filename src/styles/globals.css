@@ -74,8 +74,6 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   transition: background-color 0.1s ease-in-out;
 }
 
