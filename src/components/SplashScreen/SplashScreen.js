@@ -7,6 +7,21 @@ const SplashScreen = () => {
   const { showSplash, hideSplashScreen } = useContext(SplashScreenContext);
   const splashRef = useRef(null);
 
+  // Disable scrolling when splash screen is mounted
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scrolling after the splash animation is done
+    const timer = setTimeout(() => {
+      document.body.style.overflow = "auto";
+    }, 1500);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   useEffect(() => {
     const splashElement = splashRef.current;
 

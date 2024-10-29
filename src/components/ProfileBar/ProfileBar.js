@@ -185,14 +185,12 @@ const ProfileBar = ({ generalInfo }) => {
               onMouseLeave={handleMouseLeave}
               aria-expanded={showCopy}
               className="max-md:hidden outline-none center"
+              onClick={() => copyText(generalInfo?.discordDisplayName)}
             >
-              <button onClick={() => copyText(generalInfo?.discordDisplayName)}>
-                {" "}
-                <IoCopy
-                  size={18}
-                  className="text-light-text-primary dark:text-dark-text-primary"
-                />
-              </button>
+              <IoCopy
+                size={18}
+                className="text-light-text-primary dark:text-dark-text-primary"
+              />
             </PopoverTrigger>
             <PopoverContent
               onMouseEnter={handleMouseEnter}
