@@ -1,20 +1,33 @@
 "use client";
 
-import React from "react";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
+import React, { useState } from "react";
+import ProfileBar from "@/components/ProfileBar/ProfileBar";
 import { useWelcomeContent } from "@/hooks/useWelcomeContent";
+import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
 const WelcomePage = () => {
   const { welcomeContent, isWelcomeLoading, isWelcomeError } =
     useWelcomeContent();
 
+  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
+    useGeneralInfoContent();
+
+  if (
+    isGeneralInfoLoading ||
+    isWelcomeLoading ||
+    !welcomeContent ||
+    !generalInfoContent
+  ) {
+    <p>Loading</p>;
+  }
+
+  if (isWelcomeError || isGeneralInfoError) {
+    <p>error</p>;
+  }
+
   return (
     <section>
-      <p>
-        {welcomeContent &&
-          welcomeContent.readmeTitle &&
-          welcomeContent.readmeTitle}
-      </p>{" "}
+      <ProfileBar generalInfo={generalInfoContent} />
     </section>
   );
 };

@@ -4,6 +4,8 @@ import { SplashScreenProvider } from "@/context/SplashScreenProvider";
 import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { Navbar } from "@/components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +23,7 @@ export default function RootLayout({ children }) {
             <SplashScreen />
             <Navbar />
             {children}
+            <ToastContainer />
           </SplashScreenProvider>
         </ThemeProvider>
       </body>
