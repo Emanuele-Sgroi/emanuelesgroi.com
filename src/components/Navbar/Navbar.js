@@ -75,7 +75,7 @@ const Navbar = () => {
         {/* Top part */}
         <div className="w-full mb-3 flex justify-between items-center">
           <NavLogo />{" "}
-          <div className="center gap-4">
+          <div className="center gap-[5px] min-[341px]:gap-4">
             <SearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-light-accent-border dark:bg-dark-accent-border" />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
@@ -468,13 +468,13 @@ const NavLogo = () => {
     <div>
       <Link
         href="/"
-        className="text-light-text-primary dark:text-dark-text-primary flex items-center gap-2"
+        className="text-light-text-primary dark:text-dark-text-primary flex items-center gap-1 min-[291px]:gap-2"
       >
         <div className="w-[32px] h-[32px] border border-light-text-primary dark:border-dark-text-primary center ">
           <p className="text-2xl">E</p>
         </div>
         <div className="max-[280px]:hidden hover-box">
-          <h6 className="leading-5">Emanuele Sgroi</h6>
+          <h6 className="leading-5 max-[284px]:hidden">Emanuele Sgroi</h6>
         </div>
       </Link>
     </div>
@@ -614,7 +614,7 @@ const EmanueleAiLink = () => {
 
 const SearchBar = () => {
   return (
-    <div className="w-[32px] sm:w-[260px] btn-secondary hover:bg-transparent cursor-pointer flex items-center justify-center sm:justify-start">
+    <div className="w-[32px] sm:w-[260px] h-[32px] btn-secondary hover:bg-transparent cursor-pointer flex items-center justify-center sm:justify-start">
       <HiOutlineSearch
         size={18}
         className="max-sm:w-[16px] max-sm:h-[16px] text-light-accent-icon dark:text-dark-accent-icon"
