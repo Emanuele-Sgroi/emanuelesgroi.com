@@ -3,7 +3,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
-import { RiHomeSmileLine } from "react-icons/ri";
+import { RiHomeSmileLine, RiRobot3Line } from "react-icons/ri";
 import { GoCodeSquare } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
@@ -12,7 +12,8 @@ import { TbSchool } from "react-icons/tb";
 import { FaSun } from "react-icons/fa";
 import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
 import { HiOutlineSearch, HiDotsHorizontal } from "react-icons/hi";
-import { LuSquareSlash } from "react-icons/lu";
+import { LuSquareSlash, LuBrain } from "react-icons/lu";
+import { PiGameControllerBold, PiWall } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import {
   Popover,
@@ -83,6 +84,7 @@ const Navbar = () => {
         {/* Bottom part */}
         <div className="w-full flex justify-between items-center gap-4">
           <div className="flex justify-start items-center gap-6">
+            {/* Welcome */}
             <div className="max-[230px]:hidden relative center">
               <Link
                 href="/"
@@ -102,6 +104,8 @@ const Navbar = () => {
                 style={{ width: `calc(100% + 10px)` }}
               />
             </div>
+
+            {/* Portfolio */}
             <div className="relative center max-[330px]:hidden">
               <Link
                 href="/portfolio"
@@ -120,6 +124,8 @@ const Navbar = () => {
                 style={{ width: `calc(100% + 10px)` }}
               />
             </div>
+
+            {/* Writings */}
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger
                 onMouseEnter={handleMouseEnter}
@@ -188,7 +194,89 @@ const Navbar = () => {
                 </ul>
               </PopoverContent>
             </Popover>
+
+            {/* Emanuele AI */}
+            {/* <div className="max-[530px]:hidden relative center">
+              <Link
+                href="/emanuele-ai"
+                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                  "/emanuele-ai"
+                )}`}
+              >
+                <RiRobot3Line
+                  size={18}
+                  className="text-light-accent-icon dark:text-dark-accent-icon"
+                />
+                Emanuele AI
+              </Link>
+              <div
+                className={getLinkClassDiv("/emanuele-ai")}
+                style={{ width: `calc(100% + 10px)` }}
+              />
+            </div> */}
+
+            {/* Dev Quiz */}
             <div className="max-[530px]:hidden relative center">
+              <Link
+                href="/dev-quiz"
+                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                  "/dev-quiz"
+                )}`}
+              >
+                <LuBrain
+                  size={18}
+                  className="text-light-accent-icon dark:text-dark-accent-icon"
+                />
+                Dev Quiz
+              </Link>
+              <div
+                className={getLinkClassDiv("/dev-quiz")}
+                style={{ width: `calc(100% + 10px)` }}
+              />
+            </div>
+
+            {/* Minigames */}
+            <div className="max-[676px]:hidden relative center">
+              <Link
+                href="/minigames"
+                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                  "/minigames"
+                )}`}
+              >
+                <PiGameControllerBold
+                  size={18}
+                  className="text-light-accent-icon dark:text-dark-accent-icon"
+                />
+                Minigames
+              </Link>
+              <div
+                className={getLinkClassDiv("/minigames")}
+                style={{ width: `calc(100% + 10px)` }}
+              />
+            </div>
+
+            {/* Wall */}
+            <div className="max-[758px]:hidden relative center">
+              <Link
+                href="/wall"
+                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                  "/wall"
+                )}`}
+              >
+                <PiWall
+                  size={18}
+                  className="text-light-accent-icon dark:text-dark-accent-icon"
+                />
+                Wall
+              </Link>
+              <div
+                className={getLinkClassDiv("/wall")}
+                style={{ width: `calc(100% + 10px)` }}
+              />
+            </div>
+
+            {/* Get in touch */}
+            <div className="max-[838px]:hidden relative center">
               <Link
                 href="/contact"
                 className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
@@ -211,7 +299,7 @@ const Navbar = () => {
           {/* Mobile */}
           <Popover open={openSideMenu} onOpenChange={setOpenSideMenu}>
             <PopoverTrigger
-              className="min-[531px]:hidden relative center outline-none"
+              className="min-[839px]:hidden relative center outline-none"
               aria-haspopup="menu"
               aria-expanded={open}
             >
@@ -219,8 +307,9 @@ const Navbar = () => {
                 <HiDotsHorizontal size={18} />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="min-[531px]:hidden w-[150px] p-4 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border mr-4">
+            <PopoverContent className="min-[839px]:hidden w-[150px] p-4 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border mr-4">
               <ul className="w-full flex flex-col justify-start items-start gap-4">
+                {/* Welcome */}
                 <li className="min-[231px]:hidden relative center gap-2">
                   <Link
                     href="/"
@@ -239,6 +328,7 @@ const Navbar = () => {
                   <div className={getLinkClassDivMobile("/")} />
                 </li>
 
+                {/* Portfolio */}
                 <li className="relative center min-[331px]:hidden gap-2">
                   <Link
                     href="/portfolio"
@@ -256,6 +346,7 @@ const Navbar = () => {
                   <div className={getLinkClassDivMobile("/portfolio")} />
                 </li>
 
+                {/* Writings */}
                 <li className="min-[431px]:hidden center gap-1 text-light-text-secondary dark:text-dark-text-secondary text-sm">
                   <FaRegBookmark
                     size={18}
@@ -267,7 +358,7 @@ const Navbar = () => {
                     className="text-light-text-primary dark:text-dark-text-primary"
                   />
                 </li>
-
+                {/* Writings - sublinks */}
                 <li className="min-[431px]:hidden">
                   <ul className="w-full flex flex-col gap-2 ml-4 mt-[-5px]">
                     <li className="w-full flex justify-start items-center gap-2">
@@ -309,7 +400,62 @@ const Navbar = () => {
                   </ul>
                 </li>
 
-                <li className="min-[531px]:hidden relative center gap-2">
+                {/* Dev Quiz */}
+                <li className="relative center min-[531px]:hidden gap-2">
+                  <Link
+                    href="/dev-quiz"
+                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                      "/dev-quiz"
+                    )}`}
+                    onClick={() => setOpenSideMenu(false)}
+                  >
+                    <LuBrain
+                      size={18}
+                      className="text-light-accent-icon dark:text-dark-accent-icon"
+                    />
+                    Dev Quiz
+                  </Link>
+                  <div className={getLinkClassDivMobile("/dev-quiz")} />
+                </li>
+
+                {/* Minigames */}
+                <li className="relative center min-[677px]:hidden gap-2">
+                  <Link
+                    href="/minigames"
+                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                      "/minigames"
+                    )}`}
+                    onClick={() => setOpenSideMenu(false)}
+                  >
+                    <PiGameControllerBold
+                      size={18}
+                      className="text-light-accent-icon dark:text-dark-accent-icon"
+                    />
+                    Minigames
+                  </Link>
+                  <div className={getLinkClassDivMobile("/minigames")} />
+                </li>
+
+                {/* Wall */}
+                <li className="relative center min-[759px]:hidden gap-2">
+                  <Link
+                    href="/wall"
+                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                      "/wall"
+                    )}`}
+                    onClick={() => setOpenSideMenu(false)}
+                  >
+                    <PiWall
+                      size={18}
+                      className="text-light-accent-icon dark:text-dark-accent-icon"
+                    />
+                    Wall
+                  </Link>
+                  <div className={getLinkClassDivMobile("/wall")} />
+                </li>
+
+                {/* Get in touch */}
+                <li className="min-[839px]:hidden relative center gap-2">
                   <Link
                     href="/contact"
                     className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(

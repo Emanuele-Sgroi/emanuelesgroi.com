@@ -8,7 +8,6 @@ import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 const WelcomePage = () => {
   const { welcomeContent, isWelcomeLoading, isWelcomeError } =
     useWelcomeContent();
-
   const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
     useGeneralInfoContent();
 
