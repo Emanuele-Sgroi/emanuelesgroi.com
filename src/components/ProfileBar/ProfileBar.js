@@ -64,8 +64,8 @@ const ProfileBar = ({ generalInfo }) => {
   };
 
   return (
-    <div className="w-[296px] flex flex-col items-start">
-      <div className="w-[296px] h-[296px] relative border-2 border-light-accent-border dark:border-dark-accent-border rounded-full">
+    <div className="w-[256px] min-[1010px]:w-[296px] flex flex-col items-start">
+      <div className="w-[256px] min-[1010px]:w-[296px] h-[256px] min-[1010px]:h-[296px]  relative border-2 border-light-accent-border dark:border-dark-accent-border rounded-full">
         <Image
           src={profilePirctureUrl}
           alt="Profile_Picture"
