@@ -3,7 +3,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
-import { RiHomeSmileLine, RiRobot3Line } from "react-icons/ri";
+import { RiHomeSmileLine, RiRobot2Line, RiRobot3Line } from "react-icons/ri";
 import { GoCodeSquare } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
@@ -79,6 +79,7 @@ const Navbar = () => {
             <SearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-light-accent-border dark:bg-dark-accent-border" />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
+            <EmanueleAiLink />
           </div>
         </div>
         {/* Bottom part */}
@@ -194,26 +195,6 @@ const Navbar = () => {
                 </ul>
               </PopoverContent>
             </Popover>
-
-            {/* Emanuele AI */}
-            {/* <div className="max-[530px]:hidden relative center">
-              <Link
-                href="/emanuele-ai"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
-                  "/emanuele-ai"
-                )}`}
-              >
-                <RiRobot3Line
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
-                Emanuele AI
-              </Link>
-              <div
-                className={getLinkClassDiv("/emanuele-ai")}
-                style={{ width: `calc(100% + 10px)` }}
-              />
-            </div> */}
 
             {/* Dev Quiz */}
             <div className="max-[530px]:hidden relative center">
@@ -501,23 +482,133 @@ const NavLogo = () => {
 };
 
 const ToggleThemeButton = ({ onClick, theme }) => {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    };
+
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkIfMobile);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setOpen(false);
+    }
+  };
+
   return (
-    <button
-      onClick={onClick}
-      className="max-sm:w-[32px] max-sm:h-[32px] btn-secondary center"
-    >
-      <p className="max-sm:hidden text-sm text-light-accent-icon dark:text-dark-accent-icon">
-        Switch Theme
-      </p>
-      {theme === "light" ? (
-        <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />
-      ) : (
-        <BsMoonStarsFill
-          size={18}
-          className="max-sm:w-[16px] max-sm:h-[16px]"
-        />
-      )}
-    </button>
+    <>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={onClick}
+          className="relative center outline-none w-[32px] h-[32px] btn-secondary center"
+          aria-expanded={open}
+        >
+          {theme !== "light" ? (
+            <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />
+          ) : (
+            <BsMoonStarsFill
+              size={18}
+              className="max-sm:w-[16px] max-sm:h-[16px]"
+            />
+          )}
+        </PopoverTrigger>
+        <PopoverContent className="w-fit p-1 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border ">
+          <p className="text-xs">
+            {theme !== "light" ? "Light Mode" : "Dark Mode"}
+          </p>
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
+const EmanueleAiLink = () => {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    };
+
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkIfMobile);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setOpen(false);
+    }
+  };
+
+  const getLinkClass = (path) => {
+    return pathname === path
+      ? "border-light-accent-active dark:border-dark-accent-active"
+      : "";
+  };
+
+  const getLinkClassIcon = (path) => {
+    return pathname === path
+      ? "text-light-text-primary dark:text-dark-text-primary"
+      : "text-light-accent-icon dark:text-dark-accent-icon";
+  };
+
+  return (
+    <>
+      {/* Writings */}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="relative center outline-none"
+          aria-expanded={open}
+        >
+          <Link
+            href="/emanuele-ai"
+            className={`w-[32px] h-[32px] btn-secondary center ${getLinkClass(
+              "/emanuele-ai"
+            )}`}
+          >
+            <RiRobot2Line
+              size={18}
+              className={` ${getLinkClassIcon("/emanuele-ai")}`}
+            />
+          </Link>
+        </PopoverTrigger>
+        <PopoverContent className="w-fit p-1 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border ">
+          <p className="text-xs">Emanuele AI</p>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 };
 
