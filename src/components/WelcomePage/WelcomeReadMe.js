@@ -1,7 +1,7 @@
 import React from "react";
 
-const WelcomeReadMe = () => {
-  return <div>WelcomeReadMe</div>;
+const WelcomeReadMe = ({ welcome }) => {
+  return <div className="main-container">WelcomeReadMe</div>;
 };
 
 export default WelcomeReadMe;

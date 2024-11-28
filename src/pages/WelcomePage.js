@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { ProfileBar, WelcomeReadMe } from "@/components";
 import { useWelcomeContent } from "@/hooks/useWelcomeContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
@@ -26,8 +25,9 @@ const WelcomePage = () => {
   }
 
   return (
-    <section>
+    <section className="with-profile-bar">
       <ProfileBar generalInfo={generalInfoContent} />
+      <WelcomeReadMe welcome={welcomeContent} />
     </section>
   );
 };
