@@ -27,7 +27,7 @@ const WelcomeReadMe = ({ welcome }) => {
       <div className="w-full mt-8 mb-4 border-b border-light-accent-border dark:border-dark-accent-border pb-1">
         <h4 className="font-semibold">{stackTitle}</h4>
       </div>
-      <div className="w-full flex justify-start gap-2 flex-wrap">
+      <div className="w-full flex justify-start gap-3 flex-wrap">
         {skillsRef.map((skill, index) => (
           <div
             key={index}
