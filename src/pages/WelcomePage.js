@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import ProfileBar from "@/components/ProfileBar/ProfileBar";
+
+import { ProfileBar, WelcomeReadMe } from "@/components";
 import { useWelcomeContent } from "@/hooks/useWelcomeContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
