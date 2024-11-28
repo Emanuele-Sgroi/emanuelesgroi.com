@@ -17,11 +17,11 @@ const WelcomePage = () => {
     !welcomeContent ||
     !generalInfoContent
   ) {
-    <p>Loading</p>;
+    return <p>Loading</p>;
   }
 
   if (isWelcomeError || isGeneralInfoError) {
-    <p>error</p>;
+    return <p>error</p>;
   }
 
   return (
