@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { getAssetUrl } from "@/utils/imageUtils";
 
@@ -49,6 +51,7 @@ const WelcomeReadMe = ({ welcome }) => {
       <div className="w-full center mt-8">
         <p className="text-sm">{exploreText}</p>
       </div>
+      <ProfileViews />
     </div>
   );
 };
@@ -95,5 +98,61 @@ const ReadmeTitle = ({ title }) => {
         );
       })}
     </p>
+  );
+};
+
+const ProfileViews = () => {
+  // Retrieve the number from session storage or start at 9
+  const initialNumber = Number(sessionStorage.getItem("number") || 9);
+  const [views, setViews] = useState(initialNumber); // initial value for profile views
+  const [targetNumber, setTargetNumber] = useState(initialNumber); // Target number of views to reach
+
+  useEffect(() => {
+    // Save the number to session storage whenever it updates
+    sessionStorage.setItem("number", views);
+  }, [views]);
+
+  useEffect(() => {
+    // Function to generate a new random target number
+    const generateTargetNumber = () => {
+      const randomIncrement = Math.floor(Math.random() * 12) + 1; // Random number between 1 and 12
+      setTargetNumber((prevTarget) => prevTarget + randomIncrement);
+    };
+
+    // Smoothly animate the number from `number` to `targetNumber`
+    const smoothIncrement = () => {
+      if (views < targetNumber) {
+        setViews((prevNumber) => prevNumber + 1);
+      }
+    };
+
+    // Generate a new target number every 4 seconds
+    const targetInterval = setInterval(generateTargetNumber, 4000);
+
+    // Animate the number every 100ms for a smooth effect
+    const animationInterval = setInterval(smoothIncrement, 100);
+
+    // Cleanup intervals on component unmount
+    return () => {
+      clearInterval(targetInterval);
+      clearInterval(animationInterval);
+    };
+  }, [views, targetNumber]);
+
+  return (
+    <div className="w-full mt-5 flex justify-start">
+      <div className=" center">
+        <div className="bg-light-accent-icon pl-2 pr-1 py-1 rounded-s-sm ">
+          <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
+            Profile views
+          </p>
+        </div>
+        <div className="bg-light-accent-extra pl-1 pr-2 py-1 rounded-e-sm">
+          <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
+            {views}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
