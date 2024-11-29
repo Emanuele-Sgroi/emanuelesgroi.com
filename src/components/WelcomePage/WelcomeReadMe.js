@@ -2,7 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
+import { RiBookMarkedFill } from "react-icons/ri";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const WelcomeReadMe = ({ welcome }) => {
   const {
@@ -12,46 +19,56 @@ const WelcomeReadMe = ({ welcome }) => {
     stackTitle,
     stackReference,
     exploreText,
+    pinnedTitle,
+    pinnedTabReference,
   } = welcome;
 
-  // Access the referenced skills
+  // Access the referenced Skills
   const skillsRef = stackReference?.map((skill) => skill.fields);
+
+  // Access the referenced Pinned Tabs
+  const pinnedTabsRef = pinnedTabReference?.map((tab) => tab.fields);
 
   return (
     <div className="main-container">
-      <ReadmeTitle title={readmeTitle} />
-      <div className="w-full center mt-4 border-b border-light-accent-border dark:border-dark-accent-border pb-1">
-        <h2 className="font-semibold">{welcomeTitle}</h2>
+      <div className="borded-container">
+        <ReadmeTitle title={readmeTitle} />
+        <div className="w-full center mt-4 border-b border-light-accent-border dark:border-dark-accent-border pb-1">
+          <h2 className="font-semibold">{welcomeTitle}</h2>
+        </div>
+        <div className="w-full center mt-6">
+          <p className="font-semibold text-[17.5px]">{aboutText}</p>
+        </div>
+        <div className="w-full mt-8 mb-4 border-b border-light-accent-border dark:border-dark-accent-border pb-1">
+          <h4 className="font-semibold">{stackTitle}</h4>
+        </div>
+        <div className="w-full flex justify-start gap-3 flex-wrap">
+          {skillsRef.map((skill, index) => (
+            <div
+              key={index}
+              className="py-1 px-2 center gap-[5px] rounded-[2px]"
+              style={{ backgroundColor: skill.skillColor }}
+            >
+              <Image
+                src={getAssetUrl(skill.skillIcon)}
+                alt={`${skill.skillName} icon`}
+                width={20}
+                height={20}
+              />
+              <p className="text-sm" style={{ color: skill.skillTextColor }}>
+                {skill.skillName}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="w-full center mt-8">
+          <p className="text-sm">{exploreText}</p>
+        </div>
+        <ProfileViews />
       </div>
-      <div className="w-full center mt-6">
-        <p className="font-semibold text-[17.5px]">{aboutText}</p>
-      </div>
-      <div className="w-full mt-8 mb-4 border-b border-light-accent-border dark:border-dark-accent-border pb-1">
-        <h4 className="font-semibold">{stackTitle}</h4>
-      </div>
-      <div className="w-full flex justify-start gap-3 flex-wrap">
-        {skillsRef.map((skill, index) => (
-          <div
-            key={index}
-            className="py-1 px-2 center gap-[5px] rounded-[2px]"
-            style={{ backgroundColor: skill.skillColor }}
-          >
-            <Image
-              src={getAssetUrl(skill.skillIcon)}
-              alt={`${skill.skillName} icon`}
-              width={20}
-              height={20}
-            />
-            <p className="text-sm" style={{ color: skill.skillTextColor }}>
-              {skill.skillName}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="w-full center mt-8">
-        <p className="text-sm">{exploreText}</p>
-      </div>
-      <ProfileViews />
+
+      {/* Pinned tabs */}
+      <PinnedTabs title={pinnedTitle} pinnedTabs={pinnedTabsRef} />
     </div>
   );
 };
@@ -152,6 +169,61 @@ const ProfileViews = () => {
             {views}
           </p>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const PinnedTabs = ({ title, pinnedTabs }) => {
+  return (
+    <div className="w-full mt-6">
+      <div className="w-full">
+        <p>{title}</p>
+      </div>
+      <div className="w-full grid grid-cols-2 gap-4 mt-2">
+        {pinnedTabs.map((tab, index) => (
+          <div
+            key={index}
+            class="h-[125px] border border-light-accent-border dark:border-dark-accent-border rounded-md p-4 flex flex-col justify-between"
+          >
+            {/* Tab header */}
+            <div className="w-full flex flex-col">
+              <div className="flex justify-start items-center gap-2">
+                <RiBookMarkedFill
+                  size={18}
+                  className="text-light-accent-icon dark:text-dark-accent-icon"
+                />
+                <Link
+                  href={tab.linkTab}
+                  className="text-sm font-semibold hover:underline "
+                >
+                  {tab.title.substring(0, 49)}
+                </Link>
+
+                <div className="border border-light-accent-border dark:border-dark-accent-border rounded-full p-1">
+                  <p className="text-[11.9px] font-semibold text-light-accent-icon dark:text-dark-accent-icon leading-none">
+                    Public
+                  </p>
+                </div>
+              </div>
+              {/* Tab decription */}
+              <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary my-2">
+                {tab.description.substring(0, 150)}
+              </p>
+            </div>
+
+            {/* Tab footer */}
+            <div className="flex justify-start items-center gap-2">
+              <span className="w-[12px] h-[12px] bg-light-accent-active dark:bg-dark-accent-active rounded-full"></span>
+              <Link
+                href={tab.linkCategory}
+                className="text-xs text-light-text-secondary dark:text-dark-text-secondary hover:underline leading-none"
+              >
+                {tab.category}
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

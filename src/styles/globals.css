@@ -177,6 +177,13 @@ a {
 
 .main-container {
   width: 895px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.borded-container {
+  width: 100%;
   padding: var(--padding-in);
   border: 1px solid var(--accent-border);
   border-radius: var(--border-radious-medium);
