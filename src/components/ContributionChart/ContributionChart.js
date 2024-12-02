@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import characterMapLarge from "@/utils/characterMapLarge";
 import characterMapSmall from "@/utils/characterMapSmall";
 
@@ -83,14 +82,18 @@ const ContributionChart = ({ word }) => {
   ];
 
   // State for selected chart style (using the identifier)
-  const [chartStyle, setChartStyle] = useState("green");
+  const [chartStyle, setChartStyle] = useState(() => {
+    return sessionStorage.getItem("contributionChartStyle") || "green";
+  });
 
   // Get the colors for the current style
   const selectedStyle = allStyles.find((style) => style.id === chartStyle);
   const chartColors = selectedStyle ? selectedStyle.colors : [];
 
   // State for input text
-  const [inputText, setInputText] = useState(word);
+  const [inputText, setInputText] = useState(() => {
+    return sessionStorage.getItem("contributionChartInput") || word;
+  });
   const [errorMessage, setErrorMessage] = useState("");
   // Calculate initial non-space character length
   const initialNonSpaceChars = inputText.replace(/\s/g, "").length;
@@ -98,6 +101,20 @@ const ContributionChart = ({ word }) => {
     MAX_CHARACTERS - initialNonSpaceChars
   );
   const inputArray = inputText.split("").map((char) => `'${char}'`); // array of characters from the inputText
+
+  useEffect(() => {
+    sessionStorage.setItem("contributionChartInput", inputText);
+  }, [inputText]);
+
+  useEffect(() => {
+    sessionStorage.setItem("contributionChartStyle", chartStyle);
+  }, [chartStyle]);
+
+  useEffect(() => {
+    const nonSpaceChars = inputText.replace(/\s/g, "").length;
+    setRemainingChars(MAX_CHARACTERS - nonSpaceChars);
+  }, [inputText]);
+
   // Handle input change
   const handleInputChange = (e) => {
     let value = e.target.value.toUpperCase();
