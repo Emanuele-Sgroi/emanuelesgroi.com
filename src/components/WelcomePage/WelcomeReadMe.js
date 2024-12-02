@@ -5,11 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { RiBookMarkedFill } from "react-icons/ri";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { ContributionChart } from "@/components";
 
 const WelcomeReadMe = ({ welcome }) => {
   const {
@@ -21,6 +17,7 @@ const WelcomeReadMe = ({ welcome }) => {
     exploreText,
     pinnedTitle,
     pinnedTabReference,
+    chartWord,
   } = welcome;
 
   // Access the referenced Skills
@@ -66,9 +63,10 @@ const WelcomeReadMe = ({ welcome }) => {
         </div>
         <ProfileViews />
       </div>
-
       {/* Pinned tabs */}
       <PinnedTabs title={pinnedTitle} pinnedTabs={pinnedTabsRef} />
+      {/*Contribution chart */}
+      <ContributionChart word={chartWord.toUpperCase()} />
     </div>
   );
 };
