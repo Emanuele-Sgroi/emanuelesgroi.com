@@ -3,6 +3,12 @@
 import React, { useState, useEffect } from "react";
 import characterMapLarge from "@/utils/characterMapLarge";
 import characterMapSmall from "@/utils/characterMapSmall";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { IoMdPlay } from "react-icons/io";
 
 const ContributionChart = ({ word }) => {
   // Constants for grid dimensions (52 weeks, 7 days per week)
@@ -246,9 +252,9 @@ const ContributionChart = ({ word }) => {
   };
 
   return (
-    <div className="w-full flex justify-between mt-6">
+    <div className="w-full flex flex-col md:flex-row md:justify-between mt-0 md:mt-6 max-md:p-4 overflow-hidden max-md:bg-bg-mobile-primary">
       {/* Chart */}
-      <div className="flex flex-col">
+      <div className="temp-width flex flex-col">
         {/* Chart header */}
         <div className="mb-2 flex flex-col">
           <p className="mb-2">Type below to generate a personalised graph</p>
@@ -259,11 +265,14 @@ const ContributionChart = ({ word }) => {
               value={inputText}
               onChange={handleInputChange}
               placeholder="Type something"
-              className="border border-light-accent-border dark:border-dark-accent-border rounded-md p-2 w-full text-light-text-primary dark:text-dark-text-primary bg-transparent"
+              className="border border-accent-border rounded-md p-2 w-full text-text-primary bg-transparent focus:outline-none max-md:bg-bg-button"
             />
             <div className="flex justify-between mt-1">
-              <span className="text-sm text-gray-500">
+              <span className="max-sm:hidden text-sm text-text-secondary">
                 {remainingChars}/{MAX_CHARACTERS} characters remaining
+              </span>
+              <span className="sm:hidden text-sm text-text-secondary">
+                {remainingChars}/{MAX_CHARACTERS}
               </span>
               {errorMessage && (
                 <span className="text-sm text-red-500">{errorMessage}</span>
@@ -271,104 +280,106 @@ const ContributionChart = ({ word }) => {
             </div>
           </div>
         </div>
-
         {/* Chart overview */}
-        <div className="flex flex-col gap-2 border border-light-accent-border dark:border-dark-accent-border rounded-md p-4">
-          {/* Top labels for months */}
-          <div className="months-row">
-            {[
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ].map((month, index) => (
-              <div key={index} className="month">
-                {month}
+        <div className="w-full flex flex-col gap-2 border border-accent-border rounded-md p-4 max-md:bg-bg-button">
+          <div className="relative overflow-x-auto thin-scrollbar">
+            <div className="min-w-max">
+              {/* Top labels for months */}
+              <div className="months-row mb-2">
+                {[
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec",
+                ].map((month, index) => (
+                  <div key={index} className="month">
+                    {month}
+                  </div>
+                ))}
               </div>
-            ))}
+              {/* Week labels and graph */}
+              <div className="w-full flex">
+                {/* Left labels for weekdays */}
+                <div className="weekdays-column">
+                  {["Mon", "Wed", "Fri"].map((day, index) => (
+                    <div key={index} className="weekday">
+                      {day}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Grid of squares */}
+                <div className="grid-chart">
+                  {Array.from({ length: DAYS }).map((_, y) => (
+                    <div key={y} className="day-row">
+                      {Array.from({ length: WEEKS }).map((_, x) => {
+                        const isSquareActive = isActive(x, y);
+
+                        // Handle emoji style
+                        if (chartStyle === "emoji") {
+                          const emoji = isSquareActive
+                            ? selectedStyle.symbols[
+                                Math.floor(
+                                  Math.random() * selectedStyle.symbols.length
+                                )
+                              ]
+                            : defaultEmoji; // default for not active squares
+
+                          return (
+                            <div
+                              key={x}
+                              className={`square-chart flex items-center justify-center text-[12px] leading-none`}
+                            >
+                              {emoji}
+                            </div>
+                          );
+                        } else {
+                          // color styles
+                          const bgColor = isSquareActive
+                            ? chartColors[
+                                Math.floor(Math.random() * chartColors.length)
+                              ]
+                            : "var(--other-chart-square)";
+
+                          const borderColor = isSquareActive
+                            ? ""
+                            : "border border-accent-border dark:border-none";
+
+                          return (
+                            <div
+                              key={x}
+                              className={`square-chart ${borderColor}`}
+                              style={{ backgroundColor: bgColor }}
+                            ></div>
+                          );
+                        }
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="flex">
-            {/* Left labels for weekdays */}
-            <div className="weekdays-column">
-              {["Mon", "Wed", "Fri"].map((day, index) => (
-                <div key={index} className="weekday">
-                  {day}
-                </div>
-              ))}
-            </div>
-
-            {/* Grid of squares */}
-            <div className="grid-chart">
-              {Array.from({ length: DAYS }).map((_, y) => (
-                <div key={y} className="day-row">
-                  {Array.from({ length: WEEKS }).map((_, x) => {
-                    const isSquareActive = isActive(x, y);
-
-                    // Handle emoji style
-                    if (chartStyle === "emoji") {
-                      const emoji = isSquareActive
-                        ? selectedStyle.symbols[
-                            Math.floor(
-                              Math.random() * selectedStyle.symbols.length
-                            )
-                          ]
-                        : defaultEmoji; // default for not active squares
-
-                      return (
-                        <div
-                          key={x}
-                          className={`square-chart flex items-center justify-center text-[12px] leading-none`}
-                        >
-                          {emoji}
-                        </div>
-                      );
-                    } else {
-                      // color styles
-                      const bgColor = isSquareActive
-                        ? chartColors[
-                            Math.floor(Math.random() * chartColors.length)
-                          ]
-                        : "var(--other-chart-square)";
-
-                      const borderColor = isSquareActive
-                        ? ""
-                        : "border border-light-accent-border dark:border-none";
-
-                      return (
-                        <div
-                          key={x}
-                          className={`square-chart ${borderColor}`}
-                          style={{ backgroundColor: bgColor }}
-                        ></div>
-                      );
-                    }
-                  })}
-                </div>
-              ))}
-            </div>
-          </div>
           {/* Chart bottom part */}
-          <div className="flex justify-between mt-1">
-            <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          <div className="flex flex-col-reverse md:flex-row md:flex-wrap-reverse max-md:items-start md:justify-between mt-1">
+            <p className="max-[406px]:hidden text-xs text-text-secondary max-md:mt-1">
               const arr = {"[" + inputArray.join(", ") + "];"}
             </p>
             <div className="center gap-1">
-              <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-                Less
-              </p>
+              <p className="text-xs text-text-secondary">Less</p>
               {/* Inactive square representation */}
               {chartStyle !== "emoji" ? (
                 <div
-                  className="square-chart border border-light-accent-border dark:border-none"
+                  className="square-chart border border-accent-border dark:border-none"
                   style={{ backgroundColor: "var(--other-chart-square)" }}
                 />
               ) : (
@@ -395,22 +406,20 @@ const ContributionChart = ({ word }) => {
                       {emoji}
                     </div>
                   ))}
-              <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-                More
-              </p>
+              <p className="text-xs text-text-secondary">More</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Select styles */}
-      <div className="w-full flex flex-col justify-start items-end pl-8 gap-2">
+      <div className="max-md:hidden w-full flex flex-col items-end pl-6 xl:pl-8 gap-2">
         {allStyles.map((styleObj, index) => (
           <div
             key={index}
-            className={`w-full center cursor-pointer py-3 px-4 rounded-md hover:bg-light-bg-button hover:dark:bg-dark-bg-button ${
+            className={`w-[90px] center cursor-pointer py-3 px-2 rounded-md hover:bg-bg-button ${
               chartStyle === styleObj.id
-                ? "bg-light-bg-button dark:bg-dark-bg-button" // Active state
+                ? "bg-bg-button" // Active state
                 : ""
             }`}
             onClick={() => setChartStyle(styleObj.id)} // Set active style on click
@@ -435,8 +444,102 @@ const ContributionChart = ({ word }) => {
           </div>
         ))}
       </div>
+
+      {/* Select styles - Mobile */}
+      <StyleSelectionMobile
+        allStyles={allStyles}
+        chartStyle={chartStyle}
+        setChartStyle={setChartStyle}
+        selectedStyle={selectedStyle}
+      />
     </div>
   );
 };
 
 export default ContributionChart;
+
+const StyleSelectionMobile = ({
+  allStyles,
+  chartStyle,
+  setChartStyle,
+  selectedStyle,
+}) => {
+  const [open, setOpen] = useState(false);
+  const [openStylesMenu, setOpenStylesMenu] = useState(false);
+
+  return (
+    <div className="md:hidden w-full mt-4">
+      <Popover open={openStylesMenu} onOpenChange={setOpenStylesMenu}>
+        <PopoverTrigger
+          className="relative center outline-none"
+          aria-haspopup="menu"
+          aria-expanded={open}
+        >
+          <div className="center gap-2 bg-bg-button px-2 py-1 rounded-md">
+            <p className="text-sm">Graph style</p>
+            <IoMdPlay size={14} className="text-text-primary" />
+            {/* Display the active style */}
+            {selectedStyle.id !== "emoji" ? (
+              // Display color swatches for color styles
+              <div className="flex">
+                {selectedStyle.colors.map((color, colorIndex) => (
+                  <div
+                    key={colorIndex}
+                    className="w-[14px] h-[10px]"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            ) : (
+              // Display emojis for the emoji style
+              <div className="flex ">
+                {selectedStyle.symbols.slice(0, 4).map((emoji, emojiIndex) => (
+                  <div
+                    key={emojiIndex}
+                    className="w-[10px] h-[10px] text-[11px] leading-none mx-[2px]"
+                  >
+                    {emoji}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-fit p-4 bg-bg-button border-accent-border ml-4">
+          {allStyles.map((styleObj, index) => (
+            <div
+              key={index}
+              className={`w-[90px] center cursor-pointer py-3 px-2 rounded-md ${
+                chartStyle === styleObj.id
+                  ? "bg-bg-hover" // Active state
+                  : ""
+              }`}
+              onClick={() => {
+                setChartStyle(styleObj.id);
+                setOpenStylesMenu(false);
+              }} // Set active style on click and close the menu
+            >
+              {styleObj.id !== "emoji"
+                ? // Display color swatches for color styles
+                  styleObj.colors.map((color, colorIndex) => (
+                    <div
+                      key={colorIndex}
+                      className="w-[14px] h-[10px]"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))
+                : styleObj.symbols.slice(0, 4).map((emoji, emojiIndex) => (
+                    <div
+                      key={emojiIndex}
+                      className="w-[10px] h-[10px] text-[11px] leading-none mx-[2px]"
+                    >
+                      {emoji}
+                    </div>
+                  ))}
+            </div>
+          ))}
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};

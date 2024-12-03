@@ -56,7 +56,7 @@ const Navbar = () => {
 
   const getLinkClassDiv = (path) => {
     return pathname === path
-      ? "absolute bottom-[-11px] h-[2px] bg-light-accent-active dark:bg-dark-accent-active"
+      ? "absolute bottom-[-11px] h-[2px] bg-accent-active "
       : "hidden";
   };
   const getLinkClassText = (path) => {
@@ -65,19 +65,19 @@ const Navbar = () => {
 
   const getLinkClassDivMobile = (path) => {
     return pathname === path
-      ? "w-[6px] h-[6px] rounded-full bg-light-accent-active dark:bg-dark-accent-active"
+      ? "w-[6px] h-[6px] rounded-full bg-accent-active "
       : "hidden";
   };
 
   return (
     <>
-      <nav className="w-full relative max-sm:px-4">
+      <nav className="w-full relative max-sm:px-4 ">
         {/* Top part */}
         <div className="w-full mb-3 flex justify-between items-center">
           <NavLogo />{" "}
           <div className="center gap-[5px] min-[341px]:gap-4">
             <SearchBar />
-            <div className="max-md:hidden w-px h-[20px] bg-light-accent-border dark:bg-dark-accent-border" />
+            <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
             <EmanueleAiLink />
           </div>
@@ -89,14 +89,11 @@ const Navbar = () => {
             <div className="max-[230px]:hidden relative center">
               <Link
                 href="/"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/"
                 )}`}
               >
-                <RiHomeSmileLine
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <RiHomeSmileLine size={18} className="text-accent-icon " />
                 Welcome
               </Link>
 
@@ -110,14 +107,11 @@ const Navbar = () => {
             <div className="relative center max-[330px]:hidden">
               <Link
                 href="/portfolio"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/portfolio"
                 )}`}
               >
-                <GoCodeSquare
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <GoCodeSquare size={18} className="text-accent-icon " />
                 Portfolio
               </Link>
               <div
@@ -135,16 +129,10 @@ const Navbar = () => {
                 aria-haspopup="menu"
                 aria-expanded={open}
               >
-                <div className="flex justify-center items-center cursor-pointer gap-1 text-light-text-primary dark:text-dark-text-primary text-sm hover-box">
-                  <FaRegBookmark
-                    size={18}
-                    className="text-light-accent-icon dark:text-dark-accent-icon"
-                  />
+                <div className="flex justify-center items-center cursor-pointer gap-1 text-text-primary text-sm hover-box">
+                  <FaRegBookmark size={18} className="text-accent-icon" />
                   Writings
-                  <IoMdArrowDropdown
-                    size={18}
-                    className="text-light-text-primary dark:text-dark-text-primary"
-                  />
+                  <IoMdArrowDropdown size={18} className="text-text-primary" />
                 </div>
                 <div
                   className={getLinkClassDiv("/writings/blog")}
@@ -158,37 +146,31 @@ const Navbar = () => {
               <PopoverContent
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="max-[430px]:hidden w-[150px] p-2 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border mt-[-4px]"
+                className="max-[430px]:hidden w-[150px] p-2 bg-bg-button border-accent-border mt-[-4px]"
                 role="menu"
               >
                 <ul className="w-full">
                   <li role="menuitem" className="w-full mb-1">
                     <Link
                       href="/writings/blog"
-                      className={`w-full flex items-center gap-2 hover-box text-light-text-primary dark:text-dark-text-primary ${getLinkClassText(
+                      className={`w-full flex items-center gap-2 hover-box text-text-primary ${getLinkClassText(
                         "/writings/blog"
                       )}`}
                       onClick={() => setOpen(false)}
                     >
-                      <BsVectorPen
-                        size={18}
-                        className="text-light-accent-icon dark:text-dark-accent-icon"
-                      />
+                      <BsVectorPen size={18} className="text-accent-icon " />
                       Blog
                     </Link>
                   </li>
                   <li role="menuitem" className="w-full">
                     <Link
                       href="/writings/academic"
-                      className={`w-full flex items-center gap-2 hover-box text-light-text-primary dark:text-dark-text-primary ${getLinkClassText(
+                      className={`w-full flex items-center gap-2 hover-box text-text-primary ${getLinkClassText(
                         "/writings/academic"
                       )}`}
                       onClick={() => setOpen(false)}
                     >
-                      <TbSchool
-                        size={18}
-                        className="text-light-accent-icon dark:text-dark-accent-icon"
-                      />
+                      <TbSchool size={18} className="text-accent-icon " />
                       Academic
                     </Link>
                   </li>
@@ -200,14 +182,11 @@ const Navbar = () => {
             <div className="max-[530px]:hidden relative center">
               <Link
                 href="/dev-quiz"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/dev-quiz"
                 )}`}
               >
-                <LuBrain
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <LuBrain size={18} className="text-accent-icon" />
                 Dev Quiz
               </Link>
               <div
@@ -220,14 +199,11 @@ const Navbar = () => {
             <div className="max-[676px]:hidden relative center">
               <Link
                 href="/minigames"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/minigames"
                 )}`}
               >
-                <PiGameControllerBold
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <PiGameControllerBold size={18} className="text-accent-icon" />
                 Minigames
               </Link>
               <div
@@ -240,14 +216,11 @@ const Navbar = () => {
             <div className="max-[758px]:hidden relative center">
               <Link
                 href="/wall"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/wall"
                 )}`}
               >
-                <PiWall
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <PiWall size={18} className="text-accent-icon" />
                 Wall
               </Link>
               <div
@@ -260,14 +233,11 @@ const Navbar = () => {
             <div className="max-[838px]:hidden relative center">
               <Link
                 href="/contact"
-                className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary hover-box ${getLinkClassText(
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
                   "/contact"
                 )}`}
               >
-                <GrContact
-                  size={18}
-                  className="text-light-accent-icon dark:text-dark-accent-icon"
-                />
+                <GrContact size={18} className="text-accent-icon" />
                 Get in Touch
               </Link>
               <div
@@ -284,25 +254,22 @@ const Navbar = () => {
               aria-haspopup="menu"
               aria-expanded={open}
             >
-              <div className="w-[32px] h-[32px] flex justify-center items-center bg-light-bg-button dark:bg-dark-bg-button rounded-s border border-light-accent-border dark:border-dark-accent-border">
+              <div className="w-[32px] h-[32px] flex justify-center items-center bg-bg-button rounded-s border border-accent-border">
                 <HiDotsHorizontal size={18} />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="min-[839px]:hidden w-[150px] p-4 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border mr-4">
+            <PopoverContent className="min-[839px]:hidden w-[150px] p-4 bg-bg-button border-accent-border mr-4">
               <ul className="w-full flex flex-col justify-start items-start gap-4">
                 {/* Welcome */}
                 <li className="min-[231px]:hidden relative center gap-2">
                   <Link
                     href="/"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <RiHomeSmileLine
-                      size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
-                    />
+                    <RiHomeSmileLine size={18} className="text-accent-icon " />
                     Welcome
                   </Link>
 
@@ -313,31 +280,22 @@ const Navbar = () => {
                 <li className="relative center min-[331px]:hidden gap-2">
                   <Link
                     href="/portfolio"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/portfolio"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <GoCodeSquare
-                      size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
-                    />
+                    <GoCodeSquare size={18} className="text-accent-icon " />
                     Portfolio
                   </Link>
                   <div className={getLinkClassDivMobile("/portfolio")} />
                 </li>
 
                 {/* Writings */}
-                <li className="min-[431px]:hidden center gap-1 text-light-text-secondary dark:text-dark-text-secondary text-sm">
-                  <FaRegBookmark
-                    size={18}
-                    className="text-light-accent-icon dark:text-dark-accent-icon"
-                  />
+                <li className="min-[431px]:hidden center gap-1 text-text-secondary text-sm">
+                  <FaRegBookmark size={18} className="text-accent-icon " />
                   Writings
-                  <IoMdArrowDropdown
-                    size={18}
-                    className="text-light-text-primary dark:text-dark-text-primary"
-                  />
+                  <IoMdArrowDropdown size={18} className="text-text-primary" />
                 </li>
                 {/* Writings - sublinks */}
                 <li className="min-[431px]:hidden">
@@ -345,15 +303,12 @@ const Navbar = () => {
                     <li className="w-full flex justify-start items-center gap-2">
                       <Link
                         href="/writings/blog"
-                        className={`flex items-center gap-2  text-light-text-primary dark:text-dark-text-primary ${getLinkClassText(
+                        className={`flex items-center gap-2 text-text-primary ${getLinkClassText(
                           "/writings/blog"
                         )}`}
                         onClick={() => setOpenSideMenu(false)}
                       >
-                        <BsVectorPen
-                          size={18}
-                          className="text-light-accent-icon dark:text-dark-accent-icon"
-                        />
+                        <BsVectorPen size={18} className="text-accent-icon" />
                         Blog
                       </Link>
                       <div
@@ -363,15 +318,12 @@ const Navbar = () => {
                     <li className="w-full flex justify-start items-center gap-2">
                       <Link
                         href="/writings/academic"
-                        className={`flex items-center gap-2 text-light-text-primary dark:text-dark-text-primary ${getLinkClassText(
+                        className={`flex items-center gap-2 text-text-primary ${getLinkClassText(
                           "/writings/academic"
                         )}`}
                         onClick={() => setOpenSideMenu(false)}
                       >
-                        <TbSchool
-                          size={18}
-                          className="text-light-accent-icon dark:text-dark-accent-icon"
-                        />
+                        <TbSchool size={18} className="text-accent-icon" />
                         Academic
                       </Link>
                       <div
@@ -385,15 +337,12 @@ const Navbar = () => {
                 <li className="relative center min-[531px]:hidden gap-2">
                   <Link
                     href="/dev-quiz"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/dev-quiz"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <LuBrain
-                      size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
-                    />
+                    <LuBrain size={18} className="text-accent-icon" />
                     Dev Quiz
                   </Link>
                   <div className={getLinkClassDivMobile("/dev-quiz")} />
@@ -403,14 +352,14 @@ const Navbar = () => {
                 <li className="relative center min-[677px]:hidden gap-2">
                   <Link
                     href="/minigames"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/minigames"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <PiGameControllerBold
                       size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
+                      className="text-accent-icon"
                     />
                     Minigames
                   </Link>
@@ -421,15 +370,12 @@ const Navbar = () => {
                 <li className="relative center min-[759px]:hidden gap-2">
                   <Link
                     href="/wall"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/wall"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <PiWall
-                      size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
-                    />
+                    <PiWall size={18} className="text-accent-icon" />
                     Wall
                   </Link>
                   <div className={getLinkClassDivMobile("/wall")} />
@@ -439,15 +385,12 @@ const Navbar = () => {
                 <li className="min-[839px]:hidden relative center gap-2">
                   <Link
                     href="/contact"
-                    className={`relative center gap-1 text-light-text-primary dark:text-dark-text-primary  ${getLinkClassText(
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
                       "/contact"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <GrContact
-                      size={18}
-                      className="text-light-accent-icon dark:text-dark-accent-icon"
-                    />
+                    <GrContact size={18} className="text-accent-icon" />
                     Get in Touch
                   </Link>
                   <div className={getLinkClassDivMobile("/contact")} />
@@ -468,9 +411,9 @@ const NavLogo = () => {
     <div>
       <Link
         href="/"
-        className="text-light-text-primary dark:text-dark-text-primary flex items-center gap-1 min-[291px]:gap-2"
+        className="text-text-primary flex items-center gap-1 min-[291px]:gap-2"
       >
-        <div className="w-[32px] h-[32px] border border-light-text-primary dark:border-dark-text-primary center ">
+        <div className="w-[32px] h-[32px] border border-text-primary center ">
           <p className="text-2xl">E</p>
         </div>
         <div className="max-[280px]:hidden hover-box">
@@ -530,7 +473,7 @@ const ToggleThemeButton = ({ onClick, theme }) => {
             />
           )}
         </PopoverTrigger>
-        <PopoverContent className="w-fit p-1 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border ">
+        <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
           <p className="text-xs">
             {theme !== "light" ? "Light Mode" : "Dark Mode"}
           </p>
@@ -571,15 +514,11 @@ const EmanueleAiLink = () => {
   };
 
   const getLinkClass = (path) => {
-    return pathname === path
-      ? "border-light-accent-active dark:border-dark-accent-active"
-      : "";
+    return pathname === path ? "border-accent-active" : "";
   };
 
   const getLinkClassIcon = (path) => {
-    return pathname === path
-      ? "text-light-text-primary dark:text-dark-text-primary"
-      : "text-light-accent-icon dark:text-dark-accent-icon";
+    return pathname === path ? "text-text-primary" : "text-accent-icon";
   };
 
   return (
@@ -604,7 +543,7 @@ const EmanueleAiLink = () => {
             />
           </Link>
         </PopoverTrigger>
-        <PopoverContent className="w-fit p-1 bg-light-bg-button dark:bg-dark-bg-button border-light-accent-border dark:border-dark-accent-border ">
+        <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
           <p className="text-xs">Emanuele AI</p>
         </PopoverContent>
       </Popover>
@@ -617,9 +556,9 @@ const SearchBar = () => {
     <div className="w-[32px] sm:w-[260px] h-[32px] btn-secondary hover:bg-transparent cursor-pointer flex items-center justify-center sm:justify-start">
       <HiOutlineSearch
         size={18}
-        className="max-sm:w-[16px] max-sm:h-[16px] text-light-accent-icon dark:text-dark-accent-icon"
+        className="max-sm:w-[16px] max-sm:h-[16px] text-accent-icon"
       />
-      <p className="max-sm:hidden text-sm flex items-center gap-1 text-light-accent-icon dark:text-dark-accent-icon">
+      <p className="max-sm:hidden text-sm flex items-center gap-1 text-accent-icon">
         Type
         <span>
           <LuSquareSlash size={18} />

@@ -11,6 +11,9 @@
   --bg-button: #f6f8fa;
   --bg-hover: #eaedf0;
 
+  --bg-mobile-primary: #fffeff;
+  --bg-mobile-body: #eff0f5;
+
   --text-primary: #1f2328;
   --text-secondary: #6b747e;
   --text-link: #4493f8;
@@ -68,7 +71,8 @@
   --border-radious-medium: 0.375rem;
   --padding-out: 2rem;
   --padding-in: 24px;
-  --gap-starndard: 24px;
+  --gap-standard: 24px;
+  --gap-standard-mobile: 18px;
   --line-height-standard: 1.5;
 }
 
@@ -80,6 +84,9 @@
   --bg-quartiary: #15191f;
   --bg-button: #212830;
   --bg-hover: #15191f;
+
+  --bg-mobile-primary: #16191c;
+  --bg-mobile-body: #040405;
 
   --text-primary: #f0f6fc;
   --text-secondary: #858c95;
@@ -159,13 +166,6 @@ section {
   padding: var(--padding-out);
 }
 
-.with-profile-bar {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  gap: var(--gap-starndard);
-}
-
 .monospace-text {
   font-family: var(--fontStack-monospace) !important;
 }
@@ -227,8 +227,16 @@ a {
 
 /* Div styles */
 
+.with-profile-bar {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: var(--gap-standard);
+}
+
 .main-container {
   width: 895px;
+  max-width: 895px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -253,6 +261,35 @@ a {
 
 .hover-box:hover {
   background-color: var(--bg-hover);
+}
+
+@media (max-width: 767px) {
+  body {
+    background: var(--bg-mobile-body);
+  }
+  section {
+    padding: 0;
+  }
+  nav {
+    background-color: var(--bg-mobile-primary);
+  }
+  .with-profile-bar {
+    flex-direction: column;
+    gap: var(--gap-standard-mobile);
+  }
+  .main-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  .borded-container {
+    width: 100%;
+    padding: var(--padding-in) 0;
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: var(--accent-border);
+    border-radius: 0;
+    background-color: var(--bg-mobile-primary);
+  }
 }
 
 /* Buttons styles */
@@ -333,7 +370,8 @@ a {
 
 .months-row {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  /* grid-template-columns: repeat(12, 1fr); */
+  grid-template-columns: repeat(12, minmax(40px, 1fr));
   text-align: center;
   font-size: 12px;
 }
@@ -344,17 +382,12 @@ a {
 
 .weekdays-column {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  /* grid-template-rows: repeat(3, 1fr); */
+  grid-template-rows: repeat(3, minmax(14px, 1fr));
   font-size: 12px;
   margin-right: 10px;
 }
 
-/* .grid-chart {
-  display: grid;
-  grid-template-columns: repeat(52, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  gap: 3px;
-} */
 .grid-chart {
   display: flex;
   flex-direction: column; /* Stack days vertically */
@@ -374,6 +407,40 @@ a {
   border-radius: 2px;
 }
 
+/* Other */
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Thin and light gray scrollbar styling */
+.thin-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgb(107, 107, 107) transparent; /* Firefox */
+}
+
+/* WebKit browsers */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+  height: 4px; /* Height of the scrollbar */
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(107, 107, 107); /* Scrollbar thumb color */
+  border-radius: 3px; /* Scrollbar thumb roundness */
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Scrollbar track color */
+}
+
 /* Tailwind */
 
 @layer utilities {
@@ -388,5 +455,84 @@ a {
   }
   :root {
     --radius: 0.5rem;
+  }
+}
+
+/* Temporary */
+
+.temp-width {
+  /* width: clamp(70%, 60vw, 100%); */
+  width: 100%;
+}
+
+@media (max-width: 1210px) {
+  .temp-width {
+    width: 705px;
+  }
+}
+
+@media (max-width: 1185px) {
+  .temp-width {
+    width: 671px;
+  }
+}
+
+@media (max-width: 1155px) {
+  .temp-width {
+    width: 641px;
+  }
+}
+
+@media (max-width: 1116px) {
+  .temp-width {
+    width: 602px;
+  }
+}
+
+@media (max-width: 1076px) {
+  .temp-width {
+    width: 562px;
+  }
+}
+
+@media (max-width: 1042px) {
+  .temp-width {
+    width: 528px;
+  }
+}
+
+@media (max-width: 960px) {
+  .temp-width {
+    width: 486px;
+  }
+}
+
+@media (max-width: 918px) {
+  .temp-width {
+    width: 444px;
+  }
+}
+
+@media (max-width: 885px) {
+  .temp-width {
+    width: 410px;
+  }
+}
+
+@media (max-width: 850px) {
+  .temp-width {
+    width: 374px;
+  }
+}
+
+@media (max-width: 806px) {
+  .temp-width {
+    width: 332px;
+  }
+}
+
+@media (max-width: 767px) {
+  .temp-width {
+    width: 100%;
   }
 }
