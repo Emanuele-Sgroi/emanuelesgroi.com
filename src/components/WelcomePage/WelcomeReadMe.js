@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { RiBookMarkedFill } from "react-icons/ri";
+import { VscPinned } from "react-icons/vsc";
 import { ContributionChart } from "@/components";
 
 const WelcomeReadMe = ({ welcome }) => {
@@ -32,20 +33,24 @@ const WelcomeReadMe = ({ welcome }) => {
         <div className="w-full flex justify-start max-md:px-4">
           <ReadmeTitle title={readmeTitle} />
         </div>
-        <div className="w-full center mt-4 border-b border-accent-border pb-3 md:pb-1">
-          <h2 className="font-semibold">{welcomeTitle}</h2>
+        <div className="w-full center mt-4 border-b border-accent-border pb-3 md:pb-1 max-md:px-4 text-center">
+          <h2 className="font-semibold  max-[375px]:text-[24px]">
+            {welcomeTitle}
+          </h2>
         </div>
-        <div className="w-full center mt-6">
+        <div className="w-full center mt-6 max-md:px-4">
           <p className="font-semibold text-[17.5px]">{aboutText}</p>
         </div>
-        <div className="w-full mt-8 mb-4 border-b border-accent-border pb-1">
-          <h4 className="font-semibold">{stackTitle}</h4>
+        <div className="w-full mt-8 mb-4 border-b border-accent-border pb-1 max-md:px-4">
+          <h4 className="font-semibold max-[375px]:text-[20px]">
+            {stackTitle}
+          </h4>
         </div>
-        <div className="w-full flex justify-start gap-3 flex-wrap">
+        <div className="w-full flex justify-start gap-2 md:gap-3 flex-wrap max-md:px-4">
           {skillsRef.map((skill, index) => (
             <div
               key={index}
-              className="py-1 px-2 center gap-[5px] rounded-[2px]"
+              className="py-[3px] md:py-1 px-[7px] md:px-2 center gap-[5px] rounded-[2px]"
               style={{ backgroundColor: skill.skillColor }}
             >
               <Image
@@ -53,6 +58,7 @@ const WelcomeReadMe = ({ welcome }) => {
                 alt={`${skill.skillName} icon`}
                 width={20}
                 height={20}
+                className="max-md:w-[18px] max-md:h-[18px]"
               />
               <p className="text-sm" style={{ color: skill.skillTextColor }}>
                 {skill.skillName}
@@ -60,15 +66,15 @@ const WelcomeReadMe = ({ welcome }) => {
             </div>
           ))}
         </div>
-        <div className="w-full center mt-8">
+        <div className="w-full center mt-8 max-md:px-4">
           <p className="text-sm">{exploreText}</p>
         </div>
         <ProfileViews />
       </div>
       {/* Pinned tabs */}
-      {/* <PinnedTabs title={pinnedTitle} pinnedTabs={pinnedTabsRef} /> */}
+      <PinnedTabs title={pinnedTitle} pinnedTabs={pinnedTabsRef} />
       {/*Contribution chart */}
-      {/* <ContributionChart word={chartWord.toUpperCase()} /> */}
+      <ContributionChart word={chartWord.toUpperCase()} />
     </div>
   );
 };
@@ -152,7 +158,7 @@ const ProfileViews = () => {
   }, [views, targetNumber]);
 
   return (
-    <div className="w-full mt-5 flex justify-start ">
+    <div className="w-full mt-5 flex justify-start max-md:px-4">
       <div className=" center">
         <div className="bg-accent-icon pl-2 pr-1 py-1 rounded-s-sm ">
           <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
@@ -171,15 +177,19 @@ const ProfileViews = () => {
 
 const PinnedTabs = ({ title, pinnedTabs }) => {
   return (
-    <div className="w-full mt-6">
-      <div className="w-full">
+    <div className="w-full mt-[18px] md:mt-6 max-md:bg-bg-mobile-primary max-md:border-y max-md:border-y-accent-border max-md:py-4 max-md:shadow-sm">
+      <div className="w-full flex justify-start items-center gap-1 max-md:px-4">
+        <VscPinned
+          size={18}
+          className="md:hidden transform rotate-45 text-accent-icon"
+        />
         <p>{title}</p>
       </div>
-      <div className="w-full grid grid-cols-2 gap-4 mt-2">
+      <div className="max-md:hidden w-full grid grid-cols-2 gap-4 mt-2">
         {pinnedTabs.map((tab, index) => (
           <div
             key={index}
-            class="h-[125px] border border-accent-border rounded-md p-4 flex flex-col justify-between"
+            class="min-h-[125px] border border-accent-border rounded-md p-4 flex flex-col justify-between"
           >
             {/* Tab header */}
             <div className="w-full flex flex-col">
@@ -187,7 +197,7 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
                 <RiBookMarkedFill size={18} className="text-accent-icon" />
                 <Link
                   href={tab.linkTab}
-                  className="text-sm font-semibold hover:underline "
+                  className="w-auto text-sm font-semibold hover:underline overflow-hidden text-nowrap"
                 >
                   {tab.title.substring(0, 49)}
                 </Link>
@@ -215,6 +225,44 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
               </Link>
             </div>
           </div>
+        ))}
+      </div>
+      <div className="md:hidden w-full flex gap-4 mt-3 overflow-x-scroll hide-scrollbar">
+        {pinnedTabs.map((tab, index) => (
+          <Link
+            key={index}
+            href={tab.linkTab}
+            className="h-[145px] min-w-[270px] border border-accent-border rounded-md p-3 flex flex-col justify-between first:ml-4 last:mr-4 max-md:bg-bg-button"
+          >
+            {/* Tab header */}
+            <div className="w-full flex flex-col">
+              <div className="w-fit border border-accent-border rounded-full p-1 mb-2">
+                <p className="text-[11.5px] font-semibold text-accent-icon leading-none">
+                  Public
+                </p>
+              </div>
+              <div className="flex justify-start items-center gap-2">
+                <p className="w-auto text-[13px] leading-4 font-semibold  text-text-primary">
+                  {tab.title}
+                </p>
+              </div>
+              {/* Tab decription */}
+              <p className="text-xs text-text-secondary my-2">
+                {tab.description.substring(0, 40)}
+              </p>
+            </div>
+
+            {/* Tab footer */}
+            <div className="flex justify-start items-center gap-2">
+              <span className="w-[12px] h-[12px] bg-accent-active rounded-full"></span>
+              <Link
+                href={tab.linkCategory}
+                className="text-xs text-text-secondary hover:underline leading-none"
+              >
+                {tab.category}
+              </Link>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
