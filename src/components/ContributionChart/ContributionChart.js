@@ -259,10 +259,10 @@ const ContributionChart = ({ word }) => {
               value={inputText}
               onChange={handleInputChange}
               placeholder="Type something"
-              className="border border-light-accent-border dark:border-dark-accent-border rounded-md p-2 w-full text-light-text-primary dark:text-dark-text-primary bg-transparent"
+              className="border border-accent-border rounded-md p-2 w-full text-text-primary bg-transparent"
             />
             <div className="flex justify-between mt-1">
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-text-secondary">
                 {remainingChars}/{MAX_CHARACTERS} characters remaining
               </span>
               {errorMessage && (
@@ -273,7 +273,7 @@ const ContributionChart = ({ word }) => {
         </div>
 
         {/* Chart overview */}
-        <div className="flex flex-col gap-2 border border-light-accent-border dark:border-dark-accent-border rounded-md p-4">
+        <div className="flex flex-col gap-2 border border-accent-border rounded-md p-4">
           {/* Top labels for months */}
           <div className="months-row">
             {[
@@ -341,7 +341,7 @@ const ContributionChart = ({ word }) => {
 
                       const borderColor = isSquareActive
                         ? ""
-                        : "border border-light-accent-border dark:border-none";
+                        : "border border-accent-border dark:border-none";
 
                       return (
                         <div
@@ -358,17 +358,15 @@ const ContributionChart = ({ word }) => {
           </div>
           {/* Chart bottom part */}
           <div className="flex justify-between mt-1">
-            <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+            <p className="text-xs text-text-secondary ">
               const arr = {"[" + inputArray.join(", ") + "];"}
             </p>
             <div className="center gap-1">
-              <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-                Less
-              </p>
+              <p className="text-xs text-text-secondary">Less</p>
               {/* Inactive square representation */}
               {chartStyle !== "emoji" ? (
                 <div
-                  className="square-chart border border-light-accent-border dark:border-none"
+                  className="square-chart border border-accent-border dark:border-none"
                   style={{ backgroundColor: "var(--other-chart-square)" }}
                 />
               ) : (
@@ -395,9 +393,7 @@ const ContributionChart = ({ word }) => {
                       {emoji}
                     </div>
                   ))}
-              <p className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
-                More
-              </p>
+              <p className="text-xs text-text-secondary">More</p>
             </div>
           </div>
         </div>
@@ -408,9 +404,9 @@ const ContributionChart = ({ word }) => {
         {allStyles.map((styleObj, index) => (
           <div
             key={index}
-            className={`w-full center cursor-pointer py-3 px-4 rounded-md hover:bg-light-bg-button hover:dark:bg-dark-bg-button ${
+            className={`w-full center cursor-pointer py-3 px-4 rounded-md hover:bg-bg-button ${
               chartStyle === styleObj.id
-                ? "bg-light-bg-button dark:bg-dark-bg-button" // Active state
+                ? "bg-bg-button" // Active state
                 : ""
             }`}
             onClick={() => setChartStyle(styleObj.id)} // Set active style on click
