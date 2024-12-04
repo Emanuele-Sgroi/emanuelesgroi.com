@@ -21,6 +21,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import "@theme-toggles/react/css/Lightbulb.css";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
+import { getAssetUrl } from "@/utils/imageUtils";
+import Image from "next/image";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -75,11 +86,13 @@ const Navbar = () => {
         {/* Top part */}
         <div className="w-full mb-3 flex justify-between items-center">
           <NavLogo />{" "}
-          <div className="center gap-[5px] min-[341px]:gap-4">
+          <div className="center gap-[5px] sm:gap-4">
             <SearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
             <EmanueleAiLink />
+            {/* Mobile only */}
+            <MobileSideProfile />
           </div>
         </div>
         {/* Bottom part */}
@@ -416,8 +429,8 @@ const NavLogo = () => {
         <div className="w-[32px] h-[32px] border border-text-primary center ">
           <p className="text-2xl">E</p>
         </div>
-        <div className="max-[280px]:hidden hover-box">
-          <h6 className="leading-5 max-[284px]:hidden">Emanuele Sgroi</h6>
+        <div className="max-sm:hidden hover-box">
+          <h6 className="leading-5">Emanuele Sgroi</h6>
         </div>
       </Link>
     </div>
@@ -461,7 +474,7 @@ const ToggleThemeButton = ({ onClick, theme }) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onClick={onClick}
-          className="relative center outline-none w-[32px] h-[32px] btn-secondary center"
+          className="max-[400px]:hidden relative center outline-none w-[32px] h-[32px] btn-secondary center"
           aria-expanded={open}
         >
           {theme !== "light" ? (
@@ -565,6 +578,73 @@ const SearchBar = () => {
         </span>
         to search
       </p>
+    </div>
+  );
+};
+
+const MobileSideProfile = () => {
+  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
+    useGeneralInfoContent();
+
+  if (isGeneralInfoLoading || !generalInfoContent) {
+    return <p>Loading</p>;
+  }
+
+  if (isGeneralInfoError) {
+    return <p>error</p>;
+  }
+
+  // Retrieve image URLs from content
+  const profilePirctureUrl = generalInfoContent?.profilePicture
+    ? getAssetUrl(generalInfoContent.profilePicture)
+    : "";
+
+  return (
+    <div className="md:hidden">
+      <Sheet>
+        <SheetTrigger>
+          <div className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2">
+            <Image
+              src={profilePirctureUrl}
+              alt="Profile_Picture_open_menu"
+              width={32}
+              height={32}
+              className="w-full h-full rounded-full object-cover object-center z-10"
+            />
+          </div>
+        </SheetTrigger>
+        <SheetContent className="!bg-bg-primary !border-accent-border md:hidden">
+          <SheetHeader>
+            <SheetDescription>
+              <div>
+                <div className="w-[100px] sm:w-[122px] h-[100px] sm:h-[122px] relative border-2 border-accent-border rounded-full">
+                  <Image
+                    src={profilePirctureUrl}
+                    alt="Profile_Picture"
+                    width={680}
+                    height={510}
+                    className="w-full h-full rounded-full object-cover object-center z-10"
+                  />
+                </div>
+                <div className="flex flex-col justify-start items-start mt-1">
+                  <h3 className="max-[375px]:text-[20px]">
+                    {generalInfoContent?.name}
+                  </h3>
+                  <p className="text-[17px] text-text-secondary">
+                    {generalInfoContent?.job}
+                  </p>
+                </div>
+                <p className="text-left text-xs text-text-secondary mt-2">
+                  {generalInfoContent?.sentence}
+                </p>
+                <div className="w-full text-left mt-4 border-b border-b-accent-border pb-1">
+                  <p className="text-xs">Explore</p>
+                </div>
+              </div>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
