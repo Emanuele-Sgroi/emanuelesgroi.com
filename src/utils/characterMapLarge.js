@@ -332,7 +332,6 @@ const characterMapLarge = {
     [0, 0, 0],
     [0, 0, 0],
   ],
-  // Special characters can be added similarly if needed
 };
 
 export default characterMapLarge;
