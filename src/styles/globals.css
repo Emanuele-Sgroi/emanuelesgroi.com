@@ -163,7 +163,7 @@ nav {
 }
 
 section {
-  padding: var(--padding-out);
+  padding: var(--padding-out) var(--padding-out) 0 var(--padding-out);
 }
 
 .monospace-text {
