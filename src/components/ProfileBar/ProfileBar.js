@@ -5,9 +5,10 @@ import Image from "next/image";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { GrLocation } from "react-icons/gr";
 import { TfiEmail } from "react-icons/tfi";
-import { IoLogoGithub } from "react-icons/io";
+import { IoLogoGithub, IoMdDownload } from "react-icons/io";
 import { FaLinkedin, FaInstagram, FaFacebook, FaDiscord } from "react-icons/fa";
 import { IoCopy } from "react-icons/io5";
+import { CgFileDocument } from "react-icons/cg";
 import {
   Popover,
   PopoverContent,
@@ -174,6 +175,23 @@ const ProfileBar = ({ generalInfo }) => {
           </Popover>
         </div>
       </div>
+
+      <div className="max-md:hidden mt-4 flex flex-col items-start gap-2">
+        <div className="flex items-center gap-2">
+          <CgFileDocument size={18} className="text-accent-icon" />
+          <a
+            href={`${getAssetUrl(generalInfo?.resume)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Emanuele-Sgroi-Resume.pdf"
+            className="text-text-primary hover:text-text-link hover:underline center gap-2"
+          >
+            Resume
+            <IoMdDownload size={18} className="text-text-primary" />
+          </a>
+        </div>
+      </div>
+
       <div className="max-md:hidden w-full h-px my-4 bg-accent-border" />
       <p className="max-md:hidden text-sm text-accent-extra">
         One day, I&apos;ll keep adding features to make this site look even more
