@@ -252,7 +252,7 @@ const ContributionChart = ({ word }) => {
   };
 
   return (
-    <div className="w-full flex flex-col md:flex-row md:justify-between mt-0 md:mt-6 max-md:p-4 overflow-hidden max-md:bg-bg-mobile-primary">
+    <div className="w-full flex flex-col md:flex-row md:justify-between mt-0 md:mt-6 max-md:p-4 overflow-hidden max-md:bg-bg-mobile-primary max-md:border-b max-md:border-b-accent-border max-md:shadow-sm">
       {/* Chart */}
       <div className="temp-width flex flex-col">
         {/* Chart header */}
