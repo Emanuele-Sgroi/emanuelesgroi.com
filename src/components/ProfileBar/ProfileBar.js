@@ -60,6 +60,7 @@ const ProfileBar = ({ generalInfo }) => {
         toast("Copied to clipboard.");
       })
       .catch((err) => {
+        alert("Failed to copy. Sorry!");
         console.error("Failed to copy: ", err);
       });
   };
@@ -148,7 +149,9 @@ const ProfileBar = ({ generalInfo }) => {
         </div>
         <div className="flex items-center gap-2">
           <FaDiscord size={18} className="text-accent-icon" />
-          <p className="text-text-primary">{generalInfo?.discordDisplayName}</p>
+          <p className="text-text-primary text-sm">
+            {generalInfo?.discordDisplayName}
+          </p>
           <button
             onClick={() => copyText(generalInfo?.discordDisplayName)}
             className="md:hidden"

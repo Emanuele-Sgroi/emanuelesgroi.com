@@ -7,13 +7,22 @@ import { RiHomeSmileLine, RiRobot2Line, RiRobot3Line } from "react-icons/ri";
 import { GoCodeSquare } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropdown, IoLogoGithub, IoMdDownload } from "react-icons/io";
 import { TbSchool } from "react-icons/tb";
-import { FaSun } from "react-icons/fa";
+import {
+  FaSun,
+  FaLinkedin,
+  FaInstagram,
+  FaFacebook,
+  FaDiscord,
+} from "react-icons/fa";
 import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
 import { HiOutlineSearch, HiDotsHorizontal } from "react-icons/hi";
 import { LuSquareSlash, LuBrain } from "react-icons/lu";
 import { PiGameControllerBold, PiWall } from "react-icons/pi";
+import { TfiEmail } from "react-icons/tfi";
+import { IoCopy } from "react-icons/io5";
+import { CgFileDocument } from "react-icons/cg";
 import { usePathname } from "next/navigation";
 import {
   Popover,
@@ -32,6 +41,7 @@ import {
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 import { getAssetUrl } from "@/utils/imageUtils";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -585,6 +595,8 @@ const SearchBar = () => {
 const MobileSideProfile = () => {
   const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
     useGeneralInfoContent();
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   if (isGeneralInfoLoading || !generalInfoContent) {
     return <p>Loading</p>;
@@ -599,11 +611,34 @@ const MobileSideProfile = () => {
     ? getAssetUrl(generalInfoContent.profilePicture)
     : "";
 
+  const getLinkClassDivMobile = (path) => {
+    return pathname === path
+      ? "w-[6px] h-[6px] rounded-full bg-accent-active mt-1 "
+      : "hidden";
+  };
+
+  const copyText = (text) => {
+    let copiedText = `${text}`;
+
+    navigator.clipboard
+      .writeText(copiedText)
+      .then(() => {
+        toast("Copied to clipboard.");
+      })
+      .catch((err) => {
+        alert("Failed to copy. Sorry!");
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   return (
     <div className="md:hidden">
-      <Sheet>
-        <SheetTrigger>
-          <div className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2">
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <div
+            onClick={() => setOpen(true)}
+            className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2"
+          >
             <Image
               src={profilePirctureUrl}
               alt="Profile_Picture_open_menu"
@@ -613,7 +648,7 @@ const MobileSideProfile = () => {
             />
           </div>
         </SheetTrigger>
-        <SheetContent className="!bg-bg-primary !border-accent-border md:hidden">
+        <SheetContent className="!bg-bg-primary !border-accent-border md:hidden overflow-y-auto thin-scrollbar">
           <SheetHeader>
             <SheetDescription>
               <div>
@@ -637,9 +672,216 @@ const MobileSideProfile = () => {
                 <p className="text-left text-xs text-text-secondary mt-2">
                   {generalInfoContent?.sentence}
                 </p>
-                <div className="w-full text-left mt-4 border-b border-b-accent-border pb-1">
+                <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Explore</p>
                 </div>
+                <ul className="w-full flex flex-col justify-start items-start gap-4 mt-4">
+                  {/* Welcome */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/"
+                      className={`relative center gap-1 text-text-primary `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <RiHomeSmileLine
+                        size={18}
+                        className="text-accent-icon "
+                      />
+                      Welcome
+                    </Link>
+                    <div className={getLinkClassDivMobile("/")} />
+                  </li>
+
+                  {/* Portfolio */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/portfolio"
+                      className={`relative center gap-1 text-text-primary `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <GoCodeSquare size={18} className="text-accent-icon " />
+                      Portfolio
+                    </Link>
+                    <div className={getLinkClassDivMobile("/portfolio")} />
+                  </li>
+
+                  <li className="w-full flex justify-start items-center gap-2">
+                    <Link
+                      href="/writings/blog"
+                      className={`flex items-center gap-2 text-text-primary `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <BsVectorPen size={18} className="text-accent-icon" />
+                      <p className="text-sm">
+                        Writings
+                        <span className="text-accent-icon mx-[3px]">/</span>
+                        Blog
+                      </p>
+                    </Link>
+                    <div className={getLinkClassDivMobile("/writings/blog")} />
+                  </li>
+                  <li className="w-full flex justify-start items-center gap-2">
+                    <Link
+                      href="/writings/academic"
+                      className={`flex items-center gap-2 text-text-primary`}
+                      onClick={() => setOpen(false)}
+                    >
+                      <TbSchool size={18} className="text-accent-icon" />
+                      <p className="text-sm">
+                        Writings
+                        <span className="text-accent-icon mx-[3px]">/</span>
+                        Academic
+                      </p>
+                    </Link>
+                    <div
+                      className={getLinkClassDivMobile("/writings/academic")}
+                    />
+                  </li>
+
+                  {/* Dev Quiz */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/dev-quiz"
+                      className={`relative center gap-1 text-text-primary `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <LuBrain size={18} className="text-accent-icon" />
+                      Dev Quiz
+                    </Link>
+                    <div className={getLinkClassDivMobile("/dev-quiz")} />
+                  </li>
+
+                  {/* Minigames */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/minigames"
+                      className={`relative center gap-1 text-text-primary `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <PiGameControllerBold
+                        size={18}
+                        className="text-accent-icon"
+                      />
+                      Minigames
+                    </Link>
+                    <div className={getLinkClassDivMobile("/minigames")} />
+                  </li>
+
+                  {/* Wall */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/wall"
+                      className={`relative center gap-1 text-text-primary`}
+                      onClick={() => setOpen(false)}
+                    >
+                      <PiWall size={18} className="text-accent-icon" />
+                      Wall
+                    </Link>
+                    <div className={getLinkClassDivMobile("/wall")} />
+                  </li>
+
+                  {/* Get in touch */}
+                  <li className="relative center gap-2">
+                    <Link
+                      href="/contact"
+                      className={`relative center gap-1 text-text-primary`}
+                      onClick={() => setOpen(false)}
+                    >
+                      <GrContact size={18} className="text-accent-icon" />
+                      Get in Touch
+                    </Link>
+                    <div className={getLinkClassDivMobile("/contact")} />
+                  </li>
+                </ul>
+                <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
+                  <p className="text-xs">Connect with me</p>
+                </div>
+
+                <ul className="w-full flex flex-col justify-start items-start gap-4 mt-4">
+                  <li className="relative center gap-2">
+                    <TfiEmail size={18} className="text-accent-icon" />
+                    <a
+                      href={`mailto:${generalInfoContent?.email}`}
+                      target="_blank"
+                      className="text-text-primary mb-px"
+                    >
+                      {generalInfoContent?.email}
+                    </a>
+                  </li>
+
+                  <li className="relative center gap-2">
+                    <IoLogoGithub size={18} className="text-accent-icon" />
+                    <a
+                      href={`${generalInfoContent?.gitHubLink}`}
+                      target="_blank"
+                      className="text-text-primary mb-px"
+                    >
+                      {generalInfoContent?.gitHubDisplayName}
+                    </a>
+                  </li>
+
+                  <li className="relative center gap-2">
+                    <FaLinkedin size={18} className="text-accent-icon" />
+                    <a
+                      href={`${generalInfoContent?.linkedInLink}`}
+                      target="_blank"
+                      className="text-text-primary mb-px"
+                    >
+                      {generalInfoContent?.linkedInDisplayName}
+                    </a>
+                  </li>
+                  <li className="relative center gap-2">
+                    <FaInstagram size={18} className="text-accent-icon" />
+                    <a
+                      href={`${generalInfoContent?.instagramLink}`}
+                      target="_blank"
+                      className="text-text-primary mb-px"
+                    >
+                      {generalInfoContent?.instagramDisplayName}
+                    </a>
+                  </li>
+                  <li className="relative center gap-2">
+                    <FaFacebook size={18} className="text-accent-icon" />
+                    <a
+                      href={`${generalInfoContent?.facebookLink}`}
+                      target="_blank"
+                      className="text-text-primary mb-px"
+                    >
+                      {generalInfoContent?.facebookDisplayName}
+                    </a>
+                  </li>
+                  <li className="relative center gap-2">
+                    <FaDiscord size={18} className="text-accent-icon" />
+                    <p className="text-text-primary text-sm mb-px">
+                      {generalInfoContent?.discordDisplayName}
+                    </p>
+                    <button
+                      onClick={() =>
+                        copyText(generalInfoContent?.discordDisplayName)
+                      }
+                    >
+                      <IoCopy size={18} className="text-text-primary" />
+                    </button>
+                  </li>
+                  <li className="relative center gap-2">
+                    <CgFileDocument size={18} className="text-accent-icon" />
+                    <a
+                      href={`${getAssetUrl(generalInfoContent?.resume)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download="Emanuele-Sgroi-Resume.pdf"
+                      className="text-text-primary mb-px center gap-2"
+                    >
+                      Resume
+                      <IoMdDownload size={18} className="text-text-primary" />
+                    </a>
+                  </li>
+                </ul>
+                <div className="my-4 w-full h-px bg-accent-border" />
+                <p className="text-xs text-left text-accent-extra">
+                  One day, I&apos;ll keep adding features to make this site look
+                  even more GitHub-like. For now, enjoy it just as it is! 😄🚀✨
+                </p>
               </div>
             </SheetDescription>
           </SheetHeader>
