@@ -536,3 +536,22 @@ a {
     width: 100%;
   }
 }
+
+/* special styles for height responsiveness, when user rotate the phone */
+
+.rh-flex-col {
+  flex-direction: column;
+}
+
+.rh-p-loading {
+  padding: 80px 16px;
+}
+
+@media (max-height: 500px) {
+  .rh-flex-col {
+    flex-direction: row;
+  }
+  .rh-p-loading {
+    padding: 46px 12px;
+  }
+}

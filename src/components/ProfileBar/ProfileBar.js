@@ -85,6 +85,7 @@ const ProfileBar = ({ generalInfo }) => {
           </p>
         </div>
       </div>
+
       <div className="flex flex-col justify-start items-start md:mt-4">
         <h3 className="max-[375px]:text-[22px]">{generalInfo?.name}</h3>
         <p className="text-xl text-text-secondary">{generalInfo?.job}</p>
