@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { ProfileBar, WelcomeReadMe } from "@/components";
+import React from "react";
+import { ProfileBar, WelcomeReadMe, Loading, ErrorMessage } from "@/components";
 import { useWelcomeContent } from "@/hooks/useWelcomeContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
@@ -17,11 +17,11 @@ const WelcomePage = () => {
     !welcomeContent ||
     !generalInfoContent
   ) {
-    return <p>Loading</p>;
+    return <Loading />;
   }
 
   if (isWelcomeError || isGeneralInfoError) {
-    return <p>error</p>;
+    return <ErrorMessage />;
   }
 
   return (
