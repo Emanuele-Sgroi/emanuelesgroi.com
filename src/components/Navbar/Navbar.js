@@ -42,6 +42,7 @@ import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 import { getAssetUrl } from "@/utils/imageUtils";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -599,11 +600,31 @@ const MobileSideProfile = () => {
   const pathname = usePathname();
 
   if (isGeneralInfoLoading || !generalInfoContent) {
-    return <p>Loading</p>;
+    return (
+      <Skeleton className="w-[36px] h-[36px] !bg-bg-button rounded-full mt-px ml-2" />
+    );
   }
 
   if (isGeneralInfoError) {
-    return <p>error</p>;
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Skeleton
+            onClick={() => setOpen(true)}
+            className="md:hidden w-[36px] h-[36px] !bg-bg-button rounded-full mt-px ml-2"
+          />
+        </SheetTrigger>
+        <SheetContent className="!bg-bg-primary !border-accent-border md:hidden overflow-y-auto thin-scrollbar">
+          <SheetHeader>
+            <SheetDescription>
+              <div>
+                <p className="text-red-500">Failed to load...</p>
+              </div>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    );
   }
 
   // Retrieve image URLs from content
