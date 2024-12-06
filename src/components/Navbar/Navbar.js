@@ -876,13 +876,16 @@ const MobileSideProfile = () => {
                     <p className="text-text-primary text-sm mb-px">
                       {generalInfoContent?.discordDisplayName}
                     </p>
-                    <button
-                      onClick={() =>
-                        copyText(generalInfoContent?.discordDisplayName)
-                      }
-                    >
-                      <IoCopy size={18} className="text-text-primary" />
-                    </button>
+                    {generalInfoContent &&
+                      generalInfoContent.discordDisplayName && (
+                        <button
+                          onClick={() =>
+                            copyText(generalInfoContent?.discordDisplayName)
+                          }
+                        >
+                          <IoCopy size={18} className="text-text-primary" />
+                        </button>
+                      )}
                   </li>
                   <li className="relative center gap-2">
                     <CgFileDocument size={18} className="text-accent-icon" />
