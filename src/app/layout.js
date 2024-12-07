@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import { SplashScreenProvider } from "@/context/SplashScreenProvider";
 import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { ThemeProvider } from "@/context/ThemeProvider";
-import { Navbar, Footer } from "@/components";
+import { Navbar, Footer, GreetingPopup } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
           <SplashScreenProvider>
             <SplashScreen />
             <ToastContainer />
+            <GreetingPopup />
             <Navbar />
             {children}
             <Footer />

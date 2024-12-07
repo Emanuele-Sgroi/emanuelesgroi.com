@@ -20,7 +20,7 @@ const ContactPage = () => {
   return (
     <section className="with-profile-bar">
       <ProfileBar generalInfo={generalInfoContent} />
-      <ContactForm />
+      <ContactForm generalInfo={generalInfoContent} />
     </section>
   );
 };
