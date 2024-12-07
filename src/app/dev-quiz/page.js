@@ -1,7 +1,8 @@
 import React from "react";
+import DevQuizPage from "@/pages/DevQuizPage";
 
 const DevQuiz = () => {
-  return <div>Dev Quiz - Coming Soon</div>;
+  return <DevQuizPage />;
 };
 
 export default DevQuiz;

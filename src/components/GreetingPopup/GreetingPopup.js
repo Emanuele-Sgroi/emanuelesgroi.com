@@ -4,13 +4,11 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
 import { RiCloseLargeLine } from "react-icons/ri";
+import Typewriter from "typewriter-effect";
 
 const GreetingPopup = () => {
   const [popupOn, setPopupOn] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [text, setText] = useState("");
-  const fullText =
-    "Hey there! Welcome to my portfolio. Yep, I borrowed some inspiration from GitHub’s style. It’s not just another ordinary developer portfolio!!! I’ve mixed in some extra features. I hope you enjoy it!";
 
   useEffect(() => {
     // Check if the popup has already been shown
@@ -36,23 +34,6 @@ const GreetingPopup = () => {
     }
   }, [isClosing]);
 
-  useEffect(() => {
-    let index = 0;
-
-    if (popupOn) {
-      const interval = setInterval(() => {
-        if (index < fullText.length) {
-          setText((prev) => prev + fullText[index - 1]);
-          index++;
-        } else {
-          clearInterval(interval); // Stop the interval when the text is fully displayed
-        }
-      }, 15); //typing speed
-
-      return () => clearInterval(interval);
-    }
-  }, [popupOn]);
-
   return (
     <div
       className={`w-full min-h-dvh fixed left-0 top-0 z-[999999] overflow-hidden ${
@@ -61,7 +42,7 @@ const GreetingPopup = () => {
     >
       <button
         onClick={() => setIsClosing(true)}
-        className={`absolute top-6 left-6 z-[9999999] ${
+        className={`absolute top-6 left-1/2 transform -translate-x-1/2 z-[99999999] ${
           isClosing ? "hidden" : ""
         }`}
       >
@@ -69,17 +50,51 @@ const GreetingPopup = () => {
       </button>
 
       <div
-        className={`max-[455px]:hidden absolute bottom-4 -right-[280px] gp-image-in `}
+        className={`max-[455px]:hidden absolute bottom-4 -right-[280px] gp-image-in small-height-hidden`}
       >
         {/* Comic text on the left */}
         <div
+          style={{}}
           className={`w-[300px] h-[220px] sm:h-[277px] absolute -left-[280px] sm:-left-[250px] top-[25px] p-4 text-left bg-white rounded-t-lg rounded-bl-lg border border-gray-300 shadow  z-[9999999] opacity-0 gp-comic-in ${
             isClosing ? "gp-comic-out" : ""
           }`}
         >
-          <p className="text-base sm:text-lg font-semibold text-black monospace-text">
+          {/* <p className="text-base sm:text-lg font-semibold text-black monospace-text">
             {text}
-          </p>
+          </p> */}
+
+          <div className="text-base sm:text-lg font-semibold text-black monospace-text">
+            <Typewriter
+              options={{
+                cursor: null,
+              }}
+              onInit={(typewriter) => {
+                typewriter
+                  .pauseFor(3200)
+                  .changeDelay(4)
+                  .typeString(
+                    '<span style="color: #4b0082;">Hey there! </span>'
+                  )
+                  .typeString(
+                    '<span style="color:#000000;">Welcome to my portfolio. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #26a641">Yep, I borrowed some inspiration from GitHub ’s style.</span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;"> It’s not just another ordinary developer portfolio!!! </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #f44336;">I’ve mixed in some extra features. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;">I hope you enjoy it!</span>'
+                  )
+                  .start();
+              }}
+            />
+          </div>
+
           {/* Triangle for the comic strip */}
           <div className="triangle"></div>
         </div>
@@ -108,7 +123,7 @@ const GreetingPopup = () => {
 
       {/* Mobile */}
       <div
-        className={`min-[456px]:hidden w-full h-full absolute bottom-0 -right-[280px] gp-image-in flex flex-col items-end justify-end gap-4 p-4`}
+        className={`min-[456px]:hidden w-full h-full absolute bottom-0 -right-[280px] gp-image-in flex flex-col items-end justify-end gap-4 p-4 small-height-hidden`}
       >
         {/* Comic text on the left */}
         <div
@@ -116,9 +131,37 @@ const GreetingPopup = () => {
             isClosing ? "gp-comic-out" : ""
           }`}
         >
-          <p className="text-base sm:text-lg font-semibold text-black monospace-text">
-            {text}
-          </p>
+          <div className="text-base sm:text-lg font-semibold text-black monospace-text">
+            <Typewriter
+              options={{
+                cursor: null,
+              }}
+              onInit={(typewriter) => {
+                typewriter
+                  .pauseFor(3200)
+                  .changeDelay(4)
+                  .typeString(
+                    '<span style="color: #4b0082;">Hey there! </span>'
+                  )
+                  .typeString(
+                    '<span style="color:#000000;">Welcome to my portfolio. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #26a641">Yep, I borrowed some inspiration from GitHub ’s style.</span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;"> It’s not just another ordinary developer portfolio!!! </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #f44336;">I’ve mixed in some extra features. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;">I hope you enjoy it!</span>'
+                  )
+                  .start();
+              }}
+            />
+          </div>
         </div>
 
         {/* Image on the right */}
@@ -134,9 +177,63 @@ const GreetingPopup = () => {
         />
       </div>
 
+      {/* Small height */}
+      <div
+        className={`small-height-show z-[9999999] ${
+          isClosing ? "small-height-closing" : ""
+        }`}
+      >
+        {/* Comic text on the left */}
+        <div
+          className={`bg-white rounded-lg border border-gray-300 shadow small-height-show-comic `}
+        >
+          <div className="text-base sm:text-lg font-semibold text-black monospace-text relative z-[9999999]">
+            <Typewriter
+              options={{
+                cursor: null,
+              }}
+              onInit={(typewriter) => {
+                typewriter
+                  .pauseFor(3000)
+                  .changeDelay(4)
+                  .typeString(
+                    '<span style="color: #4b0082;">Hey there! </span>'
+                  )
+                  .typeString(
+                    '<span style="color:#000000;">Welcome to my portfolio. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #26a641">Yep, I borrowed some inspiration from GitHub ’s style.</span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;"> It’s not just another ordinary developer portfolio!!! </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #f44336;">I’ve mixed in some extra features. </span>'
+                  )
+                  .typeString(
+                    '<span style="color: #000000;">I hope you enjoy it!</span>'
+                  )
+                  .start();
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Image on the right */}
+        <Image
+          src={images.laptopoctocat}
+          alt="laptopoctocat"
+          width={300}
+          height={300}
+          quality={100}
+          className={`w-auto h-[150px] sm:h-[250px] lg:h-[300px] relative z-[9999998]`}
+        />
+      </div>
+
       {/* Overlay layer */}
       <div
-        className={`gp-overlay gp-overlay-fade-in z-[9999997] ${
+        className={`gp-overlay gp-overlay-fade-in z-[9999997] small-height-no-show-overlay ${
           isClosing ? "gp-overlay-fade-out" : ""
         }`}
       />

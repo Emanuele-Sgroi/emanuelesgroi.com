@@ -6,3 +6,4 @@ export { default as Footer } from "./Footer/Footer";
 export { default as Loading } from "./Loading/Loading";
 export { default as ErrorMessage } from "./ErrorMessage/ErrorMessage";
 export { default as GreetingPopup } from "./GreetingPopup/GreetingPopup";
+export { default as DevQuizComponent } from "./DevQuizPage/DevQuizComponent";
