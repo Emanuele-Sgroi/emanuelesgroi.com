@@ -407,6 +407,144 @@ a {
   border-radius: 2px;
 }
 
+/* GreetingPopup styles */
+
+.gp-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: black;
+  opacity: 0;
+}
+
+.gp-overlay-fade-in {
+  animation: fadeIn 0.4s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.gp-overlay-fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.triangle {
+  position: absolute;
+  right: -10px;
+  bottom: -1px;
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-left: 15px solid white;
+  border-bottom: 0px solid transparent;
+}
+
+.gp-image-in {
+  animation: slideIn 0.3s forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes slideIn {
+  from {
+    right: -280px;
+  }
+  to {
+    right: 16px;
+  }
+}
+
+.gp-image-out {
+  animation: slideOut 0.5s forwards;
+  animation-delay: 0.3;
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    right: 16px;
+    bottom: 16px;
+  }
+  to {
+    opacity: 1;
+    right: -280px;
+    bottom: 16px;
+  }
+}
+
+.gp-comic-in {
+  animation: comicIn 0.2s forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes comicIn {
+  from {
+    opacity: 0;
+    top: -140px;
+  }
+  to {
+    opacity: 1;
+    top: -200px;
+  }
+}
+
+@media (max-width: 639px) {
+  @keyframes comicIn {
+    from {
+      opacity: 0;
+      top: -120px;
+    }
+    to {
+      opacity: 1;
+      top: -180px;
+    }
+  }
+}
+
+@media (max-width: 455px) {
+  @keyframes slideIn {
+    from {
+      right: -280px;
+    }
+    to {
+      right: 0;
+    }
+  }
+}
+
+.gp-comic-out {
+  animation: comicOut 0.3s forwards;
+}
+
+@keyframes comicOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    top: -200px;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+    top: -200px;
+  }
+}
+
 /* Other */
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
