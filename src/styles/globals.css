@@ -293,6 +293,24 @@ a {
 }
 
 /* Buttons styles */
+
+.btn-primary {
+  background-color: var(--accent-extra);
+  padding: 6px 12px;
+  border-radius: var(--border-radious-medium);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: white;
+  transition: all 0.1s ease-in-out;
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+.btn-primary:active {
+  filter: brightness(1.25);
+}
+
 .btn-secondary {
   background-color: transparent;
   transition: background-color 0.1s ease-in-out;
