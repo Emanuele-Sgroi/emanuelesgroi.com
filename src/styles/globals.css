@@ -310,10 +310,19 @@ a {
 .btn-primary:active {
   filter: brightness(1.25);
 }
+.btn-primary:disabled {
+  filter: none;
+  cursor: not-allowed;
+}
+
+.btn-primary:disabled:hover,
+.btn-primary:disabled:active {
+  filter: none;
+}
 
 .btn-secondary {
   background-color: transparent;
-  transition: background-color 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   padding: 6px 5px;
   border-radius: 0.375rem;
   border: 1px solid var(--accent-border);

@@ -172,3 +172,126 @@ export const javascriptQuestions = [
       "The length property reflects the highest index + 1, so adding an element at index 3 results in length 4.",
   },
 ];
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// NODE JS QUESTIONS
+
+export const nodeJsQuestions = [
+  {
+    id: 1,
+    question: "Which module in Node.js is used to work with file systems?",
+    options: ["fs", "path", "http", "os"],
+    answer: "fs",
+    explanation:
+      "The 'fs' module provides an API for interacting with the file system.",
+  },
+  {
+    id: 2,
+    question: "What is the purpose of middleware in Node.js?",
+    options: [
+      "To process requests and responses",
+      "To manage database connections",
+      "To handle static files",
+      "To serve HTML pages",
+    ],
+    answer: "To process requests and responses",
+    explanation:
+      "Middleware functions in Node.js are used to handle requests, responses, and the next steps in the request-response cycle.",
+  },
+  {
+    id: 3,
+    question: "What does the 'eventEmitter' module do in Node.js?",
+    options: [
+      "Handles asynchronous functions",
+      "Provides an API for event-driven programming",
+      "Manages database events",
+      "Serves static content",
+    ],
+    answer: "Provides an API for event-driven programming",
+    explanation:
+      "The 'eventEmitter' module in Node.js allows developers to create, emit, and listen for events in an event-driven architecture.",
+  },
+];
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// REACT NATIVE QUESTIONS
+
+export const reactNativeQuestions = [
+  {
+    id: 1,
+    question: "What is the purpose of React Native?",
+    options: [
+      "To build cross-platform mobile apps using JavaScript",
+      "To create backend servers",
+      "To optimize web apps for mobile devices",
+      "To manage mobile databases",
+    ],
+    answer: "To build cross-platform mobile apps using JavaScript",
+    explanation:
+      "React Native is used to build native-like mobile applications for iOS and Android using JavaScript and React.",
+  },
+  {
+    id: 2,
+    question: "What is the role of Flexbox in mobile development?",
+    options: [
+      "To define animations",
+      "To style navigation bars",
+      "To create responsive layouts",
+      "To handle API requests",
+    ],
+    answer: "To create responsive layouts",
+    explanation:
+      "Flexbox is used in mobile development to design flexible, responsive layouts that adapt to different screen sizes.",
+  },
+  {
+    id: 3,
+    question: "Which command is used to start a React Native project?",
+    options: ["npm start", "expo start", "react-native init", "yarn dev"],
+    answer: "expo start",
+    explanation:
+      "'expo start' initializes and runs a React Native project using Expo CLI.",
+  },
+];
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// API QUESTIONS
+
+export const apiQuestions = [
+  {
+    id: 1,
+    question: "What does the HTTP status code 404 indicate?",
+    options: [
+      "Server error",
+      "Resource not found",
+      "Successful request",
+      "Unauthorized access",
+    ],
+    answer: "Resource not found",
+    explanation:
+      "The HTTP status code 404 indicates that the requested resource could not be found on the server.",
+  },
+  {
+    id: 2,
+    question: "Which HTTP method is used to update an existing resource?",
+    options: ["GET", "POST", "PUT", "DELETE"],
+    answer: "PUT",
+    explanation:
+      "The HTTP method PUT is used to update an existing resource or create it if it does not exist.",
+  },
+  {
+    id: 3,
+    question: "What is the purpose of a JSON Web Token (JWT)?",
+    options: [
+      "To store data permanently",
+      "To authenticate and securely transmit information",
+      "To manage cookies",
+      "To create server-side sessions",
+    ],
+    answer: "To authenticate and securely transmit information",
+    explanation:
+      "JWTs are used to authenticate users and securely transmit information between parties as JSON objects.",
+  },
+];
