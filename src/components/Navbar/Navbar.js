@@ -103,7 +103,7 @@ const Navbar = () => {
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
             <EmanueleAiLink />
             {/* Mobile only */}
-            <MobileSideProfile />
+            <MobileSideProfile onClick={toggleTheme} theme={theme} />
           </div>
         </div>
         {/* Bottom part */}
@@ -593,7 +593,7 @@ const SearchBar = () => {
   );
 };
 
-const MobileSideProfile = () => {
+const MobileSideProfile = ({ onClick, theme }) => {
   const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
     useGeneralInfoContent();
   const [open, setOpen] = useState(false);
@@ -693,6 +693,13 @@ const MobileSideProfile = () => {
                 <p className="text-left text-xs text-text-secondary mt-2">
                   {generalInfoContent?.sentence}
                 </p>
+
+                <div className="min-[401px]:hidden w-full text-left mt-6 border-b border-b-accent-border pb-1">
+                  <p className="text-xs">Theme</p>
+                </div>
+                {/* Switch theme */}
+                <ToggleThemeMobile onClick={onClick} theme={theme} />
+
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Explore</p>
                 </div>
@@ -817,7 +824,6 @@ const MobileSideProfile = () => {
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Connect with me</p>
                 </div>
-
                 <ul className="w-full flex flex-col justify-start items-start gap-4 mt-4">
                   <li className="relative center gap-2">
                     <TfiEmail size={18} className="text-accent-icon" />
@@ -911,6 +917,34 @@ const MobileSideProfile = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
+    </div>
+  );
+};
+
+const ToggleThemeMobile = ({ onClick, theme }) => {
+  return (
+    <div className="min-[401px]:hidden w-full flex justify-start items-center gap-1 mt-4">
+      <button onClick={onClick} className="relative center outline-none">
+        <span className="center gap-1 mr-2">
+          <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />{" "}
+          <span className="max-[288px]:hidden">Light</span>
+        </span>
+        <div
+          className={`px-1 rounded-full w-[44px] h-[24px] border border-accent-border flex items-center ${
+            theme === "light" ? "justify-start" : "justify-end"
+          }`}
+        >
+          <div className="h-[17px] w-[17px] rounded-full bg-text-primary"></div>
+        </div>
+        <span className="center gap-1 ml-2">
+          {" "}
+          <BsMoonStarsFill
+            size={18}
+            className="max-sm:w-[16px] max-sm:h-[16px]"
+          />{" "}
+          <span className="max-[288px]:hidden">Dark</span>
+        </span>
+      </button>
     </div>
   );
 };
