@@ -262,6 +262,17 @@ const ContactForm = ({ generalInfo }) => {
             Alternatively, you can reach out via any of the social media links
             or directly through my email address.
           </p>
+
+          <div className="md:hidden w-full flex max-[350px]:flex-col justify-start items-start gap-1 px-4 mt-6">
+            <p className="text-sm">Or reach out via email:</p>
+            <a
+              href={`mailto:${generalInfo?.email}`}
+              target="_blank"
+              className="text-accent-extra underline"
+            >
+              {generalInfo?.email}
+            </a>
+          </div>
         </div>
       </div>
     </>

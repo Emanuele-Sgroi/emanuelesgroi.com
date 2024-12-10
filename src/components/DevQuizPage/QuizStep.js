@@ -18,7 +18,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   darcula,
   oneLight,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import ThemeContext from "@/context/ThemeProvider";
 
 const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
