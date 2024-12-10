@@ -1,5 +1,3 @@
-import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
-
 // CORE CONCEPTS
 export const coreConceptsQuestions = [
   {
