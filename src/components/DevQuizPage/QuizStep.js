@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -13,13 +14,74 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import {
+  darcula,
+  oneLight,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
+import ThemeContext from "@/context/ThemeProvider";
 
-const QuizStep = ({ questions, onCancel, onComplete }) => {
+const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
+  const [elapsedTime, setElapsedTime] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState(null);
+  const router = useRouter();
+  const originalPushRef = useRef(router.push);
 
-  const currentQuestion = questions[currentIndex];
+  // Use an effect to increment elapsedTime:
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Handle browser/tab navigation (external)
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = ""; // Required for most modern browsers to show a warning
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  // handle navigation (internal)
+  useEffect(() => {
+    router.push = (url, as, options) => {
+      if (url !== router.asPath) {
+        setPendingUrl(() => () => originalPushRef.current(url, as, options));
+        setShowNavigationWarning(true);
+        return;
+      }
+      return originalPushRef.current(url, as, options);
+    };
+    return () => {
+      router.push = originalPushRef.current;
+    };
+  }, [router]);
+
+  useEffect(() => {
+    const shuffled = questions.map((q) => ({
+      ...q,
+      options: shuffleArray(q.options),
+    }));
+    setShuffledQuestions(shuffled);
+  }, [questions]);
+
+  // Replace currentQuestion usage with shuffledQuestions:
+  const currentQuestion = shuffledQuestions[currentIndex];
+
+  // Define option labels
+  const optionLabels = ["A.", "B.", "C.", "D.", "E.", "F."];
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswers((prev) => ({
@@ -30,12 +92,27 @@ const QuizStep = ({ questions, onCancel, onComplete }) => {
   };
 
   const handleNext = () => {
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < shuffledQuestions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setShowExplanation(false);
     } else {
-      onComplete(selectedAnswers); // Pass results to parent
+      onComplete(selectedAnswers, elapsedTime, shuffledQuestions);
     }
+  };
+
+  const handleNavigationConfirm = () => {
+    if (pendingUrl) pendingUrl();
+    restoreOriginalPush();
+  };
+
+  const handleNavigationCancel = () => {
+    setShowNavigationWarning(false);
+    setPendingUrl(null);
+    restoreOriginalPush();
+  };
+
+  const restoreOriginalPush = () => {
+    router.push = originalPushRef.current;
   };
 
   //   const handlePrevious = () => {
@@ -47,24 +124,40 @@ const QuizStep = ({ questions, onCancel, onComplete }) => {
 
   return (
     <>
-      <QuizHeader currentIndex={currentIndex} questions={questions} />
+      <QuizHeader
+        elapsedTime={elapsedTime}
+        currentIndex={currentIndex}
+        questions={questions}
+      />
 
       <div className="w-full flex items-start flex-col gap-6">
-        <div className="w-full">
-          <h3 className="text-lg font-semibold">{currentQuestion.question}</h3>
+        <div className="w-full -mt-4 flex flex-col justify-start items-start gap-2">
+          <p className="text-xs text-text-secondary">
+            Topic: <span>{currentQuestion?.topic}</span>
+          </p>
+          <h3 className="text-lg font-semibold">{currentQuestion?.question}</h3>
+          <div className="w-full">
+            {currentQuestion?.code && currentQuestion?.language && (
+              <CodeBlock
+                code={currentQuestion?.code}
+                lang={currentQuestion?.language || "javascript"}
+              />
+            )}
+          </div>
         </div>
 
         <div className="w-full flex items-start flex-col gap-4">
-          {currentQuestion.options.map((option, index) => {
-            const isSelected = selectedAnswers[currentIndex] === option;
-            const isCorrect = option === currentQuestion.answer;
+          {currentQuestion?.options.map((option, index) => {
+            const isSelected =
+              selectedAnswers[currentIndex]?.text === option?.text;
+            const isCorrect = option?.text === currentQuestion?.answer;
             const isIncorrect = isSelected && !isCorrect;
 
             return (
               <Button
                 key={index}
                 onClick={() => handleAnswerSelect(option)}
-                className={`p-2 rounded-md text-left !text-text-primary border hover:!bg-bg-hover ${
+                className={`w-fit h-auto p-2 rounded-md text-left !text-text-primary border hover:!bg-bg-hover flex flex-col justify-start items-start ${
                   showExplanation
                     ? isCorrect
                       ? "border-green-500"
@@ -75,7 +168,22 @@ const QuizStep = ({ questions, onCancel, onComplete }) => {
                 } !bg-transparent`}
                 disabled={showExplanation} // Disable after selecting an answer
               >
-                {option}
+                <span>
+                  <span className="mr-[5px] font-normal text-text-secondary">
+                    {optionLabels[index]}
+                  </span>{" "}
+                  {option.text}
+                </span>
+                {option.code && (
+                  <CodeBlock
+                    code={option?.code}
+                    lang={
+                      currentQuestion?.language
+                        ? currentQuestion.language
+                        : "javascript"
+                    }
+                  />
+                )}
               </Button>
             );
           })}
@@ -84,21 +192,38 @@ const QuizStep = ({ questions, onCancel, onComplete }) => {
           <div className="w-full bg-bg-hover dark:bg-bg-button p-2 rounded-md">
             <p
               className={`font-semibold ${
-                selectedAnswers[currentIndex] === currentQuestion.answer
+                selectedAnswers[currentIndex].text === currentQuestion?.answer
                   ? "text-green-500"
                   : "text-red-500"
               }`}
             >
-              {selectedAnswers[currentIndex] === currentQuestion.answer
+              {selectedAnswers[currentIndex].text === currentQuestion?.answer
                 ? "Correct! "
                 : "Incorrect. "}
             </p>
             <p className=" text-text-primary text-left">
-              {currentQuestion.explanation}
+              {currentQuestion?.explanation?.text}
             </p>
+            {currentQuestion?.explanation?.code && (
+              <CodeBlock
+                code={currentQuestion?.explanation?.code}
+                lang={
+                  currentQuestion?.language
+                    ? currentQuestion.language
+                    : "javascript"
+                }
+              />
+            )}
           </div>
         )}
       </div>
+
+      {/* Navigation Warning */}
+      <NavigationWarning
+        showNavigationWarning={showNavigationWarning}
+        handleNavigationCancel={handleNavigationCancel}
+        handleNavigationConfirm={handleNavigationConfirm}
+      />
 
       <QuizFooter
         onCancel={onCancel}
@@ -113,17 +238,7 @@ const QuizStep = ({ questions, onCancel, onComplete }) => {
 
 export default QuizStep;
 
-const QuizHeader = ({ currentIndex, questions }) => {
-  const [elapsedTime, setElapsedTime] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setElapsedTime((prevTime) => prevTime + 1);
-    }, 1000);
-
-    return () => clearInterval(timer); // Cleanup interval on unmount
-  }, []);
-
+const QuizHeader = ({ currentIndex, questions, elapsedTime }) => {
   return (
     <div className="w-full flex justify-between pb-4 border-b border-accent-border mb-4">
       <p className="text-text-primary text-lg">
@@ -158,8 +273,7 @@ const QuizFooter = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Quit Quiz</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to quit the quiz? Your progress will not be
-            saved.
+            Are you sure you want to quit the quiz?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -178,3 +292,43 @@ const QuizFooter = ({
     </Button>
   </div>
 );
+
+const NavigationWarning = ({
+  showNavigationWarning,
+  handleNavigationCancel,
+  handleNavigationConfirm,
+}) => (
+  <AlertDialog open={showNavigationWarning}>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Leave Quiz</AlertDialogTitle>
+        <AlertDialogDescription>
+          Are you sure you want to leave the quiz?
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel onClick={handleNavigationCancel}>
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction onClick={handleNavigationConfirm}>
+          Leave
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+);
+
+const CodeBlock = ({ code, lang }) => {
+  const { theme } = useContext(ThemeContext);
+  return (
+    <SyntaxHighlighter
+      showLineNumbers={true}
+      wrapLongLines={true}
+      language={lang}
+      style={theme === "dark" ? darcula : oneLight}
+      className="w-full rounded-md border border-accent-border"
+    >
+      {code}
+    </SyntaxHighlighter>
+  );
+};

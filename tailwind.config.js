@@ -134,6 +134,12 @@ module.exports = {
         "accent-icon": "var(--accent-icon)",
         "accent-extra": "var(--accent-extra)",
 
+        // Tags
+        "text-tag": "var(--tag-color)",
+        "bg-tag": "var(--tag-bg)",
+        "bg-hover-tag": "var(--tag-hover-bg)",
+        "text-hover-tag": "var(--tag-hover-text)",
+
         // Other Colors
         "other-chart-square": "var(--other-chart-square)",
         "other-chart-green1": "var(--other-chart-green1)",

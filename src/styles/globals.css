@@ -23,6 +23,11 @@
   --accent-icon: #59636e;
   --accent-extra: #0969da;
 
+  --tag-color: #0969da;
+  --tag-bg: #ddf4ff;
+  --tag-hover-bg: #0969da;
+  --tag-hover-text: #ffffff;
+
   --other-chart-square: #ebedf0;
   --other-chart-green1: #0be9a8;
   --other-chart-green2: #40c463;
@@ -96,6 +101,11 @@
   --accent-active: #f78166;
   --accent-icon: #9198a1;
   --accent-extra: #238636;
+
+  --tag-color: #4493f8;
+  --tag-bg: #388bfd1a;
+  --tag-hover-bg: #1f6feb;
+  --tag-hover-text: #ffffff;
 
   --other-chart-square: #161b22;
   --other-chart-green1: #034429;
@@ -331,6 +341,27 @@ a {
 
 .btn-secondary:hover {
   background-color: var(--bg-hover);
+}
+
+/* tags styles */
+.tag-primary {
+  display: inline-block;
+  padding: 0px 7px;
+  background-color: var(--tag-bg);
+  color: var(--tag-color);
+  border-radius: 2em;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 22px;
+  cursor: default;
+  transition: all 0.1s ease-in-out;
+}
+.tag-primary:hover {
+  background-color: var(--tag-hover-bg);
+  color: var(--tag-hover-text);
 }
 
 /* Splash styles */
