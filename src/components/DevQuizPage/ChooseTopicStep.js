@@ -29,16 +29,18 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
 
   return (
     <>
-      <div className="w-full center pb-4 border-b border-accent-border mb-4">
-        <h2>Choose Your Topic</h2>
+      <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
+        <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
+          Choose Your Topic
+        </h2>
       </div>
 
-      <form className="w-full grid grid-cols-2 gap-4 mb-4">
+      <form className="max-md:px-4 w-full grid grid-cols-2 gap-2 sm:gap-4 mb-4">
         {topics.map((topic) => (
           <label
             key={topic.key}
             htmlFor={topic.key}
-            className={`w-[400px] flex flex-col gap-1 border border-accent-border p-2 rounded-md cursor-pointer ${
+            className={`w-full flex flex-col gap-1 border border-accent-border p-2 rounded-md cursor-pointer ${
               selectedTopics[topic.key] ? "bg-bg-tertiary" : ""
             }`}
           >
@@ -56,11 +58,11 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
       </form>
 
       {Object.values(selectedTopics).filter(Boolean).length < 1 ? (
-        <p className="font-semibold text-red-500">
+        <p className="text-center max-md:px-4 font-semibold text-red-500">
           Please select at least one topic.
         </p>
       ) : (
-        <p className="font-semibold">
+        <p className="text-center max-md:px-4 font-semibold">
           Selected Topics:{" "}
           <span className="text-accent-extra font-bold">
             {Object.values(selectedTopics).filter(Boolean).length}
@@ -68,7 +70,7 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
         </p>
       )}
 
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 max-md:px-4">
         <button
           onClick={onCancel}
           className="btn-secondary !px-[12px] !py-[6px]"

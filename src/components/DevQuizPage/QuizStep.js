@@ -130,7 +130,7 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
         questions={questions}
       />
 
-      <div className="w-full flex items-start flex-col gap-6">
+      <div className="max-md:px-4 w-full flex items-start flex-col gap-6">
         <div className="w-full -mt-4 flex flex-col justify-start items-start gap-2">
           <p className="text-xs text-text-secondary">
             Topic: <span>{currentQuestion?.topic}</span>
@@ -154,10 +154,10 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
             const isIncorrect = isSelected && !isCorrect;
 
             return (
-              <Button
+              <button
                 key={index}
                 onClick={() => handleAnswerSelect(option)}
-                className={`w-fit h-auto p-2 rounded-md text-left !text-text-primary border hover:!bg-bg-hover flex flex-col justify-start items-start ${
+                className={`w-fit max-w-full h-auto p-2 rounded-md text-left !text-text-primary border hover:!bg-bg-hover flex flex-col justify-start items-start ${
                   showExplanation
                     ? isCorrect
                       ? "border-green-500"
@@ -168,7 +168,7 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
                 } !bg-transparent`}
                 disabled={showExplanation} // Disable after selecting an answer
               >
-                <span>
+                <span className="flex">
                   <span className="mr-[5px] font-normal text-text-secondary">
                     {optionLabels[index]}
                   </span>{" "}
@@ -184,7 +184,7 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
                     }
                   />
                 )}
-              </Button>
+              </button>
             );
           })}
         </div>
@@ -240,7 +240,7 @@ export default QuizStep;
 
 const QuizHeader = ({ currentIndex, questions, elapsedTime }) => {
   return (
-    <div className="w-full flex justify-between pb-4 border-b border-accent-border mb-4">
+    <div className="max-md:px-4 w-full flex justify-between pb-4 border-b border-accent-border mb-4">
       <p className="text-text-primary text-lg">
         Question <span className="font-bold">{currentIndex + 1}</span> of{" "}
         <span className="font-bold">{questions.length}</span>
@@ -261,7 +261,7 @@ const QuizFooter = ({
   currentIndex,
   questions,
 }) => (
-  <div className="w-full center gap-6 mt-6">
+  <div className="max-md:px-4 w-full center gap-6 mt-6">
     {/* Quit Button with Alert Dialog */}
     <AlertDialog>
       <AlertDialogTrigger asChild>
