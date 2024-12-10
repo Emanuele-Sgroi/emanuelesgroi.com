@@ -4,6 +4,7 @@ import WelcomeStep from "./WelcomeStep";
 import ChooseTopicStep from "./ChooseTopicStep";
 import SelectNumberStep from "./SelectNumberStep";
 import QuizStep from "./QuizStep";
+import QuizResult from "./QuizResult";
 import {
   coreConceptsQuestions,
   reactQuestions,
@@ -64,6 +65,17 @@ const DevQuizComponent = () => {
   const [quizStep, setQuizStep] = useState("welcome");
   const [selectedTopics, setSelectedTopics] = useState([]); // Tracks topics selected by the user
   const [selectedQuestions, setSelectedQuestions] = useState([]); // Tracks final question counts
+  const [quizResult, setQuizResult] = useState(null);
+
+  // Shuffle questions to make them random
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
 
   const handleStartQuiz = () => setQuizStep("chooseTopic");
   const handleCancelQuiz = () => setQuizStep("welcome");
@@ -81,8 +93,26 @@ const DevQuizComponent = () => {
     setQuizStep("quizStart"); // Proceed to the quiz step
   };
 
-  const handleQuizComplete = () => {
-    console.log("quiz completed");
+  const handleQuizComplete = (results, elapsedTime, shuffledQuestions) => {
+    // Calculate correct answers using shuffledQuestions and results
+    const correctAnswers = shuffledQuestions.reduce(
+      (count, question, index) => {
+        const userAnswer = results[index]?.text;
+        return userAnswer === question.answer ? count + 1 : count;
+      },
+      0
+    );
+
+    const totalQuestions = shuffledQuestions.length;
+
+    setQuizResult({
+      selectedTopics,
+      correctAnswers,
+      totalQuestions,
+      elapsedTime,
+    });
+
+    setQuizStep("result");
   };
 
   return (
@@ -91,6 +121,8 @@ const DevQuizComponent = () => {
         <div
           className={`w-full h-full md:!min-h-[800px] bg-bg-secondary rounded-md p-4 ${
             quizStep === "welcome"
+              ? "center"
+              : quizStep === "result"
               ? "center"
               : "flex items-center justify-start"
           } flex-col gap-4`}
@@ -117,14 +149,27 @@ const DevQuizComponent = () => {
             />
           )}
           {/* Quiz Step */}
-
           {quizStep === "quizStart" && (
             <QuizStep
-              questions={selectedQuestions.flatMap((topic) =>
-                topic.questions.slice(0, topic.selectedCount)
+              questions={shuffleArray(
+                selectedQuestions.flatMap((topic) =>
+                  topic.questions.slice(0, topic.selectedCount)
+                )
               )}
               onCancel={() => setQuizStep("welcome")}
               onComplete={handleQuizComplete}
+              shuffleArray={shuffleArray}
+            />
+          )}
+          {/* Result step */}
+          {quizStep === "result" && quizResult && (
+            <QuizResult
+              selectedTopics={quizResult.selectedTopics}
+              totalQuestions={quizResult.totalQuestions}
+              correctAnswers={quizResult.correctAnswers}
+              elapsedTime={quizResult.elapsedTime}
+              onRestart={() => setQuizStep("chooseTopic")}
+              onLeave={() => setQuizStep("welcome")}
             />
           )}
         </div>
