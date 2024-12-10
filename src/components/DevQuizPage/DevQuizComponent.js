@@ -117,9 +117,9 @@ const DevQuizComponent = () => {
 
   return (
     <div className="main-container">
-      <div className="borded-container md:!min-h-[800px] !p-4">
+      <div className="borded-container md:!min-h-[800px] md:!p-4">
         <div
-          className={`w-full h-full md:!min-h-[800px] bg-bg-secondary rounded-md p-4 ${
+          className={`w-full h-full md:!min-h-[800px] md:bg-bg-secondary md:rounded-md md:p-4 ${
             quizStep === "welcome"
               ? "center"
               : quizStep === "result"

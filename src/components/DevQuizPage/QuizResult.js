@@ -16,10 +16,10 @@ const QuizResult = ({
   const finalPercentage = ((correctAnswers / totalQuestions) * 100).toFixed(1);
   const [displayPercentage, setDisplayPercentage] = useState(0);
 
-  // Animate from 0% to finalPercentage over 3 seconds
+  // Animate from 0% to finalPercentage over 2 seconds
   useEffect(() => {
     const end = parseFloat(finalPercentage);
-    const duration = 3000; // 3 seconds
+    const duration = 3000; // 2 seconds
     const stepTime = 50; // update every 50ms
     const increment = end / (duration / stepTime);
 
@@ -59,11 +59,13 @@ const QuizResult = ({
 
   return (
     <>
-      <div className="w-full center pb-4 border-b border-accent-border mb-1">
-        <h2>Your Results</h2>
+      <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
+        <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
+          Your Results
+        </h2>
       </div>
       {/* Selected Topics */}
-      <div className="w-full center flex-col gap-2">
+      <div className="max-md:px-4 w-full center flex-col gap-2">
         <p className="text-text-secondary">Topics</p>
         <ul className="center gap-2 flex-wrap">
           {selectedTopics.map((topic, index) => (
@@ -74,7 +76,7 @@ const QuizResult = ({
         </ul>
       </div>
       {/* Percentage with circular progress */}
-      <div className="w-[180px] h-[180px] my-4">
+      <div className="max-[220px]:w-[100px] w-[180px] max-[220px]:h-[100px] h-[180px] my-4">
         <CircularProgressbar
           value={displayPercentage}
           text={`${displayPercentage.toFixed(1)}%`}
@@ -108,20 +110,22 @@ const QuizResult = ({
         />
       </div>
       {/* Score */}
-      <div>
-        <h3 className="text-xl font-normal text-text-primary -mt-2">
+      <div className="max-md:px-4">
+        <h3 className="text-xl text-center font-normal text-text-primary -mt-2">
           <span className="font-bold">{correctAnswers}</span> out of{" "}
           <span className="font-bold">{totalQuestions}</span>
         </h3>
       </div>
       {/* Time Taken */}
-      <div className="center flex-col">
-        <p className="text-text-secondary">Time Taken</p>
-        <p className="text-text-primary">{formatElapsedTime(elapsedTime)}</p>
+      <div className="max-md:px-4 center flex-col">
+        <p className="text-text-secondary text-center">Time Taken</p>
+        <p className="text-text-primary text-center">
+          {formatElapsedTime(elapsedTime)}
+        </p>
       </div>
 
       {/* Buttons */}
-      <div className="flex gap-4 mt-4">
+      <div className="max-md:px-4 flex gap-4 mt-4">
         <button
           onClick={onLeave}
           className="btn-secondary !px-[12px] !py-[6px]"

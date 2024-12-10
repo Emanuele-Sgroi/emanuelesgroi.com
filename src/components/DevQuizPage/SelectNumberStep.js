@@ -40,13 +40,17 @@ const SelectNumberStep = ({
 
   return (
     <>
-      <div className="w-full center pb-4 border-b border-accent-border mb-4">
-        <h2>How many questions?</h2>
+      <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
+        <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
+          How many questions?
+        </h2>
       </div>
 
       <div
-        className={`w-full grid ${
-          selectedQuestions.length === 1 ? "grid-cols-1" : "grid-cols-2"
+        className={`max-md:px-4 w-full grid ${
+          selectedQuestions.length === 1
+            ? "grid-cols-1"
+            : "grid-cols-1 lg:grid-cols-2"
         } gap-4`}
       >
         {selectedQuestions.map((topic) => (
@@ -78,7 +82,7 @@ const SelectNumberStep = ({
         <span className="text-accent-extra">{totalQuestions}</span>
       </p>
 
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 max-md:px-4">
         <button
           onClick={onCancel}
           className="btn-secondary !px-[12px] !py-[6px]"
