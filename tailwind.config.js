@@ -140,6 +140,10 @@ module.exports = {
         "bg-hover-tag": "var(--tag-hover-bg)",
         "text-hover-tag": "var(--tag-hover-text)",
 
+        // Likes
+        "like-bg-active": "var(--like-bg-active)",
+        "like-text-active": "var(--like-text-active)",
+
         // Other Colors
         "other-chart-square": "var(--other-chart-square)",
         "other-chart-green1": "var(--other-chart-green1)",
@@ -203,6 +207,9 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
         s: "0.375rem",
+      },
+      animation: {
+        "spin-very-slow": "spin 12s linear infinite",
       },
     },
   },

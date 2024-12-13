@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^16.0.1",
+    "@contentful/rich-text-types": "^17.0.0",
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^6.0.1",

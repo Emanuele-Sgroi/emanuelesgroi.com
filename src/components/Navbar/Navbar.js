@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
 import { RiHomeSmileLine, RiRobot2Line, RiRobot3Line } from "react-icons/ri";
-import { GoCodeSquare } from "react-icons/go";
+import { GoCodeSquare, GoCommentDiscussion } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
 import { IoMdArrowDropdown, IoLogoGithub, IoMdDownload } from "react-icons/io";
@@ -236,25 +236,25 @@ const Navbar = () => {
               />
             </div>
 
-            {/* Wall */}
-            <div className="max-[758px]:hidden relative center">
+            {/* Discussions */}
+            <div className="max-[800px]:hidden relative center">
               <Link
-                href="/wall"
+                href="/discussions"
                 className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
-                  "/wall"
+                  "/discussions"
                 )}`}
               >
-                <PiWall size={18} className="text-accent-icon" />
-                Wall
+                <GoCommentDiscussion size={18} className="text-accent-icon" />
+                Discussions
               </Link>
               <div
-                className={getLinkClassDiv("/wall")}
+                className={getLinkClassDiv("/discussions")}
                 style={{ width: `calc(100% + 10px)` }}
               />
             </div>
 
             {/* Get in touch */}
-            <div className="max-[838px]:hidden relative center">
+            <div className="max-[888px]:hidden relative center">
               <Link
                 href="/contact"
                 className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
@@ -274,7 +274,7 @@ const Navbar = () => {
           {/* Mobile */}
           <Popover open={openSideMenu} onOpenChange={setOpenSideMenu}>
             <PopoverTrigger
-              className="min-[839px]:hidden relative center outline-none"
+              className="min-[889px]:hidden relative center outline-none"
               aria-haspopup="menu"
               aria-expanded={open}
             >
@@ -282,7 +282,7 @@ const Navbar = () => {
                 <HiDotsHorizontal size={18} />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="min-[839px]:hidden w-[150px] p-4 bg-bg-button border-accent-border mr-4">
+            <PopoverContent className="min-[889px]:hidden w-[150px] p-4 bg-bg-button border-accent-border mr-4">
               <ul className="w-full flex flex-col justify-start items-start gap-4">
                 {/* Welcome */}
                 <li className="min-[231px]:hidden relative center gap-2">
@@ -390,23 +390,26 @@ const Navbar = () => {
                   <div className={getLinkClassDivMobile("/minigames")} />
                 </li>
 
-                {/* Wall */}
-                <li className="relative center min-[759px]:hidden gap-2">
+                {/* Discussions */}
+                <li className="relative center min-[801px]:hidden gap-2">
                   <Link
-                    href="/wall"
+                    href="/discussions"
                     className={`relative center gap-1 text-text-primary ${getLinkClassText(
-                      "/wall"
+                      "/discussions"
                     )}`}
                     onClick={() => setOpenSideMenu(false)}
                   >
-                    <PiWall size={18} className="text-accent-icon" />
-                    Wall
+                    <GoCommentDiscussion
+                      size={18}
+                      className="text-accent-icon"
+                    />
+                    Discussions
                   </Link>
-                  <div className={getLinkClassDivMobile("/wall")} />
+                  <div className={getLinkClassDivMobile("/discussions")} />
                 </li>
 
                 {/* Get in touch */}
-                <li className="min-[839px]:hidden relative center gap-2">
+                <li className="min-[889px]:hidden relative center gap-2">
                   <Link
                     href="/contact"
                     className={`relative center gap-1 text-text-primary ${getLinkClassText(
