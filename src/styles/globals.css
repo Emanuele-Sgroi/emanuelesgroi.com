@@ -28,6 +28,9 @@
   --tag-hover-bg: #0969da;
   --tag-hover-text: #ffffff;
 
+  --like-bg-active: #388bfd33;
+  --like-text-active: #4493f8;
+
   --other-chart-square: #ebedf0;
   --other-chart-green1: #0be9a8;
   --other-chart-green2: #40c463;
@@ -106,6 +109,9 @@
   --tag-bg: #388bfd1a;
   --tag-hover-bg: #1f6feb;
   --tag-hover-text: #ffffff;
+
+  --like-bg-active: #388bfd33;
+  --like-text-active: #4493f8;
 
   --other-chart-square: #161b22;
   --other-chart-green1: #034429;
@@ -244,6 +250,22 @@ a {
   gap: var(--gap-standard);
 }
 
+.with-side-bar {
+  width: 1216px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: var(--gap-standard);
+}
+
+.with-top_header {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  gap: var(--gap-standard);
+}
+
 .main-container {
   width: 895px;
   max-width: 895px;
@@ -341,6 +363,23 @@ a {
 
 .btn-secondary:hover {
   background-color: var(--bg-hover);
+}
+
+.btn-likes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--accent-icon);
+  gap: 4px;
+  border: 1px solid var(--accent-border);
+  border-radius: 100px;
+  transition: all 0.1s ease-in-out;
+}
+
+.btn-likes:hover {
+  background-color: #388bfd33;
 }
 
 /* tags styles */
