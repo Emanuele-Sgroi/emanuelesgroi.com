@@ -16,7 +16,7 @@ datasource db {
 model Comment {
   id         Int      @id @default(autoincrement())
   name       String
-  avatar     String
+  avatar     String?
   content    String
   parentId   Int?     // Optional field; defaults to null if not provided
   createdAt  DateTime @default(now())
