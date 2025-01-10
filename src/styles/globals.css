@@ -366,13 +366,14 @@ a {
 }
 
 .btn-likes {
+  height: 26px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4px 10px;
   font-size: 12px;
   color: var(--accent-icon);
-  gap: 4px;
+  gap: 8px;
   border: 1px solid var(--accent-border);
   border-radius: 100px;
   transition: all 0.1s ease-in-out;
@@ -854,4 +855,8 @@ a {
   .rh-p-loading {
     padding: 46px 12px;
   }
+}
+
+blockquote {
+  color: #6b7280;
 }
