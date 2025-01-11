@@ -8,16 +8,18 @@ import { useDiscussionContent } from "@/hooks/useDiscussionContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
 const DiscussionsPage = () => {
+  // get data from CMS
   const { discussionContent, isDiscussionLoading, isDiscussionError } =
     useDiscussionContent();
   const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
     useGeneralInfoContent();
+  // states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [topComment, setTopComment] = useState(null);
   const [normalComments, setNormalComments] = useState([]);
-  const [replies, setReplies] = useState([]);
 
+  // Fetch comments from database
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -34,8 +36,8 @@ const DiscussionsPage = () => {
         );
         setNormalComments(comments);
 
-        console.log("Top Comment:", top);
-        console.log("Normal Comments:", comments);
+        // console.log("Top Comment:", top);
+        // console.log("Normal Comments:", comments);
 
         setError(false);
       } catch (err) {
@@ -49,6 +51,7 @@ const DiscussionsPage = () => {
     fetchComments();
   }, []);
 
+  // show error or loading
   if (
     isGeneralInfoLoading ||
     isDiscussionLoading ||
@@ -71,7 +74,6 @@ const DiscussionsPage = () => {
         <CommentsSection
           generalInfoContent={generalInfoContent}
           topComment={topComment}
-          isAuthor={topComment?.isAuthor}
           normalComments={normalComments}
         />
         <div className="w-[312px] h-[300px]">right</div>

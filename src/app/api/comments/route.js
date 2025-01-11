@@ -15,15 +15,15 @@ export async function POST(request) {
     } = await request.json();
 
     // Log request data for debugging
-    console.log("POST Request Body:", {
-      name,
-      avatar,
-      content,
-      parentId,
-      reactions,
-      isAuthor,
-      isTopComment,
-    });
+    // console.log("POST Request Body:", {
+    //   name,
+    //   avatar,
+    //   content,
+    //   parentId,
+    //   reactions,
+    //   isAuthor,
+    //   isTopComment,
+    // });
 
     const newComment = await prisma.comment.create({
       data: {
@@ -37,7 +37,7 @@ export async function POST(request) {
       },
     });
 
-    console.log("New Comment Created:", newComment);
+    //console.log("New Comment Created:", newComment);
 
     return new Response(JSON.stringify(newComment), {
       status: 201,
@@ -63,7 +63,7 @@ export async function GET(request) {
       },
     });
 
-    console.log(JSON.stringify(comments));
+    //console.log(JSON.stringify(comments));
 
     return new Response(JSON.stringify(comments), {
       status: 200,
