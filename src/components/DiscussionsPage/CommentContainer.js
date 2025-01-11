@@ -192,7 +192,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
         <div className="flex items-center gap-2">
           {comment.avatar ? (
             <Image
-              src={comment.avatar}
+              src={comment.isAuthor ? authorPicture : comment.avatar}
               alt="Profile_Picture"
               width={32}
               height={32}
@@ -211,6 +211,11 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
           <p className="text-accent-icon text-sm">
             {formatRelativeDate(comment.createdAt)}
           </p>
+          {comment.isAuthor && (
+            <p className="text-xs px-2 py-[1px] rounded-full border border-accent-icon text-accent-icon">
+              Author
+            </p>
+          )}
         </div>
         <div>
           <ReactMarkdown components={customComponents}>

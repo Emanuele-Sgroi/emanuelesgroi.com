@@ -10,6 +10,7 @@
   --bg-quartiary: #dee1e5;
   --bg-button: #f6f8fa;
   --bg-hover: #eaedf0;
+  --bg-extra: #d1d5da80;
 
   --bg-mobile-primary: #fffeff;
   --bg-mobile-body: #eff0f5;
@@ -92,6 +93,7 @@
   --bg-quartiary: #15191f;
   --bg-button: #212830;
   --bg-hover: #15191f;
+  --bg-extra: #57606a;
 
   --bg-mobile-primary: #16191c;
   --bg-mobile-body: #040405;
@@ -254,7 +256,7 @@ a {
   width: 1216px;
   display: flex;
   align-items: start;
-  justify-content: center;
+  justify-content: start;
   gap: var(--gap-standard);
 }
 

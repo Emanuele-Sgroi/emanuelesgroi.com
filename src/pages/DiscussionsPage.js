@@ -1,9 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Loading, ErrorMessage } from "@/components";
-import DiscussionsHeader from "@/components/DiscussionsPage/DiscussionsHeader";
-import CommentsSection from "@/components/DiscussionsPage/CommentsSection";
+import {
+  Loading,
+  ErrorMessage,
+  DiscussionsHeader,
+  CommentsSection,
+  DiscussionSideBar,
+} from "@/components";
 import { useDiscussionContent } from "@/hooks/useDiscussionContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
@@ -76,7 +80,7 @@ const DiscussionsPage = () => {
           topComment={topComment}
           normalComments={normalComments}
         />
-        <div className="w-[312px] h-[300px]">right</div>
+        <DiscussionSideBar />
       </div>
     </section>
   );

@@ -98,7 +98,7 @@ const CommentsSection = ({
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="max-w-[905px] flex flex-1 flex-col">
       {/* Display top comment */}
       <TopComment profilePicture={profilePictureUrl} topComment={topComment} />
 
