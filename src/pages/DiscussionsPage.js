@@ -7,6 +7,7 @@ import {
   DiscussionsHeader,
   CommentsSection,
   DiscussionSideBar,
+  FixedBar,
 } from "@/components";
 import { useDiscussionContent } from "@/hooks/useDiscussionContent";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
@@ -71,18 +72,27 @@ const DiscussionsPage = () => {
   }
 
   return (
-    <section className="with-top_header">
-      <DiscussionsHeader discussionContent={discussionContent} />
-      {/* Bottom part */}
-      <div className="with-side-bar">
-        <CommentsSection
-          generalInfoContent={generalInfoContent}
-          topComment={topComment}
-          normalComments={normalComments}
-        />
-        <DiscussionSideBar />
-      </div>
-    </section>
+    <>
+      {/* Fixed bar for scrolling */}
+      <FixedBar
+        discussionContent={discussionContent}
+        generalInfoContent={generalInfoContent}
+        comments={normalComments}
+      />
+      <section className="with-top_header">
+        {/* Header */}
+        <DiscussionsHeader discussionContent={discussionContent} />
+        {/* Bottom part */}
+        <div className="with-side-bar">
+          <CommentsSection
+            generalInfoContent={generalInfoContent}
+            topComment={topComment}
+            normalComments={normalComments}
+          />
+          <DiscussionSideBar />
+        </div>
+      </section>
+    </>
   );
 };
 
