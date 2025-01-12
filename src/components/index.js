@@ -16,3 +16,4 @@ export { default as ReplyContainer } from "./DiscussionsPage/ReplyContainer";
 export { default as CommentInput } from "./DiscussionsPage/CommentInput";
 export { default as ProfileAvatarSelector } from "./DiscussionsPage/ProfileAvatarSelector";
 export { default as CodeBlock } from "./DiscussionsPage/CodeBlock";
+export { default as FixedBar } from "./DiscussionsPage/FixedBar";
