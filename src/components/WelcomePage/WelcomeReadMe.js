@@ -189,7 +189,7 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
         {pinnedTabs.map((tab, index) => (
           <div
             key={index}
-            class="min-h-[125px] border border-accent-border rounded-md p-4 flex flex-col justify-between"
+            className="min-h-[125px] border border-accent-border rounded-md p-4 flex flex-col justify-between"
           >
             {/* Tab header */}
             <div className="w-full flex flex-col">
