@@ -129,8 +129,8 @@ const TopComment = ({ profilePicture, topComment }) => {
   };
 
   return (
-    <div className="w-full p-4 flex flex-col gap-4 border border-accent-border rounded-md">
-      <div className="flex items-center gap-2">
+    <div className="w-full p-4 flex flex-col gap-4 md:border max-md:border-b max-md:border-t border-accent-border md:rounded-md max-md:bg-bg-mobile-primary">
+      <div className="flex items-center gap-2 flex-wrap">
         {/* Display author's profile picture */}
         {profilePicture ? (
           <Image
@@ -154,13 +154,13 @@ const TopComment = ({ profilePicture, topComment }) => {
           {formatRelativeDate(topComment.createdAt)}
         </p>
       </div>
-      <div>
+      <div className="w-full">
         {/* Render markdown content */}
         <ReactMarkdown components={customComponents}>
           {topComment?.content}
         </ReactMarkdown>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center flex-wrap">
         {/* Likes button */}
         <button
           onClick={handleLike}

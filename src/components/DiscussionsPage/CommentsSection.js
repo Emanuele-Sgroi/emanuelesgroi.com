@@ -96,17 +96,17 @@ const CommentsSection = ({
       toast.error("Failed to post your comment. Please try again later.");
     }
   };
-
+  //max-[915px]:max-w-full min-[1000px]:max-w-[750px]
   return (
-    <div className="max-w-[905px] flex flex-1 flex-col">
+    <div className="w-full max-[915px]:max-w-full min-[916px]:max-w-[660px] lg:max-w-[750px] xl:max-w-[905px] flex flex-col">
       {/* Display top comment */}
       <TopComment profilePicture={profilePictureUrl} topComment={topComment} />
 
       {/* Display comment count and sorting menu */}
       {comments.length > 0 ? (
-        <div className="flex justify-between items-center my-4">
+        <div className="flex justify-between items-center flex-wrap my-4 max-md:px-4 gap-2">
           {/* Comment and reply count */}
-          <p className="center text-text-primary gap-1">
+          <p className="center text-text-primary gap-1 flex-wrap">
             <span className="font-semibold">
               {comments.filter((comment) => comment.parentId === null).length}{" "}
               Comment
@@ -121,7 +121,7 @@ const CommentsSection = ({
           </p>
 
           {/* Sorting menu */}
-          <div className="flex items-center bg-bg-button rounded-md">
+          <div className="flex items-center bg-bg-button rounded-md flex-wrap">
             <button
               onClick={() => handleSortChange("oldest")}
               className={`group/item relative center px-3 py-[5px] text-sm text-text-primary rounded-md ${
@@ -167,7 +167,7 @@ const CommentsSection = ({
       )}
 
       {comments.length > 0 && (
-        <div className="flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-4 md:gap-8">
           {comments.map((comment) => {
             const commentReplies = replies.filter(
               (reply) => reply.parentId === comment.id
@@ -188,9 +188,9 @@ const CommentsSection = ({
       )}
       <div className="w-full flex flex-col mt-4">
         <div className="w-full h-[2px] bg-accent-border mb-4" />
-        <h5 className="font-semibold">Add a comment</h5>
+        <h5 className="font-semibold max-md:px-4">Add a comment</h5>
         {/* Normal comments input */}
-        <div className="mt-4">
+        <div className="mt-4 max-md:p-2 max-md:bg-bg-mobile-primary max-md:border-b max-md:border-t border-accent-border">
           <CommentInput
             placeholder=""
             parentId={null}
@@ -199,7 +199,7 @@ const CommentsSection = ({
             isReply={false}
           />
         </div>
-        <div className="flex items-center gap-1 mt-4">
+        <div className="flex items-center gap-1 mt-4 max-md:px-4 flex-wrap">
           <RiErrorWarningLine size={16} className="text-accent-icon" />
           <p className="text-sm text-text-secondary">
             Comments deemed inappropriate or disrespectful will be removed.

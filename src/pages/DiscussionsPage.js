@@ -79,7 +79,7 @@ const DiscussionsPage = () => {
         generalInfoContent={generalInfoContent}
         comments={normalComments}
       />
-      <section className="with-top_header">
+      <section className="with-top_header max-md:gap-4">
         {/* Header */}
         <DiscussionsHeader discussionContent={discussionContent} />
         {/* Bottom part */}

@@ -11,15 +11,18 @@ import ThemeContext from "@/context/ThemeProvider";
 const CodeBlock = ({ code, lang }) => {
   const { theme } = useContext(ThemeContext);
   return (
-    <SyntaxHighlighter
-      showLineNumbers={true}
-      wrapLongLines={true}
-      language={lang}
-      style={theme === "dark" ? darcula : oneLight}
-      className="w-full rounded-md border border-accent-border"
-    >
-      {code}
-    </SyntaxHighlighter>
+    <div className="w-full relative ">
+      <SyntaxHighlighter
+        showLineNumbers={true}
+        wrapLongLines={false}
+        language={lang}
+        style={theme === "dark" ? darcula : oneLight}
+        customStyle={{ width: "100%", minWidth: 0 }}
+        className="rounded-md border border-accent-border"
+      >
+        {code}
+      </SyntaxHighlighter>
+    </div>
   );
 };
 

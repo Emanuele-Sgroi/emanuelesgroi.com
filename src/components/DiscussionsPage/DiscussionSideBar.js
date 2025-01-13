@@ -201,11 +201,13 @@ const avatars = [
   },
 ];
 
+//xl:w-[312px] xl:min-w-[312px] lg:w-[280px] lg:min-w-[280px] w-[200px] min-w-[200px] max-[915px]:w-full
+
 const DiscussionSideBar = () => {
   return (
-    <div className="w-[312px] flex flex-col items-start justify-start gap-4">
+    <div className="flex flex-col items-start justify-start gap-4">
       {/* Category */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 max-md:px-4">
         <p className="text-xs text-text-secondary font-semibold">Category</p>
         <div className="flex gap-2 items-center">
           <div className="center rounded-md bg-bg-extra p-1 text-lg">👋🏻</div>
@@ -218,7 +220,7 @@ const DiscussionSideBar = () => {
       <div className="w-full h-px bg-accent-border" />
 
       {/* Labels */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 max-md:px-4">
         <p className="text-xs text-text-secondary font-semibold">Labels</p>
         <p className="text-xs text-text-primary ">None yet</p>
       </div>
@@ -226,7 +228,7 @@ const DiscussionSideBar = () => {
       <div className="w-full h-px bg-accent-border" />
 
       {/* Avatars */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 max-md:px-4">
         <p className="text-xs text-text-secondary font-semibold">
           Your Name = Cool Avatar
         </p>
@@ -258,7 +260,7 @@ const DiscussionSideBar = () => {
 
       <div className="w-full h-px bg-accent-border" />
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 max-md:px-4">
         <p className="text-xs text-text-secondary font-semibold">
           What do you think of this idea?
         </p>

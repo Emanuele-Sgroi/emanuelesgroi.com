@@ -187,9 +187,9 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
   };
 
   return (
-    <div className="w-full border border-accent-border rounded-md">
+    <div className="w-full md:border max-md:border-b max-md:border-t max-md:bg-bg-mobile-primary border-accent-border md:rounded-md">
       <div className="w-full p-4 flex flex-col gap-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {comment.avatar ? (
             <Image
               src={comment.isAuthor ? authorPicture : comment.avatar}
@@ -217,13 +217,13 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
             </p>
           )}
         </div>
-        <div>
+        <div className="w-full ">
           <ReactMarkdown components={customComponents}>
             {comment.content}
           </ReactMarkdown>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex gap-2 items-center">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex gap-2 items-center flex-wrap">
             {/* Likes button */}
             <button
               onClick={handleLike}
@@ -292,9 +292,9 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
       </div>
       {/* Replies */}
       {replies.length > 0 && (
-        <div className="relative w-full pt-4 pr-0 pb-2 pl-4 bg-bg-secondary border-t border-accent-border overflow-hidden">
+        <div className="relative w-full pt-4 pr-0 pb-2 pl-2 md:pl-4 bg-bg-primary md:bg-bg-secondary border-t border-accent-border overflow-hidden">
           {/* Line */}
-          <div className="w-px h-full bg-accent-icon absolute bottom-0 top-[30px] left-[30px] z-0" />
+          <div className="w-px h-full bg-accent-icon absolute bottom-0 top-[30px] left-[23px] z-0" />
           {replies.map((reply, i) => (
             <ReplyContainer
               key={reply.id}
@@ -307,7 +307,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
         </div>
       )}
       {/* Reply input container */}
-      <div className="w-full center p-2 bg-bg-hover border-t border-accent-border rounded-b-md">
+      <div className="w-full center p-2 bg-bg-mobile-primary md:bg-bg-hover border-t border-accent-border rounded-b-md">
         <CommentInput
           placeholder="Write a reply"
           parentId={comment.id}
