@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { FaRegSmile } from "react-icons/fa";
+import { CodeBlock } from "@/components";
 
 const emojis = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"];
 
