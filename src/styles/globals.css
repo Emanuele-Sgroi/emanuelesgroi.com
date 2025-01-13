@@ -253,11 +253,18 @@ a {
 }
 
 .with-side-bar {
-  width: 1216px;
+  width: 100%;
+  max-width: 1216px;
   display: flex;
   align-items: start;
   justify-content: start;
   gap: var(--gap-standard);
+}
+
+@media (max-width: 915px) {
+  .with-side-bar {
+    flex-direction: column;
+  }
 }
 
 .with-top_header {

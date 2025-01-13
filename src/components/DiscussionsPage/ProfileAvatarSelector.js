@@ -38,7 +38,7 @@ const ProfileAvatarSelector = ({
     : null; // Show placeholder if name is empty
 
   return (
-    <div className="flex items-start gap-4 ">
+    <div className="flex items-start gap-4 flex-col sm:flex-row">
       {/* Profile Picture */}
       <div className="flex items-center justify-center w-[70px] h-[70px] rounded-full border border-accent-border bg-bg-hover">
         {name ? (
@@ -59,7 +59,7 @@ const ProfileAvatarSelector = ({
       </div>
 
       {/* Name and Avatar Type */}
-      <div className="flex gap-4 w-full">
+      <div className="flex gap-4 w-full flex-col md:flex-row">
         {/* Input Field for Name */}
         <div className="flex-1 flex flex-col">
           <label
@@ -92,7 +92,7 @@ const ProfileAvatarSelector = ({
           >
             <SelectTrigger
               id="avatarType"
-              className="w-full ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0"
+              className="w-full ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0 !bg-bg-primary"
             >
               <SelectValue placeholder="Select an avatar style" />
             </SelectTrigger>

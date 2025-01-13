@@ -157,7 +157,7 @@ const CommentInput = ({
           {placeholder}
         </button>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 ">
           <ProfileAvatarSelector
             name={name}
             setName={setName}
@@ -191,7 +191,7 @@ const CommentInput = ({
                 </button>
               </div>
               {activeTab === "write" && (
-                <div className="flex gap-6 items-center px-4">
+                <div className="hidden md:flex gap-6 items-center px-4">
                   <button onClick={() => addMarkdown("header")} title="Header">
                     <GoHeading size={18} className="text-accent-icon" />
                   </button>
@@ -242,6 +242,56 @@ const CommentInput = ({
             <div className="px-2 min-h-[140px]">
               {activeTab === "write" ? (
                 <div className="flex flex-col">
+                  <div className="flex md:hidden gap-3 items-center mt-2 flex-wrap">
+                    <button
+                      onClick={() => addMarkdown("header")}
+                      title="Header"
+                    >
+                      <GoHeading size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button onClick={() => addMarkdown("bold")} title="Bold">
+                      <GoBold size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button
+                      onClick={() => addMarkdown("italic")}
+                      title="Italic"
+                    >
+                      <FiItalic size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button
+                      onClick={() => addMarkdown("blockquote")}
+                      title="Quote"
+                    >
+                      <GoQuote size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button
+                      onClick={() => addMarkdown("code")}
+                      title="Code Block"
+                    >
+                      <GoCode size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button onClick={() => addMarkdown("link")} title="Link">
+                      <IoIosLink size={16} className="text-accent-icon" />
+                    </button>
+
+                    <button
+                      onClick={() => addMarkdown("ul")}
+                      title="Unordered List"
+                    >
+                      <FaListUl size={16} className="text-accent-icon" />
+                    </button>
+                    <button
+                      onClick={() => addMarkdown("ol")}
+                      title="Ordered List"
+                    >
+                      <FaListOl size={16} className="text-accent-icon" />
+                    </button>
+                  </div>
                   <textarea
                     value={inputValue}
                     onChange={handleInputChange}

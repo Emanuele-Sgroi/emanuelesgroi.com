@@ -111,7 +111,7 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
 
   return (
     <div className="w-full pr-4 mt-1 mb-8 last:mb-4 z-10">
-      <div className="flex gap-4 items-start">
+      <div className="min-w-[30px] flex gap-2 md:gap-4 items-start">
         {/* Avatar */}
         {reply.isAuthor ? (
           <>
@@ -121,7 +121,7 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
               width={32}
               height={32}
               quality={100}
-              className="w-[30px] h-[30px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
+              className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
             />
           </>
         ) : (
@@ -133,18 +133,18 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
                 width={32}
                 height={32}
                 quality={100}
-                className="w-[30px] h-[30px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
+                className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
               />
             ) : (
-              <div className="w-[30px] h-[30px] rounded-full bg-bg-button flex items-center justify-center text-base font-semibold text-accent-icon border border-accent-border z-10">
+              <div className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full bg-bg-button flex items-center justify-center text-base font-semibold text-accent-icon border border-accent-border z-10">
                 ?
               </div>
             )}
           </>
         )}
         {/* Reply Content */}
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
+        <div className="w-full flex flex-col gap-2 pr-4">
+          <div className="flex items-center gap-2 flex-wrap">
             <p className="font-semibold text-text-primary text-sm cursor-default hover:underline hover:text-accent-extra">
               {reply.name}
             </p>
@@ -157,12 +157,12 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
               </p>
             )}
           </div>
-          <div>
+          <div className="w-full pr-4 md:pr-8 ">
             <ReactMarkdown components={customComponents}>
               {reply.content}
             </ReactMarkdown>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center flex-wrap">
             {/* Emoji popover */}
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger
