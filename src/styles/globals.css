@@ -333,6 +333,24 @@ a {
   }
 }
 
+.manupilot-main-container {
+  width: 100%;
+  height: calc(100svh - 63px);
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.manupilot-main-container > * {
+  flex-shrink: 0;
+}
+
+/* @media (max-width: 767px) {
+  .manupilot-main-container {
+    height: calc(100svh - 59px);
+  }
+} */
+
 /* Buttons styles */
 
 .btn-primary {
@@ -749,6 +767,38 @@ a {
 
 .thin-scrollbar::-webkit-scrollbar-track {
   background: transparent; /* Scrollbar track color */
+}
+
+/* ManuPilot */
+
+.manupilot-background-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--other-chart-green2),
+    var(--other-chart-green3),
+    var(--other-chart-green2),
+    var(--other-chart-green3),
+    var(--other-chart-blue2),
+    var(--other-chart-blue3),
+    var(--other-chart-purple2),
+    var(--other-chart-orange3),
+    var(--other-chart-red2),
+    var(--other-chart-yellow3)
+  );
+  background-size: 600% 600%;
+  animation: gradient-rotate 6s ease infinite;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Tailwind */

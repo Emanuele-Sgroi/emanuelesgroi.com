@@ -57,7 +57,7 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full center bg-bg-primary border-b border-accent-border py-4 px-4 md:px-8 transition-transform duration-300 z-[99999] ${
+      className={`fixed top-0 left-0 w-full center bg-bg-primary border-b border-accent-border py-4 px-4 md:px-8 transition-transform duration-300 z-[999] ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

@@ -3,8 +3,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
-import { RiHomeSmileLine, RiRobot2Line, RiRobot3Line } from "react-icons/ri";
-import { GoCodeSquare, GoCommentDiscussion } from "react-icons/go";
+import { RiHomeSmileLine, RiFolderInfoLine } from "react-icons/ri";
+import { GoCodeSquare, GoCommentDiscussion, GoCopilot } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
 import { IoMdArrowDropdown, IoLogoGithub, IoMdDownload } from "react-icons/io";
@@ -19,7 +19,6 @@ import {
 import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
 import { HiOutlineSearch, HiDotsHorizontal } from "react-icons/hi";
 import { LuSquareSlash, LuBrain } from "react-icons/lu";
-import { PiGameControllerBold, PiWall } from "react-icons/pi";
 import { TfiEmail } from "react-icons/tfi";
 import { IoCopy } from "react-icons/io5";
 import { CgFileDocument } from "react-icons/cg";
@@ -50,6 +49,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const isManuPilotPage = pathname === "/manupilot";
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -95,19 +95,27 @@ const Navbar = () => {
     <>
       <nav className="w-full relative max-sm:px-4 ">
         {/* Top part */}
-        <div className="w-full mb-3 flex justify-between items-center">
+        <div
+          className={`w-full flex justify-between items-center ${
+            isManuPilotPage ? "mt-[-5px]" : "mb-3"
+          }`}
+        >
           <NavLogo />{" "}
           <div className="center gap-[5px] sm:gap-4">
             <SearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
-            <EmanueleAiLink />
+            <ManuPilotLink />
             {/* Mobile only */}
             <MobileSideProfile onClick={toggleTheme} theme={theme} />
           </div>
         </div>
         {/* Bottom part */}
-        <div className="w-full flex justify-between items-center gap-4">
+        <div
+          className={`w-full flex justify-between items-center gap-4 ${
+            isManuPilotPage && "hidden"
+          }`}
+        >
           <div className="flex justify-start items-center gap-6">
             {/* Welcome */}
             <div className="max-[230px]:hidden relative center">
@@ -219,25 +227,8 @@ const Navbar = () => {
               />
             </div>
 
-            {/* Minigames */}
-            <div className="max-[676px]:hidden relative center">
-              <Link
-                href="/minigames"
-                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
-                  "/minigames"
-                )}`}
-              >
-                <PiGameControllerBold size={18} className="text-accent-icon" />
-                Minigames
-              </Link>
-              <div
-                className={getLinkClassDiv("/minigames")}
-                style={{ width: `calc(100% + 10px)` }}
-              />
-            </div>
-
             {/* Discussions */}
-            <div className="max-[800px]:hidden relative center">
+            <div className="max-[676px]:hidden relative center">
               <Link
                 href="/discussions"
                 className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
@@ -254,7 +245,7 @@ const Navbar = () => {
             </div>
 
             {/* Get in touch */}
-            <div className="max-[888px]:hidden relative center">
+            <div className="max-[807px]:hidden relative center">
               <Link
                 href="/contact"
                 className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
@@ -274,7 +265,7 @@ const Navbar = () => {
           {/* Mobile */}
           <Popover open={openSideMenu} onOpenChange={setOpenSideMenu}>
             <PopoverTrigger
-              className="min-[889px]:hidden relative center outline-none"
+              className="min-[808px]:hidden relative center outline-none"
               aria-haspopup="menu"
               aria-expanded={open}
             >
@@ -372,26 +363,8 @@ const Navbar = () => {
                   <div className={getLinkClassDivMobile("/dev-quiz")} />
                 </li>
 
-                {/* Minigames */}
-                <li className="relative center min-[677px]:hidden gap-2">
-                  <Link
-                    href="/minigames"
-                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
-                      "/minigames"
-                    )}`}
-                    onClick={() => setOpenSideMenu(false)}
-                  >
-                    <PiGameControllerBold
-                      size={18}
-                      className="text-accent-icon"
-                    />
-                    Minigames
-                  </Link>
-                  <div className={getLinkClassDivMobile("/minigames")} />
-                </li>
-
                 {/* Discussions */}
-                <li className="relative center min-[801px]:hidden gap-2">
+                <li className="relative center min-[677px]:hidden gap-2">
                   <Link
                     href="/discussions"
                     className={`relative center gap-1 text-text-primary ${getLinkClassText(
@@ -409,7 +382,7 @@ const Navbar = () => {
                 </li>
 
                 {/* Get in touch */}
-                <li className="min-[889px]:hidden relative center gap-2">
+                <li className="min-[808px]:hidden relative center gap-2">
                   <Link
                     href="/contact"
                     className={`relative center gap-1 text-text-primary ${getLinkClassText(
@@ -510,7 +483,7 @@ const ToggleThemeButton = ({ onClick, theme }) => {
   );
 };
 
-const EmanueleAiLink = () => {
+const ManuPilotLink = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -544,10 +517,6 @@ const EmanueleAiLink = () => {
     return pathname === path ? "border-accent-active" : "";
   };
 
-  const getLinkClassIcon = (path) => {
-    return pathname === path ? "text-text-primary" : "text-accent-icon";
-  };
-
   return (
     <>
       {/* Writings */}
@@ -559,19 +528,16 @@ const EmanueleAiLink = () => {
           aria-expanded={open}
         >
           <Link
-            href="/emanuele-ai"
+            href="/manupilot"
             className={`w-[32px] h-[32px] btn-secondary center ${getLinkClass(
-              "/emanuele-ai"
+              "/manupilot"
             )}`}
           >
-            <RiRobot2Line
-              size={18}
-              className={` ${getLinkClassIcon("/emanuele-ai")}`}
-            />
+            <GoCopilot size={18} className={`text-text-primary`} />
           </Link>
         </PopoverTrigger>
         <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
-          <p className="text-xs">Emanuele AI</p>
+          <p className="text-xs">Try ManuPilot AI</p>
         </PopoverContent>
       </Popover>
     </>
@@ -637,7 +603,7 @@ const MobileSideProfile = ({ onClick, theme }) => {
 
   const getLinkClassDivMobile = (path) => {
     return pathname === path
-      ? "w-[6px] h-[6px] rounded-full bg-accent-active mt-1 "
+      ? "w-[6px] h-[6px] rounded-full bg-accent-active mt-1 ml-2 "
       : "hidden";
   };
 
@@ -656,23 +622,24 @@ const MobileSideProfile = ({ onClick, theme }) => {
   };
 
   return (
-    <div className="md:hidden">
+    <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <div
             onClick={() => setOpen(true)}
-            className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2"
+            className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2 cursor-pointer"
           >
             <Image
               src={profilePirctureUrl}
               alt="Profile_Picture_open_menu"
-              width={32}
-              height={32}
-              className="w-full h-full rounded-full object-cover object-center z-10"
+              width={36}
+              height={36}
+              quality={100}
+              className="w-[36px] h-[36px] rounded-full object-cover object-center z-10"
             />
           </div>
         </SheetTrigger>
-        <SheetContent className="!bg-bg-primary !border-accent-border md:hidden overflow-y-auto thin-scrollbar">
+        <SheetContent className="max-[308px]:w-screen !bg-bg-primary !border-accent-border overflow-y-auto thin-scrollbar max-[234px]:px-1">
           <SheetHeader>
             <SheetDescription>
               <div>
@@ -697,7 +664,7 @@ const MobileSideProfile = ({ onClick, theme }) => {
                   {generalInfoContent?.sentence}
                 </p>
 
-                <div className="min-[401px]:hidden w-full text-left mt-6 border-b border-b-accent-border pb-1">
+                <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Theme</p>
                 </div>
                 {/* Switch theme */}
@@ -706,40 +673,39 @@ const MobileSideProfile = ({ onClick, theme }) => {
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Explore</p>
                 </div>
-                <ul className="w-full flex flex-col justify-start items-start gap-4 mt-4">
+                <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
                   {/* Welcome */}
-                  <li className="relative center gap-2">
+                  <li className="w-full relative center gap-2">
                     <Link
                       href="/"
-                      className={`relative center gap-1 text-text-primary `}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button`}
                       onClick={() => setOpen(false)}
                     >
                       <RiHomeSmileLine
                         size={18}
                         className="text-accent-icon "
                       />
-                      Welcome
+                      Welcome <div className={getLinkClassDivMobile("/")} />
                     </Link>
-                    <div className={getLinkClassDivMobile("/")} />
                   </li>
 
                   {/* Portfolio */}
-                  <li className="relative center gap-2">
+                  <li className="w-full relative center gap-2">
                     <Link
                       href="/portfolio"
-                      className={`relative center gap-1 text-text-primary `}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
                       <GoCodeSquare size={18} className="text-accent-icon " />
-                      Portfolio
+                      Portfolio{" "}
+                      <div className={getLinkClassDivMobile("/portfolio")} />
                     </Link>
-                    <div className={getLinkClassDivMobile("/portfolio")} />
                   </li>
 
                   <li className="w-full flex justify-start items-center gap-2">
                     <Link
                       href="/writings/blog"
-                      className={`flex items-center gap-2 text-text-primary `}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
                       <BsVectorPen size={18} className="text-accent-icon" />
@@ -747,14 +713,16 @@ const MobileSideProfile = ({ onClick, theme }) => {
                         Writings
                         <span className="text-accent-icon mx-[3px]">/</span>
                         Blog
-                      </p>
+                      </p>{" "}
+                      <div
+                        className={getLinkClassDivMobile("/writings/blog")}
+                      />
                     </Link>
-                    <div className={getLinkClassDivMobile("/writings/blog")} />
                   </li>
                   <li className="w-full flex justify-start items-center gap-2">
                     <Link
                       href="/writings/academic"
-                      className={`flex items-center gap-2 text-text-primary`}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
                       <TbSchool size={18} className="text-accent-icon" />
@@ -762,154 +730,188 @@ const MobileSideProfile = ({ onClick, theme }) => {
                         Writings
                         <span className="text-accent-icon mx-[3px]">/</span>
                         Academic
-                      </p>
+                      </p>{" "}
+                      <div
+                        className={getLinkClassDivMobile("/writings/academic")}
+                      />
                     </Link>
-                    <div
-                      className={getLinkClassDivMobile("/writings/academic")}
-                    />
+                  </li>
+
+                  {/* ManuPilot */}
+                  <li className="w-full flex justify-start items-center gap-2">
+                    <Link
+                      href="/manupilot"
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <GoCopilot size={18} className="text-accent-icon" />
+                      ManuPilot
+                      <div
+                        className={`${getLinkClassDivMobile(
+                          "/manupilot"
+                        )} ml-1`}
+                      />
+                      <div className="absolute right-4 px-1 rounded-full border border-text-primary text-xs text-text-primary font-semibold">
+                        AI Chat
+                      </div>
+                    </Link>
                   </li>
 
                   {/* Dev Quiz */}
-                  <li className="relative center gap-2">
+                  <li className="w-full relative center gap-2">
                     <Link
                       href="/dev-quiz"
-                      className={`relative center gap-1 text-text-primary `}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button  `}
                       onClick={() => setOpen(false)}
                     >
                       <LuBrain size={18} className="text-accent-icon" />
-                      Dev Quiz
+                      Dev Quiz{" "}
+                      <div className={getLinkClassDivMobile("/dev-quiz")} />
                     </Link>
-                    <div className={getLinkClassDivMobile("/dev-quiz")} />
                   </li>
 
-                  {/* Minigames */}
-                  <li className="relative center gap-2">
+                  {/* Discussions */}
+                  <li className="w-full relative center gap-2">
                     <Link
-                      href="/minigames"
-                      className={`relative center gap-1 text-text-primary `}
+                      href="/discussions"
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
-                      <PiGameControllerBold
+                      <GoCommentDiscussion
                         size={18}
                         className="text-accent-icon"
                       />
-                      Minigames
+                      Discussions{" "}
+                      <div className={getLinkClassDivMobile("/discussions")} />
                     </Link>
-                    <div className={getLinkClassDivMobile("/minigames")} />
-                  </li>
-
-                  {/* Wall */}
-                  <li className="relative center gap-2">
-                    <Link
-                      href="/wall"
-                      className={`relative center gap-1 text-text-primary`}
-                      onClick={() => setOpen(false)}
-                    >
-                      <PiWall size={18} className="text-accent-icon" />
-                      Wall
-                    </Link>
-                    <div className={getLinkClassDivMobile("/wall")} />
                   </li>
 
                   {/* Get in touch */}
-                  <li className="relative center gap-2">
+                  <li className="w-full relative center gap-2">
                     <Link
                       href="/contact"
-                      className={`relative center gap-1 text-text-primary`}
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
                       <GrContact size={18} className="text-accent-icon" />
-                      Get in Touch
+                      Get in Touch{" "}
+                      <div className={getLinkClassDivMobile("/contact")} />
                     </Link>
-                    <div className={getLinkClassDivMobile("/contact")} />
                   </li>
                 </ul>
+
+                {/* Contacts */}
+
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <p className="text-xs">Connect with me</p>
                 </div>
-                <ul className="w-full flex flex-col justify-start items-start gap-4 mt-4">
-                  <li className="relative center gap-2">
-                    <TfiEmail size={18} className="text-accent-icon" />
+
+                <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`mailto:${generalInfoContent?.email}`}
                       target="_blank"
-                      className="text-text-primary mb-px"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      <TfiEmail size={18} className="text-accent-icon" />
                       {generalInfoContent?.email}
                     </a>
                   </li>
 
-                  <li className="relative center gap-2">
-                    <IoLogoGithub size={18} className="text-accent-icon" />
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`${generalInfoContent?.gitHubLink}`}
                       target="_blank"
-                      className="text-text-primary mb-px"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      <IoLogoGithub size={18} className="text-accent-icon" />
                       {generalInfoContent?.gitHubDisplayName}
                     </a>
                   </li>
 
-                  <li className="relative center gap-2">
-                    <FaLinkedin size={18} className="text-accent-icon" />
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`${generalInfoContent?.linkedInLink}`}
                       target="_blank"
-                      className="text-text-primary mb-px"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      {" "}
+                      <FaLinkedin size={18} className="text-accent-icon" />
                       {generalInfoContent?.linkedInDisplayName}
                     </a>
                   </li>
-                  <li className="relative center gap-2">
-                    <FaInstagram size={18} className="text-accent-icon" />
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`${generalInfoContent?.instagramLink}`}
                       target="_blank"
-                      className="text-text-primary mb-px"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      {" "}
+                      <FaInstagram size={18} className="text-accent-icon" />
                       {generalInfoContent?.instagramDisplayName}
                     </a>
                   </li>
-                  <li className="relative center gap-2">
-                    <FaFacebook size={18} className="text-accent-icon" />
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`${generalInfoContent?.facebookLink}`}
                       target="_blank"
-                      className="text-text-primary mb-px"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      {" "}
+                      <FaFacebook size={18} className="text-accent-icon" />
                       {generalInfoContent?.facebookDisplayName}
                     </a>
                   </li>
-                  <li className="relative center gap-2">
-                    <FaDiscord size={18} className="text-accent-icon" />
-                    <p className="text-text-primary text-sm mb-px">
-                      {generalInfoContent?.discordDisplayName}
-                    </p>
-                    {generalInfoContent &&
-                      generalInfoContent.discordDisplayName && (
-                        <button
-                          onClick={() =>
-                            copyText(generalInfoContent?.discordDisplayName)
-                          }
-                        >
+                  <li className="w-full relative center gap-2">
+                    <button
+                      onClick={() =>
+                        copyText(generalInfoContent?.discordDisplayName)
+                      }
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
+                    >
+                      <FaDiscord size={18} className="text-accent-icon" />
+                      <p className="text-text-primary text-sm mb-px">
+                        {generalInfoContent?.discordDisplayName}
+                      </p>
+                      {generalInfoContent &&
+                        generalInfoContent.discordDisplayName && (
                           <IoCopy size={18} className="text-text-primary" />
-                        </button>
-                      )}
+                        )}
+                    </button>
                   </li>
-                  <li className="relative center gap-2">
-                    <CgFileDocument size={18} className="text-accent-icon" />
+                  <li className="w-full relative center gap-2">
                     <a
                       href={`${getAssetUrl(generalInfoContent?.resume)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       download="Emanuele-Sgroi-Resume.pdf"
-                      className="text-text-primary mb-px center gap-2"
+                      className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
+                      {" "}
+                      <CgFileDocument size={18} className="text-accent-icon" />
                       Resume
                       <IoMdDownload size={18} className="text-text-primary" />
                     </a>
                   </li>
                 </ul>
+
+                <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
+                  <p className="text-xs">Other</p>
+                </div>
+                <div className="w-full relative center gap-2 mt-1">
+                  <Link
+                    href="/about-this-website"
+                    className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
+                    onClick={() => setOpen(false)}
+                  >
+                    <RiFolderInfoLine size={18} className="text-accent-icon" />
+                    About this website
+                    <div
+                      className={getLinkClassDivMobile("/about-this-website")}
+                    />
+                  </Link>
+                </div>
+
                 <div className="my-4 w-full h-px bg-accent-border" />
                 <p className="text-xs text-left text-accent-extra">
                   One day, I&apos;ll keep adding features to make this site look
@@ -926,7 +928,7 @@ const MobileSideProfile = ({ onClick, theme }) => {
 
 const ToggleThemeMobile = ({ onClick, theme }) => {
   return (
-    <div className="min-[401px]:hidden w-full flex justify-start items-center gap-1 mt-4">
+    <div className=" w-full flex justify-start items-center gap-1 mt-4">
       <button onClick={onClick} className="relative center outline-none">
         <span className="center gap-1 mr-2">
           <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />{" "}
