@@ -1,12 +1,20 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { IoLogoGithub } from "react-icons/io";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isManuPilotPage = pathname === "/manupilot";
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className=" w-full mt-auto pt-10 md:pt-12 pb-10 px-4">
+    <footer
+      className={`w-full mt-auto pt-10 md:pt-12 pb-10 px-4 ${
+        isManuPilotPage && "hidden"
+      }`}
+    >
       <div className="w-full center gap-2 max-md:flex-col">
         <Link
           href="/"

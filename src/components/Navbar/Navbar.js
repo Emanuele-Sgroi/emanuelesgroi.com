@@ -3,13 +3,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
-import {
-  RiHomeSmileLine,
-  RiRobot2Line,
-  RiRobot3Line,
-  RiFolderInfoLine,
-} from "react-icons/ri";
-import { GoCodeSquare, GoCommentDiscussion } from "react-icons/go";
+import { RiHomeSmileLine, RiFolderInfoLine } from "react-icons/ri";
+import { GoCodeSquare, GoCommentDiscussion, GoCopilot } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
 import { IoMdArrowDropdown, IoLogoGithub, IoMdDownload } from "react-icons/io";
@@ -24,7 +19,6 @@ import {
 import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
 import { HiOutlineSearch, HiDotsHorizontal } from "react-icons/hi";
 import { LuSquareSlash, LuBrain } from "react-icons/lu";
-import { PiGameControllerBold, PiWall } from "react-icons/pi";
 import { TfiEmail } from "react-icons/tfi";
 import { IoCopy } from "react-icons/io5";
 import { CgFileDocument } from "react-icons/cg";
@@ -55,6 +49,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const isManuPilotPage = pathname === "/manupilot";
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -100,19 +95,27 @@ const Navbar = () => {
     <>
       <nav className="w-full relative max-sm:px-4 ">
         {/* Top part */}
-        <div className="w-full mb-3 flex justify-between items-center">
+        <div
+          className={`w-full flex justify-between items-center ${
+            isManuPilotPage ? "mt-[-5px]" : "mb-3"
+          }`}
+        >
           <NavLogo />{" "}
           <div className="center gap-[5px] sm:gap-4">
             <SearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
-            <EmanueleAiLink />
+            <ManuPilotLink />
             {/* Mobile only */}
             <MobileSideProfile onClick={toggleTheme} theme={theme} />
           </div>
         </div>
         {/* Bottom part */}
-        <div className="w-full flex justify-between items-center gap-4">
+        <div
+          className={`w-full flex justify-between items-center gap-4 ${
+            isManuPilotPage && "hidden"
+          }`}
+        >
           <div className="flex justify-start items-center gap-6">
             {/* Welcome */}
             <div className="max-[230px]:hidden relative center">
@@ -480,7 +483,7 @@ const ToggleThemeButton = ({ onClick, theme }) => {
   );
 };
 
-const EmanueleAiLink = () => {
+const ManuPilotLink = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -514,10 +517,6 @@ const EmanueleAiLink = () => {
     return pathname === path ? "border-accent-active" : "";
   };
 
-  const getLinkClassIcon = (path) => {
-    return pathname === path ? "text-text-primary" : "text-accent-icon";
-  };
-
   return (
     <>
       {/* Writings */}
@@ -534,10 +533,7 @@ const EmanueleAiLink = () => {
               "/manupilot"
             )}`}
           >
-            <RiRobot2Line
-              size={18}
-              className={` ${getLinkClassIcon("/manupilot")}`}
-            />
+            <GoCopilot size={18} className={`text-text-primary`} />
           </Link>
         </PopoverTrigger>
         <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
@@ -748,7 +744,7 @@ const MobileSideProfile = ({ onClick, theme }) => {
                       className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
-                      <RiRobot2Line size={18} className="text-accent-icon" />
+                      <GoCopilot size={18} className="text-accent-icon" />
                       ManuPilot
                       <div
                         className={`${getLinkClassDivMobile(
@@ -781,7 +777,10 @@ const MobileSideProfile = ({ onClick, theme }) => {
                       className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                       onClick={() => setOpen(false)}
                     >
-                      <PiWall size={18} className="text-accent-icon" />
+                      <GoCommentDiscussion
+                        size={18}
+                        className="text-accent-icon"
+                      />
                       Discussions{" "}
                       <div className={getLinkClassDivMobile("/discussions")} />
                     </Link>

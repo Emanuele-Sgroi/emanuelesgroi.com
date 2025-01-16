@@ -1,7 +1,8 @@
 import React from "react";
+import ManuPilotPage from "@/pages/ManuPilotPage";
 
-const EmanueleAi = () => {
-  return <div>Emanuele AI - Coming Soon</div>;
+const ManuPilot = () => {
+  return <ManuPilotPage />;
 };
 
-export default EmanueleAi;
+export default ManuPilot;
