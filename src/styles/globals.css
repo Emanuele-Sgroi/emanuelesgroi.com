@@ -335,21 +335,42 @@ a {
 
 .manupilot-main-container {
   width: 100%;
-  height: calc(100svh - 63px);
+  height: calc(100vh - 63px); /* counting the navbar height */
   background-color: var(--bg-primary);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.manupilot-main-container > * {
-  flex-shrink: 0;
+/* Let the Body expand + shrink to show its scrollbar */
+.manupilot-main-container > *:nth-child(2) {
+  flex: 1 1 0;
+  min-height: 0; /* critical so content can shrink below its size */
 }
 
-/* @media (max-width: 767px) {
-  .manupilot-main-container {
-    height: calc(100svh - 59px);
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
   }
-} */
+  50% {
+    background-position: 300% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.manupilot-shimmer {
+  /* A triple color gradient for stronger contrast */
+  background: linear-gradient(to right, #007bff 0%, #f850a4 50%, #007bff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* hides the real text, showing gradient only */
+
+  /* Slower, with ease-in-out to emphasize the wave */
+  animation: shimmer 6.5s ease-in-out infinite;
+}
 
 /* Buttons styles */
 
@@ -751,21 +772,29 @@ a {
 /* Thin and light gray scrollbar styling */
 .thin-scrollbar {
   scrollbar-width: thin; /* Firefox */
-  scrollbar-color: rgb(107, 107, 107) transparent; /* Firefox */
+  scrollbar-color: var(--accent-border) transparent; /* Firefox */
+}
+
+/* medium and light gray scrollbar styling */
+.medium-scrollbar {
+  scrollbar-width: 20px;
+  scrollbar-color: var(--accent-border) transparent; /* Firefox */
 }
 
 /* WebKit browsers */
-.thin-scrollbar::-webkit-scrollbar {
+.thin-scrollbar::-webkit-scrollbar .medium-scrollbar::-webkit-scrollbar {
   width: 4px; /* Width of the scrollbar */
   height: 4px; /* Height of the scrollbar */
 }
 
-.thin-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgb(107, 107, 107); /* Scrollbar thumb color */
+.thin-scrollbar::-webkit-scrollbar-thumb
+  .medium-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--accent-border); /* Scrollbar thumb color */
   border-radius: 3px; /* Scrollbar thumb roundness */
 }
 
-.thin-scrollbar::-webkit-scrollbar-track {
+.thin-scrollbar::-webkit-scrollbar-track
+  .medium-scrollbar::-webkit-scrollbar-track {
   background: transparent; /* Scrollbar track color */
 }
 

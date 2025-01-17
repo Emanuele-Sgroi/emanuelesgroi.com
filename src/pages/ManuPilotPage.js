@@ -4,55 +4,22 @@ import React, { useState } from "react";
 import { ManuPilotHeader, ManuPilotBody, ManuPilotInput } from "@/components";
 
 const ManuPilotPage = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [conversation, setConversation] = useState([]); // Store messages
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    const userMessage = { role: "user", content: input };
-
-    try {
-      // Send the user's message to the API
-      const response = await fetch("/api/manupilot", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch the AI response");
-      }
-
-      const data = await response.json();
-
-      // Add user and AI messages to the chat log
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        userMessage,
-        { role: "assistant", content: data.content },
-      ]);
-      setInput("");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const addMessage = (message) => {
+    setConversation((prev) => [...prev, message]);
   };
 
   return (
     <div className="manupilot-main-container">
       <ManuPilotHeader />
-      <ManuPilotBody />
-      <ManuPilotInput />
+      <ManuPilotBody conversation={conversation} loading={loading} />
+      <ManuPilotInput
+        addMessage={addMessage}
+        loading={loading}
+        setLoading={setLoading}
+      />
     </div>
   );
 };
