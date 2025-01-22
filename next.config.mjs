@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
+import transpileModules from "next-transpile-modules";
 
 dotenv.config();
 
-/** @type {import('next').NextConfig} */
+const withTM = transpileModules(["react-syntax-highlighter"]);
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -21,7 +23,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "api.dicebear.com",
-        port: "",
         pathname: "/**",
       },
     ],
@@ -29,4 +30,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withTM(nextConfig);
