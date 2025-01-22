@@ -115,13 +115,6 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
     router.push = originalPushRef.current;
   };
 
-  //   const handlePrevious = () => {
-  //     if (currentIndex > 0) {
-  //       setCurrentIndex((prev) => prev - 1);
-  //       setShowExplanation(false);
-  //     }
-  //   };
-
   return (
     <>
       <QuizHeader
