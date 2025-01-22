@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-//import "react-circular-progressbar/dist/styles.css";
+import "react-circular-progressbar/dist/styles.css";
 
 const QuizResult = ({
   selectedTopics,

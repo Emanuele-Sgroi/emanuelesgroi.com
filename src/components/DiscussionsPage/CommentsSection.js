@@ -5,7 +5,7 @@ import { getAssetUrl } from "@/utils/imageUtils";
 import { GoDotFill } from "react-icons/go";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 import { TopComment, CommentContainer, CommentInput } from "@/components";
 
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
