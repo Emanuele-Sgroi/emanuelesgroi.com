@@ -3,21 +3,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoCopilot } from "react-icons/go";
 import { MdLightbulb } from "react-icons/md";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FaRobot, FaFutbol, FaArrowDown, FaFileCode } from "react-icons/fa";
+import { FaRobot, FaFileCode } from "react-icons/fa";
 import { SiReact } from "react-icons/si";
-import {
-  IoCodeWorkingOutline,
-  IoBrushOutline,
-  IoCodeSharp,
-  IoArrowDown,
-} from "react-icons/io5";
+import { IoCodeSharp, IoArrowDown } from "react-icons/io5";
 import { FiCornerRightDown } from "react-icons/fi";
 import { TfiInfoAlt } from "react-icons/tfi";
 import { LuGithub } from "react-icons/lu";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";

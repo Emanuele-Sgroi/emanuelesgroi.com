@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useContext } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import {
+//   darcula,
+//   oneLight,
+// } from "react-syntax-highlighter/dist/cjs/styles/prism";
+//import { Prism as SyntaxHighlighter } from "react-syntax-highlighter/dist/cjs/prism";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
 import {
   darcula,
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
 import ThemeContext from "@/context/ThemeProvider";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
