@@ -129,6 +129,7 @@ const ManuPilotPage = () => {
   const originalPushRef = useRef(router.push);
 
   const [conversation, setConversation] = useState([]); // Store messages
+  const [isThinking, setIsThinking] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -224,12 +225,15 @@ const ManuPilotPage = () => {
 
     if (!text && !file) return;
 
+    // Add the user's new message to conversation state
     setConversation((prev) => [...prev, { role: "user", text, file }]);
 
+    setIsThinking(true);
     setLoading(true);
     setError(null);
 
     try {
+      // Prepare the "messages" array for the server
       const conversationWithNew = [
         ...conversation,
         { role: "user", text, file },
@@ -239,26 +243,117 @@ const ManuPilotPage = () => {
         ...convertConversationToApiMessages(conversationWithNew),
       ];
 
+      // Make the request
       const response = await fetch("/api/manupilot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: messagesForApi }),
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        setConversation((prev) => [
-          ...prev,
-          { role: "assistant", content: data.content },
-        ]);
-      } else {
-        console.error("Error:", data.error);
+      if (!response.ok) {
+        // If server responded with 4xx or 5xx
+        const errText = await response.text().catch(() => "");
+        console.error("Error response text:", errText);
         setError({
           type: "chat",
           message: "There was an error generating a response.",
         });
+        return;
       }
+
+      // Check Content-Type to see if it's streaming or JSON
+      const contentType = response.headers.get("content-type") || "";
+
+      if (contentType.includes("text/plain")) {
+        // -------------------------
+        // STREAMING RESPONSE LOGIC
+        // -------------------------
+        // The server is returning raw text in chunks (because we used stream: true)
+        if (!response.body) {
+          throw new Error("ReadableStream not supported in this environment.");
+        }
+
+        // Stop showing "thinking message"
+        setIsThinking(false);
+
+        // Create an 'assistant' message with empty content
+        setConversation((prev) => [
+          ...prev,
+          { role: "assistant", content: "" },
+        ]);
+
+        // Get a reader to read the stream chunk by chunk
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let done = false;
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            // Decode the current chunk into a string
+            const chunkValue = decoder.decode(value, { stream: true });
+
+            // Append this chunk to the last message in conversation
+            setConversation((prev) => {
+              // The last message should be the assistant's
+              const lastMsg = prev[prev.length - 1];
+              // If for some reason it's not assistant, create one:
+              if (lastMsg.role !== "assistant") {
+                return [...prev, { role: "assistant", content: chunkValue }];
+              }
+              // Otherwise, append
+              const updatedMsg = {
+                ...lastMsg,
+                content: lastMsg.content + chunkValue,
+              };
+              return [...prev.slice(0, -1), updatedMsg];
+            });
+          }
+        }
+      } else {
+        // ----------------------
+        // JSON RESPONSE LOGIC
+        // ----------------------
+        // This happens if we triggered summarization or an error
+        const data = await response.json();
+
+        // Stop showing "thinking message"
+        setIsThinking(false);
+
+        if (data.error) {
+          // The server might send { error: "...", ... }
+          console.error("API error:", data.error);
+          setError({
+            type: "chat",
+            message: data.error || "There was an error generating a response.",
+          });
+          return;
+        }
+        // Otherwise, we assume data is the summarized assistant message
+        // e.g. { role: "assistant", content: "some summary" }
+        setConversation((prev) => [
+          ...prev,
+          { role: "assistant", content: data.content || "" },
+        ]);
+      }
+
+      // const data = await response.json();
+      // if (response.ok) {
+      //   setConversation((prev) => [
+      //     ...prev,
+      //     { role: "assistant", content: data.content },
+      //   ]);
+      // } else {
+      //   console.error("Error:", data.error);
+      //   setError({
+      //     type: "chat",
+      //     message: "There was an error generating a response.",
+      //   });
+      // }
     } catch (error) {
+      setIsThinking(false);
       console.error("API error:", error);
       setError({
         type: "system",
@@ -266,6 +361,7 @@ const ManuPilotPage = () => {
           "ManuPilot is experiencing an issue. Please try regenerating your response. If the problem persists, try again later.",
       });
     } finally {
+      setIsThinking(false);
       setLoading(false);
     }
   };
@@ -285,6 +381,7 @@ const ManuPilotPage = () => {
 
   const handleResetConversation = () => {
     setConversation([]);
+    setError(null);
   };
 
   const clearError = () => setError(null);
@@ -297,6 +394,7 @@ const ManuPilotPage = () => {
       />
       <ManuPilotBody
         conversation={conversation}
+        isThinking={isThinking}
         loading={loading}
         handleSendMessage={handleSendMessage}
       />

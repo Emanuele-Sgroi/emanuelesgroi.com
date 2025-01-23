@@ -143,7 +143,12 @@ const customComponents = {
   },
 };
 
-const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
+const ManuPilotBody = ({
+  conversation,
+  loading,
+  handleSendMessage,
+  isThinking,
+}) => {
   const containerRef = useRef(null);
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -375,7 +380,7 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
             })}
 
             {/* Loading State */}
-            {loading && (
+            {loading && isThinking && (
               <div className="flex justify-start items-center gap-4 my-4">
                 <GoCopilot size={20} className="text-accent-icon" />
                 <div className="manupilot-shimmer">
