@@ -1,3 +1,7 @@
+// API call for openAI used for Manupilot
+// This is called when the conversation reaches the limit in terms of tokens.
+// The AI will make a summarise of the whole conversation, allowing the user to keep chatting in the same conversation
+
 import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -74,9 +78,7 @@ export async function POST(req) {
 }
 
 function summarizeIfNeeded(messages) {
-  // Placeholder for summarization logic
-  // console.log("Summarizing messages:", messages);
-  return messages.slice(-20); // Example: Keep only the last 5 messages
+  return messages.slice(-20); // Example: Keep only the last 20 messages
 }
 
 function approximateTokenCount(messages) {

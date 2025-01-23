@@ -201,8 +201,6 @@ const avatars = [
   },
 ];
 
-//xl:w-[312px] xl:min-w-[312px] lg:w-[280px] lg:min-w-[280px] w-[200px] min-w-[200px] max-[915px]:w-full
-
 const DiscussionSideBar = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-4">

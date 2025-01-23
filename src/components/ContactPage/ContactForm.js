@@ -17,21 +17,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import sendEmail from "@/utils/send-email";
 import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { PiChatText } from "react-icons/pi";
-import { GrLocation } from "react-icons/gr";
-import { TfiEmail } from "react-icons/tfi";
-import { IoLogoGithub, IoMdDownload } from "react-icons/io";
+import { IoLogoGithub } from "react-icons/io";
 import { FaLinkedin, FaInstagram, FaFacebook, FaDiscord } from "react-icons/fa";
 import { IoCopy } from "react-icons/io5";
-import { CgFileDocument } from "react-icons/cg";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-//import "react-toastify/dist/ReactToastify.css";
 
 // Define the form schema using Zod
 const formSchema = z.object({
@@ -42,7 +31,6 @@ const formSchema = z.object({
 
 const ContactForm = ({ generalInfo }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [showCopy, setShowCopy] = useState(false);
 
   // Initialize the form with React Hook Form and Zod for validation
   const form = useForm({

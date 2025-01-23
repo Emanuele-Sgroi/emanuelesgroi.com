@@ -1,12 +1,6 @@
 "use client";
 
 import React, { useContext } from "react";
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import {
-//   darcula,
-//   oneLight,
-// } from "react-syntax-highlighter/dist/cjs/styles/prism";
-//import { Prism as SyntaxHighlighter } from "react-syntax-highlighter/dist/cjs/prism";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
 import {
   darcula,
@@ -25,8 +19,6 @@ const ManuPilotCodeBlock = ({ code, lang }) => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
   };
-
-  //manupilot-code-temp-width
 
   return (
     <div className="relative w-full max-w-full sm:max-w-[570px] min-[700px]:max-w-[625px] min-[750px]:max-w-[675px] min-[850px]:max-w-[750px] my-4 rounded-md border border-accent-border bg-bg-secondary ">

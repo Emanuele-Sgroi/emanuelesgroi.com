@@ -14,51 +14,13 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ManuPilotCodeBlock from "./ManuPilotCodeBlock";
 
-// const customComponents = {
-//   blockquote: ({ children }) => (
-//     <blockquote className="border-l-4 border-text-primary pl-3 opacity-40 italic mb-2">
-//       {children}
-//     </blockquote>
-//   ),
-//   a: ({ href, children }) => (
-//     <a
-//       href={href}
-//       target="_blank"
-//       rel="noopener noreferrer"
-//       className="text-text-link underline"
-//     >
-//       {children}
-//     </a>
-//   ),
-//   ul: ({ children }) => (
-//     <ul className="list-disc pl-6 text-text-primary mb-2">{children}</ul>
-//   ),
-//   ol: ({ children }) => (
-//     <ol className="list-decimal pl-6 text-text-primary mb-2">{children}</ol>
-//   ),
-//   li: ({ children }) => <li className="mb-1">{children}</li>,
-//   code: ({ inline, className, children }) => {
-//     const language = /language-(\w+)/.exec(className || "")?.[1] || "bash";
-//     return !inline ? (
-//       <ManuPilotCodeBlock code={String(children).trim()} lang={language} />
-//     ) : (
-//       <code className="px-1 py-[2px] bg-transparent border border-accent-border rounded-md text-text-primary">
-//         {children}
-//       </code>
-//     );
-//   },
-// };
-
 const customComponents = {
-  // Line breaks
   hr: () => <hr className="border-accent-border my-4" />,
-  // Force paragraphs to wrap text and break words
   p: ({ node, children }) => (
     <p className="mb-2 leading-relaxed text-text-primary whitespace-pre-wrap break-words">
       {children}
     </p>
   ),
-  // Headings
   h1: ({ children }) => (
     <h1 className="text-3xl sm:text-4xl font-extrabold mt-3 mb-4 text-text-primary whitespace-pre-wrap break-words">
       {children}
@@ -125,13 +87,11 @@ const customComponents = {
       className="w-auto h-auto rounded-md border border-accent-border manupilot-img-temp-width"
     />
   ),
-  // Blockquote
   blockquote: ({ children }) => (
     <blockquote className="border-l-4 border-text-primary pl-3 opacity-80 italic mb-3 whitespace-pre-wrap break-words">
       {children}
     </blockquote>
   ),
-  // Lists
   ul: ({ children }) => (
     <ul className="list-disc pl-2 sm:pl-6 text-text-primary my-2">
       {children}
@@ -143,7 +103,6 @@ const customComponents = {
     </ol>
   ),
   li: ({ children }) => <li className="mb-1">{children}</li>,
-  // Links
   a: ({ href, children }) => (
     <a
       href={href}
@@ -154,11 +113,9 @@ const customComponents = {
       {children}
     </a>
   ),
-  // Code logic => Fenced code => <ManuPilotCodeBlock/>, Inline => <code/>
   code: ({ inline, className, children }) => {
     const language = /language-(\w+)/.exec(className || "")?.[1] || "plaintext";
     if (!inline && language !== "plaintext") {
-      // Multi-line (fenced) code block
       return (
         <ManuPilotCodeBlock
           code={String(children).replace(/\n$/, "")}
@@ -166,7 +123,6 @@ const customComponents = {
         />
       );
     }
-    // Inline code
     return (
       <code
         className="
@@ -233,7 +189,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
 
   useEffect(() => {
     function checkSize() {
-      // Tailwind's `sm` breakpoint = 640px
       setIsMobile(window.innerWidth < 640);
     }
     checkSize(); // run on mount
@@ -249,13 +204,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
       setRandomIndices([0, 1, 2, 3, 4, 5]); // all indices for desktop
     }
   }, [isMobile]);
-
-  // const handleScroll = () => {
-  //   if (!containerRef.current) return;
-
-  //   const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
-  //   setShowScrollToBottom(scrollTop + clientHeight < scrollHeight - 10);
-  // };
 
   const scrollToBottom = () => {
     if (containerRef.current) {
@@ -274,7 +222,7 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
           className="text-other-chart-orange4 max-[322px]:hidden"
         />
       ),
-      label: "Tell me more about Emanuele Sgroi?",
+      label: "Tell me more about Emanuele Sgroi",
     },
     {
       icon: (
@@ -371,7 +319,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
   return (
     <div
       ref={containerRef}
-      //  onScroll={handleScroll}
       className="
       flex-1 
       min-h-0         
@@ -415,7 +362,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
                     {isUser ? (
                       <UserBubble message={message} />
                     ) : (
-                      // assistant => parse with React Markdown
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm, remarkBreaks]}
                         components={customComponents}
@@ -423,13 +369,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
                         {message.content}
                       </ReactMarkdown>
                     )}
-                    {/* {isUser ? (
-                      ""
-                    ) : (
-                      // assistant => parse with React Markdown
-
-                      <>{message.content}</>
-                    )} */}
                   </div>
                 </div>
               );
@@ -457,7 +396,6 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
           <div className="center gap-4 flex-wrap max-w-[850px]">
             {displaySuggestions.map((suggestionObj, idx) => {
               const { icon, label, index } = suggestionObj;
-              // Reuse your mobileSuggestionsStyles(index)
               const styleClasses = mobileSuggestionsStyles(index);
               return (
                 <button
@@ -484,13 +422,16 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
           className={`
       sticky bottom-4 left-1/2 transform -translate-x-1/2
       bg-bg-button text-text-primary border border-accent-border
-      rounded-full p-3 z-10
+      rounded-full p-2 md:p-3 z-10
       transition-all duration-300 ease-in-out
       ${showScrollToBottom ? "scale-100 opacity-100" : "scale-0 opacity-0"}
     `}
           aria-hidden={!showScrollToBottom} // Accessibility improvement
         >
-          <IoArrowDown size={20} className="text-accent-icon" />
+          <IoArrowDown
+            size={20}
+            className="max-md:w-[18px] max-md:h-[18px] text-accent-icon"
+          />
         </button>
       )}
     </div>
@@ -499,22 +440,12 @@ const ManuPilotBody = ({ conversation, loading, handleSendMessage }) => {
 
 export default ManuPilotBody;
 
-// ${
-//   isUser
-//     ? "bg-bg-tertiary text-text-primary px-4 py-2 max-w-[800px] whitespace-pre-wrap break-words"
-//     : "text-text-primary max-w-[800px]"
-// }
-
 function UserBubble({ message }) {
-  // message = { role: "user", text: "...", file: { name, content } }
   const { text, file } = message;
 
   return (
     <div className="flex flex-col gap-3">
       {file && (
-        // <div className="text-sm whitespace-pre-wrap break-words">
-        //   [ Attached: {file.name} ]
-        // </div>
         <div className="w-fit center cursor-default gap-2 border border-accent-border px-4 py-1 rounded-xl">
           <FaFileCode size={24} className="text-accent-icon" />
           <div className="flex flex-col">

@@ -20,7 +20,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-//import "react-circular-progressbar/dist/styles.css";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
@@ -37,7 +36,6 @@ const ManuPilotInput = ({
   const [lastMessage, setLastMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState(null);
-  // If the user picks a file from <input>, but hasn't clicked "Upload" yet
   const [pendingFile, setPendingFile] = useState(null);
   const [pendingError, setPendingError] = useState("");
 
@@ -142,18 +140,6 @@ const ManuPilotInput = ({
     ".adoc",
   ];
 
-  // useEffect(() => {
-  //   if (droppedFile) {
-  //     // We got a new file from the parent’s drop event
-  //     setSelectedFile({ name: droppedFile.name });
-  //     setFileContent(droppedFile.content);
-  //     setShowBadge(true);
-
-  //     // Clear the parent's droppedFile so we don't re-run each render
-  //     setDroppedFile(null);
-  //   }
-  // }, [droppedFile, setDroppedFile]);
-
   useEffect(() => {
     if (droppedFile) {
       // Drag & drop => we read the file right away (triggerType "direct")
@@ -230,11 +216,8 @@ const ManuPilotInput = ({
   // Auto-resize and auto-scroll on input
   const handleInput = (e) => {
     const target = e.target;
-    // Reset the height so it can shrink on delete
     target.style.height = "auto";
-    // Then set it to match the content
     target.style.height = `${target.scrollHeight}px`;
-    // Always scroll to the bottom
     target.scrollTop = target.scrollHeight;
   };
 
@@ -263,33 +246,6 @@ const ManuPilotInput = ({
       setOpenAttachDialog(true);
     }
   };
-
-  // Build final message string, send to parent
-  // const sendUserMessage = () => {
-  //   const typedText = textAreaRef.current.value.trim();
-
-  //   if (!typedText && !selectedFile) return;
-
-  //   // Build the message object
-  //   const newMessage = {
-  //     text: typedText || "",
-  //     file: selectedFile
-  //       ? { name: selectedFile.name, content: fileContent }
-  //       : null,
-  //   };
-
-  //   // Save for possible "Regenerate" usage
-  //   setLastMessage(newMessage);
-
-  //   // Send to parent
-  //   handleSendMessage(newMessage);
-
-  //   // Reset
-  //   textAreaRef.current.value = "";
-  //   setSelectedFile(null);
-  //   setFileContent(null);
-  //   setShowBadge(false);
-  // };
 
   function sendUserMessage() {
     const typedText = textAreaRef.current.value.trim();
@@ -337,13 +293,6 @@ const ManuPilotInput = ({
     setPendingFile(file);
     setPendingError("");
   };
-  //Once user clicks "Upload" in the dialog
-  // const handleUpload = () => {
-  //   if (selectedFile) {
-  //     setOpenAttachDialog(false);
-  //     setShowBadge(true);
-  //   }
-  // };
 
   function handleUpload() {
     if (!pendingFile) return;
@@ -439,9 +388,6 @@ const ManuPilotInput = ({
                 onKeyDown={handleKeyDown}
                 onFocus={() => {
                   setIsFocused(true);
-
-                  // Wait ~300ms to allow the keyboard to animate in,
-                  // then scroll the textarea into view so it's not covered.
                   setTimeout(() => {
                     textAreaRef.current?.scrollIntoView({
                       block: "nearest",

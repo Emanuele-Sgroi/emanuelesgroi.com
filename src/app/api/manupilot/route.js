@@ -1,3 +1,5 @@
+// API call for openAI used for Manupilot
+
 export const runtime = "nodejs";
 
 import OpenAI from "openai";
@@ -13,7 +15,6 @@ export async function POST(req) {
   try {
     const { messages } = await req.json();
 
-    // 1) Validate messages
     if (!messages || !Array.isArray(messages)) {
       return new Response(
         JSON.stringify({ error: "Messages must be provided as an array" }),
@@ -21,7 +22,6 @@ export async function POST(req) {
       );
     }
 
-    // 2) Approximate token count
     const tokenCount = approximateTokenCount(messages);
 
     if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
@@ -42,14 +42,12 @@ export async function POST(req) {
         );
       }
 
-      // Forward the summarized response
       const summarizedData = await summarizeResponse.json();
       return new Response(JSON.stringify(summarizedData), {
         status: 200,
       });
     }
 
-    // 4) Make the OpenAI request if tokens are within the limit
     const chatCompletion = await openai.chat.completions.create({
       model: "chatgpt-4o-latest",
       messages,

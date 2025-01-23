@@ -39,7 +39,6 @@ const customComponents = {
   ),
   li: ({ children }) => <li className="mb-1">{children}</li>,
   code: ({ inline, className, children }) => {
-    //const language = /language-(\w+)/.exec(className || "")?.[1] || "plaintext";
     return !inline ? (
       <CodeBlock code={String(children).trim()} lang="javascript" />
     ) : (

@@ -15,7 +15,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
 
 const ProfileBar = ({ generalInfo }) => {
   const [showCopy, setShowCopy] = useState(false);

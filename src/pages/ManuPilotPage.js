@@ -22,7 +22,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
@@ -184,19 +183,16 @@ const ManuPilotPage = () => {
       const file = e.dataTransfer.files[0];
       const ext = file.name.split(".").pop().toLowerCase();
 
-      // 1) Check extension
       if (!allowedExtensions.includes(`.${ext}`)) {
         toast.error("This file type is not supported.");
         return;
       }
 
-      // 2) Check size
       if (file.size > MAX_FILE_SIZE_BYTES) {
         toast.error("File exceeds 2 MB limit.");
         return;
       }
 
-      // 3) Pass the raw File object to the child
       setDroppedFile(file);
     }
 
@@ -213,91 +209,6 @@ const ManuPilotPage = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   function handleDragEnter(e) {
-  //     // We only want to react if the user is dragging files
-  //     if (e.dataTransfer.types?.includes("Files")) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
-
-  //       setDragCounter((prev) => prev + 1);
-  //       setIsDraggingFile(true); // Show the overlay
-  //     }
-  //   }
-
-  //   function handleDragOver(e) {
-  //     if (e.dataTransfer.types?.includes("Files")) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
-  //       // We do *not* increment here, or you'd quickly inflate dragCounter
-  //     }
-  //   }
-
-  //   function handleDragLeave(e) {
-  //     // If we leave *an element* but still inside the page, we’ll see dragleave.
-  //     // We only hide if dragCounter gets to 0
-  //     if (e.dataTransfer.types?.includes("Files")) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
-
-  //       setDragCounter((prevCount) => {
-  //         const newCount = prevCount - 1;
-  //         if (newCount <= 0) {
-  //           // All "drag enters" are gone
-  //           setIsDraggingFile(false);
-  //           return 0;
-  //         }
-  //         return newCount;
-  //       });
-  //     }
-  //   }
-
-  //   function handleDrop(e) {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //     // Reset our counter and overlay
-  //     setDragCounter(0);
-  //     setIsDraggingFile(false);
-
-  //     if (!e.dataTransfer.files?.length) return;
-  //     const file = e.dataTransfer.files[0];
-  //     const ext = file.name.split(".").pop().toLowerCase();
-
-  //     if (!allowedExtensions.includes(`.${ext}`)) {
-  //       toast.error("This file type is not supported.");
-  //       return;
-  //     }
-
-  //     if (file.size > MAX_FILE_SIZE_BYTES) {
-  //       toast.error("File exceeds 2 MB limit.");
-  //       return;
-  //     }
-
-  //     // Read file
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const result = reader.result;
-  //       setDroppedFile({ name: file.name, content: result });
-  //     };
-  //     reader.onerror = () => {
-  //       toast.error("Failed to read the file.");
-  //     };
-  //     reader.readAsText(file);
-  //   }
-
-  //   window.addEventListener("dragenter", handleDragEnter);
-  //   window.addEventListener("dragover", handleDragOver);
-  //   window.addEventListener("dragleave", handleDragLeave);
-  //   window.addEventListener("drop", handleDrop);
-
-  //   return () => {
-  //     window.removeEventListener("dragenter", handleDragEnter);
-  //     window.removeEventListener("dragover", handleDragOver);
-  //     window.removeEventListener("dragleave", handleDragLeave);
-  //     window.removeEventListener("drop", handleDrop);
-  //   };
-  // }, []);
-
   if (isManuPilotLoading || !manuPilotContent) {
     return <Loading />;
   }
@@ -306,26 +217,19 @@ const ManuPilotPage = () => {
     return <ErrorMessage />;
   }
 
-  // --------------------------------------
-  // NEW: handleSendMessage takes an object
-  // --------------------------------------
+  // handleSendMessage takes an object
   const handleSendMessage = async (newMessage) => {
-    // newMessage = { text: "...", file: { name: "...", content: "..." } }
-    // or possibly { text: "...", file: null } if no file was attached
     if (!newMessage) return;
     const { text, file } = newMessage;
 
-    // Don't send empty if there's no text and no file
     if (!text && !file) return;
 
-    // 1) Add user message to local conversation
     setConversation((prev) => [...prev, { role: "user", text, file }]);
 
     setLoading(true);
     setError(null);
 
     try {
-      // 2) Build final messages array for the AI (merging file content)
       const conversationWithNew = [
         ...conversation,
         { role: "user", text, file },
@@ -335,7 +239,6 @@ const ManuPilotPage = () => {
         ...convertConversationToApiMessages(conversationWithNew),
       ];
 
-      // 3) Call your API
       const response = await fetch("/api/manupilot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -344,7 +247,6 @@ const ManuPilotPage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        // 4) AI response => push into conversation
         setConversation((prev) => [
           ...prev,
           { role: "assistant", content: data.content },
@@ -368,18 +270,15 @@ const ManuPilotPage = () => {
     }
   };
 
-  // Helper to transform conversation (local) => ChatGPT API format
   function convertConversationToApiMessages(convo) {
     return convo.map((msg) => {
       if (msg.role === "user") {
-        // Combine user’s typed text + file content if present
         let combined = msg.text || "";
         if (msg.file) {
           combined += `\n\nAttached file: ${msg.file.name}\n${msg.file.content}`;
         }
         return { role: "user", content: combined.trim() };
       }
-      // assistant messages remain as-is
       return { role: msg.role, content: msg.content };
     });
   }
@@ -421,81 +320,6 @@ const ManuPilotPage = () => {
     </div>
   );
 };
-
-/**
- * Summarization logic: if total tokens > MAX_TOKENS_FOR_PROMPT,
- *    we ask the AI to create a short summary of older messages, then replace them
- *    with a single summary message, so the entire conversation is shorter.
- */
-// async function maybeSummarizeIfNeeded(fullMessages) {
-//   const totalTokens = countTokens(fullMessages);
-//   if (totalTokens <= MAX_TOKENS_FOR_PROMPT) {
-//     return fullMessages;
-//   }
-
-//   // If we exceed 100k tokens, let's summarize older messages
-//   // We'll keep system + last 5 messages, and summarize everything else in between
-
-//   const systemMsg = fullMessages[0];
-//   const lastFive = fullMessages.slice(-5);
-//   const olderMessages = fullMessages.slice(1, -5);
-
-//   // call /api/manupilot-summarize with olderMessages
-//   const summarizeRes = await fetch("/api/manupilot-summarize", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ olderMessages }),
-//   });
-
-//   const summarizeData = await summarizeRes.json();
-//   if (!summarizeRes.ok) {
-//     console.error("Error summarizing older messages:", summarizeData.error);
-//     // if summarization fails, fallback to returning original (dangerous for token limit!)
-//     return fullMessages;
-//   }
-
-//   const summaryText =
-//     summarizeData.summary || "Unable to summarize older chat.";
-
-//   // Now we replace older messages with one short summary message
-//   const newConversation = [
-//     systemMsg,
-//     {
-//       role: "assistant",
-//       content: `SUMMARIZED CONTEXT:\n${summaryText}`,
-//     },
-//     ...lastFive,
-//   ];
-
-//   // Re-check token usage after summarizing
-//   const checkAgain = countTokens(newConversation);
-//   if (checkAgain > MAX_TOKENS_FOR_PROMPT) {
-//     console.warn(
-//       `Still over token limit after summarizing: ${checkAgain} tokens. Consider chunking further.`
-//     );
-//     // for now we just inform the user that we are over the limit and we invite him to reset the conversation
-//     alert(
-//       `You are over the token limit. Please consider resetting your conversation otherwise ManuPilot will not work.`
-//     );
-//   }
-
-//   return newConversation;
-// }
-
-/** A small function to count tokens using tiktoken. */
-// function countTokens(messages) {
-//   const encoding = encodingForModel("chatgpt-4o-latest");
-//   let total = 0;
-
-//   for (const msg of messages) {
-//     // add the content tokens
-//     const tokens = encoding.encode(msg.content);
-//     total += tokens.length;
-//   }
-
-//   encoding.free();
-//   return total;
-// }
 
 /**
  * A small hook to handle the "are you sure you want to leave" warning
