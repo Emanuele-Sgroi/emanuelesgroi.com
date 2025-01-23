@@ -30,6 +30,7 @@ const ManuPilotInput = ({
   clearError,
   droppedFile,
   setDroppedFile,
+  conversation,
 }) => {
   const [openAttachDialog, setOpenAttachDialog] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -445,7 +446,9 @@ const ManuPilotInput = ({
           <div className="w-full px-4 py-1 center">
             {error && error.type === "chat" ? (
               <div className="center flex-col gap-2">
-                <p className="text-sm text-text-primary">{error.message}</p>
+                <p className="text-sm text-text-primary text-center">
+                  {error.message}
+                </p>
                 <button
                   onClick={() => {
                     clearError();
@@ -463,7 +466,9 @@ const ManuPilotInput = ({
               </div>
             ) : (
               <div className="center flex-col gap-2">
-                <p className="text-sm text-red-600">{error.message}</p>
+                <p className="text-sm text-red-600 text-center">
+                  {error.message}
+                </p>
                 <button
                   onClick={() => {
                     clearError();
