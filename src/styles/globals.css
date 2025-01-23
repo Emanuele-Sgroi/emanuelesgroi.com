@@ -58,6 +58,9 @@
   --other-chart-yellow3: #ecd718;
   --other-chart-yellow4: #ceba0c;
 
+  --manupilot-badge-blue: #b9c7b3;
+  --manupilot-badge-purple: #ebd7dd;
+
   /* Font Sizes */
   --font-xs: 12px;
   --font-sm: 14px;
@@ -140,6 +143,9 @@
   --other-chart-yellow2: #fff176;
   --other-chart-yellow3: #fff59d;
   --other-chart-yellow4: #fff9c4;
+
+  --manupilot-badge-blue: #02031a;
+  --manupilot-badge-purple: #4b0082;
 }
 
 html {
