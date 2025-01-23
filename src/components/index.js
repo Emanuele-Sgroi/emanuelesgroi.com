@@ -1,4 +1,9 @@
 export { default as Navbar } from "./Navbar/Navbar";
+export { default as NavLogo } from "./Navbar/NavLogo";
+export { default as NavSearchBar } from "./Navbar/NavSearchBar";
+export { default as ToggleThemeButton } from "./Navbar/ToggleThemeButton";
+export { default as NavManuPilotLink } from "./Navbar/NavManuPilotLink";
+export { default as NavMobileSideProfile } from "./Navbar/NavMobileSideProfile";
 export { default as ProfileBar } from "./ProfileBar/ProfileBar";
 export { default as WelcomeReadMe } from "./WelcomePage/WelcomeReadMe";
 export { default as ContributionChart } from "./ContributionChart/ContributionChart";
@@ -20,3 +25,4 @@ export { default as FixedBar } from "./DiscussionsPage/FixedBar";
 export { default as ManuPilotHeader } from "./ManuPilotPage/ManuPilotHeader";
 export { default as ManuPilotBody } from "./ManuPilotPage/ManuPilotBody";
 export { default as ManuPilotInput } from "./ManuPilotPage/ManuPilotInput";
+export { default as AttachFileOverlay } from "./ManuPilotPage/AttachFileOverlay";

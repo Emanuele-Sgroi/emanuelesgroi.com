@@ -335,7 +335,7 @@ a {
 
 .manupilot-main-container {
   width: 100%;
-  height: calc(100vh - 63px); /* counting the navbar height */
+  height: calc(100svh - 63px); /* counting the navbar height */
   background-color: var(--bg-primary);
   display: flex;
   flex-direction: column;

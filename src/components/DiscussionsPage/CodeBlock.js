@@ -18,7 +18,7 @@ const CodeBlock = ({ code, lang }) => {
         language={lang}
         style={theme === "dark" ? darcula : oneLight}
         customStyle={{ width: "100%", minWidth: 0 }}
-        className="rounded-md border border-accent-border"
+        className="rounded-md border border-accent-border thin-scrollbar"
       >
         {code}
       </SyntaxHighlighter>

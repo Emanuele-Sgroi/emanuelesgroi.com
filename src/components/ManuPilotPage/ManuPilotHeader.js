@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Popover,
   PopoverContent,
@@ -16,22 +16,59 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
-const ManuPilotHeader = () => {
+const ManuPilotHeader = ({ onClickReset, conversation }) => {
   return (
     <div className="w-full p-4 bg-bg-primary center relative">
-      <TooltipProvider delayDuration={100} skipDelayDuration={500}>
-        <Tooltip>
-          <TooltipTrigger className="absolute left-4">
-            <button className=" p-2 bg-bg-button hover:bg-bg-hover border border-accent-border rounded-md">
-              <BiEdit size={18} className="text-accent-icon" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p className="text-xs">Reset conversation</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <AlertDialog>
+        <AlertDialogTrigger
+          disabled={conversation.length < 1}
+          className="absolute left-4"
+        >
+          <TooltipProvider delayDuration={100} skipDelayDuration={500}>
+            <Tooltip>
+              <TooltipTrigger
+                disabled={conversation.length < 1}
+                className=" p-2 bg-bg-button hover:bg-bg-hover border border-accent-border rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
+              >
+                <BiEdit size={18} className="text-accent-icon" />
+              </TooltipTrigger>
+              <TooltipContent
+                disabled={conversation.length < 1}
+                className="max-md:!hidden"
+              >
+                <p className="text-xs">Reset conversation</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to Reset the chat?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Your current conversation with ManuPilot will be lost and cannot
+              be recovered.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={onClickReset}>Reset</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="flex items-center sm:gap-2">
         <p className="text-text-primary font-bold mr-2 max-sm:hidden">

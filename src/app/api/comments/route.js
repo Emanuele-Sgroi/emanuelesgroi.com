@@ -1,3 +1,5 @@
+// Comments API Handler: Handles CRUD operations for comments using Prisma
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -14,17 +16,6 @@ export async function POST(request) {
       isTopComment,
     } = await request.json();
 
-    // Log request data for debugging
-    // console.log("POST Request Body:", {
-    //   name,
-    //   avatar,
-    //   content,
-    //   parentId,
-    //   reactions,
-    //   isAuthor,
-    //   isTopComment,
-    // });
-
     const newComment = await prisma.comment.create({
       data: {
         name,
@@ -36,8 +27,6 @@ export async function POST(request) {
         isTopComment: isTopComment || false,
       },
     });
-
-    //console.log("New Comment Created:", newComment);
 
     return new Response(JSON.stringify(newComment), {
       status: 201,
@@ -55,15 +44,10 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const comments = await prisma.comment.findMany({
-      // include: {
-      //   children: true, // Fetch all replies (nested comments)
-      // },
       orderBy: {
         createdAt: "desc", // Sort comments by creation date
       },
     });
-
-    //console.log(JSON.stringify(comments));
 
     return new Response(JSON.stringify(comments), {
       status: 200,
@@ -86,8 +70,6 @@ export async function PATCH(request) {
       where: { id: Number(id) },
       data: { reactions },
     });
-
-    //console.log("Updated Comment:", updatedComment);
 
     return new Response(JSON.stringify(updatedComment), {
       status: 200,

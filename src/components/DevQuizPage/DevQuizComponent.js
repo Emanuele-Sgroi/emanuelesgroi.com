@@ -78,7 +78,9 @@ const DevQuizComponent = () => {
   };
 
   const handleStartQuiz = () => setQuizStep("chooseTopic");
+
   const handleCancelQuiz = () => setQuizStep("welcome");
+
   const handleTopicsSelected = (selectedKeys) => {
     console.log("Selected Keys:", selectedKeys); // Debugging
     const topicsWithQuestions = topics.filter((topic) =>
@@ -88,6 +90,7 @@ const DevQuizComponent = () => {
     setSelectedTopics(topicsWithQuestions);
     setQuizStep("selectNumber");
   };
+
   const handleQuestionNumbersSelected = (questions) => {
     setSelectedQuestions(questions);
     setQuizStep("quizStart"); // Proceed to the quiz step

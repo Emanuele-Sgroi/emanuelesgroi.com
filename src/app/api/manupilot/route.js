@@ -1,9 +1,15 @@
+// API call for openAI used for Manupilot
+
+export const runtime = "nodejs";
+
 import OpenAI from "openai";
 
 // Initialize the OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const MAX_TOKENS_FOR_PROMPT = 100000;
 
 export async function POST(req) {
   try {
@@ -16,23 +22,34 @@ export async function POST(req) {
       );
     }
 
-    // Estimate tokens
-    const tokenCount = messages.reduce(
-      (total, message) => total + message.content.length,
-      0
-    );
-    if (tokenCount > 2000) {
-      return new Response(
-        JSON.stringify({
-          error: "Your query exceeds the 2,000-token limit. Please shorten it!",
-        }),
-        { status: 400 }
+    const tokenCount = approximateTokenCount(messages);
+
+    if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
+      const summarizeResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/manupilot-summarize`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages }),
+        }
       );
+
+      if (!summarizeResponse.ok) {
+        const errorData = await summarizeResponse.json();
+        return new Response(
+          JSON.stringify({ error: errorData.error || "Summarization failed" }),
+          { status: summarizeResponse.status }
+        );
+      }
+
+      const summarizedData = await summarizeResponse.json();
+      return new Response(JSON.stringify(summarizedData), {
+        status: 200,
+      });
     }
 
-    // Call the OpenAI chat completion API
     const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "chatgpt-4o-latest",
       messages,
     });
 
@@ -59,4 +76,15 @@ export async function POST(req) {
       { status: 500 }
     );
   }
+}
+
+/** A simple approximation: ~4 characters = 1 token */
+function approximateTokenCount(messages) {
+  let totalChars = 0;
+  for (const msg of messages) {
+    if (msg?.content) {
+      totalChars += msg.content.length;
+    }
+  }
+  return Math.floor(totalChars / 4);
 }

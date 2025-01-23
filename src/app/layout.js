@@ -1,11 +1,13 @@
 import { Inter } from "next/font/google";
+import "react-circular-progressbar/dist/styles.css";
+import "react-toastify/dist/ReactToastify.css";
+import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
 import { SplashScreenProvider } from "@/context/SplashScreenProvider";
 import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { Navbar, Footer, GreetingPopup } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

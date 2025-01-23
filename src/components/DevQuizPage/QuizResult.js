@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+//import "react-circular-progressbar/dist/styles.css";
 
 const QuizResult = ({
   selectedTopics,
@@ -81,29 +81,19 @@ const QuizResult = ({
           value={displayPercentage}
           text={`${displayPercentage.toFixed(1)}%`}
           styles={{
-            // Customize the path, i.e. the "completed progress"
             path: {
-              // Path color
               stroke: color,
-              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
               strokeLinecap: "butt",
-              // Customize transition animation
               transition: "stroke-dashoffset 0.5s ease 0s",
               strokeWidth: "3px",
             },
-            // Customize the circle behind the path, i.e. the "total progress"
             trail: {
-              // Trail color
               stroke: "#d6d6d6",
-              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
               strokeLinecap: "butt",
               strokeWidth: "3px",
             },
-            // Customize the text
             text: {
-              // Text color
               fill: color,
-              // Text size
               fontSize: "14px",
             },
           }}

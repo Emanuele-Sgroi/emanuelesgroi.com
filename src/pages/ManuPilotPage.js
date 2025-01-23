@@ -1,80 +1,416 @@
 "use client";
 
-import React, { useState } from "react";
-import { ManuPilotHeader, ManuPilotBody, ManuPilotInput } from "@/components";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  ManuPilotHeader,
+  ManuPilotBody,
+  ManuPilotInput,
+  AttachFileOverlay,
+  Loading,
+  ErrorMessage,
+} from "@/components";
+import { useManuPilotContent } from "@/hooks/useManuPilotContent";
+import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ToastContainer, toast } from "react-toastify";
+
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
+
+const allowedExtensions = [
+  ".txt",
+  ".csv",
+  ".json",
+  ".js",
+  ".jsx",
+  ".ts",
+  ".tsx",
+  ".html",
+  ".css",
+  ".scss",
+  ".sass",
+  ".php",
+  ".py",
+  ".java",
+  ".c",
+  ".cpp",
+  ".h",
+  ".hpp",
+  ".cs",
+  ".rb",
+  ".swift",
+  ".kt",
+  ".go",
+  ".rs",
+  ".sh",
+  ".bash",
+  ".yaml",
+  ".yml",
+  ".xml",
+  ".ini",
+  ".md",
+  ".sql",
+  ".env",
+  ".gitignore",
+  ".npmrc",
+  ".editorconfig",
+  ".babelrc",
+  ".prettierrc",
+  ".eslintrc",
+  ".prisma",
+  ".db",
+  ".dbml",
+  ".psql",
+  ".pgsql",
+  ".mongo",
+  ".nosql",
+  ".sqlite",
+  ".mjs",
+  ".vue",
+  ".svelte",
+  ".angular",
+  ".elm",
+  ".ejs",
+  ".hbs",
+  ".njk",
+  ".lit",
+  ".mjml",
+  ".sol",
+  ".vyper",
+  ".wasm",
+  ".ipynb",
+  ".r",
+  ".dvc",
+  ".pkl",
+  ".dart",
+  ".erl",
+  ".ex",
+  ".exs",
+  ".scala",
+  ".clj",
+  ".lisp",
+  ".ml",
+  ".hs",
+  ".scheme",
+  ".nim",
+  ".toml",
+  ".makefile",
+  ".cmake",
+  ".gradle",
+  ".dockerfile",
+  ".compose",
+  ".zshrc",
+  ".bashrc",
+  ".bash_profile",
+  ".profile",
+  ".fish",
+  ".rst",
+  ".asciidoc",
+  ".tex",
+  ".latex",
+  ".bib",
+  ".adoc",
+];
 
 const ManuPilotPage = () => {
+  const { isManuPilotError, isManuPilotLoading, manuPilotContent } =
+    useManuPilotContent();
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState(null);
+  const router = useRouter();
+  const originalPushRef = useRef(router.push);
+
   const [conversation, setConversation] = useState([]); // Store messages
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addMessage = (message) => {
-    setConversation((prev) => [...prev, message]);
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
+  const [droppedFile, setDroppedFile] = useState(null);
+  const [dragCounter, setDragCounter] = useState(0);
+
+  // handle tab close or route changes
+  useNavigationProtection(conversation, router, originalPushRef);
+
+  // ----- DRAG & DROP LOGIC -----
+
+  useEffect(() => {
+    function handleDragEnter(e) {
+      if (e.dataTransfer.types?.includes("Files")) {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragCounter((prev) => prev + 1);
+        setIsDraggingFile(true);
+      }
+    }
+
+    function handleDragOver(e) {
+      if (e.dataTransfer.types?.includes("Files")) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+
+    function handleDragLeave(e) {
+      if (e.dataTransfer.types?.includes("Files")) {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragCounter((prevCount) => {
+          const newCount = prevCount - 1;
+          if (newCount <= 0) {
+            setIsDraggingFile(false);
+            return 0;
+          }
+          return newCount;
+        });
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setDragCounter(0);
+      setIsDraggingFile(false);
+
+      if (!e.dataTransfer.files?.length) return;
+      const file = e.dataTransfer.files[0];
+      const ext = file.name.split(".").pop().toLowerCase();
+
+      if (!allowedExtensions.includes(`.${ext}`)) {
+        toast.error("This file type is not supported.");
+        return;
+      }
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        toast.error("File exceeds 2 MB limit.");
+        return;
+      }
+
+      setDroppedFile(file);
+    }
+
+    window.addEventListener("dragenter", handleDragEnter);
+    window.addEventListener("dragover", handleDragOver);
+    window.addEventListener("dragleave", handleDragLeave);
+    window.addEventListener("drop", handleDrop);
+
+    return () => {
+      window.removeEventListener("dragenter", handleDragEnter);
+      window.removeEventListener("dragover", handleDragOver);
+      window.removeEventListener("dragleave", handleDragLeave);
+      window.removeEventListener("drop", handleDrop);
+    };
+  }, []);
+
+  if (isManuPilotLoading || !manuPilotContent) {
+    return <Loading />;
+  }
+
+  if (isManuPilotError) {
+    return <ErrorMessage />;
+  }
+
+  // handleSendMessage takes an object
+  const handleSendMessage = async (newMessage) => {
+    if (!newMessage) return;
+    const { text, file } = newMessage;
+
+    if (!text && !file) return;
+
+    setConversation((prev) => [...prev, { role: "user", text, file }]);
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const conversationWithNew = [
+        ...conversation,
+        { role: "user", text, file },
+      ];
+      const messagesForApi = [
+        { role: "system", content: manuPilotContent.aiInstructions }, // System instructions
+        ...convertConversationToApiMessages(conversationWithNew),
+      ];
+
+      const response = await fetch("/api/manupilot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: messagesForApi }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setConversation((prev) => [
+          ...prev,
+          { role: "assistant", content: data.content },
+        ]);
+      } else {
+        console.error("Error:", data.error);
+        setError({
+          type: "chat",
+          message: "There was an error generating a response.",
+        });
+      }
+    } catch (error) {
+      console.error("API error:", error);
+      setError({
+        type: "system",
+        message:
+          "ManuPilot is experiencing an issue. Please try regenerating your response. If the problem persists, try again later.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
+  function convertConversationToApiMessages(convo) {
+    return convo.map((msg) => {
+      if (msg.role === "user") {
+        let combined = msg.text || "";
+        if (msg.file) {
+          combined += `\n\nAttached file: ${msg.file.name}\n${msg.file.content}`;
+        }
+        return { role: "user", content: combined.trim() };
+      }
+      return { role: msg.role, content: msg.content };
+    });
+  }
+
+  const handleResetConversation = () => {
+    setConversation([]);
+  };
+
+  const clearError = () => setError(null);
+
   return (
-    <div className="manupilot-main-container">
-      <ManuPilotHeader />
-      <ManuPilotBody conversation={conversation} loading={loading} />
-      <ManuPilotInput
-        addMessage={addMessage}
-        loading={loading}
-        setLoading={setLoading}
+    <div className="!relative manupilot-main-container">
+      <ManuPilotHeader
+        onClickReset={handleResetConversation}
+        conversation={conversation}
       />
+      <ManuPilotBody
+        conversation={conversation}
+        loading={loading}
+        handleSendMessage={handleSendMessage}
+      />
+      <ManuPilotInput
+        loading={loading}
+        handleSendMessage={handleSendMessage}
+        error={error}
+        clearError={clearError}
+        droppedFile={droppedFile}
+        setDroppedFile={setDroppedFile}
+      />
+      <NavigationWarningDialog
+        showNavigationWarning={showNavigationWarning}
+        setShowNavigationWarning={setShowNavigationWarning}
+        pendingUrl={pendingUrl}
+        originalPushRef={originalPushRef}
+        router={router}
+      />
+
+      <AttachFileOverlay isDraggingFile={isDraggingFile} />
     </div>
   );
 };
 
+/**
+ * A small hook to handle the "are you sure you want to leave" warning
+ */
+function useNavigationProtection(conversation, router, originalPushRef) {
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState(null);
+
+  useEffect(() => {
+    if (conversation.length > 0) {
+      // warn on browser/tab close
+      const handleBeforeUnload = (e) => {
+        e.preventDefault();
+        e.returnValue = "";
+      };
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () =>
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+  }, [conversation]);
+
+  useEffect(() => {
+    if (conversation.length > 0) {
+      // intercept router.push
+      router.push = (url, as, options) => {
+        if (url !== router.asPath) {
+          setPendingUrl(() => () => originalPushRef.current(url, as, options));
+          setShowNavigationWarning(true);
+          return;
+        }
+        return originalPushRef.current(url, as, options);
+      };
+      return () => {
+        router.push = originalPushRef.current;
+      };
+    }
+  }, [router, conversation]);
+
+  return {
+    showNavigationWarning,
+    setShowNavigationWarning,
+    pendingUrl,
+    setPendingUrl,
+  };
+}
+
+/**
+ * Render the AlertDialog for navigation warnings
+ */
+function NavigationWarningDialog({
+  showNavigationWarning,
+  setShowNavigationWarning,
+  pendingUrl,
+  originalPushRef,
+  router,
+}) {
+  const handleNavigationConfirm = () => {
+    if (pendingUrl) pendingUrl();
+    restoreOriginalPush();
+  };
+
+  const handleNavigationCancel = () => {
+    setShowNavigationWarning(false);
+    restoreOriginalPush();
+  };
+
+  const restoreOriginalPush = () => {
+    router.push = originalPushRef.current;
+  };
+
+  return (
+    <AlertDialog open={showNavigationWarning}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure you want to leave?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Your current conversation with ManuPilot will be lost and cannot be
+            recovered.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={handleNavigationCancel}>
+            Stay
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleNavigationConfirm}>
+            Leave
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
 export default ManuPilotPage;
-
-// {/* <div className="max-w-3xl mx-auto p-4">
-// <h1 className="text-2xl font-bold mb-4">ManuPilot Chat</h1>
-
-// {/* Chat Messages */}
-// <div className="border rounded-lg p-4 mb-4 bg-white max-h-[400px] overflow-y-auto">
-//   {messages.map((message, index) => (
-//     <div
-//       key={index}
-//       className={`mb-3 ${
-//         message.role === "user" ? "text-right" : "text-left"
-//       }`}
-//     >
-//       <p
-//         className={`p-2 rounded-md ${
-//           message.role === "user"
-//             ? "bg-blue-100 text-blue-800"
-//             : "bg-gray-100 text-gray-800"
-//         }`}
-//       >
-//         {message.content}
-//       </p>
-//     </div>
-//   ))}
-//   {!messages.length && (
-//     <p className="text-gray-500">
-//       No messages yet. Start the conversation!
-//     </p>
-//   )}
-// </div>
-
-// {/* Input Field */}
-// <form onSubmit={handleSubmit} className="flex gap-2">
-//   <input
-//     type="text"
-//     className="flex-1 p-2 border rounded-md"
-//     value={input}
-//     onChange={(e) => setInput(e.target.value)}
-//     placeholder="Type your message..."
-//     disabled={isLoading}
-//   />
-//   <button
-//     type="submit"
-//     className="p-2 bg-blue-500 text-white rounded-md"
-//     disabled={isLoading}
-//   >
-//     {isLoading ? "Loading..." : "Send"}
-//   </button>
-// </form>
-
-// {/* Error Message */}
-// {error && <p className="text-red-500 mt-2">{error}</p>}
-// </div> */}
