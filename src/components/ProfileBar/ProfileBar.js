@@ -7,7 +7,7 @@ import { GrLocation } from "react-icons/gr";
 import { TfiEmail } from "react-icons/tfi";
 import { IoLogoGithub, IoMdDownload } from "react-icons/io";
 import { FaLinkedin, FaInstagram, FaFacebook, FaDiscord } from "react-icons/fa";
-import { IoCopy } from "react-icons/io5";
+import { IoCopy, IoCloseSharp } from "react-icons/io5";
 import { CgFileDocument } from "react-icons/cg";
 import {
   Popover,
@@ -15,10 +15,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ToastContainer, toast } from "react-toastify";
+import { images } from "@/utils/imageImport";
+import Link from "next/link";
 
 const ProfileBar = ({ generalInfo }) => {
   const [showCopy, setShowCopy] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showManuPilotBadge, setShowManuPilotBadge] = useState(true);
+
+  useEffect(() => {
+    // Check localStorage for badge visibility
+    const badgeStatus = localStorage.getItem("showManuPilotBadge");
+    if (badgeStatus === "false") {
+      setShowManuPilotBadge(false);
+    }
+  }, []);
+
+  const handleCloseBadge = () => {
+    setShowManuPilotBadge(false);
+    localStorage.setItem("showManuPilotBadge", "false"); // Save preference
+  };
 
   // Retrieve image URLs from content
   const profilePirctureUrl = generalInfo?.profilePicture
@@ -91,6 +107,7 @@ const ProfileBar = ({ generalInfo }) => {
       </div>
 
       <p className="max-md:hidden mt-4">{generalInfo?.sentence}</p>
+
       <div className="max-md:hidden w-full h-px my-4 bg-accent-border" />
       <div className="max-md:hidden flex items-center gap-2">
         <GrLocation size={18} className="text-accent-icon" />
@@ -196,6 +213,48 @@ const ProfileBar = ({ generalInfo }) => {
       </div>
 
       <div className="max-md:hidden w-full h-px my-4 bg-accent-border" />
+
+      {/* Manupilot badge */}
+      {showManuPilotBadge && (
+        <div
+          className="max-md:hidden relative w-full p-4 border border-accent-border rounded-md mb-4 center flex-col"
+          style={{
+            background:
+              "linear-gradient(45deg, var(--manupilot-badge-blue) 0%, var(--manupilot-badge-blue) 30%, var(--manupilot-badge-purple)  60%, var(--manupilot-badge-purple)  100%)",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <div className="relative w-full flex justify-end">
+            <Image
+              src={images.copilot}
+              alt="ManuPilot"
+              width={100} // Increase resolution to improve clarity
+              height={100} // Match width for consistency
+              quality={100} // Maximum quality for best appearance
+              className="w-[80px] h-auto object-contain mt-4 mb-1" // Ensure the image scales properly
+              priority={true} // Preload image for faster rendering
+              loading="eager" // Load image immediately (for essential visuals)
+            />
+            <div className="absolute left-0">
+              <h2 className=" font-bold text-base">Discover</h2>
+              <h2 className="font-bold">ManuPilot</h2>
+              <p className="text-sm mt-2 text-text-secondary">
+                Inspired by GitHub Copilot
+              </p>
+            </div>
+          </div>
+          <Link
+            href={"/manupilot"}
+            className="!w-full rounded-full px-2 py-1 bg-white text-black text-sm mt-6 center font-bold hover:bg-accent-extra hover:text-white transition-all"
+          >
+            Open ManuPilot
+          </Link>
+          <button onClick={handleCloseBadge} className="absolute top-1 right-1">
+            <IoCloseSharp size={18} className="text-text-primary" />
+          </button>
+        </div>
+      )}
+
       <p className="max-md:hidden text-sm text-accent-extra">
         One day, I&apos;ll keep adding features to make this site look even more
         GitHub-like. For now, enjoy it just as it is! 😄🚀✨
