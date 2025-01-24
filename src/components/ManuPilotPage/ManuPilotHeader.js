@@ -30,7 +30,7 @@ import {
 
 const ManuPilotHeader = ({ onClickReset, conversation }) => {
   return (
-    <div className="w-full p-4 bg-bg-primary center relative">
+    <div className="w-full px-4 py-2 sm:py-4 bg-bg-primary center relative">
       <AlertDialog>
         <AlertDialogTrigger
           disabled={conversation.length < 1}
@@ -40,7 +40,7 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
             <Tooltip>
               <TooltipTrigger
                 disabled={conversation.length < 1}
-                className=" p-2 bg-bg-button hover:bg-bg-hover border border-accent-border rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
+                className=" p-1 sm:p-2 bg-bg-button hover:bg-bg-hover border border-accent-border cursor-pointer rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
               >
                 <BiEdit size={18} className="text-accent-icon" />
               </TooltipTrigger>
@@ -76,12 +76,12 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
         </p>{" "}
         <p className="max-sm:hidden">-</p>
         <Popover>
-          <PopoverTrigger className="text-text-primary font-bold center gap-1 p-2 rounded-md hover:bg-bg-hover">
+          <PopoverTrigger className="text-text-primary font-bold max-sm:text-sm center gap-1 p-2 rounded-md hover:bg-bg-hover">
             GPT 4o <IoCaretDown size={10} className="text-accent-icon" />
           </PopoverTrigger>
           <PopoverContent>
             <div>
-              <div className="flex items-start gap-2 border-b border-accent-border pb-4">
+              <div className="flex items-start gap-2 border-b border-accent-border pb-2 sm:pb-4">
                 <div className="center gap-2">
                   <FaCheck size={14} className="text-accent-icon" />
                   <div className="bg-[#059669] p-[2px] rounded-sm">
@@ -89,13 +89,15 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
                   </div>
                 </div>
                 <div className="center flex-col gap-1 mt-[-1px]">
-                  <p className="text-text-primary font-bold">GPT 4o</p>{" "}
-                  <p className="text-text-secondary text-xs font-light">
+                  <p className="text-text-primary max-sm:text-sm font-bold">
+                    GPT 4o
+                  </p>{" "}
+                  <p className="text-text-secondary text-xs font-light max-sm:ml-2">
                     OpenAI API
                   </p>
                 </div>
               </div>
-              <p className="text-sm text-text-primary  mt-4">
+              <p className="text-xs sm:text-sm text-text-primary  mt-2 sm:mt-4">
                 There are currently no other models to choose from.
               </p>
             </div>

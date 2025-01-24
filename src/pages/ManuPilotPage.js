@@ -123,8 +123,8 @@ const allowedExtensions = [
 const ManuPilotPage = () => {
   const { isManuPilotError, isManuPilotLoading, manuPilotContent } =
     useManuPilotContent();
-  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
-  const [pendingUrl, setPendingUrl] = useState(null);
+  //const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  //const [pendingUrl, setPendingUrl] = useState(null);
   const router = useRouter();
   const originalPushRef = useRef(router.push);
 
@@ -138,7 +138,8 @@ const ManuPilotPage = () => {
   const [dragCounter, setDragCounter] = useState(0);
 
   // handle tab close or route changes
-  useNavigationProtection(conversation, router, originalPushRef);
+  const { showNavigationWarning, setShowNavigationWarning, pendingUrl } =
+    useNavigationProtection(conversation, router, originalPushRef);
 
   // ----- DRAG & DROP LOGIC -----
 
@@ -428,7 +429,7 @@ function useNavigationProtection(conversation, router, originalPushRef) {
 
   useEffect(() => {
     if (conversation.length > 0) {
-      // warn on browser/tab close
+      // Warn on browser/tab close
       const handleBeforeUnload = (e) => {
         e.preventDefault();
         e.returnValue = "";
@@ -441,17 +442,19 @@ function useNavigationProtection(conversation, router, originalPushRef) {
 
   useEffect(() => {
     if (conversation.length > 0) {
-      // intercept router.push
+      const originalPush = router.push;
+
       router.push = (url, as, options) => {
         if (url !== router.asPath) {
-          setPendingUrl(() => () => originalPushRef.current(url, as, options));
+          setPendingUrl(() => () => originalPush(url, as, options));
           setShowNavigationWarning(true);
-          return;
+          return Promise.resolve(false); // Prevent immediate navigation
         }
-        return originalPushRef.current(url, as, options);
+        return originalPush(url, as, options);
       };
+
       return () => {
-        router.push = originalPushRef.current;
+        router.push = originalPush; // Restore original push on unmount
       };
     }
   }, [router, conversation]);
