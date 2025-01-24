@@ -310,6 +310,16 @@ a {
   background-color: var(--bg-hover);
 }
 
+.writings-container {
+  width: 100%;
+  max-width: 1216px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: var(--padding-in) 0;
+}
+
 @media (max-width: 767px) {
   body {
     background: var(--bg-mobile-body);

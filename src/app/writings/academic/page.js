@@ -1,7 +1,8 @@
 import React from "react";
+import AcademicWritingsPage from "@/pages/AcademicWritingsPage";
 
 const Academic = () => {
-  return <div>Academic</div>;
+  return <AcademicWritingsPage />;
 };
 
 export default Academic;
