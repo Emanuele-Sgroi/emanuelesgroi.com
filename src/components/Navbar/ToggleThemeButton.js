@@ -49,12 +49,9 @@ const ToggleThemeButton = ({ onClick, theme }) => {
           aria-expanded={open}
         >
           {theme !== "light" ? (
-            <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />
+            <FaSun size={18} />
           ) : (
-            <BsMoonStarsFill
-              size={18}
-              className="max-sm:w-[16px] max-sm:h-[16px]"
-            />
+            <BsMoonStarsFill size={18} />
           )}
         </PopoverTrigger>
         <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
