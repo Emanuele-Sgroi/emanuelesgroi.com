@@ -151,40 +151,88 @@ const ManuPilotBody = ({
 }) => {
   const containerRef = useRef(null);
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
+  const [autoScroll, setAutoScroll] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [randomIndices, setRandomIndices] = useState([]);
 
   // Scroll to bottom on new messages or loading
+  // useEffect(() => {
+  //   if (containerRef.current) {
+  //     containerRef.current.scrollTo({
+  //       top: containerRef.current.scrollHeight,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [conversation, loading]);
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [conversation, loading]);
+    if (!containerRef.current) return;
+    if (!autoScroll) return; // If user has "broken" from bottom, do nothing
+
+    containerRef.current.scrollTo({
+      top: containerRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [conversation, loading, autoScroll]);
 
   // Update scroll state dynamically
+  // useEffect(() => {
+  //   const SCROLL_THRESHOLD = 200;
+
+  //   const handleScroll = () => {
+  //     if (!containerRef.current) return;
+
+  //     const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
+
+  //     // Check if the content is scrollable and user is far enough from the bottom
+  //     const isScrollable = scrollHeight > clientHeight;
+  //     const isNearBottom =
+  //       scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD;
+
+  //     setShowScrollToBottom(isScrollable && !isNearBottom);
+  //   };
+
+  //   handleScroll(); // Initialize state
+  //   const container = containerRef.current;
+  //   container?.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("resize", handleScroll);
+
+  //   return () => {
+  //     container?.removeEventListener("scroll", handleScroll);
+  //     window.removeEventListener("resize", handleScroll);
+  //   };
+  // }, []);
+
   useEffect(() => {
     const SCROLL_THRESHOLD = 200;
+    const container = containerRef.current;
 
-    const handleScroll = () => {
-      if (!containerRef.current) return;
+    function handleScroll() {
+      if (!container) return;
 
-      const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
-
-      // Check if the content is scrollable and user is far enough from the bottom
+      const { scrollHeight, clientHeight, scrollTop } = container;
       const isScrollable = scrollHeight > clientHeight;
+      // If within 200px of the bottom => "nearBottom"
       const isNearBottom =
         scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD;
 
       setShowScrollToBottom(isScrollable && !isNearBottom);
-    };
 
-    handleScroll(); // Initialize state
-    const container = containerRef.current;
+      // IF USER IS NOT NEAR BOTTOM, DISABLE AUTO-SCROLL
+      if (!isNearBottom) {
+        setAutoScroll(false);
+      } else {
+        // If user comes back near bottom by manually scrolling,
+        // we can re-enable autoScroll:
+        setAutoScroll(true);
+      }
+    }
+
+    // Attach listeners
     container?.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleScroll);
+
+    // Initial check
+    handleScroll();
 
     return () => {
       container?.removeEventListener("scroll", handleScroll);
@@ -217,6 +265,7 @@ const ManuPilotBody = ({
         behavior: "smooth",
       });
     }
+    setAutoScroll(true); // If user clicks button, re-enable
   };
 
   const suggestions = [
