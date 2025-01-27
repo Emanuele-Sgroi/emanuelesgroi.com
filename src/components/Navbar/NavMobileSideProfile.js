@@ -7,6 +7,7 @@ import { GoCodeSquare, GoCommentDiscussion, GoCopilot } from "react-icons/go";
 import { GrContact } from "react-icons/gr";
 import { IoLogoGithub, IoMdDownload } from "react-icons/io";
 import { TbSchool } from "react-icons/tb";
+import { FaRegBookmark } from "react-icons/fa6";
 import {
   FaSun,
   FaLinkedin,
@@ -173,7 +174,20 @@ const NavMobileSideProfile = ({ onClick, theme }) => {
                     </Link>
                   </li>
 
-                  <li className="w-full flex justify-start items-center gap-2">
+                  {/* Writings */}
+                  <li className="w-full relative center gap-2">
+                    <Link
+                      href="/writings"
+                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
+                      onClick={() => setOpen(false)}
+                    >
+                      <FaRegBookmark size={18} className="text-accent-icon " />
+                      Writings{" "}
+                      <div className={getLinkClassDivMobile("/writings")} />
+                    </Link>
+                  </li>
+
+                  {/* <li className="w-full flex justify-start items-center gap-2">
                     <Link
                       href="/writings/blog"
                       className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
@@ -206,7 +220,7 @@ const NavMobileSideProfile = ({ onClick, theme }) => {
                         className={getLinkClassDivMobile("/writings/academic")}
                       />
                     </Link>
-                  </li>
+                  </li> */}
 
                   {/* ManuPilot */}
                   <li className="w-full flex justify-start items-center gap-2">
