@@ -21,6 +21,21 @@ import {
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function checkSize() {
+      setIsMobile(window.innerWidth < breakpoint);
+    }
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
 const ManuPilotInput = ({
@@ -30,8 +45,8 @@ const ManuPilotInput = ({
   clearError,
   droppedFile,
   setDroppedFile,
-  conversation,
 }) => {
+  const isMobile = useIsMobile();
   const [openAttachDialog, setOpenAttachDialog] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [lastMessage, setLastMessage] = useState("");
@@ -223,30 +238,67 @@ const ManuPilotInput = ({
   };
 
   // Manage Enter/Shift+Enter
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "Enter") {
+  //     if (e.shiftKey) {
+  //       // SHIFT+Enter => newline
+  //       e.preventDefault();
+  //       const { selectionStart, selectionEnd, value } = e.target;
+  //       e.target.value =
+  //         value.substring(0, selectionStart) +
+  //         "\n" +
+  //         value.substring(selectionEnd);
+  //       e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
+  //       handleInput(e);
+  //     } else {
+  //       // ENTER => send
+  //       e.preventDefault();
+  //       if (!isFileLoading) {
+  //         sendUserMessage();
+  //         e.target.style.height = "auto";
+  //       }
+  //     }
+  //   } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
+  //     setOpenAttachDialog(true);
+  //   }
+  // };
+
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      if (e.shiftKey) {
-        // SHIFT+Enter => newline
+    if (isMobile) {
+      // For MOBILE: "Enter" => always newline, user must tap the send button
+      if (e.key === "Enter") {
         e.preventDefault();
-        const { selectionStart, selectionEnd, value } = e.target;
-        e.target.value =
-          value.substring(0, selectionStart) +
-          "\n" +
-          value.substring(selectionEnd);
-        e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
-        handleInput(e);
-      } else {
-        // ENTER => send
-        e.preventDefault();
-        if (!isFileLoading) {
-          sendUserMessage();
-          e.target.style.height = "auto";
-        }
+        insertNewLine(e);
       }
-    } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
-      setOpenAttachDialog(true);
+    } else {
+      // For DESKTOP: "Enter" => send, SHIFT+Enter => newline
+      if (e.key === "Enter") {
+        if (e.shiftKey) {
+          e.preventDefault();
+          insertNewLine(e);
+        } else {
+          // ENTER => send
+          e.preventDefault();
+          if (!isFileLoading) {
+            sendUserMessage();
+            e.target.style.height = "auto";
+          }
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
+        // your existing ^⇧@ logic
+        setOpenAttachDialog(true);
+      }
     }
   };
+
+  // Helper function to insert newline
+  function insertNewLine(e) {
+    const { selectionStart, selectionEnd, value } = e.target;
+    e.target.value =
+      value.substring(0, selectionStart) + "\n" + value.substring(selectionEnd);
+    e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
+    handleInput(e); // re-auto-size
+  }
 
   function sendUserMessage() {
     const typedText = textAreaRef.current.value.trim();
@@ -319,15 +371,15 @@ const ManuPilotInput = ({
 
   return (
     <>
-      <div className="w-full flex justify-center px-4 pb-4">
+      <div className=" w-full flex justify-center px-4 pb-2 sm:pb-4">
         {error === null ? (
           <div
-            className={`relative w-full max-w-[850px] flex items-end gap-3 border border-accent-border rounded-2xl  ${
-              isFocused ? "ring-2 ring-text-link" : ""
+            className={` relative w-full max-w-[850px] flex max-sm:justify-start items-start sm:items-end max-sm:flex-col gap-3 max-sm:bg-bg-mobile-primary border border-accent-border rounded-2xl  ${
+              isFocused ? "ring-1 sm:ring-2 ring-text-link" : ""
             }`}
             tabIndex={0}
           >
-            <div className="flex-1 flex flex-col ">
+            <div className="max-sm:w-full sm:flex-1 flex flex-col ">
               {/* File Badge */}
               {selectedFile && showBadge && (
                 <div className="relative w-fit center cursor-default gap-2 bg-bg-button pl-3 pr-6 py-1 rounded-md text-sm text-text-primary mt-3 ml-2">
@@ -384,7 +436,7 @@ const ManuPilotInput = ({
                 className="w-full h-auto min-h-[10px] max-h-[280px] resize-none overflow-auto
                      bg-transparent border-none placeholder:text-text-secondary
                      focus:outline-none focus:ring-0
-                     text-sm text-text-primary font-medium leading-tight pt-5 pr-2 pl-4 pb-1 thin-scrollbar"
+                     text-sm text-text-primary font-medium leading-tight pt-3 sm:pt-5 pr-2 pl-4 sm:pb-1 thin-scrollbar"
                 onInput={handleInput}
                 onKeyDown={handleKeyDown}
                 onFocus={() => {
@@ -400,14 +452,14 @@ const ManuPilotInput = ({
               />
             </div>
 
-            <div className="flex items-center gap-4 pr-4 pb-4">
+            <div className="max-sm:w-full flex max-sm:justify-between items-center gap-4 max-sm:px-3 sm:pr-4 pb-2 sm:pb-4">
               <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                 <Tooltip>
                   <TooltipTrigger className="flex items-center">
                     <button
                       onClick={() => setOpenAttachDialog(true)}
                       disabled={isFileLoading}
-                      className="p-1 rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
+                      className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
                     >
                       <GrAttachment size={20} className="text-accent-icon" />
                     </button>
@@ -427,7 +479,7 @@ const ManuPilotInput = ({
                     <button
                       onClick={sendUserMessage}
                       disabled={loading || isFileLoading}
-                      className="p-1 rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
+                      className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
                     >
                       <VscSend size={20} className="text-accent-icon" />
                     </button>
@@ -533,3 +585,7 @@ const ManuPilotInput = ({
 };
 
 export default ManuPilotInput;
+
+{
+  /* Mobile */
+}
