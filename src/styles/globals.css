@@ -58,6 +58,9 @@
   --other-chart-yellow3: #ecd718;
   --other-chart-yellow4: #ceba0c;
 
+  --gradient-wr-indigo: #e6e1f7;
+  --gradient-wr-cyan: #d1e2f7;
+
   --manupilot-badge-blue: #b9c7b3;
   --manupilot-badge-purple: #ebd7dd;
 
@@ -143,6 +146,9 @@
   --other-chart-yellow2: #fff176;
   --other-chart-yellow3: #fff59d;
   --other-chart-yellow4: #fff9c4;
+
+  --gradient-wr-indigo: #130e27;
+  --gradient-wr-cyan: #031a37;
 
   --manupilot-badge-blue: #02031a;
   --manupilot-badge-purple: #4b0082;
@@ -308,16 +314,6 @@ a {
 
 .hover-box:hover {
   background-color: var(--bg-hover);
-}
-
-.writings-container {
-  width: 100%;
-  max-width: 1216px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  padding: var(--padding-in) 0;
 }
 
 @media (max-width: 767px) {
@@ -963,4 +959,75 @@ a {
 
 blockquote {
   color: #6b7280;
+}
+
+/* Writings */
+
+.writings-header-gradient {
+  /* Adjust the colors/percents to your preference */
+  background: linear-gradient(
+    to right,
+    var(--gradient-wr-indigo) 0%,
+    var(--gradient-wr-indigo) 3%,
+    var(--bg-secondary) 10%,
+    var(--bg-secondary) 90%,
+    var(--gradient-wr-cyan) 97%,
+    var(--gradient-wr-cyan) 100%
+  );
+}
+
+.wr-copilot-animation {
+  animation: copilot 2.5s linear infinite;
+}
+
+.wr-models-animation {
+  animation: models 50s linear infinite;
+}
+.wr-sparklesmall-animation {
+  animation: sparkle 2s linear infinite;
+}
+.wr-sparklelarge-animation {
+  animation: sparkle 3s linear infinite;
+}
+
+@keyframes copilot {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes models {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(-15deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.dotted-gradient-line {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #4c1d95, #db2777) 0 0 / 20px 4px,
+    linear-gradient(90deg, #4c1d95, #db2777) 10px 0 / 20px 4px;
+  background-repeat: repeat-x;
+  background-size: 20px 4px;
 }

@@ -26,3 +26,5 @@ export { default as ManuPilotHeader } from "./ManuPilotPage/ManuPilotHeader";
 export { default as ManuPilotBody } from "./ManuPilotPage/ManuPilotBody";
 export { default as ManuPilotInput } from "./ManuPilotPage/ManuPilotInput";
 export { default as AttachFileOverlay } from "./ManuPilotPage/AttachFileOverlay";
+export { default as TopHeaderAnimated } from "./WritingsPage/TopHeaderAnimated";
+export { default as Blog } from "./WritingsPage/Blog";

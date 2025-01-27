@@ -84,7 +84,7 @@ const Navbar = () => {
           }`}
         >
           <NavLogo />{" "}
-          <div className="center gap-[5px] sm:gap-4">
+          <div className="center gap-3 sm:gap-4">
             <NavSearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
@@ -136,7 +136,23 @@ const Navbar = () => {
             </div>
 
             {/* Writings */}
-            <Popover open={open} onOpenChange={setOpen}>
+            <div className="relative center max-[430px]:hidden">
+              <Link
+                href="/writings"
+                className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
+                  "/portfolio"
+                )}`}
+              >
+                <FaRegBookmark size={18} className="text-accent-icon " />
+                Writings
+              </Link>
+              <div
+                className={getLinkClassDiv("/writings")}
+                style={{ width: `calc(100% + 10px)` }}
+              />
+            </div>
+
+            {/* <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -191,7 +207,7 @@ const Navbar = () => {
                   </li>
                 </ul>
               </PopoverContent>
-            </Popover>
+            </Popover> */}
 
             {/* Dev Quiz */}
             <div className="max-[530px]:hidden relative center">
@@ -290,13 +306,27 @@ const Navbar = () => {
                 </li>
 
                 {/* Writings */}
-                <li className="min-[431px]:hidden center gap-1 text-text-secondary text-sm">
+                <li className="relative center min-[431px]:hidden gap-2">
+                  <Link
+                    href="/writings"
+                    className={`relative center gap-1 text-text-primary ${getLinkClassText(
+                      "/writings"
+                    )}`}
+                    onClick={() => setOpenSideMenu(false)}
+                  >
+                    <FaRegBookmark size={18} className="text-accent-icon " />
+                    Writings
+                  </Link>
+                  <div className={getLinkClassDivMobile("/writings")} />
+                </li>
+
+                {/* <li className="min-[431px]:hidden center gap-1 text-text-secondary text-sm">
                   <FaRegBookmark size={18} className="text-accent-icon " />
                   Writings
                   <IoMdArrowDropdown size={18} className="text-text-primary" />
-                </li>
+                </li> */}
                 {/* Writings - sublinks */}
-                <li className="min-[431px]:hidden">
+                {/* <li className="min-[431px]:hidden">
                   <ul className="w-full flex flex-col gap-2 ml-4 mt-[-5px]">
                     <li className="w-full flex justify-start items-center gap-2">
                       <Link
@@ -329,7 +359,7 @@ const Navbar = () => {
                       />
                     </li>
                   </ul>
-                </li>
+                </li> */}
 
                 {/* Dev Quiz */}
                 <li className="relative center min-[531px]:hidden gap-2">
