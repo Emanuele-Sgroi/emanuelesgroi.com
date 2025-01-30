@@ -28,3 +28,4 @@ export { default as ManuPilotInput } from "./ManuPilotPage/ManuPilotInput";
 export { default as AttachFileOverlay } from "./ManuPilotPage/AttachFileOverlay";
 export { default as TopHeaderAnimated } from "./WritingsPage/TopHeaderAnimated";
 export { default as Blog } from "./WritingsPage/Blog";
+export { default as Academic } from "./WritingsPage/Academic";
