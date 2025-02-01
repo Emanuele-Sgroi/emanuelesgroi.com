@@ -29,3 +29,8 @@ export { default as AttachFileOverlay } from "./ManuPilotPage/AttachFileOverlay"
 export { default as TopHeaderAnimated } from "./WritingsPage/TopHeaderAnimated";
 export { default as Blog } from "./WritingsPage/Blog";
 export { default as Academic } from "./WritingsPage/Academic";
+export { default as BlogPostTopSection } from "./BlogPostPage/BlogPostTopSection";
+export { default as BlogInfoAndShareSection } from "./BlogPostPage/BlogInfoAndShareSection";
+export { default as BlogContentSection } from "./BlogPostPage/BlogContentSection";
+export { default as KeepReadingSection } from "./BlogPostPage/KeepReadingSection";
+export { default as PageSuggestionsSection } from "./BlogPostPage/PageSuggestionsSection";

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { GoDotFill } from "react-icons/go";
 
-const POSTS_PER_PAGE = 2;
+const POSTS_PER_PAGE = 6;
 
 const Blog = ({ writingsContent }) => {
   const { blogTitle, blogPosts } = writingsContent;
@@ -122,7 +122,7 @@ const Blog = ({ writingsContent }) => {
         {/* Coming soon text */}
         {currentPage === totalPages && (
           <div className="w-full center mt-4 sm:mt-8">
-            <p className="uppercase sm:text-lg font-bold text-text-secondarytext-center ">
+            <p className="uppercase sm:text-lg font-bold text-text-secondary text-center ">
               More posts coming soon
             </p>
           </div>
