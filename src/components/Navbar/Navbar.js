@@ -33,6 +33,7 @@ const Navbar = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const isManuPilotPage = pathname === "/manupilot";
+  const isBlogPost = pathname.startsWith("/writings/");
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -96,7 +97,7 @@ const Navbar = () => {
         {/* Bottom part */}
         <div
           className={`w-full flex justify-between items-center gap-4 ${
-            isManuPilotPage && "hidden"
+            (isManuPilotPage || isBlogPost) && "hidden"
           }`}
         >
           <div className="flex justify-start items-center gap-6">

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import client from "@/utils/contentfulClient";
 import { Suspense } from "react";
 import { Loading, ErrorMessage } from "@/components";
+import BlogPostPage from "@/pages/BlogPostPage";
 
 export async function generateStaticParams() {
   const response = await client.getEntries({
@@ -40,11 +41,7 @@ async function BlogPostContent({ slug }) {
     notFound();
   }
 
-  return (
-    <div className="w-full center flex-col">
-      <h1 className="text-5xl font-bold">{blogPost.postTitle}</h1>
-    </div>
-  );
+  return <BlogPostPage blogPost={blogPost} />;
 }
 
 export default function BlogPost({ params }) {

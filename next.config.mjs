@@ -61,6 +61,10 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**", // Allows images from ANY domain
+      },
     ],
     dangerouslyAllowSVG: true,
   },

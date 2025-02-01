@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,8 +60,10 @@
   --other-chart-yellow3: #ecd718;
   --other-chart-yellow4: #ceba0c;
 
-  --gradient-wr-indigo: #e6e1f7;
-  --gradient-wr-cyan: #d1e2f7;
+  --gradient-wr-indigo: #dbd2fc;
+  --gradient-wr-cyan: #beddfa;
+  --gradient-bl-indigo: #ebe5fd;
+  --gradient-bl-cyan: #d5e9fc;
 
   --manupilot-badge-blue: #b9c7b3;
   --manupilot-badge-purple: #ebd7dd;
@@ -103,6 +107,8 @@
 
   --bg-mobile-primary: #16191c;
   --bg-mobile-body: #040405;
+
+  --bg-blog-primary: #22272e;
 
   --text-primary: #f0f6fc;
   --text-secondary: #858c95;
@@ -149,10 +155,128 @@
 
   --gradient-wr-indigo: #130e27;
   --gradient-wr-cyan: #031a37;
+  --gradient-bl-indigo: #130e27;
+  --gradient-bl-cyan: #031a37;
 
   --manupilot-badge-blue: #02031a;
   --manupilot-badge-purple: #4b0082;
 }
+
+/* Extra Fonts Families */
+
+.monospace-text {
+  font-family: var(--fontStack-monospace) !important;
+}
+
+.poppins-thin {
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* Default global styles */
 
 html {
   box-sizing: border-box;
@@ -179,7 +303,6 @@ body {
   transition: background-color 0.1s ease-in-out;
 }
 
-/* Default styles for sections */
 section,
 div,
 nav {
@@ -194,10 +317,6 @@ nav {
 
 section {
   padding: var(--padding-out) var(--padding-out) 0 var(--padding-out);
-}
-
-.monospace-text {
-  font-family: var(--fontStack-monospace) !important;
 }
 
 h1,
@@ -1081,4 +1200,22 @@ blockquote {
 }
 .hover-gradient-effect:hover {
   --_p: 100%;
+}
+
+/* Blog post */
+
+.blog-header-gradient {
+  position: absolute;
+  top: -80px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  background: linear-gradient(
+    to bottom,
+    var(--bg-secondary) 0%,
+    var(--gradient-bl-indigo) 35%,
+    var(--gradient-bl-cyan) 65%,
+    var(--bg-secondary) 100%
+  );
 }
