@@ -15,7 +15,7 @@ export async function generateStaticParams() {
     return [];
   }
 
-  const path = response.items.map((item) => ({
+  const paths = response.items.map((item) => ({
     slug: item.fields.postSlug,
   }));
 
