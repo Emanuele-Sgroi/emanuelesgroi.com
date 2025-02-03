@@ -96,7 +96,7 @@ const BlogContentSection = ({ blogPost }) => {
           <h1
             id={id}
             ref={(el) => (headingsRef.current = [...headingsRef.current, el])}
-            className="poppins-bold text-5xl text-text-primary leading-tight mt-10 mb-5"
+            className="poppins-bold text-4xl md:text-5xl text-text-primary leading-tight mt-8 md:mt-10 mb-5 break-words"
           >
             {children}
           </h1>
@@ -104,35 +104,35 @@ const BlogContentSection = ({ blogPost }) => {
       },
       [BLOCKS.HEADING_2]: (node, children) => {
         return (
-          <h2 className="poppins-bold text-4xl text-text-primary leading-tight mt-8 mb-4">
+          <h2 className="poppins-bold text-3xl md:text-4xl text-text-primary leading-tight mt-8 mb-4">
             {children}
           </h2>
         );
       },
       [BLOCKS.HEADING_3]: (node, children) => {
         return (
-          <h3 className="poppins-semibold text-3xl text-text-primary leading-tight mt-6 mb-3">
+          <h3 className="poppins-semibold text-2xl md:text-3xl text-text-primary leading-tight mt-6 mb-3">
             {children}
           </h3>
         );
       },
       [BLOCKS.HEADING_4]: (node, children) => {
         return (
-          <h4 className="poppins-semibold text-2xl text-text-primary leading-tight mt-4 mb-3">
+          <h4 className="poppins-semibold text-xl md:text-2xl text-text-primary leading-tight mt-4 mb-3">
             {children}
           </h4>
         );
       },
       [BLOCKS.HEADING_5]: (node, children) => {
         return (
-          <h5 className="poppins-medium text-xl text-text-primary leading-tight mt-3 mb-3">
+          <h5 className="poppins-medium text-lg md:text-xl text-text-primary leading-tight mt-3 mb-3">
             {children}
           </h5>
         );
       },
       [BLOCKS.HEADING_6]: (node, children) => {
         return (
-          <h6 className="poppins-medium text-lg text-text-primary leading-tight mt-2 mb-2">
+          <h6 className="poppins-medium text-base md:text-lg text-text-primary leading-tight mt-2 mb-2">
             {children}
           </h6>
         );
@@ -156,7 +156,7 @@ const BlogContentSection = ({ blogPost }) => {
             .trim();
 
           return (
-            <div className="my-4 rounded-md bg-bg-button  overflow-x-auto">
+            <div className="my-4 rounded-md bg-bg-button overflow-x-auto">
               <SyntaxHighlighter
                 language="python"
                 style={darcula}
@@ -167,7 +167,7 @@ const BlogContentSection = ({ blogPost }) => {
 
                   overflowX: "auto", // Ensures scrolling when needed
                 }}
-                className="thin-scrollbar monospace-text text-base dark:!bg-bg-button !p-2"
+                className="thin-scrollbar monospace-text text-sm md:text-base dark:!bg-bg-button !p-2"
               >
                 {code}
               </SyntaxHighlighter>
@@ -176,7 +176,7 @@ const BlogContentSection = ({ blogPost }) => {
         }
 
         return (
-          <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-lg mb-5 break-words">
+          <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-base md:text-lg mb-5 break-words">
             {children}
           </p>
         );
@@ -190,7 +190,7 @@ const BlogContentSection = ({ blogPost }) => {
             href={url}
             target={isExternal ? "_blank" : "_self"}
             rel={isExternal ? "noopener noreferrer" : ""}
-            className="text-text-link underline poppins-regular leading-[30px] tracking-[0.01em] text-lg break-words"
+            className="text-text-link underline poppins-regular leading-[30px] tracking-[0.01em] text-base md:text-lg break-words"
           >
             {children}
           </a>
@@ -203,15 +203,15 @@ const BlogContentSection = ({ blogPost }) => {
         <ol className="list-decimal pl-6">{children}</ol>
       ),
       [BLOCKS.LIST_ITEM]: (node, children) => {
-        return <li className="text-lg mb-[22px]">{children}</li>;
+        return <li className="text-base md:text-lg mb-[22px]">{children}</li>;
       },
       [BLOCKS.QUOTE]: (node, children) => (
-        <blockquote className="border-l-4 border-t border-r border-b !border-l-other-chart-blue3 border-accent-border !bg-bg-button poppins-regular pl-4 pt-4 pb-1 pr-4 mb-4 rounded-e-xl">
+        <blockquote className="border-l-4 border-t border-r border-b !border-l-other-chart-blue3 max-md:!text-sm border-accent-border !bg-bg-button poppins-regular pl-4 pt-4 pb-1 pr-4 mb-4 rounded-e-xl">
           {children}
         </blockquote>
       ),
       [BLOCKS.HR]: () => (
-        <hr className="my-8 border-t-2 border-accent-border" />
+        <hr className="my-6 md:my-8 border-t-2 border-accent-border" />
       ),
       [BLOCKS.TABLE]: (node, children) => (
         <div className="overflow-x-auto thin-scrollbar my-6">
@@ -238,7 +238,7 @@ const BlogContentSection = ({ blogPost }) => {
         }
 
         return (
-          <th className="px-4 py-2 bg-other-chart-blue3 border border-[#b9c2ff] dark:border-accent-border text-left text-lg poppins-bold text-white">
+          <th className="px-4 py-2 bg-other-chart-blue3 border border-[#b9c2ff] dark:border-accent-border text-left text-sm md:text-lg poppins-bold text-white">
             {textContent}
           </th>
         );
@@ -256,7 +256,7 @@ const BlogContentSection = ({ blogPost }) => {
         }
 
         return (
-          <td className="px-4 py-2 border border-[#b9c2ff] dark:border-accent-border text-base poppins-regular">
+          <td className="px-4 py-2 border border-[#b9c2ff] dark:border-accent-border text-sm md:text-base poppins-regular">
             {textContent}
           </td>
         );
@@ -318,100 +318,129 @@ const BlogContentSection = ({ blogPost }) => {
   };
 
   return (
-    <div className="w-full max-w-[1020px] pt-12 flex gap-10">
-      {/* Left - Blog Content */}
-      <div className="w-2/3">
-        {documentToReactComponents(blogContent, options)}
-        <div className="w-full flex items-center gap-2 mt-10">
-          <div className="flex flex-col justify-center">
-            <div className="h-[5px] w-[40px] bg-accent-active mb-1" />
-            <h4 className="text-sm poppins-light mb-2">Tags:</h4>
-          </div>
-
-          <div className="flex flex-wrap gap-2 ">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 poppins-regular tag-primary text-sm rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="w-full flex flex-col mt-12">
-          <h3 className="text-text-primary text-left poppins-bold text-3xl">
-            Written by
-          </h3>
-          <div className="w-full h-[2px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mt-3"></div>
-          <div className="flex items-center gap-4 mt-6">
-            <div className="w-[120px] h-[120px] relative border border-accent-border rounded-full">
-              <Image
-                src={getAssetUrl(imageAuthor)}
-                alt="Author_Picture"
-                width={680}
-                height={510}
-                className="w-full h-full rounded-full object-cover object-center z-10"
-              />
+    <div className="w-full center max-[500px]:px-4 px-6  pt-8 md:pt-12 ">
+      <div className="w-full max-w-[1020px] flex gap-10">
+        {/* Left - Blog Content */}
+        <div className="w-full md:w-2/3">
+          {/* Table of Contents Section - Mobile*/}
+          <div className="md:hidden w-full mb-8 border-b border-accent-border pb-4">
+            <div className="w-full">
+              <h4 className="text-xl poppins-semibold mb-2">
+                Table of Contents
+              </h4>
             </div>
-            <div className="flex flex-col">
-              <h4 className="poppins-semibold text-xl">{author}</h4>
-              <p className="text-text-secondary poppins-regular text-sm">
-                Inspired by GitHub
-              </p>
+            <ul className="w-full space-y-2 mt-5">
+              {tableOfContents.map((item) => (
+                <li key={item.id} className="!w-full">
+                  <ScrollLink
+                    to={item.id}
+                    spy={true}
+                    smooth={true}
+                    offset={-15}
+                    duration={100}
+                    className={`w-full flex text-left text-text-primary text-sm py-1 pr-1 pl-4 hover:text-text-link hover:underline poppins-medium`}
+                  >
+                    {item.text}
+                  </ScrollLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {documentToReactComponents(blogContent, options)}
+          <div className="w-full flex max-md:flex-col items-start md:items-center gap-2 mt-10">
+            <div className="flex flex-col justify-center">
+              <div className="h-[5px] w-[40px] bg-accent-active mb-1" />
+              <h4 className="text-sm poppins-light mb-2">Tags:</h4>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Right - Tags & Table of Contents */}
-      <div className="w-1/3 ">
-        {/* Tags Section */}
-        <div className="w-full mb-6">
-          <div className="w-full">
-            <h4 className="text-lg poppins-semibold mb-2">Tags</h4>
-            <div className="h-[2px] w-full bg-accent-border" />
-          </div>
-
-          <div className="flex flex-wrap gap-2 mt-5">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 poppins-regular tag-primary text-sm rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Table of Contents Section */}
-        <div className="sticky top-6 w-full">
-          <div className="w-full">
-            <h4 className="text-lg poppins-semibold mb-2">Table of Contents</h4>
-            <div className="h-[2px] w-full bg-accent-border" />
-          </div>
-          <ul className="w-full space-y-2 mt-5">
-            {tableOfContents.map((item) => (
-              <li key={item.id} className="!w-full">
-                <ScrollLink
-                  // activeClass="bg-red-500"
-                  to={item.id}
-                  spy={true}
-                  smooth={true}
-                  offset={-15}
-                  duration={100}
-                  className={`w-full flex text-left text-text-primary text-sm py-1 px-2 rounded-md hover:text-text-link hover:underline cursor-pointer transition   ${
-                    activeSection === item.id
-                      ? "bg-[#DDF4FF] dark:bg-[#121D2F] poppins-semibold  "
-                      : "poppins-medium"
-                  }`}
+            <div className="flex flex-wrap gap-2 ">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 poppins-regular tag-primary text-sm rounded-full"
                 >
-                  {item.text}
-                </ScrollLink>
-              </li>
-            ))}
-          </ul>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="w-full flex flex-col mt-8 md:mt-12">
+            <h3 className="text-text-primary text-left poppins-bold text-xl sm:text-3xl">
+              Written by
+            </h3>
+            <div className="w-full h-[2px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mt-3"></div>
+            <div className="flex items-center gap-4 mt-6">
+              <div className="w-[80px] md:w-[120px] h-[80px] md:h-[120px] relative border border-accent-border rounded-full">
+                <Image
+                  src={getAssetUrl(imageAuthor)}
+                  alt="Author_Picture"
+                  width={680}
+                  height={510}
+                  quality={100}
+                  className="w-full h-full rounded-full object-cover object-center z-10"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h4 className="poppins-semibold text-xl">{author}</h4>
+                <p className="text-text-secondary poppins-regular max-[500px]:text-xs text-sm">
+                  Inspired by GitHub
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right - Tags & Table of Contents */}
+        <div className="max-md:hidden w-1/3 ">
+          {/* Tags Section */}
+          <div className="w-full mb-6">
+            <div className="w-full">
+              <h4 className="text-lg poppins-semibold mb-2">Tags</h4>
+              <div className="h-[2px] w-full bg-accent-border" />
+            </div>
+
+            <div className="flex flex-wrap gap-2 mt-5">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 poppins-regular tag-primary text-sm rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Table of Contents Section */}
+          <div className="sticky top-6 w-full">
+            <div className="w-full">
+              <h4 className="text-lg poppins-semibold mb-2">
+                Table of Contents
+              </h4>
+              <div className="h-[2px] w-full bg-accent-border" />
+            </div>
+            <ul className="w-full space-y-2 mt-5">
+              {tableOfContents.map((item) => (
+                <li key={item.id} className="!w-full">
+                  <ScrollLink
+                    // activeClass="bg-red-500"
+                    to={item.id}
+                    spy={true}
+                    smooth={true}
+                    offset={-15}
+                    duration={100}
+                    className={`w-full flex text-left text-text-primary text-sm py-1 px-2 rounded-md hover:text-text-link hover:underline cursor-pointer transition   ${
+                      activeSection === item.id
+                        ? "bg-[#DDF4FF] dark:bg-[#121D2F] poppins-semibold  "
+                        : "poppins-medium"
+                    }`}
+                  >
+                    {item.text}
+                  </ScrollLink>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

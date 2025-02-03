@@ -9,7 +9,7 @@ import {
 
 const BlogPostPage = ({ blogPost }) => {
   return (
-    <div className="w-full center flex-col">
+    <div className="w-full center flex-col max-md:bg-bg-mobile-primary">
       <BlogPostTopSection blogPost={blogPost} />
       <BlogInfoAndShareSection blogPost={blogPost} />
       <BlogContentSection blogPost={blogPost} />
