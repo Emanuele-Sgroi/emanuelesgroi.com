@@ -15,11 +15,9 @@ export async function generateStaticParams() {
     return [];
   }
 
-  const paths = response.items.map((item) => ({
+  return response.items.map((item) => ({
     slug: item.fields.postSlug,
   }));
-
-  return { paths, fallback: "blocking" };
 }
 
 async function fetchBlogPost(slug) {
