@@ -10,9 +10,16 @@ export async function generateStaticParams() {
     select: "fields.postSlug",
   });
 
-  return response.items.map((item) => ({
-    postSlug: item.fields.postSlug,
+  if (!response.items.length) {
+    console.error("No blog posts found");
+    return [];
+  }
+
+  const path = response.items.map((item) => ({
+    slug: item.fields.postSlug,
   }));
+
+  return { paths, fallback: "blocking" };
 }
 
 async function fetchBlogPost(slug) {
@@ -23,14 +30,15 @@ async function fetchBlogPost(slug) {
       limit: 1,
     });
 
-    if (response.items.length === 0) {
+    if (!response.items.length) {
+      console.warn(`No blog post found for slug: ${slug}`);
       return null;
     }
 
-    return response.items[0].fields;
+    return response.items[0].fields ?? null;
   } catch (error) {
     console.error("Error fetching blog post:", error);
-    throw new Error("Failed to fetch blog post");
+    return null;
   }
 }
 
@@ -38,7 +46,8 @@ async function BlogPostContent({ slug }) {
   const blogPost = await fetchBlogPost(slug);
 
   if (!blogPost) {
-    notFound();
+    console.error(`Blog post not found for slug: ${slug}`);
+    return notFound();
   }
 
   return <BlogPostPage blogPost={blogPost} />;

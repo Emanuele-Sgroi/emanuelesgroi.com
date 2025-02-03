@@ -13,7 +13,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ToastContainer, toast } from "react-toastify";
-import { getAssetUrl } from "@/utils/imageUtils";
 
 const linkName = process.env.NEXT_PUBLIC_BASE_URL;
 
