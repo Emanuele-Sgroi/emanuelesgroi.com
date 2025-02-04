@@ -4,22 +4,42 @@ import { Suspense } from "react";
 import { Loading, ErrorMessage } from "@/components";
 import BlogPostPage from "@/pages/BlogPostPage";
 
-export async function generateStaticParams() {
-  const response = await client.getEntries({
-    content_type: "blogPost",
-    select: "fields.postSlug",
-  });
+// export async function generateStaticParams() {
+//   const response = await client.getEntries({
+//     content_type: "blogPost",
+//     select: "fields.postSlug",
+//   });
 
-  if (!response.items.length) {
-    console.error("No blog posts found");
+//   if (!response.items.length) {
+//     console.error("No blog posts found");
+//     return [];
+//   }
+
+//   return response.items.map((item) => ({
+//     slug: item.fields.postSlug,
+//   }));
+// }
+
+export async function generateStaticParams() {
+  try {
+    const response = await client.getEntries({
+      content_type: "blogPost",
+      select: "fields.postSlug",
+    });
+
+    if (!response.items.length) {
+      console.error("No blog posts found");
+      return [];
+    }
+
+    return response.items
+      .map((item) => item.fields?.postSlug)
+      .filter(Boolean) // Remove any undefined values
+      .map((slug) => ({ slug })); // Ensure correct format
+  } catch (error) {
+    console.error("Error fetching blog post slugs:", error);
     return [];
   }
-
-  const paths = response.items.map((item) => ({
-    slug: item.fields.postSlug,
-  }));
-
-  return { paths, fallback: "blocking" };
 }
 
 async function fetchBlogPost(slug) {
@@ -30,12 +50,15 @@ async function fetchBlogPost(slug) {
       limit: 1,
     });
 
-    if (!response.items.length) {
+    if (!response.items.length || !response.items[0].fields) {
       console.warn(`No blog post found for slug: ${slug}`);
       return null;
     }
 
-    return response.items[0].fields ?? null;
+    // Log the fetched data for debugging
+    // console.log("Fetched blog post:", response.items[0].fields);
+
+    return response.items[0].fields;
   } catch (error) {
     console.error("Error fetching blog post:", error);
     return null;
