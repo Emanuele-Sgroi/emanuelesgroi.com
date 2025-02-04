@@ -55,6 +55,9 @@ async function fetchBlogPost(slug) {
       return null;
     }
 
+    // Log the fetched data for debugging
+    // console.log("Fetched blog post:", response.items[0].fields);
+
     return response.items[0].fields;
   } catch (error) {
     console.error("Error fetching blog post:", error);
