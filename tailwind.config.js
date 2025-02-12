@@ -17,6 +17,7 @@ module.exports = {
         "bg-quartiary": "var(--bg-quartiary)",
         "bg-button": "var(--bg-button)",
         "bg-hover": "var(--bg-hover)",
+        "bg-hover2": "var(--bg-hover-2)",
         "bg-extra": "var(--bg-extra)",
 
         // Mobile Background Colors

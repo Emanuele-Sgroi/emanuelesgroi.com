@@ -57,3 +57,5 @@ next-env.d.ts
 .vercel
 
 .codegpt
+
+.notes.txt

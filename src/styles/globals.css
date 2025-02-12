@@ -12,6 +12,7 @@
   --bg-quartiary: #dee1e5;
   --bg-button: #f6f8fa;
   --bg-hover: #eaedf0;
+  --bg-hover-2: #eff2f5;
   --bg-extra: #d1d5da80;
 
   --bg-mobile-primary: #fffeff;
@@ -103,6 +104,7 @@
   --bg-quartiary: #15191f;
   --bg-button: #212830;
   --bg-hover: #15191f;
+  --bg-hover-2: #262c36;
   --bg-extra: #57606a;
 
   --bg-mobile-primary: #16191c;
@@ -135,6 +137,7 @@
   --other-chart-blue1: #1e3a73;
   --other-chart-blue2: #2c549f;
   --other-chart-blue3: #3b6be4;
+  --other-chart-blue3df: #3b6be418;
   --other-chart-blue4: #4e88ff;
   --other-chart-purple1: #6c5491;
   --other-chart-purple2: #8f6bb5;
@@ -243,6 +246,11 @@
 .poppins-regular-italic {
   font-family: "Poppins", serif;
   font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-italic {
+  font-family: "Poppins", serif;
   font-style: italic;
 }
 
@@ -542,6 +550,23 @@ a {
 
 .btn-secondary:hover {
   background-color: var(--bg-hover);
+}
+
+.btn-tertiary {
+  background-color: var(--bg-button);
+  transition: all 0.1s ease-in-out;
+  padding: 5px 16px;
+  border-radius: 0.375rem;
+  border: 1px solid var(--accent-border);
+  gap: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.btn-tertiary:hover {
+  background-color: var(--bg-hover-2);
 }
 
 .btn-likes {

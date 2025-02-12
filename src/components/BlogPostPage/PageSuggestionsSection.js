@@ -42,7 +42,7 @@ const PageSuggestionsSection = () => {
     },
   ];
   return (
-    <div className="w-full center max-[500px]:px-4 px-6 pt-12 md:pt-20 max-md:pb-32">
+    <div className="w-full center max-[500px]:px-4 px-6 pt-12 md:pt-20 pb-12 max-md:pb-32">
       <div className="w-full max-w-[1232px] flex flex-col items-start justify-start">
         {/* Suggestions */}
         <div className="w-full">

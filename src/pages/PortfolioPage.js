@@ -1,25 +1,38 @@
 "use client";
 
 import React from "react";
-import { ProfileBar, Loading, ErrorMessage } from "@/components";
+import {
+  ProfileBar,
+  PortfolioContainer,
+  Loading,
+  ErrorMessage,
+} from "@/components";
 import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const PortfolioPage = () => {
   const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
     useGeneralInfoContent();
+  const { portfolioContent, isPortfolioLoading, isPortfolioError } =
+    usePortfolioContent();
 
-  if (isGeneralInfoLoading || !generalInfoContent) {
+  if (
+    isGeneralInfoLoading ||
+    isPortfolioLoading ||
+    !generalInfoContent ||
+    !portfolioContent
+  ) {
     return <Loading />;
   }
 
-  if (isGeneralInfoError) {
+  if (isGeneralInfoError || isPortfolioError) {
     return <ErrorMessage />;
   }
 
   return (
-    <section className="with-profile-bar">
+    <section className="with-profile-bar max-md:!gap-0">
       <ProfileBar generalInfo={generalInfoContent} />
-      <div></div>
+      <PortfolioContainer portfolio={portfolioContent} />
     </section>
   );
 };

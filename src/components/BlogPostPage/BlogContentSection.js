@@ -46,11 +46,11 @@ const BlogContentSection = ({ blogPost }) => {
     };
   }, []);
 
-  // Extract Table of Contents (H1 headings)
+  // Extract Table of Contents (H2 headings)
   const tableOfContents = [];
   if (blogContent?.content) {
     blogContent.content.forEach((block) => {
-      if (block.nodeType === BLOCKS.HEADING_1) {
+      if (block.nodeType === BLOCKS.HEADING_2) {
         const text = block.content.map((item) => item.value).join(" ");
         const id = text.replace(/\s+/g, "-").toLowerCase();
         tableOfContents.push({ id, text });
@@ -90,21 +90,21 @@ const BlogContentSection = ({ blogPost }) => {
     },
     renderNode: {
       [BLOCKS.HEADING_1]: (node, children) => {
-        const text = children.join(" ");
-        const id = text.replace(/\s+/g, "-").toLowerCase();
         return (
-          <h1
-            id={id}
-            ref={(el) => (headingsRef.current = [...headingsRef.current, el])}
-            className="poppins-bold text-4xl md:text-5xl text-text-primary leading-tight mt-8 md:mt-10 mb-5 break-words"
-          >
+          <h1 className="poppins-bold text-4xl md:text-5xl text-text-primary leading-tight mt-8 md:mt-10 mb-5 break-words">
             {children}
           </h1>
         );
       },
       [BLOCKS.HEADING_2]: (node, children) => {
+        const text = children.join(" ");
+        const id = text.replace(/\s+/g, "-").toLowerCase();
         return (
-          <h2 className="poppins-bold text-3xl md:text-4xl text-text-primary leading-tight mt-8 mb-4">
+          <h2
+            id={id}
+            ref={(el) => (headingsRef.current = [...headingsRef.current, el])}
+            className="poppins-bold text-3xl md:text-4xl text-text-primary leading-tight mt-8 mb-4"
+          >
             {children}
           </h2>
         );
@@ -164,7 +164,6 @@ const BlogContentSection = ({ blogPost }) => {
                 customStyle={{
                   margin: 0,
                   borderRadius: "8px",
-
                   overflowX: "auto", // Ensures scrolling when needed
                 }}
                 className="thin-scrollbar monospace-text text-sm md:text-base dark:!bg-bg-button !p-2"

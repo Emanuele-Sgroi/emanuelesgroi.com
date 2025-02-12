@@ -1,0 +1,210 @@
+"use client";
+
+import React, { useState } from "react";
+import { IoMdCheckmark } from "react-icons/io";
+import { TfiClose } from "react-icons/tfi";
+import { IoCodeDownloadSharp } from "react-icons/io5";
+
+const ProjectSideBar = ({ project }) => {
+  const {
+    smallDescription,
+    techTagsBulk,
+    designed,
+    developed,
+    techStack,
+    languages,
+  } = project;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Access the referenced project tech stack
+  const techStackRef = techStack?.map((tech) => tech.fields);
+
+  // Parse JSON for languages
+  const parsedLanguages =
+    typeof languages === "string" ? JSON.parse(languages) : languages || [];
+
+  // Group technologies by category
+  const categorizedTechStack = techStackRef?.reduce((acc, tech) => {
+    const category = tech.category;
+
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+
+    acc[category].push(tech.name);
+    return acc;
+  }, {});
+
+  return (
+    <div
+      className="
+      max-[855px]:w-full 
+      max-[855px]:max-w-full 
+      min-w-[240px] 
+      max-w-[296px] 
+      flex 
+      flex-col 
+      justify-start 
+      items-start 
+      gap-4 
+      md:pt-1 
+      max-md:bg-bg-mobile-primary 
+      max-md:border-t 
+      max-md:border-b 
+      max-md:border-accent-border 
+      max-md:py-6 
+      max-md:px-6 
+      max-sm:px-4
+    "
+    >
+      <div
+        className={` 
+      w-full 
+      flex 
+      flex-col 
+      justify-start 
+      items-start 
+      gap-4 
+      max-md:border-b max-md:border-accent-border max-md:pb-2
+      ${!isExpanded ? "max-md:max-h-40 max-md:overflow-hidden" : ""}
+    `}
+      >
+        {/* Small description */}
+        <p className="font-semibold">About</p>
+        <p>{smallDescription}</p>
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1">
+          {techTagsBulk.map((tag, i) => (
+            <div key={i} className="tag-primary">
+              {tag}
+            </div>
+          ))}
+        </div>
+
+        {/* Designed & developed */}
+        <div className="w-full flex flex-col gap-2 border-b border-accent-border pb-4">
+          <p className="flex items-center text-sm text-text-secondary gap-2">
+            <span>
+              {designed ? (
+                <IoMdCheckmark
+                  size={16}
+                  className="text-[#216e39] dark:text-[#30a14e]"
+                />
+              ) : (
+                <TfiClose
+                  size={15}
+                  className="text-red-700 dark:text-red-600"
+                />
+              )}
+            </span>
+            Designed
+          </p>
+          <p className="flex items-center text-sm text-text-secondary gap-2">
+            <span>
+              {developed ? (
+                <IoMdCheckmark
+                  size={16}
+                  className="text-[#216e39] dark:text-[#30a14e]"
+                />
+              ) : (
+                <TfiClose
+                  size={15}
+                  className="text-red-700 dark:text-red-600"
+                />
+              )}
+            </span>
+            Developed
+          </p>
+        </div>
+
+        {/* Development summary */}
+
+        <div className="w-full border-b border-accent-border pb-4">
+          <h2 className="text-base font-semibold mb-3">Development Summary</h2>
+
+          <ul className="flex flex-col justify-start items-start gap-2">
+            {categorizedTechStack &&
+              Object.entries(categorizedTechStack).map(
+                ([category, technologies]) => (
+                  <li key={category}>
+                    <p className="text-sm font-medium flex items-center gap-2">
+                      <span>
+                        <IoCodeDownloadSharp
+                          size={19}
+                          className="text-[#3fb950]"
+                        />
+                      </span>
+                      {category}
+                    </p>
+                    <div className="flex flex-wrap gap-1 mt-1 ml-[27px]">
+                      {technologies.map((tech, index) => (
+                        <p
+                          key={index}
+                          className="text-sm text-text-secondary cursor-default"
+                        >
+                          <span className="hover:text-text-link hover:underline">
+                            {tech}
+                          </span>
+                          {index !== technologies.length - 1 && <span>,</span>}
+                        </p>
+                      ))}
+                    </div>
+                  </li>
+                )
+              )}
+          </ul>
+        </div>
+
+        {/* Languages */}
+        <div className="w-full">
+          <h2 className="text-base font-semibold mb-3">Languages</h2>
+          <div className="w-full h-[8px] center gap-[2px] rounded-full overflow-hidden mb-2">
+            {parsedLanguages.map((lang, index) => (
+              <div
+                key={index}
+                className="h-full"
+                style={{
+                  width: `${lang.percentage}%`,
+                  backgroundColor: lang.color,
+                }}
+              ></div>
+            ))}
+          </div>
+          <div className="w-full flex flex-wrap gap-[2px]">
+            {parsedLanguages.map((lang, index) => (
+              <div key={index} className="flex items-center gap-2">
+                {/* Language Color Indicator */}
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: lang.color }}
+                />
+                {/* Language Name */}
+                <p className="text-xs text-text-primary font-medium">
+                  {lang.name}
+                </p>
+                {/* Language Percentage */}
+                <p className="text-xs text-text-secondary">
+                  {lang.percentage}
+                  %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* The Expand/Collapse Button (placed *outside* the overflow-hidden div) */}
+      <div className="block md:hidden w-fit">
+        <button
+          className="text-sm font-semibold text-text-link"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? "Collapse" : "Expand"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectSideBar;
