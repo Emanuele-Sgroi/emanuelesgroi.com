@@ -68,6 +68,7 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true,
   },
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;

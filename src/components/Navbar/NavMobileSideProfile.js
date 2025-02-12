@@ -385,12 +385,12 @@ const NavMobileSideProfile = ({ onClick, theme }) => {
                 </div>
                 <div className="w-full relative center gap-2 mt-1">
                   <Link
-                    href="/about-this-website"
+                    href="/site-documentation"
                     className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                     onClick={() => setOpen(false)}
                   >
                     <RiFolderInfoLine size={18} className="text-accent-icon" />
-                    About this website
+                    Site Documentation
                     <div
                       className={getLinkClassDivMobile("/about-this-website")}
                     />

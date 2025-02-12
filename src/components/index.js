@@ -34,3 +34,13 @@ export { default as BlogInfoAndShareSection } from "./BlogPostPage/BlogInfoAndSh
 export { default as BlogContentSection } from "./BlogPostPage/BlogContentSection";
 export { default as KeepReadingSection } from "./BlogPostPage/KeepReadingSection";
 export { default as PageSuggestionsSection } from "./BlogPostPage/PageSuggestionsSection";
+export { default as PortfolioContainer } from "./PortfolioPage/PortfolioContainer";
+export { default as SortBar } from "./PortfolioPage/SortBar";
+export { default as ListLayout } from "./PortfolioPage/ListLayout";
+export { default as GridLayout } from "./PortfolioPage/GridLayout";
+export { default as AboutThisWebsite } from "./PortfolioPage/AboutThisWebsite";
+export { default as ProjectTopSection } from "./ProjectDetailsPage/ProjectTopSection";
+export { default as ProjectContentContainer } from "./ProjectDetailsPage/ProjectContentContainer";
+export { default as ProjectSideBar } from "./ProjectDetailsPage/ProjectSideBar";
+export { default as ProjectReadme } from "./ProjectDetailsPage/ProjectReadme";
+export { default as ProjectGallery } from "./ProjectDetailsPage/ProjectGallery";
