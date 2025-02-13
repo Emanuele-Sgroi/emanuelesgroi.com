@@ -1,17 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { getAssetUrl } from "@/utils/imageUtils";
-import Image from "next/image";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
-import { Link as ScrollLink } from "react-scroll";
-import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
-import {
-  darcula,
-  oneLight,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { IoCodeDownloadSharp } from "react-icons/io5";
 import Masonry from "react-masonry-css";
 import ModalImage from "react-modal-image";
 

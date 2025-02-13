@@ -40,7 +40,6 @@ const ProjectReadme = ({ project }) => {
   // Custom renderer for Contentful rich text
   const options = {
     renderMark: {
-      // ✅ Inline Code (single words, phrases inside text)
       [MARKS.CODE]: (text) => (
         <span className="px-1 py-[1px] monospace-text text-sm md:text-base rounded-sm bg-[#EFF2FF] dark:bg-bg-button text-text-primary whitespace-pre-wrap break-words">
           {text}
@@ -115,46 +114,6 @@ const ProjectReadme = ({ project }) => {
           {children}
         </p>
       ),
-      // [BLOCKS.PARAGRAPH]: (node, children) => {
-      //   // Check if all elements in the paragraph are marked as code
-      //   const isCodeBlock = node.content.every((child) =>
-      //     child.marks?.some((mark) => mark.type === MARKS.CODE)
-      //   );
-
-      //   if (isCodeBlock) {
-      //     // const code = node.content.map((child) => child.value).join("\n");
-      //     const code = node.content
-      //       .map((child) => child.value)
-      //       .join("")
-      //       .trim();
-
-      //     return (
-      //       <div className="max-w-full my-4 rounded-md bg-bg-button overflow-x-auto">
-      //         <SyntaxHighlighter
-      //           language="python"
-      //           style={darcula}
-      //           wrapLongLines={false}
-      //           customStyle={{
-      //             margin: 0,
-      //             borderRadius: "8px",
-      //             overflowX: "auto", // Ensures scrolling when needed
-      //           }}
-      //           className="thin-scrollbar monospace-text text-sm md:text-base dark:!bg-bg-button !p-2"
-      //         >
-      //           {code}
-      //         </SyntaxHighlighter>
-      //         {code}
-      //       </div>
-      //     );
-      //   }
-
-      //   return (
-      //     <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-base md:text-lg mb-5 break-words">
-      //       {children}
-      //     </p>
-      //   );
-      // },
-
       [INLINES.HYPERLINK]: (node, children) => {
         const url = node.data.uri;
         const isExternal = url.startsWith("http");
@@ -201,7 +160,6 @@ const ProjectReadme = ({ project }) => {
       [BLOCKS.TABLE_HEADER_CELL]: (node, children) => {
         let textContent = children;
 
-        // Ensure it's pure text, removing unexpected <p> or <span> wrappers
         if (
           Array.isArray(children) &&
           children.length === 1 &&
@@ -219,7 +177,6 @@ const ProjectReadme = ({ project }) => {
       [BLOCKS.TABLE_CELL]: (node, children) => {
         let textContent = children;
 
-        // Ensure it's pure text, removing unexpected <p> or <span> wrappers
         if (
           Array.isArray(children) &&
           children.length === 1 &&
