@@ -4,9 +4,15 @@ import "react-toastify/dist/ReactToastify.css";
 import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
 import { SplashScreenProvider } from "@/context/SplashScreenProvider";
-import SplashScreen from "@/components/SplashScreen/SplashScreen";
 import { ThemeProvider } from "@/context/ThemeProvider";
-import { Navbar, Footer, GreetingPopup } from "@/components";
+import { ChatProvider } from "@/context/ChatProvider";
+import {
+  Navbar,
+  Footer,
+  GreetingPopup,
+  ChatWidget,
+  SplashScreen,
+} from "@/components";
 import { ToastContainer, toast } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,9 +31,12 @@ export default function RootLayout({ children }) {
             <SplashScreen />
             <ToastContainer />
             <GreetingPopup />
-            <Navbar />
-            {children}
-            <Footer />
+            <ChatProvider>
+              <ChatWidget />
+              <Navbar />
+              {children}
+              <Footer />
+            </ChatProvider>
           </SplashScreenProvider>
         </ThemeProvider>
       </body>

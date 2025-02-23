@@ -89,8 +89,9 @@ const Navbar = () => {
           <div className="center gap-3 sm:gap-4">
             <NavSearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <ToggleThemeButton onClick={toggleTheme} theme={theme} />
             <NavManuPilotLink />
+            <ToggleThemeButton onClick={toggleTheme} theme={theme} />
+
             {/* Mobile only */}
             <NavMobileSideProfile onClick={toggleTheme} theme={theme} />
           </div>

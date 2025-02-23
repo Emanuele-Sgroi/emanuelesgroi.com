@@ -160,7 +160,6 @@ const SortBar = ({
                       onSelect={() => {
                         setSelectedTag(""); // Clears the selection
                         setOpen(false);
-                        console.log("all");
                       }}
                       className="text-text-primary !flex !gap-1 !items-center !rounded-none data-[selected='true']:!bg-transparent dark:data-[selected='true']:!bg-transparent group/item"
                     >

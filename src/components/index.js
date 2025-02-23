@@ -2,6 +2,7 @@ export { default as Navbar } from "./Navbar/Navbar";
 export { default as NavLogo } from "./Navbar/NavLogo";
 export { default as NavSearchBar } from "./Navbar/NavSearchBar";
 export { default as ToggleThemeButton } from "./Navbar/ToggleThemeButton";
+export { default as SplashScreen } from "./SplashScreen/SplashScreen";
 export { default as NavManuPilotLink } from "./Navbar/NavManuPilotLink";
 export { default as NavMobileSideProfile } from "./Navbar/NavMobileSideProfile";
 export { default as ProfileBar } from "./ProfileBar/ProfileBar";
@@ -44,3 +45,7 @@ export { default as ProjectContentContainer } from "./ProjectDetailsPage/Project
 export { default as ProjectSideBar } from "./ProjectDetailsPage/ProjectSideBar";
 export { default as ProjectReadme } from "./ProjectDetailsPage/ProjectReadme";
 export { default as ProjectGallery } from "./ProjectDetailsPage/ProjectGallery";
+export { default as ChatWidget } from "./ChatWidget/ChatWidget";
+export { default as ChatHeader } from "./ChatWidget/ChatHeader";
+export { default as ChatBody } from "./ChatWidget/ChatBody";
+export { default as Spinner } from "./Spinner/Spinner";

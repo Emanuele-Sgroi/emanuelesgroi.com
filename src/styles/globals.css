@@ -511,6 +511,25 @@ a {
   animation: shimmer 6.5s ease-in-out infinite;
 }
 
+/* ManuPilot chat */
+
+.chat-starting-animation {
+  opacity: 0;
+  transform: translateY(-100%);
+  animation: openChat 0.2s ease-in-out forwards;
+}
+
+@keyframes openChat {
+  from {
+    opacity: 0;
+    transform: translateY(2%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Buttons styles */
 
 .btn-primary {

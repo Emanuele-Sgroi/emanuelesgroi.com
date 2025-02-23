@@ -237,32 +237,6 @@ const ManuPilotInput = ({
     target.scrollTop = target.scrollHeight;
   };
 
-  // Manage Enter/Shift+Enter
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     if (e.shiftKey) {
-  //       // SHIFT+Enter => newline
-  //       e.preventDefault();
-  //       const { selectionStart, selectionEnd, value } = e.target;
-  //       e.target.value =
-  //         value.substring(0, selectionStart) +
-  //         "\n" +
-  //         value.substring(selectionEnd);
-  //       e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
-  //       handleInput(e);
-  //     } else {
-  //       // ENTER => send
-  //       e.preventDefault();
-  //       if (!isFileLoading) {
-  //         sendUserMessage();
-  //         e.target.style.height = "auto";
-  //       }
-  //     }
-  //   } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
-  //     setOpenAttachDialog(true);
-  //   }
-  // };
-
   const handleKeyDown = (e) => {
     if (isMobile) {
       // For MOBILE: "Enter" => always newline, user must tap the send button
@@ -585,7 +559,3 @@ const ManuPilotInput = ({
 };
 
 export default ManuPilotInput;
-
-{
-  /* Mobile */
-}
