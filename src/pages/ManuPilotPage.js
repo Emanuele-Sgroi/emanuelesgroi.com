@@ -211,6 +211,21 @@ const ManuPilotPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // On mount, read local storage
+    const storedData = localStorage.getItem("manuPilotChat");
+    if (storedData) {
+      try {
+        const parsed = JSON.parse(storedData);
+        if (parsed.messages) {
+          setConversation(parsed.messages);
+        }
+      } catch (e) {
+        console.error("Error parsing chat data:", e);
+      }
+    }
+  }, []);
+
   if (isManuPilotLoading || !manuPilotContent) {
     return <Loading />;
   }
@@ -382,6 +397,7 @@ const ManuPilotPage = () => {
 
   const handleResetConversation = () => {
     setConversation([]);
+    localStorage.removeItem("manuPilotChat");
     setError(null);
   };
 

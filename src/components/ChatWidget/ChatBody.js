@@ -1,45 +1,161 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { useChat } from "@/context/ChatProvider";
-import { usePathname } from "next/navigation";
-import { IoClose } from "react-icons/io5";
-import { PiCornersOutBold } from "react-icons/pi";
-import { AiOutlinePlus } from "react-icons/ai";
 import { GoCopilot } from "react-icons/go";
 import { FiArrowRight } from "react-icons/fi";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { FaFileCode } from "react-icons/fa";
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { Spinner } from "@/components";
 import ChatInput from "./ChatInput";
+import { images } from "@/utils/imageImport";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import ChatCodeBlock from "./ChatCodeBlock";
+
+const customComponents = {
+  hr: () => <hr className="border-accent-border my-2" />,
+
+  p: ({ children }) => (
+    <p className="text-sm text-text-primary leading-normal whitespace-normal break-words !p-0 !m-0">
+      {children}
+    </p>
+  ),
+  h1: ({ children }) => (
+    <h1 className="text-2xl font-semibold text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h1>
+  ),
+  h2: ({ children }) => (
+    <h2 className="text-lg font-semibold text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="text-base font-medium text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h3>
+  ),
+  h4: ({ children }) => (
+    <h4 className="text-sm font-medium text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h4>
+  ),
+  h5: ({ children }) => (
+    <h5 className="text-xs font-medium  text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h5>
+  ),
+  h6: ({ children }) => (
+    <h6 className="text-xs font-semibold text-text-primary break-words !p-0 !m-0">
+      {children}
+    </h6>
+  ),
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 text-xs border-text-primary pl-2 opacity-80 italic break-words">
+      {children}
+    </blockquote>
+  ),
+  ul: ({ children }) => (
+    <ul className="list-disc pl-4 text-text-primary text-sm !py-0 !m-0 !gap-0">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal pl-4 text-text-primary text-sm !py-0 !m-0 !gap-0">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => (
+    <li className="text-sm leading-snug !p-0 !m-0">{children}</li>
+  ),
+  a: ({ href, children }) => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-text-link text-sm underline"
+    >
+      {children}
+    </a>
+  ),
+  code: ({ inline, className, children }) => {
+    const language = /language-(\w+)/.exec(className || "")?.[1] || "plaintext";
+    if (!inline && language !== "plaintext") {
+      return (
+        <ChatCodeBlock
+          code={String(children).replace(/\n$/, "")}
+          lang={language}
+        />
+      );
+    }
+    return (
+      <code className="inline-block px-1 py-[1px] text-xs rounded-sm bg-bg-button text-text-primary break-words">
+        {children}
+      </code>
+    );
+  },
+};
 
 export default function ChatBody({
+  activeChat,
+  setActiveChat,
   portfolioContent,
   isPortfolioLoading,
   isPortfolioError,
+  manuPilotContent,
+  isManuPilotLoading,
+  isManuPilotError,
+  error,
+  setError,
+  droppedFile,
+  setDroppedFile,
+  switchToGeneralChat,
 }) {
   // Access the referenced projects
   const projectsRef = portfolioContent?.projects?.map(
     (project) => project.fields
   );
 
-  const [activeChat, setActiveChat] = useState(null); // null | 'general' | { projectName: 'example', questions: [aiQuestions] }
+  const { messages } = useChat(); // get the messages from context
+
+  //helpfull states
+  const [isThinking, setIsThinking] = useState(false);
+  const [autoScroll, setAutoScroll] = useState(true);
+  const containerRef = useRef(null);
+
+  // Whenever messages change, if autoScroll is true => scroll to bottom
+  useEffect(() => {
+    if (autoScroll) {
+      const container = containerRef.current;
+      if (container) {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [messages, autoScroll]);
+
+  // Handle scroll events to see if user scrolled away from bottom
+  function handleScroll() {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - 50;
+    // If user is near the bottom, keep autoScroll = true; otherwise false
+    setAutoScroll(isNearBottom);
+  }
 
   // Function to handle starting project chat
   const handleProjectClick = (projectName, questions) => {
@@ -58,8 +174,35 @@ export default function ChatBody({
     return text;
   };
 
+  // return states
+  if (isManuPilotLoading || !manuPilotContent) {
+    return (
+      <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isManuPilotError) {
+    return (
+      <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
+        <Image
+          src={images.deckfailcat}
+          alt="please_wait"
+          width={100}
+          height={100}
+          className="w-auto h-[100px]"
+        />
+        <h5 className="text-base  text-red-500 center flex-col text-center">
+          <span>Sorry, the chat isn&apos;t available at the moment.</span>Please
+          try again soon.
+        </h5>
+      </div>
+    );
+  }
+
   return (
-    <div className=" w-full center flex-col py-2 px-8">
+    <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
       {/* Intro Screen */}
       {!activeChat && (
         <>
@@ -172,20 +315,101 @@ export default function ChatBody({
 
       {/* Chat Interface */}
       {activeChat && (
-        <div className="flex flex-col flex-1 justify-between h-full">
-          <div className="flex-1 overflow-y-auto p-4 thin-scrollbar">
-            <p className="text-xs text-text-secondary">
-              ManuPilot uses AI. Check for mistakes.
-            </p>
+        <div className="flex flex-col w-full h-full">
+          {/* Note at the top */}
+          <p className="text-center text-xs text-text-secondary pb-1">
+            ManuPilot uses AI. Check for mistakes.
+          </p>
+
+          {/* Scrollable Messages Container */}
+          <div
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="flex-1 min-h-0 overflow-y-auto p-4 thin-scrollbar"
+          >
+            {messages.map((msg, idx) => {
+              const isUser = msg.role === "user";
+              return (
+                <div
+                  key={idx}
+                  className={`mb-2 ${isUser ? "text-right" : "text-left"}`}
+                >
+                  {isUser ? (
+                    <UserBubble message={msg} />
+                  ) : (
+                    <AssistantBubble message={msg} />
+                  )}
+                </div>
+              );
+            })}
+
+            {/* AI Thinking State */}
+            {isThinking && (
+              <div className="flex justify-start items-center gap-4 my-4">
+                <GoCopilot size={20} className="text-accent-icon" />
+                <div className="manupilot-shimmer">
+                  ManuPilot is thinking...
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Chat Input */}
+          {/* Input at the bottom */}
           <ChatInput
-            projectName={activeChat.project.projectName || null}
-            aiQuestions={activeChat.project.questions || null}
+            manuPilotContent={manuPilotContent}
+            activeChat={activeChat}
+            setActiveChat={setActiveChat}
+            isThinking={isThinking}
+            setIsThinking={setIsThinking}
+            error={error}
+            setError={setError}
+            droppedFile={droppedFile}
+            setDroppedFile={setDroppedFile}
+            switchToGeneralChat={switchToGeneralChat}
           />
         </div>
       )}
+    </div>
+  );
+}
+
+/* UserBubble Component */
+function UserBubble({ message }) {
+  const { content, file } = message;
+  return (
+    <div className="flex flex-col gap-3 items-end p-4">
+      {file && (
+        <div className="w-fit center cursor-default gap-2 border border-accent-border px-4 py-1 rounded-xl">
+          <FaFileCode size={24} className="text-accent-icon" />
+          <div className="flex flex-col">
+            <p className="text-text-primary font-bold text-sm">{file.name}</p>
+            <p className="text-text-secondary text-sm">File</p>
+          </div>
+        </div>
+      )}
+
+      {content && (
+        <div className="rounded-xl bg-bg-button text-text-primary px-2 py-[6px] max-w-[239px] whitespace-pre-wrap break-words text-left">
+          {content}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* AssistantBubble Component */
+function AssistantBubble({ message }) {
+  return (
+    <div className="w-full text-text-primary whitespace-pre-wrap pr-6 break-words flex justify-between items-start gap-4">
+      <GoCopilot size={20} className="text-accent-icon mt-[2px]" />
+      <div className="w-full max-w-[372px]">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkBreaks]}
+          components={customComponents}
+        >
+          {message.content}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }
