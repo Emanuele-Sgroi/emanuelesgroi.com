@@ -141,8 +141,8 @@ export default function ChatWidget() {
     <>
       <div
         className={`
-      fixed bottom-2 right-2 w-[480px] h-[600px]
-      flex flex-col rounded-xl border border-accent-border shadow-2xl z-[9990]
+      fixed bottom-0 md:bottom-2 right-0 md:right-2 w-full max-w-full md:max-w-[480px] h-full max-h-full md:max-h-[600px]
+      flex flex-col md:rounded-xl border border-accent-border shadow-2xl z-[9990]
       bg-bg-tertiary
       transition-all duration-1000 ease-in-out
       transform

@@ -12,6 +12,7 @@ import {
   GreetingPopup,
   ChatWidget,
   SplashScreen,
+  ChatFloater,
 } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -30,10 +31,12 @@ export default function RootLayout({ children }) {
           <SplashScreenProvider>
             <SplashScreen />
             <ToastContainer />
-            <GreetingPopup />
+
             <ChatProvider>
+              <GreetingPopup />
               <ChatWidget />
               <Navbar />
+              {/* <ChatFloater /> */}
               {children}
               <Footer />
             </ChatProvider>

@@ -66,7 +66,7 @@ const NavManuPilotLink = () => {
           onMouseLeave={handleMouseLeave}
           className={`${
             isManupilot && "!hidden"
-          } popover-1-trigger relative center outline-none`}
+          } max-md:hidden popover-1-trigger relative center outline-none`}
           aria-expanded={open}
         >
           <button
@@ -87,7 +87,7 @@ const NavManuPilotLink = () => {
             isManupilot && "!hidden"
           }`}
         >
-          <p className="text-xs">Chat with ManuPilot</p>
+          <p className="text-xs">Quick Chat with ManuPilot</p>
         </PopoverContent>
       </Popover>
 
@@ -102,11 +102,15 @@ const NavManuPilotLink = () => {
         >
           <Link
             href="/manupilot"
-            className={`relative w-[32px] h-[32px] btn-secondary center !rounded-bl-none !rounded-tl-none !border-l-0 ${
+            className={`relative w-[32px] h-[32px] btn-secondary center md:!rounded-bl-none md:!rounded-tl-none md:!border-l-0 ${
               isManupilot && "!hidden"
             }`}
           >
-            <PiCornersOutBold size={18} className={`text-text-primary`} />
+            <PiCornersOutBold
+              size={18}
+              className={`max-md:hidden text-text-primary`}
+            />
+            <GoCopilot size={18} className={`md:hidden text-text-primary`} />
           </Link>
         </PopoverTrigger>
         <PopoverContent

@@ -202,7 +202,7 @@ export default function ChatBody({
   }
 
   return (
-    <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
+    <div className="relative w-full h-full temp-h-chat-widget-body center flex-col pt-2 px-4 pb-2">
       {/* Intro Screen */}
       {!activeChat && (
         <>
@@ -214,7 +214,7 @@ export default function ChatBody({
           <h1 className="text-xl font-semibold text-center my-2">
             Ask ManuPilot
           </h1>
-          <p className="text-sm text-text-secondary text-center mb-4">
+          <p className="text-sm text-text-secondary text-center mb-4 max-w-[400px] md:max-w-full">
             Select one of my projects to get started. Ask questions about the
             project to get answers quickly and learn your way around.
           </p>
@@ -224,7 +224,7 @@ export default function ChatBody({
               <Spinner />
             </div>
           ) : (
-            <div className="w-full">
+            <div className="w-full max-w-[600px] md:max-w-full mt-6 md:mt-0">
               {/* Project List */}
               <Command className="!h-fit border border-accent-border bg-bg-primary !rounded-t-md !rounded-b-none !pb-0">
                 <CommandInput placeholder="Search a project to chat about" />
@@ -251,7 +251,7 @@ export default function ChatBody({
                               className="w-full flex gap-1 items-center justify-between rounded-md hover:bg-bg-hover dark:hover:bg-bg-hover2 px-1 py-[6px]"
                             >
                               <div className="relative flex items-center gap-2 z-20">
-                                <div className="w-[21px] h-[21px] max-w-6 max-h-6 border border-accent-border rounded-full">
+                                <div className="max-[320px]:hidden !w-[21px] !h-[21px] !min-w-[21px] !min-h-[21px] max-w-6 max-h-6 border border-accent-border rounded-full">
                                   <Image
                                     src={getAssetUrl(authorImage)}
                                     alt="Profile_Picture"
@@ -259,10 +259,10 @@ export default function ChatBody({
                                     height={21}
                                     priority
                                     quality={100}
-                                    className="w-full h-full rounded-full object-cover object-center z-10"
+                                    className="!w-[21px] !h-[21px] !min-w-[21px] !min-h-[21px] rounded-full object-cover object-center z-10"
                                   />
                                 </div>
-                                <p className="text-sm tracking-tight">
+                                <p className="text-left text-sm tracking-tight">
                                   <span className="text-text-secondary">
                                     Emanuele-Sgroi/
                                   </span>
@@ -325,7 +325,7 @@ export default function ChatBody({
           <div
             ref={containerRef}
             onScroll={handleScroll}
-            className="flex-1 min-h-0 overflow-y-auto p-4 thin-scrollbar"
+            className="flex-1 min-h-0 overflow-y-auto p-4 max-md:!px-0 thin-scrollbar"
           >
             {messages.map((msg, idx) => {
               const isUser = msg.role === "user";
@@ -347,7 +347,7 @@ export default function ChatBody({
             {isThinking && (
               <div className="flex justify-start items-center gap-4 my-4">
                 <GoCopilot size={20} className="text-accent-icon" />
-                <div className="manupilot-shimmer">
+                <div className="manupilot-shimmer !text-sm">
                   ManuPilot is thinking...
                 </div>
               </div>
@@ -389,7 +389,7 @@ function UserBubble({ message }) {
       )}
 
       {content && (
-        <div className="rounded-xl bg-bg-button text-text-primary px-2 py-[6px] max-w-[239px] whitespace-pre-wrap break-words text-left">
+        <div className="rounded-xl bg-bg-button text-text-primary text-sm px-2 py-[6px] max-w-[95%] md:max-w-[239px] whitespace-pre-wrap break-words text-left">
           {content}
         </div>
       )}
@@ -402,7 +402,7 @@ function AssistantBubble({ message }) {
   return (
     <div className="w-full text-text-primary whitespace-pre-wrap pr-6 break-words flex justify-between items-start gap-4">
       <GoCopilot size={20} className="text-accent-icon mt-[2px]" />
-      <div className="w-full max-w-[372px]">
+      <div className="w-full max-w-[95%] md:max-w-[372px]">
         <ReactMarkdown
           remarkPlugins={[remarkGfm, remarkBreaks]}
           components={customComponents}

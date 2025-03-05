@@ -48,4 +48,5 @@ export { default as ProjectGallery } from "./ProjectDetailsPage/ProjectGallery";
 export { default as ChatWidget } from "./ChatWidget/ChatWidget";
 export { default as ChatHeader } from "./ChatWidget/ChatHeader";
 export { default as ChatBody } from "./ChatWidget/ChatBody";
+export { default as ChatFloater } from "./ChatWidget/ChatFloater";
 export { default as Spinner } from "./Spinner/Spinner";

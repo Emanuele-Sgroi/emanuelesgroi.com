@@ -48,11 +48,9 @@ export default function ChatHeader({
   portfolioContent,
   isPortfolioError,
 }) {
-  const router = useRouter();
   const { messages, setMessages } = useChat();
   const [open, setOpen] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
-  const [immersiveOpen, setImmersiveOpen] = useState(false);
   const [openNew, setOpenNew] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [openProjectsDialog, setOpenProjectsDialog] = useState(false);
@@ -103,20 +101,6 @@ export default function ChatHeader({
     }
   };
 
-  // Open Popover for Immersive chat (link to /manupilot)
-  const handleMouseEnterImmersive = () => {
-    if (!isMobile) {
-      setImmersiveOpen(true);
-    }
-  };
-
-  // Close Popover for Immersive chat (link to /manupilot)
-  const handleMouseLeaveImmersive = () => {
-    if (!isMobile) {
-      setImmersiveOpen(false);
-    }
-  };
-
   // Open Popover for starting a new conversation
   const handleMouseEnterNew = () => {
     if (!isMobile) {
@@ -130,11 +114,6 @@ export default function ChatHeader({
       setOpenNew(false);
     }
   };
-
-  // function to bring the user to the page of manupilot
-  function handleTakeToImmersive() {
-    router.push("/manupilot");
-  }
 
   // function to start new conversation
   function handleNewConversation() {
@@ -162,7 +141,7 @@ export default function ChatHeader({
   return (
     <>
       <div className="border-b border-accent-border flex justify-between items-center py-2 pr-2 pl-4">
-        <h2 className="text-sm font-semibold">ManuPilot</h2>
+        <h2 className="text-sm font-semibold">Quick chat</h2>
         <div className="h-full flex items-center gap-2">
           {activeChat && messages.length < 1 && (
             <>
@@ -238,7 +217,7 @@ export default function ChatHeader({
                     </PopoverContent>
                   </Popover>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="!z-[999999]">
                   <AlertDialogHeader>
                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -257,26 +236,6 @@ export default function ChatHeader({
               <div className="bg-accent-border h-[25px] w-px mx-1"></div>
             </>
           )}
-
-          <Popover open={immersiveOpen} onOpenChange={setImmersiveOpen}>
-            <PopoverTrigger
-              onMouseEnter={handleMouseEnterImmersive}
-              onMouseLeave={handleMouseLeaveImmersive}
-              aria-expanded={immersiveOpen}
-            >
-              <button
-                onClick={handleTakeToImmersive}
-                className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
-              >
-                <PiCornersOutBold size={18} className="text-accent-icon" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent
-              className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
-            >
-              <p className="text-xs">Take conversation to immersive</p>
-            </PopoverContent>
-          </Popover>
 
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger
@@ -302,7 +261,7 @@ export default function ChatHeader({
 
       {/* Dialog to change project topic */}
       <Dialog open={openProjectsDialog} onOpenChange={setOpenProjectsDialog}>
-        <DialogContent className="!bg-bg-secondary">
+        <DialogContent className="!bg-bg-secondary !z-[999999]">
           <DialogHeader>
             <DialogTitle>Attach a Project</DialogTitle>
           </DialogHeader>
@@ -333,7 +292,7 @@ export default function ChatHeader({
                             className="w-full flex gap-1 items-center justify-between rounded-md hover:bg-bg-hover dark:hover:bg-bg-hover2 px-1 py-[6px]"
                           >
                             <div className="relative flex items-center gap-2 z-20">
-                              <div className="w-[21px] h-[21px] max-w-6 max-h-6 border border-accent-border rounded-full">
+                              <div className="max-[320px]:hidden !w-[21px] !h-[21px] !min-w-[21px] !min-h-[21px] max-w-6 max-h-6 border border-accent-border rounded-full">
                                 <Image
                                   src={getAssetUrl(authorImage)}
                                   alt="Profile_Picture"
@@ -341,10 +300,10 @@ export default function ChatHeader({
                                   height={21}
                                   priority
                                   quality={100}
-                                  className="w-full h-full rounded-full object-cover object-center z-10"
+                                  className="!w-[21px] !h-[21px] !min-w-[21px] !min-h-[21px] rounded-full object-cover object-center z-10"
                                 />
                               </div>
-                              <p className="text-sm tracking-tight">
+                              <p className="text-left text-sm tracking-tight">
                                 <span className="text-text-secondary">
                                   Emanuele-Sgroi/
                                 </span>

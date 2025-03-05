@@ -14,26 +14,26 @@ export function ChatProvider({ children }) {
   const [messages, setMessages] = useState([]);
 
   // When component mounts, read from localStorage
-  useEffect(() => {
-    const storedData = localStorage.getItem("manuPilotChat");
-    if (storedData) {
-      try {
-        const parsed = JSON.parse(storedData);
-        // Expect something like { messages: [...], isOpen: boolean, etc. }
-        if (parsed.messages) setMessages(parsed.messages);
-      } catch (e) {
-        console.error("Error parsing stored chat data:", e);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("manuPilotChat");
+  //   if (storedData) {
+  //     try {
+  //       const parsed = JSON.parse(storedData);
+  //       // Expect something like { messages: [...], isOpen: boolean, etc. }
+  //       if (parsed.messages) setMessages(parsed.messages);
+  //     } catch (e) {
+  //       console.error("Error parsing stored chat data:", e);
+  //     }
+  //   }
+  // }, []);
 
-  // Whenever messages changes, save to localStorage
-  useEffect(() => {
-    const dataToStore = {
-      messages,
-    };
-    localStorage.setItem("manuPilotChat", JSON.stringify(dataToStore));
-  }, [messages]);
+  // // Whenever messages changes, save to localStorage
+  // useEffect(() => {
+  //   const dataToStore = {
+  //     messages,
+  //   };
+  //   localStorage.setItem("manuPilotChat", JSON.stringify(dataToStore));
+  // }, [messages]);
 
   // functions to toggle open/close
   const openChat = () => setIsOpen(true);

@@ -594,7 +594,7 @@ export default function ChatInput({
                   />
                 </div>
 
-                <div className="max-sm:w-full flex max-sm:justify-between items-center gap-4 max-sm:px-3 sm:pr-4 pb-2 sm:pb-4">
+                <div className="flex  items-center gap-4 max-sm:px-3 sm:pr-4 pb-3 sm:pb-4">
                   <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                     <Tooltip>
                       <TooltipTrigger className="flex items-center">
@@ -671,7 +671,7 @@ export default function ChatInput({
         )}
       </div>
       <Dialog open={openAttachDialog} onOpenChange={setOpenAttachDialog}>
-        <DialogContent>
+        <DialogContent className="z-[999999]">
           <DialogHeader>
             <DialogTitle>Attach a File</DialogTitle>
             <DialogDescription>
