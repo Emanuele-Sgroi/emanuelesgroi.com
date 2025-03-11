@@ -12,7 +12,28 @@ const GreetingPopup = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [canShowFloater, setCanShowFloater] = useState(false);
 
+  // useEffect(() => {
+  //   const hasShownPopup = sessionStorage.getItem("hasShownGreetingPopup");
+
+  //   if (!hasShownPopup) {
+  //     const delayPopup = setTimeout(() => {
+  //       setPopupOn(true);
+  //       sessionStorage.setItem("hasShownGreetingPopup", "true");
+  //     }, 3000);
+
+  //     return () => clearTimeout(delayPopup);
+  //   } else {
+  //     const delayFloater = setTimeout(() => {
+  //       setCanShowFloater(true);
+  //     }, 3000);
+
+  //     return () => clearTimeout(delayFloater);
+  //   }
+  // }, []);
+
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const hasShownPopup = sessionStorage.getItem("hasShownGreetingPopup");
 
     if (!hasShownPopup) {
