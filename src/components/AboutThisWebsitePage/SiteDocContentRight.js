@@ -15,7 +15,7 @@ const SiteDocContentRight = () => {
 
         {/* Short Description */}
         <p className="text-text-secondary text-sm mb-6">
-          Welcome to {'"'}About This Website{'"'}, a behind-the-scenes look at
+          Welcome to &quot;About This Website&quot;, a behind-the-scenes look at
           how I built this GitHub-inspired portfolio. If you&apos;re curious
           about the design choices, tech stack, or unique features (like the AI
           chatbot), this is the right place!

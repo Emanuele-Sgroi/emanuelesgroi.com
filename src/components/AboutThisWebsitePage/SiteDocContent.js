@@ -1036,9 +1036,9 @@ const Features = () => {
           The <b>Discussions</b> page is designed to mimic{" "}
           <b>GitHub Discussions</b>, which I believe is one of the coolest
           features of GitHub. The main purpose of this page is to let users
-          leave comments if they want to. Whether it&apos;s something like
-          <i>"Hey, cool portfolio!"</i> or{" "}
-          <i>"Maybe you should quit development..."</i> (who knows?).
+          leave comments if they want to. Whether it&apos;s something like{" "}
+          <i>&quot;Hey, cool portfolio!&quot;</i> or{" "}
+          <i>&quot;Maybe you should quit development...&quot;</i> (who knows?).
         </p>
 
         <p className="mt-3">
@@ -1266,9 +1266,9 @@ const DeploymentAndFuturePlans = () => {
         <p className="mt-4">
           Well, as I mentioned before, there are things that{" "}
           <b>need improvement</b>. So if someone asks me{" "}
-          <b>"What&apos;s next?"</b>, my first answer would be that I need to
-          refine what I&apos;ve already built. There are parts of the project
-          where the
+          <b>&quot;What&apos;s next?&quot;</b>, my first answer would be that I
+          need to refine what I&apos;ve already built. There are parts of the
+          project where the
           <b>code could be optimized</b>, and that&apos;s a priority before
           adding anything new.
         </p>
