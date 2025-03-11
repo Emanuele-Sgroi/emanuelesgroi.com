@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import dynamic from "next/dynamic";
+//import dynamic from "next/dynamic";
 import "react-circular-progressbar/dist/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@theme-toggles/react/css/Lightbulb.css";
