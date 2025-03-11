@@ -16,6 +16,8 @@ import {
 } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
 
+export const dynamic = "force-dynamic";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -25,9 +27,7 @@ export const metadata = {
 
 const GreetingPopup = dynamic(
   () => import("@/components/GreetingPopup/GreetingPopup"),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
 
 export default function RootLayout({ children }) {
