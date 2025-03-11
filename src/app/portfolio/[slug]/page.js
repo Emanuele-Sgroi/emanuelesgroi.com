@@ -1,3 +1,59 @@
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { Loading, ErrorMessage } from "@/components";
+import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
+import { fetchProject, fetchProjectSlugs } from "@/utils/fetchCMSContent";
+
+// Generate Static Paths
+export async function generateStaticParams() {
+  try {
+    const { data, error } = await fetchProjectSlugs();
+    if (error || !data?.length) {
+      console.error("No project slugs found:", error);
+      return [];
+    }
+    return data.map((slug) => ({ slug }));
+  } catch (error) {
+    console.error("Error generating project slugs:", error);
+    return [];
+  }
+}
+
+// Fetch project details
+async function ProjectContent({ slug }) {
+  const { data: project, error } = await fetchProject(slug);
+  console.log("Project data:", project); // Debugging log
+  console.log("Error:", error); // Debugging log
+
+  if (error || !project) {
+    console.error(`Error fetching project for slug: ${slug}`, error);
+    notFound();
+  }
+
+  return <ProjectDetailsPage project={project} />;
+}
+
+// Error Boundary Component (to catch errors)
+function ErrorBoundary({ children }) {
+  try {
+    return children;
+  } catch (error) {
+    console.error("ErrorBoundary caught an error:", error); // Debugging log
+    return <ErrorMessage />;
+  }
+}
+
+// Main Component
+export default function Project({ params }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ErrorBoundary>
+        <ProjectContent slug={params.slug} />
+      </ErrorBoundary>
+    </Suspense>
+  );
+}
+
 // import { notFound } from "next/navigation";
 // import client from "@/utils/contentfulClient";
 // import { Suspense } from "react";
@@ -75,45 +131,3 @@
 //     return <ErrorMessage />;
 //   }
 // }
-
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import { Loading, ErrorMessage } from "@/components";
-import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
-import { fetchProject, fetchProjectSlugs } from "@/utils/fetchCMSContent";
-
-// Generate Static Paths
-export async function generateStaticParams() {
-  try {
-    const { data, error } = await fetchProjectSlugs();
-    if (error || !data?.length) {
-      console.error("No project slugs found:", error);
-      return [];
-    }
-    return data.map((slug) => ({ slug }));
-  } catch (error) {
-    console.error("Error generating project slugs:", error);
-    return [];
-  }
-}
-
-// Fetch project details
-async function ProjectContent({ slug }) {
-  const { data: project, error } = await fetchProject(slug);
-
-  if (error || !project) {
-    console.error(`Error fetching project for slug: ${slug}`, error);
-    return notFound();
-  }
-
-  return <ProjectDetailsPage project={project} />;
-}
-
-// Main Component
-export default function Project({ params }) {
-  return (
-    <Suspense fallback={<Loading />}>
-      <ProjectContent slug={params.slug} />
-    </Suspense>
-  );
-}

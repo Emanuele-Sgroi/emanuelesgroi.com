@@ -1,3 +1,59 @@
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { Loading, ErrorMessage } from "@/components";
+import BlogPostPage from "@/pages/BlogPostPage";
+import { fetchBlogPost, fetchBlogPostSlugs } from "@/utils/fetchCMSContent";
+
+// Generate Static Paths
+export async function generateStaticParams() {
+  try {
+    const { data, error } = await fetchBlogPostSlugs();
+    if (error || !data?.length) {
+      console.error("No blog post slugs found:", error);
+      return [];
+    }
+    return data.map((slug) => ({ slug }));
+  } catch (error) {
+    console.error("Error generating blog post slugs:", error);
+    return [];
+  }
+}
+
+// Fetch blog post details
+async function BlogPostContent({ slug }) {
+  const { data: blogPost, error } = await fetchBlogPost(slug);
+  console.log("Blog post data:", blogPost);
+  console.log("Error:", error);
+
+  if (error || !blogPost) {
+    console.error(`Blog post not found for slug: ${slug}`);
+    notFound();
+  }
+
+  return <BlogPostPage blogPost={blogPost} />;
+}
+
+// Error Boundary Component (to catch errors)
+function ErrorBoundary({ children }) {
+  try {
+    return children;
+  } catch (error) {
+    console.error("ErrorBoundary caught an error:", error);
+    return <ErrorMessage />;
+  }
+}
+
+// Main Component
+export default function BlogPost({ params }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ErrorBoundary>
+        <BlogPostContent slug={params.slug} />
+      </ErrorBoundary>
+    </Suspense>
+  );
+}
+
 // import { notFound } from "next/navigation";
 // import client from "@/utils/contentfulClient";
 // import { Suspense } from "react";
@@ -78,45 +134,3 @@
 //     return <ErrorMessage />;
 //   }
 // }
-
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import { Loading, ErrorMessage } from "@/components";
-import BlogPostPage from "@/pages/BlogPostPage";
-import { fetchBlogPost, fetchBlogPostSlugs } from "@/utils/fetchCMSContent";
-
-// Generate Static Paths
-export async function generateStaticParams() {
-  try {
-    const { data, error } = await fetchBlogPostSlugs();
-    if (error || !data?.length) {
-      console.error("No blog post slugs found:", error);
-      return [];
-    }
-    return data.map((slug) => ({ slug }));
-  } catch (error) {
-    console.error("Error generating blog post slugs:", error);
-    return [];
-  }
-}
-
-// Fetch blog post details
-async function BlogPostContent({ slug }) {
-  const { data: blogPost, error } = await fetchBlogPost(slug);
-
-  if (error || !blogPost) {
-    console.error(`Error fetching blog post for slug: ${slug}`, error);
-    return notFound();
-  }
-
-  return <BlogPostPage blogPost={blogPost} />;
-}
-
-// Main Component
-export default function BlogPost({ params }) {
-  return (
-    <Suspense fallback={<Loading />}>
-      <BlogPostContent slug={params.slug} />
-    </Suspense>
-  );
-}
