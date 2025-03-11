@@ -45,6 +45,7 @@ export { default as ProjectContentContainer } from "./ProjectDetailsPage/Project
 export { default as ProjectSideBar } from "./ProjectDetailsPage/ProjectSideBar";
 export { default as ProjectReadme } from "./ProjectDetailsPage/ProjectReadme";
 export { default as ProjectGallery } from "./ProjectDetailsPage/ProjectGallery";
+export { default as ChatWidgetWrapper } from "./ChatWidget/ChatWidgetWrapper";
 export { default as ChatWidget } from "./ChatWidget/ChatWidget";
 export { default as ChatHeader } from "./ChatWidget/ChatHeader";
 export { default as ChatBody } from "./ChatWidget/ChatBody";

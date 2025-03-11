@@ -1399,7 +1399,7 @@ const DocFooter = () => {
   const currentYear = new Date().getFullYear();
   return (
     <footer id="bottom" className="w-full mt-auto pt-10 md:pt-12 pb-10 px-4 ">
-      <div className="w-full center gap-2 max-md:flex-col">
+      <div className="w-full center max-md:items-start gap-2 max-md:flex-col">
         <Link
           href="/"
           className="text-text-primary center text-[22px] md:text-lg w-[38px] md:w-[26px] h-[38px] md:h-[26px] border border-text-primary center max-md:mb-2"

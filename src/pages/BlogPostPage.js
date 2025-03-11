@@ -8,9 +8,13 @@ import {
   Loading,
 } from "@/components";
 
-const BlogPostPage = ({ blogPost }) => {
+const BlogPostPage = ({ blogPost, writingsContent, error }) => {
   if (!blogPost) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorMessage />;
   }
 
   return (
@@ -18,7 +22,11 @@ const BlogPostPage = ({ blogPost }) => {
       <BlogPostTopSection blogPost={blogPost} />
       <BlogInfoAndShareSection blogPost={blogPost} />
       <BlogContentSection blogPost={blogPost} />
-      <KeepReadingSection blogPost={blogPost} />
+      <KeepReadingSection
+        blogPost={blogPost}
+        writingsContent={writingsContent}
+        error={error}
+      />
       <PageSuggestionsSection />
     </div>
   );

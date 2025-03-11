@@ -9,18 +9,13 @@ import {
   DiscussionSideBar,
   FixedBar,
 } from "@/components";
-import { useDiscussionContent } from "@/hooks/useDiscussionContent";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
+//import { useDiscussionContent } from "@/hooks/useDiscussionContent";
+//import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
-const DiscussionsPage = () => {
-  // get data from CMS
-  const { discussionContent, isDiscussionLoading, isDiscussionError } =
-    useDiscussionContent();
-  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
-    useGeneralInfoContent();
+const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
   // states
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [dbError, setDbError] = useState(false);
   const [topComment, setTopComment] = useState(null);
   const [normalComments, setNormalComments] = useState([]);
 
@@ -44,10 +39,10 @@ const DiscussionsPage = () => {
         // console.log("Top Comment:", top);
         // console.log("Normal Comments:", comments);
 
-        setError(false);
+        setDbError(false);
       } catch (err) {
         console.error("Error fetching comments:", err);
-        setError(true);
+        setDbError(true);
       } finally {
         setLoading(false);
       }
@@ -57,17 +52,11 @@ const DiscussionsPage = () => {
   }, []);
 
   // show error or loading
-  if (
-    isGeneralInfoLoading ||
-    isDiscussionLoading ||
-    !discussionContent ||
-    !generalInfoContent ||
-    loading
-  ) {
+  if (!discussionContent || !generalInfoContent || loading) {
     return <Loading />;
   }
 
-  if (isDiscussionError || isGeneralInfoError || error) {
+  if (error || dbError) {
     return <ErrorMessage />;
   }
 

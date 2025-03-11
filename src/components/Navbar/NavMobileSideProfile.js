@@ -28,25 +28,27 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 import { getAssetUrl } from "@/utils/imageUtils";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const NavMobileSideProfile = ({ onClick, theme }) => {
-  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
-    useGeneralInfoContent();
+const NavMobileSideProfile = ({
+  onClick,
+  theme,
+  generalInfoContent,
+  error,
+}) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  if (isGeneralInfoLoading || !generalInfoContent) {
+  if (!generalInfoContent) {
     return (
       <Skeleton className="w-[36px] h-[36px] !bg-bg-button rounded-full mt-px ml-2" />
     );
   }
 
-  if (isGeneralInfoError) {
+  if (error) {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>

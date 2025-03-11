@@ -3,18 +3,14 @@
 import React from "react";
 import ContactForm from "@/components/ContactPage/ContactForm";
 import { ProfileBar, Loading, ErrorMessage } from "@/components";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
-const ContactPage = () => {
-  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
-    useGeneralInfoContent();
-
-  if (isGeneralInfoLoading || !generalInfoContent) {
-    return <Loading />;
+const ContactPage = ({ generalInfoContent, error }) => {
+  if (error) {
+    return <ErrorMessage />;
   }
 
-  if (isGeneralInfoError) {
-    return <ErrorMessage />;
+  if (!generalInfoContent) {
+    return <Loading />;
   }
 
   return (

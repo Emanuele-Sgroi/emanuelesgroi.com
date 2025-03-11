@@ -7,18 +7,14 @@ import {
   ErrorMessage,
   DevQuizComponent,
 } from "@/components";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
-const WelcomePage = () => {
-  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
-    useGeneralInfoContent();
-
-  if (isGeneralInfoLoading || !generalInfoContent) {
-    return <Loading />;
+const DevQuizPage = ({ generalInfoContent, error }) => {
+  if (error) {
+    return <ErrorMessage />;
   }
 
-  if (isGeneralInfoError) {
-    return <ErrorMessage />;
+  if (!generalInfoContent) {
+    return <Loading />;
   }
 
   return (
@@ -29,4 +25,4 @@ const WelcomePage = () => {
   );
 };
 
-export default WelcomePage;
+export default DevQuizPage;

@@ -1,38 +1,37 @@
 "use client";
 
-import useSWR from "swr";
-import client from "@/utils/contentfulClient";
-import { useEffect, useState } from "react";
-
-const fetchManuPilotContent = async () => {
-  const response = await client.getEntries({
-    content_type: "manuPilotPage",
-    limit: 1,
-  });
-
-  if (response.items.length > 0) {
-    return response.items[0].fields;
-  }
-  throw new Error("No content found for manuPilotPage");
-};
+import { useState, useEffect } from "react";
+import { fetchManuPilotContent } from "@/utils/fetchCMSContent";
 
 export const useManuPilotContent = () => {
+  const [manuPilotContent, setManuPilotContent] = useState(null);
   const [isManuPilotLoading, setIsManuPilotLoading] = useState(true);
-
-  const { data, error } = useSWR("manuPilotPage", fetchManuPilotContent, {
-    onLoadingSlow: () => setIsManuPilotLoading(true),
-    onSuccess: () => setIsManuPilotLoading(false),
-    onError: () => setIsManuPilotLoading(false),
-  });
+  const [isManuPilotError, setIsManuPilotError] = useState(false);
 
   useEffect(() => {
-    setIsManuPilotLoading(!data && !error);
-  }, [data, error]);
+    async function loadContent() {
+      setIsManuPilotLoading(true);
+      setIsManuPilotError(false);
 
-  // Handling the loading and error states directly here
-  return {
-    manuPilotContent: data || null,
-    isManuPilotLoading,
-    isManuPilotError: !!error,
-  };
+      try {
+        const { data, error } = await fetchManuPilotContent();
+
+        if (error) {
+          console.error("Error fetching ManuPilot content:", error);
+          setIsManuPilotError(true);
+        } else {
+          setManuPilotContent(data);
+        }
+      } catch (error) {
+        console.error("Unexpected error fetching ManuPilot content:", error);
+        setIsManuPilotError(true);
+      } finally {
+        setIsManuPilotLoading(false);
+      }
+    }
+
+    loadContent();
+  }, []);
+
+  return { manuPilotContent, isManuPilotLoading, isManuPilotError };
 };
