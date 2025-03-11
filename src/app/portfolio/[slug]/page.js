@@ -103,7 +103,7 @@ async function ProjectContent({ slug }) {
 
   if (error || !project) {
     console.error(`Error fetching project for slug: ${slug}`, error);
-    return notFound();
+    notFound();
   }
 
   return <ProjectDetailsPage project={project} />;

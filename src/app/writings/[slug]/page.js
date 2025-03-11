@@ -106,7 +106,7 @@ async function BlogPostContent({ slug }) {
 
   if (error || !blogPost) {
     console.error(`Error fetching blog post for slug: ${slug}`, error);
-    return notFound();
+    notFound();
   }
 
   return <BlogPostPage blogPost={blogPost} />;
