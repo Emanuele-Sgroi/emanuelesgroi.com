@@ -6,6 +6,7 @@ import {
   ProjectTopSection,
   ProjectContentContainer,
   ProjectSideBar,
+  ErrorMessage,
 } from "@/components";
 
 const ProjectDetailsPage = ({ project, error }) => {

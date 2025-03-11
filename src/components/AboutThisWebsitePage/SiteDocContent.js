@@ -350,7 +350,7 @@ const DesignAndUI = () => {
             but users can toggle it manually if they prefer.
           </li>
           <li>
-            To stay as close as possible to GitHub&apos's look, I{" "}
+            To stay as close as possible to GitHub&apos&apos;s look, I{" "}
             <b>extracted the colors directly using the browser inspector</b>
             (as shown in the previous section).
           </li>
@@ -434,7 +434,7 @@ const TechStack = () => {
             ManuPilot AI. This approach helps reduce client-side workload and
             ensures <b>faster load times</b>.{" "}
             <Link
-              href="https://github.com/Emanuele-Sgroi/emanuelesgroi.com/blob/main/src/hooks/useGeneralInfoContent.js"
+              href="https://github.com/Emanuele-Sgroi/emanuelesgroi.com/blob/main/src/utils/fetchCMSContent.js"
               target="_blank"
               className="text-text-link underline"
             >
@@ -472,7 +472,7 @@ const TechStack = () => {
           experience with Next.js at the time. It&apos;s something I plan to
           improve. In the future, I might implement{" "}
           <b>Incremental Static Regeneration (ISR)</b> to strike a better
-          balance between performance and up-to-date content. (see example)
+          balance between performance and up-to-date content.
         </p>
       </div>
 
@@ -492,9 +492,10 @@ const TechStack = () => {
 
         <p className="monospace-text bg-[#212830] text-white w-fit p-2 rounded-md mt-4">
           <span className="!text-[#FFA73A]">{"<div"}</span> id=
-          <span className="!text-[#6A8759]">{'"example"'}</span> className=
+          <span className="!text-[#6A8759]">&quot;example&quot;</span>{" "}
+          className=
           <span className="!text-[#6A8759]">
-            {'"w-full h-screen absolute top-0 left-0"'}
+            &quot;w-full h-screen absolute top-0 left-0&quot;
           </span>
           <span className="!text-[#FFA73A]">{" />"}</span>
         </p>
@@ -565,20 +566,6 @@ const TechStack = () => {
           quality={100}
           priority
         />
-
-        <p className="mt-3">
-          The way I structured content types in Contentful follows my{" "}
-          <b>design pattern</b>. I used <b>custom hooks</b> to fetch the data
-          and integrate it into my components wherever needed.
-        </p>
-
-        <Link
-          href="https://github.com/Emanuele-Sgroi/emanuelesgroi.com/blob/main/src/hooks/useWritingsContent.js"
-          target="_blank"
-          className="mt-3 text-text-link underline"
-        >
-          See example
-        </Link>
 
         <p className="mt-3">
           While I didn&apos;t use Contentful <b>for everything</b> in this
@@ -1094,7 +1081,7 @@ const Features = () => {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Contacts</h2>
 
         <p className="mt-4">
-          Honestly, there&apos;s not much to say about this page. It's a{" "}
+          Honestly, there&apos;s not much to say about this page. It&apos;s a{" "}
           <b>contact form</b>. Wow, what a surprise!
         </p>
 
