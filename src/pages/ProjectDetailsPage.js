@@ -8,9 +8,13 @@ import {
   ProjectSideBar,
 } from "@/components";
 
-const ProjectDetailsPage = ({ project }) => {
+const ProjectDetailsPage = ({ project, error }) => {
   if (!project) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <ErrorMessage />;
   }
 
   return (

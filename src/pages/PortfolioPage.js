@@ -7,25 +7,13 @@ import {
   Loading,
   ErrorMessage,
 } from "@/components";
-import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
-import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
-const PortfolioPage = () => {
-  const { generalInfoContent, isGeneralInfoLoading, isGeneralInfoError } =
-    useGeneralInfoContent();
-  const { portfolioContent, isPortfolioLoading, isPortfolioError } =
-    usePortfolioContent();
-
-  if (
-    isGeneralInfoLoading ||
-    isPortfolioLoading ||
-    !generalInfoContent ||
-    !portfolioContent
-  ) {
+const PortfolioPage = ({ portfolioContent, generalInfoContent, error }) => {
+  if (!portfolioContent || !generalInfoContent) {
     return <Loading />;
   }
 
-  if (isGeneralInfoError || isPortfolioError) {
+  if (error) {
     return <ErrorMessage />;
   }
 

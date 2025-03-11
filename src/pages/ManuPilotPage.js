@@ -9,7 +9,7 @@ import {
   Loading,
   ErrorMessage,
 } from "@/components";
-import { useManuPilotContent } from "@/hooks/useManuPilotContent";
+//import { useManuPilotContent } from "@/hooks/useManuPilotContent";
 import { useRouter } from "next/navigation";
 import {
   AlertDialog,
@@ -120,14 +120,11 @@ const allowedExtensions = [
   ".adoc",
 ];
 
-const ManuPilotPage = () => {
-  const { isManuPilotError, isManuPilotLoading, manuPilotContent } =
-    useManuPilotContent();
+const ManuPilotPage = ({ manuPilotContent, isError }) => {
   //const [showNavigationWarning, setShowNavigationWarning] = useState(false);
   //const [pendingUrl, setPendingUrl] = useState(null);
   const router = useRouter();
   const originalPushRef = useRef(router.push);
-
   const [conversation, setConversation] = useState([]); // Store messages
   const [isThinking, setIsThinking] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -212,11 +209,11 @@ const ManuPilotPage = () => {
     };
   }, []);
 
-  if (isManuPilotLoading || !manuPilotContent) {
+  if (!manuPilotContent) {
     return <Loading />;
   }
 
-  if (isManuPilotError) {
+  if (isError) {
     return <ErrorMessage />;
   }
 

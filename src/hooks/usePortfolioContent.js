@@ -1,38 +1,37 @@
 "use client";
 
-import useSWR from "swr";
-import client from "@/utils/contentfulClient";
-import { useEffect, useState } from "react";
-
-const fetchPortfolioContent = async () => {
-  const response = await client.getEntries({
-    content_type: "portfolioPage",
-    limit: 1,
-  });
-
-  if (response.items.length > 0) {
-    return response.items[0].fields;
-  }
-  throw new Error("No content found for the Portfolio Page");
-};
+import { useState, useEffect } from "react";
+import { fetchPortfolioContent } from "@/utils/fetchCMSContent";
 
 export const usePortfolioContent = () => {
+  const [portfolioContent, setPortfolioContent] = useState(null);
   const [isPortfolioLoading, setIsPortfolioLoading] = useState(true);
-
-  const { data, error } = useSWR("portfolioPage", fetchPortfolioContent, {
-    onLoadingSlow: () => setIsPortfolioLoading(true),
-    onSuccess: () => setIsPortfolioLoading(false),
-    onError: () => setIsPortfolioLoading(false),
-  });
+  const [isPortfolioError, setIsPortfolioError] = useState(false);
 
   useEffect(() => {
-    setIsPortfolioLoading(!data && !error);
-  }, [data, error]); // setIsPortfolioLoading
+    async function loadContent() {
+      setIsPortfolioLoading(true);
+      setIsPortfolioError(false);
 
-  // Handling the loading and error states directly here
-  return {
-    portfolioContent: data || null,
-    isPortfolioLoading,
-    isPortfolioError: !!error,
-  };
+      try {
+        const { data, error } = await fetchPortfolioContent();
+
+        if (error) {
+          console.error("Error fetching Portfolio content:", error);
+          setIsPortfolioError(true);
+        } else {
+          setPortfolioContent(data);
+        }
+      } catch (error) {
+        console.error("Unexpected error fetching Portfolio content:", error);
+        setIsPortfolioError(true);
+      } finally {
+        setIsPortfolioLoading(false);
+      }
+    }
+
+    loadContent();
+  }, []);
+
+  return { portfolioContent, isPortfolioLoading, isPortfolioError };
 };

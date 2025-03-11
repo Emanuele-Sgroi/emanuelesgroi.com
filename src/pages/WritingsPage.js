@@ -8,17 +8,13 @@ import {
   Loading,
   ErrorMessage,
 } from "@/components";
-import { useWritingsContent } from "@/hooks/useWritingsContent";
 
-const WritingsPage = () => {
-  const { writingsContent, isWritingsLoading, isWritingsError } =
-    useWritingsContent();
-
-  if (isWritingsLoading || !writingsContent) {
+const WritingsPage = ({ writingsContent, error }) => {
+  if (!writingsContent) {
     return <Loading />;
   }
 
-  if (isWritingsError) {
+  if (error) {
     return <ErrorMessage />;
   }
 

@@ -1,38 +1,37 @@
 "use client";
 
-import useSWR from "swr";
-import client from "@/utils/contentfulClient";
-import { useEffect, useState } from "react";
-
-const fetchWritingsContent = async () => {
-  const response = await client.getEntries({
-    content_type: "writingPage",
-    limit: 1,
-  });
-
-  if (response.items.length > 0) {
-    return response.items[0].fields;
-  }
-  throw new Error("No content found for Writings Page");
-};
+import { useState, useEffect } from "react";
+import { fetchWritingsContent } from "@/utils/fetchCMSContent";
 
 export const useWritingsContent = () => {
+  const [writingsContent, setWritingsContent] = useState(null);
   const [isWritingsLoading, setIsWritingsLoading] = useState(true);
-
-  const { data, error } = useSWR("writingPage", fetchWritingsContent, {
-    onLoadingSlow: () => setIsWritingsLoading(true),
-    onSuccess: () => setIsWritingsLoading(false),
-    onError: () => setIsWritingsLoading(false),
-  });
+  const [isWritingsError, setIsWritingsError] = useState(false);
 
   useEffect(() => {
-    setIsWritingsLoading(!data && !error);
-  }, [data, error]);
+    async function loadContent() {
+      setIsWritingsLoading(true);
+      setIsWritingsError(false);
 
-  // Handling the loading and error states directly here
-  return {
-    writingsContent: data || null,
-    isWritingsLoading,
-    isWritingsError: !!error,
-  };
+      try {
+        const { data, error } = await fetchWritingsContent();
+
+        if (error) {
+          console.error("Error fetching Writings content:", error);
+          setIsWritingsError(true);
+        } else {
+          setWritingsContent(data);
+        }
+      } catch (error) {
+        console.error("Unexpected error fetching Writings content:", error);
+        setIsWritingsError(true);
+      } finally {
+        setIsWritingsLoading(false);
+      }
+    }
+
+    loadContent();
+  }, []);
+
+  return { writingsContent, isWritingsLoading, isWritingsError };
 };

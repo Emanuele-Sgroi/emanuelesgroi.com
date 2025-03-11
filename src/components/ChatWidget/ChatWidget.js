@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useChat } from "@/context/ChatProvider";
 import { usePathname } from "next/navigation";
 import { ChatHeader, ChatBody } from "@/components";
-import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 import { allowedExtensions } from "@/utils/allowedExtensions";
 import AttachFileOverlay from "@/components/ManuPilotPage/AttachFileOverlay";
 import { useManuPilotContent } from "@/hooks/useManuPilotContent";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 export default function ChatWidget() {
   const { isOpen, closeChat, messages, setMessages } = useChat();
