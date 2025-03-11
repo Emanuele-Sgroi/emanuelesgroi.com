@@ -4,15 +4,19 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { GoCopilot } from "react-icons/go";
 import { usePathname } from "next/navigation";
+import { useChat } from "@/context/ChatProvider";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PiCornersOutBold } from "react-icons/pi";
 
 const NavManuPilotLink = () => {
   const pathname = usePathname();
+  const { openChat } = useChat();
   const [open, setOpen] = useState(false);
+  const [immersiveOpen, setImmersiveOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -40,43 +44,84 @@ const NavManuPilotLink = () => {
     }
   };
 
+  const handleMouseEnterImmersive = () => {
+    if (!isMobile) {
+      setImmersiveOpen(true);
+    }
+  };
+
+  const handleMouseLeaveImmersive = () => {
+    if (!isMobile) {
+      setImmersiveOpen(false);
+    }
+  };
+
   const isManupilot = pathname === "/manupilot";
 
   return (
-    <>
-      {/* Writings */}
+    <div className={`${isManupilot && "!hidden"} flex`}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="relative center outline-none"
+          className={`${
+            isManupilot && "!hidden"
+          } max-md:hidden popover-1-trigger relative center outline-none`}
           aria-expanded={open}
         >
-          <Link
-            href="/manupilot"
-            className={`relative w-[32px] h-[32px] btn-secondary center ${
-              isManupilot && "!bg-bg-hover"
+          <button
+            onClick={openChat}
+            className={`relative w-[32px] h-[32px] btn-secondary center !rounded-br-none !rounded-tr-none ${
+              isManupilot && "!hidden"
             }`}
           >
             <GoCopilot size={18} className={`text-text-primary`} />
-            {!isManupilot ? (
-              <p className="w-[13px] h-[13px] absolute -top-1 -right-1 inline-block whitespace-nowrap text-[8px] font-bold text-white p-[1px] rounded-full shadow bg-gradient-to-r from-pink-500 to-purple-500 transform rotate-45">
-                AI
-              </p>
-            ) : (
-              <div className="w-[10px] h-[10px] absolute -top-1 -right-1 rounded-full bg-accent-active" />
-            )}
+
+            {/* <p className="w-[13px] h-[13px] absolute -top-1 -left-1 inline-block whitespace-nowrap text-[8px] font-bold text-white p-[1px] rounded-full shadow bg-gradient-to-r from-pink-500 to-purple-500 transform -rotate-12">
+              AI
+            </p> */}
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          className={`w-fit p-1 bg-bg-button border-accent-border ${
+            isManupilot && "!hidden"
+          }`}
+        >
+          <p className="text-xs">Quick Chat with ManuPilot</p>
+        </PopoverContent>
+      </Popover>
+
+      <Popover open={immersiveOpen} onOpenChange={setImmersiveOpen}>
+        <PopoverTrigger
+          onMouseEnter={handleMouseEnterImmersive}
+          onMouseLeave={handleMouseLeaveImmersive}
+          className={`${
+            isManupilot && "!hidden"
+          } popover-1-trigger relative center outline-none`}
+          aria-expanded={immersiveOpen}
+        >
+          <Link
+            href="/manupilot"
+            className={`relative w-[32px] h-[32px] btn-secondary center md:!rounded-bl-none md:!rounded-tl-none md:!border-l-0 ${
+              isManupilot && "!hidden"
+            }`}
+          >
+            <PiCornersOutBold
+              size={18}
+              className={`max-md:hidden text-text-primary`}
+            />
+            <GoCopilot size={18} className={`md:hidden text-text-primary`} />
           </Link>
         </PopoverTrigger>
         <PopoverContent
           className={`w-fit p-1 bg-bg-button border-accent-border ${
-            isManupilot && "hidden"
+            isManupilot && "!hidden"
           }`}
         >
-          <p className="text-xs">Try ManuPilot AI</p>
+          <p className="text-xs">Immersive conversation with ManuPilot</p>
         </PopoverContent>
       </Popover>
-    </>
+    </div>
   );
 };
 

@@ -111,7 +111,7 @@ const NavMobileSideProfile = ({ onClick, theme }) => {
             />
           </div>
         </SheetTrigger>
-        <SheetContent className="max-[308px]:w-screen !bg-bg-primary !border-accent-border overflow-y-auto thin-scrollbar max-[234px]:px-1">
+        <SheetContent className="max-[308px]:w-screen !bg-bg-primary !border-accent-border overflow-y-auto thin-scrollbar max-[234px]:px-1 z-[99999999999999]">
           <SheetHeader>
             <SheetDescription>
               <div>
@@ -385,12 +385,12 @@ const NavMobileSideProfile = ({ onClick, theme }) => {
                 </div>
                 <div className="w-full relative center gap-2 mt-1">
                   <Link
-                    href="/site-documentation"
+                    href="/about-this-website"
                     className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
                     onClick={() => setOpen(false)}
                   >
                     <RiFolderInfoLine size={18} className="text-accent-icon" />
-                    Site Documentation
+                    About this Website
                     <div
                       className={getLinkClassDivMobile("/about-this-website")}
                     />

@@ -136,6 +136,7 @@ const ManuPilotPage = () => {
   const [isDraggingFile, setIsDraggingFile] = useState(false);
   const [droppedFile, setDroppedFile] = useState(null);
   const [dragCounter, setDragCounter] = useState(0);
+  const [abortController, setAbortController] = useState(null);
 
   // handle tab close or route changes
   const { showNavigationWarning, setShowNavigationWarning, pendingUrl } =
@@ -226,6 +227,11 @@ const ManuPilotPage = () => {
 
     if (!text && !file) return;
 
+    // Clear previous AbortController and create a new one
+    if (abortController) abortController.abort();
+    const newAbortController = new AbortController();
+    setAbortController(newAbortController);
+
     // Add the user's new message to conversation state
     setConversation((prev) => [...prev, { role: "user", text, file }]);
 
@@ -249,6 +255,7 @@ const ManuPilotPage = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: messagesForApi }),
+        signal: newAbortController.signal,
       });
 
       if (!response.ok) {
@@ -381,8 +388,14 @@ const ManuPilotPage = () => {
   }
 
   const handleResetConversation = () => {
+    if (abortController) {
+      abortController.abort(); // Cancel ongoing request
+    }
+    setIsThinking(false);
     setConversation([]);
+    localStorage.removeItem("manuPilotChat");
     setError(null);
+    clearError();
   };
 
   const clearError = () => setError(null);

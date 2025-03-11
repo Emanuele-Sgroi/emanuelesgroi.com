@@ -35,6 +35,7 @@ const Navbar = () => {
   const isManuPilotPage = pathname === "/manupilot";
   const isBlogPost = pathname.startsWith("/writings/");
   const isProjectDetails = pathname.startsWith("/portfolio/");
+  const isSiteDoc = pathname === "/about-this-website";
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -78,7 +79,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full relative max-sm:px-4 ">
+      <nav
+        className={`w-full ${
+          isSiteDoc ? "fixed top-0 left-0 z-[999]" : "relative"
+        } max-sm:px-4`}
+      >
         {/* Top part */}
         <div
           className={`w-full flex justify-between items-center ${
@@ -89,8 +94,9 @@ const Navbar = () => {
           <div className="center gap-3 sm:gap-4">
             <NavSearchBar />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <ToggleThemeButton onClick={toggleTheme} theme={theme} />
             <NavManuPilotLink />
+            <ToggleThemeButton onClick={toggleTheme} theme={theme} />
+
             {/* Mobile only */}
             <NavMobileSideProfile onClick={toggleTheme} theme={theme} />
           </div>
@@ -98,7 +104,8 @@ const Navbar = () => {
         {/* Bottom part */}
         <div
           className={`w-full flex justify-between items-center gap-4 ${
-            (isManuPilotPage || isBlogPost || isProjectDetails) && "hidden"
+            (isManuPilotPage || isBlogPost || isProjectDetails || isSiteDoc) &&
+            "hidden"
           }`}
         >
           <div className="flex justify-start items-center gap-6">

@@ -285,7 +285,7 @@ const ManuPilotBody = ({
           className="text-other-chart-green3 max-[322px]:hidden"
         />
       ),
-      label: "What is this website about?",
+      label: "Show me Emanuele's Projects?",
     },
     {
       icon: (

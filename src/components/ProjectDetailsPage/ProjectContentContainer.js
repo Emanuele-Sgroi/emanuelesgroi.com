@@ -5,13 +5,11 @@ import Link from "next/link";
 import { IoCode } from "react-icons/io5";
 import { SiKdenlive } from "react-icons/si";
 import { FiBookOpen } from "react-icons/fi";
-import { FaList } from "react-icons/fa";
 import { ProjectReadme, ProjectGallery } from "@/components";
 
 const ProjectContentContainer = ({ project }) => {
   const { demoLink, codeLink, readme } = project;
   const [activeTab, setActiveTab] = useState("readme");
-  const [open, setOpen] = React.useState(false);
 
   const getTabClassDiv = (tab) => {
     return activeTab === tab

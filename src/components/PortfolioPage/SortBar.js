@@ -22,6 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useChat } from "@/context/ChatProvider";
 
 const SortBar = ({
   portfolio,
@@ -31,6 +32,7 @@ const SortBar = ({
   setSelectedTag,
 }) => {
   const router = useRouter();
+  const { openChat } = useChat();
   const [open, setOpen] = React.useState(false);
 
   // Access the referenced projects
@@ -160,7 +162,6 @@ const SortBar = ({
                       onSelect={() => {
                         setSelectedTag(""); // Clears the selection
                         setOpen(false);
-                        console.log("all");
                       }}
                       className="text-text-primary !flex !gap-1 !items-center !rounded-none data-[selected='true']:!bg-transparent dark:data-[selected='true']:!bg-transparent group/item"
                     >
@@ -216,7 +217,10 @@ const SortBar = ({
             Random
           </button>
           {/* ManuPilot Button */}
-          <button className="center gap-2 btn-primary ! !text-base !font-semibold">
+          <button
+            onClick={openChat}
+            className="center gap-2 btn-primary ! !text-base !font-semibold"
+          >
             <GoCopilot size={16} />
             Ask ManuPilot
           </button>

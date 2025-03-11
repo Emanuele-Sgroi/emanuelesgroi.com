@@ -20,6 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { allowedExtensions } from "@/utils/allowedExtensions";
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(false);
@@ -61,100 +62,100 @@ const ManuPilotInput = ({
   const [showBadge, setShowBadge] = useState(false);
   const textAreaRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const allowedExtensions = [
-    ".txt",
-    ".csv",
-    ".json",
-    ".js",
-    ".jsx",
-    ".ts",
-    ".tsx",
-    ".html",
-    ".css",
-    ".scss",
-    ".sass",
-    ".php",
-    ".py",
-    ".java",
-    ".c",
-    ".cpp",
-    ".h",
-    ".hpp",
-    ".cs",
-    ".rb",
-    ".swift",
-    ".kt",
-    ".go",
-    ".rs",
-    ".sh",
-    ".bash",
-    ".yaml",
-    ".yml",
-    ".xml",
-    ".ini",
-    ".md",
-    ".sql",
-    ".env",
-    ".gitignore",
-    ".npmrc",
-    ".editorconfig",
-    ".babelrc",
-    ".prettierrc",
-    ".eslintrc",
-    ".prisma",
-    ".db",
-    ".dbml",
-    ".psql",
-    ".pgsql",
-    ".mongo",
-    ".nosql",
-    ".sqlite",
-    ".mjs",
-    ".vue",
-    ".svelte",
-    ".angular",
-    ".elm",
-    ".ejs",
-    ".hbs",
-    ".njk",
-    ".lit",
-    ".mjml",
-    ".sol",
-    ".vyper",
-    ".wasm",
-    ".ipynb",
-    ".r",
-    ".dvc",
-    ".pkl",
-    ".dart",
-    ".erl",
-    ".ex",
-    ".exs",
-    ".scala",
-    ".clj",
-    ".lisp",
-    ".ml",
-    ".hs",
-    ".scheme",
-    ".nim",
-    ".toml",
-    ".makefile",
-    ".cmake",
-    ".gradle",
-    ".dockerfile",
-    ".compose",
-    ".zshrc",
-    ".bashrc",
-    ".bash_profile",
-    ".profile",
-    ".fish",
-    ".rst",
-    ".asciidoc",
-    ".tex",
-    ".latex",
-    ".bib",
-    ".adoc",
-  ];
+  // const allowedExtensions = [
+  //   ".txt",
+  //   ".csv",
+  //   ".json",
+  //   ".js",
+  //   ".jsx",
+  //   ".ts",
+  //   ".tsx",
+  //   ".html",
+  //   ".css",
+  //   ".scss",
+  //   ".sass",
+  //   ".php",
+  //   ".py",
+  //   ".java",
+  //   ".c",
+  //   ".cpp",
+  //   ".h",
+  //   ".hpp",
+  //   ".cs",
+  //   ".rb",
+  //   ".swift",
+  //   ".kt",
+  //   ".go",
+  //   ".rs",
+  //   ".sh",
+  //   ".bash",
+  //   ".yaml",
+  //   ".yml",
+  //   ".xml",
+  //   ".ini",
+  //   ".md",
+  //   ".sql",
+  //   ".env",
+  //   ".gitignore",
+  //   ".npmrc",
+  //   ".editorconfig",
+  //   ".babelrc",
+  //   ".prettierrc",
+  //   ".eslintrc",
+  //   ".prisma",
+  //   ".db",
+  //   ".dbml",
+  //   ".psql",
+  //   ".pgsql",
+  //   ".mongo",
+  //   ".nosql",
+  //   ".sqlite",
+  //   ".mjs",
+  //   ".vue",
+  //   ".svelte",
+  //   ".angular",
+  //   ".elm",
+  //   ".ejs",
+  //   ".hbs",
+  //   ".njk",
+  //   ".lit",
+  //   ".mjml",
+  //   ".sol",
+  //   ".vyper",
+  //   ".wasm",
+  //   ".ipynb",
+  //   ".r",
+  //   ".dvc",
+  //   ".pkl",
+  //   ".dart",
+  //   ".erl",
+  //   ".ex",
+  //   ".exs",
+  //   ".scala",
+  //   ".clj",
+  //   ".lisp",
+  //   ".ml",
+  //   ".hs",
+  //   ".scheme",
+  //   ".nim",
+  //   ".toml",
+  //   ".makefile",
+  //   ".cmake",
+  //   ".gradle",
+  //   ".dockerfile",
+  //   ".compose",
+  //   ".zshrc",
+  //   ".bashrc",
+  //   ".bash_profile",
+  //   ".profile",
+  //   ".fish",
+  //   ".rst",
+  //   ".asciidoc",
+  //   ".tex",
+  //   ".latex",
+  //   ".bib",
+  //   ".adoc",
+  // ];
 
   useEffect(() => {
     if (droppedFile) {
@@ -237,32 +238,6 @@ const ManuPilotInput = ({
     target.scrollTop = target.scrollHeight;
   };
 
-  // Manage Enter/Shift+Enter
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     if (e.shiftKey) {
-  //       // SHIFT+Enter => newline
-  //       e.preventDefault();
-  //       const { selectionStart, selectionEnd, value } = e.target;
-  //       e.target.value =
-  //         value.substring(0, selectionStart) +
-  //         "\n" +
-  //         value.substring(selectionEnd);
-  //       e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
-  //       handleInput(e);
-  //     } else {
-  //       // ENTER => send
-  //       e.preventDefault();
-  //       if (!isFileLoading) {
-  //         sendUserMessage();
-  //         e.target.style.height = "auto";
-  //       }
-  //     }
-  //   } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
-  //     setOpenAttachDialog(true);
-  //   }
-  // };
-
   const handleKeyDown = (e) => {
     if (isMobile) {
       // For MOBILE: "Enter" => always newline, user must tap the send button
@@ -285,7 +260,6 @@ const ManuPilotInput = ({
           }
         }
       } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "@") {
-        // your existing ^⇧@ logic
         setOpenAttachDialog(true);
       }
     }
@@ -585,7 +559,3 @@ const ManuPilotInput = ({
 };
 
 export default ManuPilotInput;
-
-{
-  /* Mobile */
-}

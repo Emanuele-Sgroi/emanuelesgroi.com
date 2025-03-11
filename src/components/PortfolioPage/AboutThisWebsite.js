@@ -40,11 +40,11 @@ const AboutThisWebsite = ({ portfolio }) => {
         />
       </div>
       <Link
-        href={"/site-documentation"}
+        href={"/about-this-website"}
         className="btn-primary max-md:!text-sm center gap-2 max-[320px]:mt-4 mt-2 lg:mt-0"
       >
         <RiFolderInfoLine size={18} className="max-[235px]:hidden" />
-        Site Documentation
+        About this website
       </Link>
     </div>
   );
