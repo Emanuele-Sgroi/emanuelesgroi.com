@@ -7,6 +7,8 @@ import { RiCloseLargeLine } from "react-icons/ri";
 import Typewriter from "typewriter-effect";
 import ChatFloater from "../ChatWidget/ChatFloater";
 
+export const dynamic = "force-dynamic";
+
 const GreetingPopup = () => {
   const [popupOn, setPopupOn] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
