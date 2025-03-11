@@ -7,12 +7,13 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
   const pathname = usePathname();
   const isManuPilotPage = pathname === "/manupilot";
+  const isSiteDoc = pathname === "/about-this-website";
   const currentYear = new Date().getFullYear();
 
   return (
     <footer
       className={`w-full mt-auto pt-10 md:pt-12 pb-10 px-4 ${
-        isManuPilotPage && "hidden"
+        (isManuPilotPage || isSiteDoc) && "hidden"
       }`}
     >
       <div className="w-full center gap-2 max-md:flex-col">

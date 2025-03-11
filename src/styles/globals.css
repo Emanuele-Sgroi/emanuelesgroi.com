@@ -1321,6 +1321,12 @@ blockquote {
   }
 }
 
+@media (max-width: 767px) {
+  .epic-bounce {
+    animation-play-state: paused;
+  }
+}
+
 .temp-h-chat-widget-body {
   max-height: 549px;
 }

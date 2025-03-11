@@ -29,7 +29,7 @@ const ChatFloater = () => {
 
   return (
     <div
-      className="fixed bottom-8 right-8 z-[999] animate-fade-in-floater"
+      className="fixed bottom-6 md:bottom-8 right-6 md:right-8 z-[998] animate-fade-in-floater"
       style={{ pointerEvents: "auto" }}
     >
       <button onClick={openChat} className="relative center">
@@ -39,7 +39,7 @@ const ChatFloater = () => {
           width={100}
           height={100}
           quality={100}
-          className={`w-[44px] h-auto object-contain ${
+          className={`w-[40px] md:w-[44px] h-auto object-contain ${
             bounce ? "epic-bounce" : ""
           }`}
           priority={true}
