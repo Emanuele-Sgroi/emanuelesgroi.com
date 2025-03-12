@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import { ChatProvider } from "@/context/ChatProvider";
 import { Navbar, Footer, ChatWidget, ChatFloater } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
+import SplashScreenWrapper from "@/components/SplashScreen/SplashScreenWrapper";
 
 //export const dynamic = "force-dynamic";
 
@@ -20,12 +21,12 @@ export const metadata = {
 };
 
 // Dynamically import SplashScreen with ssr: false
-const SplashScreen = dynamic(
-  () => import("@/components/SplashScreen/SplashScreen"),
-  {
-    ssr: false,
-  }
-);
+// const SplashScreen = dynamic(
+//   () => import("@/components/SplashScreen/SplashScreen"),
+//   {
+//     ssr: false,
+//   }
+// );
 
 const GreetingPopup = dynamic(
   () => import("@/components/GreetingPopup/GreetingPopup"),
@@ -39,19 +40,18 @@ export default function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body>
         <ThemeProvider>
-          <SplashScreenProvider>
-            <SplashScreen />
-            <ToastContainer />
-
-            <ChatProvider>
-              <GreetingPopup />
-              <ChatWidget />
-              <Navbar />
-              {/* <ChatFloater /> */}
-              {children}
-              <Footer />
-            </ChatProvider>
-          </SplashScreenProvider>
+          {/* <SplashScreenWrapper> */}
+          {/* <SplashScreen /> */}
+          <ToastContainer />
+          <ChatProvider>
+            <GreetingPopup />
+            <ChatWidget />
+            <Navbar />
+            {/* <ChatFloater /> */}
+            {children}
+            <Footer />
+          </ChatProvider>
+          {/* </SplashScreenWrapper> */}
         </ThemeProvider>
       </body>
     </html>

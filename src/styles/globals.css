@@ -298,6 +298,10 @@ html {
   box-sizing: inherit; /* Apply box-sizing to all elements */
 }
 
+body:has(.splash-container) {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
