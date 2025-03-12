@@ -16,23 +16,24 @@ const GreetingPopup = () => {
 
   useEffect(() => {
     // Safety checks: do nothing if we're on the server
-    if (typeof window === "undefined") return;
-    if (!("sessionStorage" in window)) return;
+    // if (typeof window === "undefined") return;
 
-    const hasShownPopup = window.sessionStorage.getItem(
-      "hasShownGreetingPopup"
-    );
-    if (!hasShownPopup) {
-      const delayPopup = setTimeout(() => {
-        setPopupOn(true);
-        window.sessionStorage.setItem("hasShownGreetingPopup", "true");
-      }, 3000);
-      return () => clearTimeout(delayPopup);
-    } else {
-      const delayFloater = setTimeout(() => {
-        setCanShowFloater(true);
-      }, 3000);
-      return () => clearTimeout(delayFloater);
+    if (typeof window !== "undefined") {
+      const hasShownPopup = window.sessionStorage.getItem(
+        "hasShownGreetingPopup"
+      );
+      if (!hasShownPopup) {
+        const delayPopup = setTimeout(() => {
+          setPopupOn(true);
+          window.sessionStorage.setItem("hasShownGreetingPopup", "true");
+        }, 3000);
+        return () => clearTimeout(delayPopup);
+      } else {
+        const delayFloater = setTimeout(() => {
+          setCanShowFloater(true);
+        }, 3000);
+        return () => clearTimeout(delayFloater);
+      }
     }
   }, []);
 

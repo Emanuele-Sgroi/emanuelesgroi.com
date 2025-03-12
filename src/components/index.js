@@ -11,7 +11,7 @@ export { default as ContributionChart } from "./ContributionChart/ContributionCh
 export { default as Footer } from "./Footer/Footer";
 export { default as Loading } from "./Loading/Loading";
 export { default as ErrorMessage } from "./ErrorMessage/ErrorMessage";
-export { default as GreetingPopup } from "./GreetingPopup/GreetingPopup";
+//export { default as GreetingPopup } from "./GreetingPopup/GreetingPopup";
 export { default as DevQuizComponent } from "./DevQuizPage/DevQuizComponent";
 export { default as DiscussionsHeader } from "./DiscussionsPage/DiscussionsHeader";
 export { default as CommentsSection } from "./DiscussionsPage/CommentsSection";
