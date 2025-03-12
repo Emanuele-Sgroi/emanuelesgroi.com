@@ -9,12 +9,12 @@ export async function generateStaticParams() {
   try {
     const { data, error } = await fetchBlogPostSlugs();
     if (error || !data?.length) {
-      console.error("No blog post slugs found:", error);
+      //  console.error("No blog post slugs found:", error);
       return [];
     }
     return data.map((slug) => ({ slug }));
   } catch (error) {
-    console.error("Error generating blog post slugs:", error);
+    // console.error("Error generating blog post slugs:", error);
     return [];
   }
 }
@@ -22,11 +22,11 @@ export async function generateStaticParams() {
 // Fetch blog post details
 async function BlogPostContent({ slug }) {
   const { data: blogPost, error } = await fetchBlogPost(slug);
-  console.log("Blog post data:", blogPost);
-  console.log("Error:", error);
+  // console.log("Blog post data:", blogPost);
+  // console.log("Error:", error);
 
   if (error || !blogPost) {
-    console.error(`Blog post not found for slug: ${slug}`);
+    //  console.error(`Blog post not found for slug: ${slug}`);
     notFound();
   }
 

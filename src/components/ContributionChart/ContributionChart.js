@@ -79,46 +79,58 @@ const ContributionChart = ({ word }) => {
     { id: "yellow", colors: contributionColorsYellow },
     emojiStyle,
   ];
-
-  // State for selected chart style (using the identifier)
-  const [chartStyle, setChartStyle] = useState(() => {
-    return sessionStorage.getItem("contributionChartStyle") || "green";
-  });
-
-  // Get the colors for the current style
-  const selectedStyle = allStyles.find((style) => style.id === chartStyle);
-  const chartColors = selectedStyle ? selectedStyle.colors : [];
-
-  // State for input text
-  const [inputText, setInputText] = useState(() => {
-    return sessionStorage.getItem("contributionChartInput") || word;
-  });
+  // 1) Initialize state with safe defaults
+  const [chartStyle, setChartStyle] = useState("green");
+  const [inputText, setInputText] = useState(word);
   const [errorMessage, setErrorMessage] = useState("");
-  // Calculate initial non-space character length
-  const initialNonSpaceChars = inputText.replace(/\s/g, "").length;
-  const [remainingChars, setRemainingChars] = useState(
-    MAX_CHARACTERS - initialNonSpaceChars
-  );
-  const inputArray = inputText.split("").map((char) => `'${char}'`); // array of characters from the inputText
 
+  // 2) Once in the browser, read from sessionStorage if available
   useEffect(() => {
-    sessionStorage.setItem("contributionChartInput", inputText);
+    if (typeof window !== "undefined") {
+      const storedStyle = window.sessionStorage.getItem(
+        "contributionChartStyle"
+      );
+      if (storedStyle) setChartStyle(storedStyle);
+
+      const storedInput = window.sessionStorage.getItem(
+        "contributionChartInput"
+      );
+      if (storedInput) setInputText(storedInput);
+    }
+  }, []);
+
+  // 3) Whenever inputText changes, store in sessionStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("contributionChartInput", inputText);
+    }
   }, [inputText]);
 
+  // 4) Whenever chartStyle changes, store in sessionStorage
   useEffect(() => {
-    sessionStorage.setItem("contributionChartStyle", chartStyle);
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("contributionChartStyle", chartStyle);
+    }
   }, [chartStyle]);
 
+  // 5) Track remaining characters for input
+  const [remainingChars, setRemainingChars] = useState(
+    MAX_CHARACTERS - inputText.replace(/\s/g, "").length
+  );
   useEffect(() => {
     const nonSpaceChars = inputText.replace(/\s/g, "").length;
     setRemainingChars(MAX_CHARACTERS - nonSpaceChars);
   }, [inputText]);
 
+  // Get colors for the selected style
+  const selectedStyle = allStyles.find((style) => style.id === chartStyle);
+  const chartColors =
+    selectedStyle && selectedStyle.colors ? selectedStyle.colors : [];
+
   // Handle input change
   const handleInputChange = (e) => {
     let value = e.target.value.toUpperCase();
-
-    // Remove invalid characters
+    // Filter out invalid chars
     const filteredValue = value.replace(/[^A-Z0-9\s]/g, "");
 
     // Set error message if there were invalid characters
@@ -128,13 +140,13 @@ const ContributionChart = ({ word }) => {
       setErrorMessage("");
     }
 
-    // Calculate non-space character length
+    // Check length ignoring spaces
     const nonSpaceChars = filteredValue.replace(/\s/g, "");
 
     // Limit to MAX_CHARACTERS
     if (nonSpaceChars.length > MAX_CHARACTERS) {
       setErrorMessage(`Max ${MAX_CHARACTERS} characters`);
-      // Truncate the input to the maximum allowed characters
+      // Truncate
       let excessChars = nonSpaceChars.length - MAX_CHARACTERS;
       let truncatedValue = filteredValue;
       while (excessChars > 0) {
@@ -147,46 +159,61 @@ const ContributionChart = ({ word }) => {
     } else {
       setInputText(filteredValue);
     }
-
-    // Update remaining characters
-    setRemainingChars(MAX_CHARACTERS - nonSpaceChars.length);
   };
 
   // Map word to grid
   const getActiveSquares = (word) => {
-    let truncated = false;
-    word = word.toUpperCase().replace(/[^A-Z0-9\s]/g, "");
+    const truncatedResult = { activeSquares: [], truncated: false };
 
-    if (word.length > MAX_CHARACTERS) {
-      word = word.substring(0, MAX_CHARACTERS);
-      truncated = true;
+    // Filter out invalid + uppercase
+    word = word.toUpperCase().replace(/[^A-Z0-9\s]/g, "");
+    let truncated = false;
+
+    // Hard cap of MAX_CHARACTERS ignoring spaces
+    let processedWord = word;
+    if (processedWord.replace(/\s/g, "").length > MAX_CHARACTERS) {
+      // Manually truncate
+      let count = 0;
+      let newWord = "";
+      for (let char of processedWord) {
+        if (char !== " ") {
+          count++;
+          if (count > MAX_CHARACTERS) {
+            truncated = true;
+            break;
+          }
+        }
+        newWord += char;
+      }
+      processedWord = newWord;
     }
 
+    // Determine which character map to use
+    const nonSpaceChars = processedWord.replace(/\s/g, "").length;
     let characterMap;
     let charWidth;
     let charHeight;
     let charSpacing;
 
-    // Remove spaces for character count calculations
-    const nonSpaceChars = word.replace(/\s/g, "").length;
+    // Calculate whether to use large or small
+    const canUseLarge = nonSpaceChars <= maxCharsLarge;
+    const canUseSmall = nonSpaceChars <= maxCharsSmall;
 
-    if (nonSpaceChars <= maxCharsLarge) {
-      // Use large character map
+    if (canUseLarge) {
       characterMap = characterMapLarge;
-      charWidth = charWidthLarge;
-      charHeight = charHeightLarge;
-      charSpacing = charSpacingLarge;
-    } else if (nonSpaceChars <= maxCharsSmall) {
-      // Use small character map
+      charWidth = 5;
+      charHeight = 7;
+      charSpacing = 2;
+    } else if (canUseSmall) {
       characterMap = characterMapSmall;
-      charWidth = charWidthSmall;
-      charHeight = charHeightSmall;
-      charSpacing = charSpacingSmall;
+      charWidth = 3;
+      charHeight = 5;
+      charSpacing = 1;
     } else {
-      // Truncate word to maxCharsSmall non-space characters
+      // Force small but also truncation
       let count = 0;
       let truncatedWord = "";
-      for (let char of word) {
+      for (let char of processedWord) {
         if (char !== " ") {
           count++;
           if (count > maxCharsSmall) {
@@ -196,25 +223,22 @@ const ContributionChart = ({ word }) => {
         }
         truncatedWord += char;
       }
-      word = truncatedWord;
-      // Use small character map
+      processedWord = truncatedWord;
       characterMap = characterMapSmall;
-      charWidth = charWidthSmall;
-      charHeight = charHeightSmall;
-      charSpacing = charSpacingSmall;
+      charWidth = 3;
+      charHeight = 5;
+      charSpacing = 1;
     }
 
+    // Build out squares
     const activeSquares = [];
     let startX = 0;
-
-    const characters = word.split("");
-
-    // Define a custom space width
-    const spaceWidth = charSpacing;
+    const spaceWidth = charSpacing; // custom space
+    const characters = processedWord.split("");
 
     characters.forEach((char) => {
       if (char === " ") {
-        // For spaces, move startX by spaceWidth
+        // Shift for spaces
         startX += spaceWidth;
       } else {
         const charGrid = characterMap[char.toUpperCase()] || [];
@@ -228,8 +252,7 @@ const ContributionChart = ({ word }) => {
             }
           });
         });
-
-        // Move startX for the next character
+        // Move x for next
         startX += charWidth + charSpacing;
       }
     });
@@ -243,6 +266,9 @@ const ContributionChart = ({ word }) => {
   const isActive = (x, y) => {
     return activeSquares.some((square) => square.x === x && square.y === y);
   };
+
+  // Build array of input characters for debugging
+  const inputArray = inputText.split("").map((char) => `'${char}'`);
 
   return (
     <div className="w-full flex flex-col md:flex-row md:justify-between mt-0 md:mt-6 max-md:p-4 overflow-hidden max-md:bg-bg-mobile-primary max-md:border-b max-md:border-b-accent-border max-md:shadow-sm">

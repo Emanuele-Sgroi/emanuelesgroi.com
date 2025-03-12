@@ -9,12 +9,12 @@ export async function generateStaticParams() {
   try {
     const { data, error } = await fetchProjectSlugs();
     if (error || !data?.length) {
-      console.error("No project slugs found:", error);
+      //console.error("No project slugs found:", error);
       return [];
     }
     return data.map((slug) => ({ slug }));
   } catch (error) {
-    console.error("Error generating project slugs:", error);
+    //console.error("Error generating project slugs:", error);
     return [];
   }
 }
@@ -22,8 +22,8 @@ export async function generateStaticParams() {
 // Fetch project details
 async function ProjectContent({ slug }) {
   const { data: project, error } = await fetchProject(slug);
-  console.log("Project data:", project); // Debugging log
-  console.log("Error:", error); // Debugging log
+  //console.log("Project data:", project); // Debugging log
+  // console.log("Error:", error); // Debugging log
 
   if (error || !project) {
     console.error(`Error fetching project for slug: ${slug}`, error);
