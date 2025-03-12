@@ -2,7 +2,7 @@ export { default as Navbar } from "./Navbar/Navbar";
 export { default as NavLogo } from "./Navbar/NavLogo";
 export { default as NavSearchBar } from "./Navbar/NavSearchBar";
 export { default as ToggleThemeButton } from "./Navbar/ToggleThemeButton";
-export { default as SplashScreen } from "./SplashScreen/SplashScreen";
+//export { default as SplashScreen } from "./SplashScreen/SplashScreen";
 export { default as NavManuPilotLink } from "./Navbar/NavManuPilotLink";
 export { default as NavMobileSideProfile } from "./Navbar/NavMobileSideProfile";
 export { default as ProfileBar } from "./ProfileBar/ProfileBar";
