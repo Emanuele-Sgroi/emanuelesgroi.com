@@ -17,7 +17,7 @@ import {
 } from "@/components";
 import { ToastContainer, toast } from "react-toastify";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
