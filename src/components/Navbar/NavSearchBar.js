@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogTrigger,
   DialogClose,
+  DialogOverlay,
 } from "@/components/ui/dialog";
 import {
   Command,
@@ -167,235 +168,240 @@ const NavSearchBar = ({
         </button>
       </DialogTrigger>
 
-      <DialogContent className="!top-[303px] !right-1/2 p-0 border-none shadow-lg !w-full max-[1469px]:!max-w-[99%] !max-w-[1459px] !h-screen !max-h-[600px] [&>button]:hidden">
-        <Command className="!w-full !max-w-full !h-full !max-h-full !border-2 !border-accent-border !rounded-lg !p-3 relative !bg-bg-primary">
-          {/* Custom Search Icon */}
+      <DialogOverlay className="!flex !items-start !z-[99999999999999999999999999]">
+        <DialogContent className="!top-1 !right-1/2 !-translate-y-0 p-0 border-none shadow-lg !w-full max-[1469px]:!max-w-[99%] !max-w-[1459px] !h-screen !max-h-[50%] [&>button]:hidden !z-[99999999999999999999999999]">
+          <Command className="!w-full !max-w-full !h-full !max-h-full !border-2 !border-accent-border !rounded-lg !p-3 relative !bg-bg-primary !z-[99999999999999999999999999]">
+            {/* Custom Search Icon */}
 
-          <div
-            className={`relative w-full !border-x !border-t !border-accent-border !rounded-md px-[2px] !mb-4 transition ${
-              isFocused ? "ring-2 ring-blue-500" : ""
-            }`}
-          >
-            <CommandInput
-              placeholder="Search this website..."
-              autoFocus
-              className="!w-full !rounded-md !pr-8"
-              value={searchValue}
-              onValueChange={setSearchValue}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            />
-            {searchValue && (
-              <button
-                onClick={() => setSearchValue("")}
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 w-[34px] h-[34px] p-1 rounded-sm hover:bg-bg-hover transition"
-              >
-                <IoMdCloseCircle size={22} className="text-accent-icon" />
-              </button>
-            )}
-          </div>
-          <CommandList className="!h-full !max-h-full !overflow-y-auto thin-scrollbar">
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup
-              heading="Projects"
-              className="w-full !bg-transparent !border-b !border-accent-border"
+            <div
+              className={`relative w-full !border-x !border-t !border-accent-border !rounded-md px-[2px] !mb-4 transition ${
+                isFocused ? "ring-2 ring-blue-500" : ""
+              }`}
             >
-              {projectsRef?.map((project, index) => {
-                const { projectTitle, projectSlug, authorImage } = project;
-                return (
-                  <CommandItem
-                    key={index}
-                    onSelect={() => {
-                      router.push(`/portfolio/${projectSlug}`);
-                      setOpen(false);
-                    }}
-                    className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                  >
-                    <span className="flex items-center gap-2">
-                      <div className="w-[21px] h-[21px] min-w-[21px] min-h-[21px] border border-accent-border rounded-full overflow-hidden">
-                        <Image
-                          src={getAssetUrl(authorImage)}
-                          alt="Profile_Picture"
-                          width={21}
-                          height={21}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <p className="text-sm tracking-tight">
-                        <span className="text-text-secondary mr-[1px] max-md:hidden">
-                          Emanuele-Sgroi/
-                        </span>
-                        <span className="text-text-primary">
-                          {truncateText(projectTitle, 65)}
-                        </span>
-                      </p>
-                    </span>
-                    <span className="text-text-secondary max-md:hidden">
-                      Jump to
-                    </span>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-            <CommandGroup
-              heading="Blog Posts"
-              className="w-full !bg-transparent !border-b !border-accent-border"
-            >
-              {blogPostsRef?.map((post, index) => {
-                const { postTitle, postSlug, imageAuthor } = post;
-                return (
-                  <CommandItem
-                    key={index}
-                    onSelect={() => {
-                      router.push(`/writings/${postSlug}`);
-                      setOpen(false);
-                    }}
-                    className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                  >
-                    <span className="flex items-center gap-2">
-                      <div className="w-[21px] h-[21px] min-w-[21px] min-h-[21px] border border-accent-border rounded-full overflow-hidden">
-                        <Image
-                          src={getAssetUrl(imageAuthor)}
-                          alt="Author_Picture"
-                          width={21}
-                          height={21}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <p className="text-sm tracking-tight">
-                        <span className="text-text-secondary mr-[1px] max-md:hidden">
-                          Emanuele-Sgroi/
-                        </span>
-                        <span className="text-text-primary">
-                          {truncateText(postTitle, 65)}
-                        </span>
-                      </p>
-                    </span>
-                    <span className="text-text-secondary max-md:hidden">
-                      Read it
-                    </span>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-            {!isManupilot && (
+              <CommandInput
+                placeholder="Search this website..."
+                autoFocus
+                className="!w-full !rounded-md !pr-8"
+                value={searchValue}
+                onValueChange={setSearchValue}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              />
+              {searchValue && (
+                <button
+                  onClick={() => setSearchValue("")}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 w-[34px] h-[34px] p-1 rounded-sm hover:bg-bg-hover transition"
+                >
+                  <IoMdCloseCircle size={22} className="text-accent-icon" />
+                </button>
+              )}
+            </div>
+            <CommandList className="!h-full !max-h-full !overflow-y-auto thin-scrollbar">
+              <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup
-                heading="ManuPilot"
+                heading="Projects"
                 className="w-full !bg-transparent !border-b !border-accent-border"
               >
-                <CommandItem
-                  onSelect={() => {
-                    router.push("/manupilot");
-                    setOpen(false);
-                  }}
-                  className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    <PiCornersOutBold size={18} className="text-accent-icon" />
-                    <p className="text-sm tracking-tight text-text-primary">
-                      Immersive
-                    </p>
-                  </span>
-                  <span className="text-text-secondary max-md:hidden">
-                    Start conversation
-                  </span>
-                </CommandItem>
-                <CommandItem
-                  onSelect={() => {
-                    openChat();
-                    setOpen(false);
-                  }}
-                  className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    <GoCopilot size={18} className="text-accent-icon" />
-                    <p className="text-sm tracking-tight text-text-primary">
-                      Quick Chat
-                    </p>
-                  </span>
-                  <span className="text-text-secondary max-md:hidden">
-                    Start conversation
-                  </span>
-                </CommandItem>
+                {projectsRef?.map((project, index) => {
+                  const { projectTitle, projectSlug, authorImage } = project;
+                  return (
+                    <CommandItem
+                      key={index}
+                      onSelect={() => {
+                        router.push(`/portfolio/${projectSlug}`);
+                        setOpen(false);
+                      }}
+                      className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <div className="w-[21px] h-[21px] min-w-[21px] min-h-[21px] border border-accent-border rounded-full overflow-hidden">
+                          <Image
+                            src={getAssetUrl(authorImage)}
+                            alt="Profile_Picture"
+                            width={21}
+                            height={21}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-sm tracking-tight">
+                          <span className="text-text-secondary mr-[1px] max-md:hidden">
+                            Emanuele-Sgroi/
+                          </span>
+                          <span className="text-text-primary">
+                            {truncateText(projectTitle, 65)}
+                          </span>
+                        </p>
+                      </span>
+                      <span className="text-text-secondary max-md:hidden">
+                        Jump to
+                      </span>
+                    </CommandItem>
+                  );
+                })}
               </CommandGroup>
-            )}
-            <CommandGroup
-              heading="Academic Papers"
-              className="w-full !bg-transparent !border-b !border-accent-border"
-            >
-              {academicPapers?.map((paper, index) => {
-                const { title, module, academicYear, pdf } = paper;
-                return (
+              <CommandGroup
+                heading="Blog Posts"
+                className="w-full !bg-transparent !border-b !border-accent-border"
+              >
+                {blogPostsRef?.map((post, index) => {
+                  const { postTitle, postSlug, imageAuthor } = post;
+                  return (
+                    <CommandItem
+                      key={index}
+                      onSelect={() => {
+                        router.push(`/writings/${postSlug}`);
+                        setOpen(false);
+                      }}
+                      className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <div className="w-[21px] h-[21px] min-w-[21px] min-h-[21px] border border-accent-border rounded-full overflow-hidden">
+                          <Image
+                            src={getAssetUrl(imageAuthor)}
+                            alt="Author_Picture"
+                            width={21}
+                            height={21}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-sm tracking-tight">
+                          <span className="text-text-secondary mr-[1px] max-md:hidden">
+                            Emanuele-Sgroi/
+                          </span>
+                          <span className="text-text-primary">
+                            {truncateText(postTitle, 65)}
+                          </span>
+                        </p>
+                      </span>
+                      <span className="text-text-secondary max-md:hidden">
+                        Read it
+                      </span>
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup>
+              {!isManupilot && (
+                <CommandGroup
+                  heading="ManuPilot"
+                  className="w-full !bg-transparent !border-b !border-accent-border"
+                >
                   <CommandItem
-                    key={index}
                     onSelect={() => {
-                      window.open(getAssetUrl(pdf), "_blank");
+                      router.push("/manupilot");
                       setOpen(false);
                     }}
                     className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
                   >
                     <span className="flex items-center gap-2">
-                      <HiAcademicCap size={18} className="text-accent-icon" />
+                      <PiCornersOutBold
+                        size={18}
+                        className="text-accent-icon"
+                      />
                       <p className="text-sm tracking-tight text-text-primary">
-                        <span className="text-text-secondary mr-[1px] max-md:hidden">
-                          {module}/
-                        </span>
-                        {truncateText(title, 65)}
+                        Immersive
                       </p>
                     </span>
                     <span className="text-text-secondary max-md:hidden">
-                      {academicYear}
+                      Start conversation
                     </span>
                   </CommandItem>
-                );
-              })}
-            </CommandGroup>
-            <CommandGroup
-              heading="Pages"
-              className="w-full !bg-transparents !border-b !border-accent-border"
-            >
-              {pages.map((page) => (
-                <CommandItem
-                  key={page.path}
-                  onSelect={() => {
-                    router.push(page.path);
-                    setOpen(false);
-                  }}
-                  className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    {page.icon}
-                    {page.name}
-                  </span>
-                  <span className="text-text-secondary max-md:hidden">
-                    Visit
-                  </span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-            <CommandGroup heading="Other" className="w-full !bg-transparent">
-              {otherLinks.map((link) => (
-                <CommandItem
-                  key={link.name}
-                  onSelect={() => {
-                    window.open(link.path, "_blank");
-                    setOpen(false);
-                  }}
-                  className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    {link.icon}
-                    {link.name}
-                  </span>
-                  <span className="text-text-secondary max-md:hidden">
-                    {link.label}
-                  </span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </DialogContent>
+                  <CommandItem
+                    onSelect={() => {
+                      openChat();
+                      setOpen(false);
+                    }}
+                    className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <GoCopilot size={18} className="text-accent-icon" />
+                      <p className="text-sm tracking-tight text-text-primary">
+                        Quick Chat
+                      </p>
+                    </span>
+                    <span className="text-text-secondary max-md:hidden">
+                      Start conversation
+                    </span>
+                  </CommandItem>
+                </CommandGroup>
+              )}
+              <CommandGroup
+                heading="Academic Papers"
+                className="w-full !bg-transparent !border-b !border-accent-border"
+              >
+                {academicPapers?.map((paper, index) => {
+                  const { title, module, academicYear, pdf } = paper;
+                  return (
+                    <CommandItem
+                      key={index}
+                      onSelect={() => {
+                        window.open(getAssetUrl(pdf), "_blank");
+                        setOpen(false);
+                      }}
+                      className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <HiAcademicCap size={18} className="text-accent-icon" />
+                        <p className="text-sm tracking-tight text-text-primary">
+                          <span className="text-text-secondary mr-[1px] max-md:hidden">
+                            {module}/
+                          </span>
+                          {truncateText(title, 65)}
+                        </p>
+                      </span>
+                      <span className="text-text-secondary max-md:hidden">
+                        {academicYear}
+                      </span>
+                    </CommandItem>
+                  );
+                })}
+              </CommandGroup>
+              <CommandGroup
+                heading="Pages"
+                className="w-full !bg-transparents !border-b !border-accent-border"
+              >
+                {pages.map((page) => (
+                  <CommandItem
+                    key={page.path}
+                    onSelect={() => {
+                      router.push(page.path);
+                      setOpen(false);
+                    }}
+                    className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      {page.icon}
+                      {page.name}
+                    </span>
+                    <span className="text-text-secondary max-md:hidden">
+                      Visit
+                    </span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+              <CommandGroup heading="Other" className="w-full !bg-transparent">
+                {otherLinks.map((link) => (
+                  <CommandItem
+                    key={link.name}
+                    onSelect={() => {
+                      window.open(link.path, "_blank");
+                      setOpen(false);
+                    }}
+                    className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      {link.icon}
+                      {link.name}
+                    </span>
+                    <span className="text-text-secondary max-md:hidden">
+                      {link.label}
+                    </span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </DialogContent>
+      </DialogOverlay>
     </Dialog>
   );
 };
