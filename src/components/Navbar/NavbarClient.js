@@ -26,7 +26,12 @@ import {
   NavMobileSideProfile,
 } from "@/components";
 
-const NavbarClient = ({ generalInfoContent, error }) => {
+const NavbarClient = ({
+  generalInfoContent,
+  portfolioContent,
+  writingsContent,
+  error,
+}) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -77,6 +82,8 @@ const NavbarClient = ({ generalInfoContent, error }) => {
       : "hidden";
   };
 
+  // handle errors and loading here
+
   return (
     <>
       <nav
@@ -92,7 +99,11 @@ const NavbarClient = ({ generalInfoContent, error }) => {
         >
           <NavLogo />{" "}
           <div className="center gap-3 sm:gap-4">
-            <NavSearchBar />
+            <NavSearchBar
+              generalInfoContent={generalInfoContent}
+              portfolioContent={portfolioContent}
+              writingsContent={writingsContent}
+            />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <NavManuPilotLink />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
