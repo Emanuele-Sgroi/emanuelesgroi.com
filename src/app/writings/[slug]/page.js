@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Loading, ErrorMessage } from "@/components";
 import BlogPostPage from "@/pages/BlogPostPage";
 import { fetchBlogPost, fetchBlogPostSlugs } from "@/utils/fetchCMSContent";
+import { getAssetUrl } from "@/utils/imageUtils";
 
 // Generate Static Paths
 export async function generateStaticParams() {
@@ -17,6 +18,37 @@ export async function generateStaticParams() {
     // console.error("Error generating blog post slugs:", error);
     return [];
   }
+}
+
+export async function generateMetadata({ params }) {
+  const { data: blogPost, error } = await fetchBlogPost(params.slug);
+
+  if (error || !blogPost) {
+    return {
+      title: "Blog Post Not Found | Emanuele Sgroi",
+      description: "Oops! This blog post doesn't exist.",
+    };
+  }
+
+  return {
+    title: blogPost.postTitle || "Blog Post | Emanuele Sgroi",
+    description: blogPost.smallDescription || "Read this blog post.",
+    keywords: blogPost.metaKeywords?.split(", ") || [
+      "Web Development",
+      "React",
+      "Next.js",
+      "Tech Blog",
+    ],
+    openGraph: {
+      title: blogPost.postTitle || "Blog Post | Emanuele Sgroi",
+      description: blogPost.smallDescription || "Read this blog post.",
+      url: `https://somedomain.com/writings/${params.slug}`,
+      type: "article",
+      images: [
+        { url: getAssetUrl(blogPost.mainImage) || "/images/og-image.jpg" },
+      ],
+    },
+  };
 }
 
 // Fetch blog post details
@@ -53,84 +85,3 @@ export default function BlogPost({ params }) {
     </Suspense>
   );
 }
-
-// import { notFound } from "next/navigation";
-// import client from "@/utils/contentfulClient";
-// import { Suspense } from "react";
-// import { Loading, ErrorMessage } from "@/components";
-// import BlogPostPage from "@/pages/BlogPostPage";
-
-// export async function generateStaticParams() {
-//   try {
-//     const response = await client.getEntries({
-//       content_type: "blogPost",
-//       select: "fields.postSlug",
-//     });
-
-//     if (!response.items.length) {
-//       console.error("No blog posts found");
-//       return [];
-//     }
-
-//     return response.items
-//       .map((item) => item.fields?.postSlug)
-//       .filter(Boolean) // Remove any undefined values
-//       .map((slug) => ({ slug })); // Ensure correct format
-//   } catch (error) {
-//     console.error("Error fetching blog post slugs:", error);
-//     return [];
-//   }
-// }
-
-// async function fetchBlogPost(slug) {
-//   try {
-//     const response = await client.getEntries({
-//       content_type: "blogPost",
-//       "fields.postSlug": slug,
-//       limit: 1,
-//     });
-
-//     if (!response.items.length || !response.items[0].fields) {
-//       console.warn(`No blog post found for slug: ${slug}`);
-//       return null;
-//     }
-
-//     // Log the fetched data for debugging
-//     // console.log("Fetched blog post:", response.items[0].fields);
-
-//     return response.items[0].fields;
-//   } catch (error) {
-//     console.error("Error fetching blog post:", error);
-//     return null;
-//   }
-// }
-
-// async function BlogPostContent({ slug }) {
-//   const blogPost = await fetchBlogPost(slug);
-
-//   if (!blogPost) {
-//     console.error(`Blog post not found for slug: ${slug}`);
-//     return notFound();
-//   }
-
-//   return <BlogPostPage blogPost={blogPost} />;
-// }
-
-// export default function BlogPost({ params }) {
-//   return (
-//     <Suspense fallback={<Loading />}>
-//       <ErrorBoundary>
-//         <BlogPostContent slug={params.slug} />
-//       </ErrorBoundary>
-//     </Suspense>
-//   );
-// }
-
-// // Error Boundary Component (to catch errors)
-// function ErrorBoundary({ children }) {
-//   try {
-//     return children;
-//   } catch (error) {
-//     return <ErrorMessage />;
-//   }
-// }

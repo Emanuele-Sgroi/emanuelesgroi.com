@@ -27,9 +27,9 @@ const Blog = ({ writingsContent }) => {
     <div className="w-full center px-4 py-6 md:py-12 max-md:bg-bg-mobile-primary max-md:mt-4 max-md:border-b max-md:border-t max-md:border-accent-border">
       <div className="relative w-full max-w-[1280px]">
         <div className="flex">
-          <h1 className="text-4xl md:text-7xl font-bold whitespace-nowrap text-nowrap">
+          <h2 className="text-4xl md:text-7xl font-bold whitespace-nowrap text-nowrap">
             {blogTitle}
-          </h1>
+          </h2>
         </div>
         {/* Show posts */}
         <div className="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-1 md:grid-cols-2 mt-6 md:mt-8">

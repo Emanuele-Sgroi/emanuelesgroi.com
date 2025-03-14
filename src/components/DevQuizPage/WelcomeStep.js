@@ -3,9 +3,9 @@ import React from "react";
 const WelcomeStep = ({ onStartQuiz }) => (
   <>
     <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
-      <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
+      <h1 className="font-semibold  max-[375px]:text-[24px] text-center">
         Welcome to Dev Quiz
-      </h2>
+      </h1>
     </div>
     <p className="max-md:px-4 text-center text-text-secondary text-lg">
       As developers, we have to remember a lot. Like any skill, memory needs

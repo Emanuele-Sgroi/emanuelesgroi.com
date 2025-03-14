@@ -3,6 +3,12 @@ import {
   fetchGeneralInfoContent,
 } from "@/utils/fetchCMSContent";
 import PortfolioPage from "@/pages/PortfolioPage";
+import { metadataByPage, defaultMetadata } from "@/config/metadata";
+
+export const generateMetadata = () => ({
+  ...defaultMetadata,
+  ...metadataByPage["/portfolio"],
+});
 
 const Portfolio = async () => {
   const { data: portfolioContent, error: portfolioError } =

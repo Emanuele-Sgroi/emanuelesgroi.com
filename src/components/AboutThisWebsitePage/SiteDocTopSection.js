@@ -30,7 +30,7 @@ const SiteDocTopSection = () => {
           <FiArrowLeftCircle size={16} /> Go Back
         </button>
 
-        <h1 className="text-xl font-bold">About this website</h1>
+        <h2 className="text-xl font-bold">About this website</h2>
       </div>
     </div>
   );

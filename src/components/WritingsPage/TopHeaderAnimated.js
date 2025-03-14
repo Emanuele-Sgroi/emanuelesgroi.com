@@ -8,9 +8,9 @@ const TopHeaderAnimated = ({ writingsContent }) => {
     <div className="relative w-full border-b border-accent-border center writings-header-gradient overflow-hidden px-4 pb-6 md:pb-0">
       <div className="relative w-full max-w-[1280px] h-[345px] md:h-[215px] flex justify-center md:justify-start items-end md:items-center ">
         <div className="w-full flex flex-col items-center md:items-start max-md:justify-end z-50">
-          <h2 className="text-text-primary max-[420px]:text-[26px] text-4xl sm:text-5xl font-bold max-w-fit md:max-w-[500px] lg:max-w-fit text-center md:text-left">
+          <h1 className="text-text-primary max-[420px]:text-[26px] text-4xl sm:text-5xl font-bold max-w-fit md:max-w-[500px] lg:max-w-fit text-center md:text-left">
             {topTitle}
-          </h2>
+          </h1>
           <p className="text-text-secondary sm:text-xl font-medium text-center md:text-left max-sm:mt-1">
             {topSubtitle}
           </p>

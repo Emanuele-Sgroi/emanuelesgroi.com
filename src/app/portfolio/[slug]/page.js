@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Loading, ErrorMessage } from "@/components";
 import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
 import { fetchProject, fetchProjectSlugs } from "@/utils/fetchCMSContent";
+import { getAssetUrl } from "@/utils/imageUtils";
 
 // Generate Static Paths
 export async function generateStaticParams() {
@@ -17,6 +18,39 @@ export async function generateStaticParams() {
     //console.error("Error generating project slugs:", error);
     return [];
   }
+}
+
+export async function generateMetadata({ params }) {
+  const { data: project, error } = await fetchProject(params.slug);
+
+  if (error || !project) {
+    return {
+      title: "Project Not Found | Emanuele Sgroi",
+      description: "Oops! This page doesn't exist.",
+    };
+  }
+
+  return {
+    title: project.projectTitle || "Project Details | Emanuele Sgroi",
+    description: project.smallDescription || "Check this project.",
+    keywords: project.metaKeywords?.split(", ") || [
+      "Web Development",
+      "React",
+      "Next.js",
+      "Mobile Development",
+      "Computer Science",
+      "Software Engineer",
+    ],
+    openGraph: {
+      title: project.postTitle || "Blog Post | Emanuele Sgroi",
+      description: project.smallDescription || "Read this blog post.",
+      url: `https://somedomain.com/blog/${params.slug}`,
+      type: "article",
+      images: [
+        { url: getAssetUrl(project.mainImage) || "/images/og-image.jpg" },
+      ],
+    },
+  };
 }
 
 // Fetch project details

@@ -35,9 +35,9 @@ const WelcomeReadMe = ({ welcome }) => {
           <ReadmeTitle title={readmeTitle} />
         </div>
         <div className="w-full center mt-4 border-b border-accent-border pb-3 md:pb-1 max-md:px-4 text-center">
-          <h2 className="font-semibold  max-[375px]:text-[24px]">
+          <h1 className="font-semibold max-[375px]:text-[24px]">
             {welcomeTitle}
-          </h2>
+          </h1>
         </div>
         <div className="w-full center mt-6 max-md:px-4">
           <p className="font-semibold text-[17.5px]">{aboutText}</p>
