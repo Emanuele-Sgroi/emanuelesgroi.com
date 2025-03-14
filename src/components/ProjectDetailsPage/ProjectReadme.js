@@ -145,13 +145,17 @@ const ProjectReadme = ({ project }) => {
       [BLOCKS.HR]: () => (
         <hr className="my-6 md:my-8 border-t-2 border-accent-border" />
       ),
-      [BLOCKS.TABLE]: (node, children) => (
-        <div className=" overflow-x-auto thin-scrollbar my-6">
-          <table className="w-full border-collapse border border-[#b9c2ff] dark:border-accent-border">
-            {children}
-          </table>
-        </div>
-      ),
+      [BLOCKS.TABLE]: (node, children) => {
+        const headerRow = children[0];
+        const bodyRows = children.slice(1);
+        return (
+          <div className=" overflow-x-auto thin-scrollbar my-6">
+            <table className="w-full border-collapse border border-[#b9c2ff] dark:border-accent-border">
+              <tbody>{children}</tbody>
+            </table>
+          </div>
+        );
+      },
       [BLOCKS.TABLE_ROW]: (node, children) => (
         <tr className="border-b border-[#b9c2ff] dark:border-accent-border odd:bg-[#3b6be418] dark:odd:bg-[#3b6be438]">
           {children}

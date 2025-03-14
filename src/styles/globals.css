@@ -69,6 +69,11 @@
   --manupilot-badge-blue: #b9c7b3;
   --manupilot-badge-purple: #ebd7dd;
 
+  --scrollbar-bg: #f1f1f1;
+  --scrollbar-tumbler: #c1c1c1;
+  --scrollbar-hover: #a8a8a8;
+  --scrollbar-active: #787878;
+
   /* Font Sizes */
   --font-xs: 12px;
   --font-sm: 14px;
@@ -163,6 +168,11 @@
 
   --manupilot-badge-blue: #02031a;
   --manupilot-badge-purple: #4b0082;
+
+  --scrollbar-bg: #424242;
+  --scrollbar-tumbler: #686868;
+  --scrollbar-hover: #7b7b7b;
+  --scrollbar-active: #a1a1a1;
 }
 
 /* Extra Fonts Families */
@@ -292,6 +302,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Disable transitions when switching themes */
+.disable-transitions,
+.disable-transitions * {
+  transition: none !important;
+}
+
 *,
 *::before,
 *::after {
@@ -312,13 +328,13 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.1s ease-in-out;
+  /* transition: background-color 0.1s ease-in-out; */
 }
 
 section,
 div,
 nav {
-  transition: background-color 0.2s ease, color 0.2s ease;
+  /* transition: background-color 0.2s ease, color 0.2s ease; */
 }
 
 nav {
@@ -770,168 +786,36 @@ a {
   }
 }
 
-.triangle {
-  position: absolute;
-  right: -10px;
-  bottom: -1px;
-  width: 0;
-  height: 0;
-  border-top: 18px solid transparent;
-  border-left: 15px solid white;
-  border-bottom: 0px solid transparent;
-}
-
-.gp-image-in {
-  animation: slideIn 0.3s forwards;
-  animation-delay: 0.4s;
-}
-
-@keyframes slideIn {
-  from {
-    right: -280px;
-  }
-  to {
-    right: 16px;
-  }
-}
-
-.gp-image-out {
-  animation: slideOut 0.5s forwards;
-  animation-delay: 0.3;
-}
-
-@keyframes slideOut {
-  from {
-    opacity: 1;
-    right: 16px;
-    bottom: 16px;
-  }
-  to {
-    opacity: 1;
-    right: -280px;
-    bottom: 16px;
-  }
-}
-
-.gp-comic-in {
-  animation: comicIn 0.2s forwards;
+.gp-modal-in {
+  animation: appear 0.3s forwards;
   animation-delay: 0.6s;
+  opacity: 0;
+  transform: translateY(50px);
 }
 
-@keyframes comicIn {
+@keyframes appear {
   from {
     opacity: 0;
-    top: -140px;
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
-    top: -200px;
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 639px) {
-  @keyframes comicIn {
-    from {
-      opacity: 0;
-      top: -120px;
-    }
-    to {
-      opacity: 1;
-      top: -180px;
-    }
-  }
+.gp-modal-out {
+  animation: disappear 0.2s forwards;
 }
 
-@media (max-width: 455px) {
-  @keyframes slideIn {
-    from {
-      right: -280px;
-    }
-    to {
-      right: 0;
-    }
-  }
-}
-
-.small-height-hidden {
-}
-.small-height-show {
-  display: none;
-}
-.small-height-no-show-overlay {
-}
-.small-height-show-comic {
-  display: none;
-}
-.small-height-closing {
-}
-
-@media (max-height: 525px) {
-  .small-height-hidden {
-    display: none;
-  }
-  .small-height-show {
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.473);
-    justify-content: end;
-    align-items: end;
-    width: 100%;
-    height: 100dvh;
-    padding: 16px;
-    gap: 16px;
-    bottom: -400px;
-    animation: appear 0.4s forwards;
-    opacity: 0;
-  }
-  .small-height-show-comic {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: fit-content;
-    max-width: 600px;
-    padding: 16px;
-    text-align: left;
-  }
-  .small-height-no-show-overlay {
-    display: none;
-  }
-  .small-height-closing {
-    animation: disappear 0.4s forwards;
-  }
-
-  @keyframes appear {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes disappear {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-}
-
-.gp-comic-out {
-  animation: comicOut 0.3s forwards;
-}
-
-@keyframes comicOut {
+@keyframes disappear {
   from {
     opacity: 1;
-    transform: scale(1);
-    top: -200px;
+    transform: translateY(0);
   }
   to {
     opacity: 0;
-    transform: scale(0);
-    top: -200px;
+    transform: translateY(50px);
   }
 }
 
@@ -975,6 +859,61 @@ a {
 .thin-scrollbar::-webkit-scrollbar-track
   .medium-scrollbar::-webkit-scrollbar-track {
   background: transparent; /* Scrollbar track color */
+}
+
+/* General scrollbar */
+
+/* Scrollbar styles for WebKit browsers (Chrome, Edge, Safari) */
+html::-webkit-scrollbar {
+  width: 18px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-tumbler);
+  border: 2px solid var(--scrollbar-bg);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+}
+
+html::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-active);
+}
+
+/* Ensure the scrollbar button is visible */
+::-webkit-scrollbar-button:single-button {
+  background-color: var(--scrollbar-bg);
+  display: block;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  height: 14px; /* Ensure it's not collapsed */
+  width: 16px;
+}
+
+/* Up arrow */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-position: center 4px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23c1c1c1'><polygon points='50,0 0,50 100,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:active {
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23808080'><polygon points='50,0 0,50 100,50'/></svg>");
+}
+
+/* Down arrow */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-position: center 5px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23c1c1c1'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment:active {
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23808080'><polygon points='0,0 100,0 50,50'/></svg>");
 }
 
 /* ManuPilot */

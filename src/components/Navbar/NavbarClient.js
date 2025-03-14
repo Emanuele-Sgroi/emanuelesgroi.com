@@ -44,15 +44,16 @@ const NavbarClient = ({
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const handleMouseEnter = () => {
@@ -82,7 +83,13 @@ const NavbarClient = ({
       : "hidden";
   };
 
-  // handle errors and loading here
+  if (!generalInfoContent || !portfolioContent || !writingsContent) {
+    return (
+      <div className="w-full h-[109px] border-b border-accent-border bg-bg-mobile-primary md:bg-bg-secondary"></div>
+    );
+  }
+
+  if (error) return;
 
   return (
     <>
@@ -288,14 +295,14 @@ const NavbarClient = ({
 
           {/* Mobile */}
           <Popover open={openSideMenu} onOpenChange={setOpenSideMenu}>
-            <PopoverTrigger
-              className="min-[808px]:hidden relative center outline-none"
-              aria-haspopup="menu"
-              aria-expanded={open}
-            >
-              <div className="w-[32px] h-[32px] flex justify-center items-center bg-bg-button rounded-s border border-accent-border">
+            <PopoverTrigger asChild>
+              <button
+                aria-haspopup="menu"
+                aria-expanded={open}
+                className="min-[808px]:hidden relative center outline-none w-[32px] h-[32px] flex justify-center items-center bg-bg-button rounded-s border border-accent-border"
+              >
                 <HiDotsHorizontal size={18} />
-              </div>
+              </button>
             </PopoverTrigger>
             <PopoverContent className="min-[889px]:hidden w-[150px] p-4 bg-bg-button border-accent-border mr-4">
               <ul className="w-full flex flex-col justify-start items-start gap-4">

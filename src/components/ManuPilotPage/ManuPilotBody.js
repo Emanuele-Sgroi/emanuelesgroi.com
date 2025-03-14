@@ -203,6 +203,8 @@ const ManuPilotBody = ({
   // }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const SCROLL_THRESHOLD = 200;
     const container = containerRef.current;
 
@@ -241,6 +243,7 @@ const ManuPilotBody = ({
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     function checkSize() {
       setIsMobile(window.innerWidth < 640);
     }

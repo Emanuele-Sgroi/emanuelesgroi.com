@@ -139,15 +139,16 @@ export default function ChatInput({
   // Popover handling
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const handleMouseEnter = () => {
@@ -492,12 +493,11 @@ export default function ChatInput({
                   </p>
                   {/* Close Topic */}
                   <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      aria-expanded={open}
-                    >
+                    <PopoverTrigger asChild>
                       <button
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        aria-expanded={open}
                         onClick={switchToGeneralChat}
                         className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
                       >
@@ -597,11 +597,11 @@ export default function ChatInput({
                 <div className="flex  items-center gap-4 max-sm:px-3 sm:pr-4 pb-3 sm:pb-4">
                   <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                     <Tooltip>
-                      <TooltipTrigger className="flex items-center">
+                      <TooltipTrigger asChild>
                         <button
                           onClick={() => setOpenAttachDialog(true)}
                           disabled={isFileLoading}
-                          className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
+                          className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
                         >
                           <GrAttachment
                             size={20}
@@ -622,7 +622,7 @@ export default function ChatInput({
 
                   <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                     <Tooltip>
-                      <TooltipTrigger className="flex items-center">
+                      <TooltipTrigger asChild>
                         <button
                           onClick={() => {
                             if (!isFileLoading) {
@@ -633,7 +633,7 @@ export default function ChatInput({
                             }
                           }}
                           disabled={isThinking}
-                          className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
+                          className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
                         >
                           <VscSend size={20} className="text-accent-icon" />
                         </button>

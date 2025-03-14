@@ -56,6 +56,8 @@ const TopComment = ({ profilePicture, topComment }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     // Load user reactions from localStorage
     const storedReactions =
       JSON.parse(localStorage.getItem(`reactions-${topComment.id}`)) || {};
@@ -96,10 +98,13 @@ const TopComment = ({ profilePicture, topComment }) => {
 
     // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
-    localStorage.setItem(
-      `reactions-${topComment.id}`,
-      JSON.stringify(updatedUserReactions)
-    );
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `reactions-${topComment.id}`,
+        JSON.stringify(updatedUserReactions)
+      );
+    }
   };
 
   const handleEmojiReaction = (emoji) => {
@@ -122,10 +127,12 @@ const TopComment = ({ profilePicture, topComment }) => {
 
     // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
-    localStorage.setItem(
-      `reactions-${topComment.id}`,
-      JSON.stringify(updatedUserReactions)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `reactions-${topComment.id}`,
+        JSON.stringify(updatedUserReactions)
+      );
+    }
   };
 
   return (

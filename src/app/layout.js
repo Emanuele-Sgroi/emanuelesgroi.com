@@ -38,7 +38,7 @@ const GreetingPopup = dynamic(
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <body>
+      <body className="porcodio">
         <ThemeProvider>
           {/* <SplashScreenWrapper> */}
           {/* <SplashScreen /> */}

@@ -15,7 +15,7 @@ import { ReplyContainer, CodeBlock, CommentInput } from "@/components";
 
 const emojis = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"];
 
-const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
+//const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
 
 const customComponents = {
   blockquote: ({ children }) => (
@@ -57,8 +57,13 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
   const [reactions, setReactions] = useState(comment?.reactions || {});
   const [userReactions, setUserReactions] = useState({});
   const [open, setOpen] = useState(false);
+  const [authorName, setAuthorName] = useState("");
 
   useEffect(() => {
+    setAuthorName(process.env.NEXT_PUBLIC_AUTHOR_NAME || "");
+
+    if (typeof window === "undefined") return;
+
     // Load user reactions from localStorage
     const storedReactions =
       JSON.parse(localStorage.getItem(`reactions-${comment.id}`)) || {};
@@ -116,10 +121,12 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
 
     // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
-    localStorage.setItem(
-      `reactions-${comment.id}`,
-      JSON.stringify(updatedUserReactions)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `reactions-${comment.id}`,
+        JSON.stringify(updatedUserReactions)
+      );
+    }
   };
 
   const handleEmojiReaction = (emoji) => {
@@ -143,14 +150,16 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
 
     // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
-    localStorage.setItem(
-      `reactions-${comment.id}`,
-      JSON.stringify(updatedUserReactions)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `reactions-${comment.id}`,
+        JSON.stringify(updatedUserReactions)
+      );
+    }
   };
 
   const handleReplySubmit = async (replyContent) => {
-    const isAuthor = replyContent.name === AUTHOR_NAME;
+    const isAuthor = replyContent.name === authorName;
 
     const newReply = {
       name: isAuthor ? "Emanuele" : replyContent.name,

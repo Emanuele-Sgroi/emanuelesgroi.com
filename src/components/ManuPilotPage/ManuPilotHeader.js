@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Popover,
   PopoverContent,
@@ -29,30 +29,33 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const ManuPilotHeader = ({ onClickReset, conversation }) => {
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
+
   return (
     <div className="w-full px-4 py-2 sm:py-4 bg-bg-primary center relative">
-      <AlertDialog>
-        <AlertDialogTrigger
-          disabled={conversation.length < 1}
-          className="absolute left-4"
-        >
-          <TooltipProvider delayDuration={100} skipDelayDuration={500}>
-            <Tooltip>
-              <TooltipTrigger
-                disabled={conversation.length < 1}
-                className=" p-1 sm:p-2 bg-bg-button hover:bg-bg-hover border border-accent-border cursor-pointer rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
-              >
-                <BiEdit size={18} className="text-accent-icon" />
-              </TooltipTrigger>
-              <TooltipContent
-                disabled={conversation.length < 1}
-                className="max-md:!hidden"
-              >
-                <p className="text-xs">Reset conversation</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </AlertDialogTrigger>
+      <TooltipProvider delayDuration={100} skipDelayDuration={500}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => {
+                setOpenAlertDialog(true);
+              }}
+              disabled={conversation.length < 1}
+              className="absolute left-6 p-1 sm:p-2 bg-bg-button hover:bg-bg-hover border border-accent-border cursor-pointer rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
+            >
+              <BiEdit size={18} className="text-accent-icon" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent
+            disabled={conversation.length < 1}
+            className="max-md:!hidden"
+          >
+            <p className="text-xs">Reset conversation</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      <AlertDialog open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>

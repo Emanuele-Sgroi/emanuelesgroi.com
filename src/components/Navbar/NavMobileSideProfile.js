@@ -16,10 +16,10 @@ import {
   FaDiscord,
 } from "react-icons/fa";
 import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
-import { LuBrain } from "react-icons/lu";
+import { LuBrain, LuSquareMenu } from "react-icons/lu";
 import { TfiEmail } from "react-icons/tfi";
 import { IoCopy } from "react-icons/io5";
-import { CgFileDocument } from "react-icons/cg";
+import { CgFileDocument, CgMenuLeftAlt } from "react-icons/cg";
 import { usePathname } from "next/navigation";
 import {
   Sheet,
@@ -60,9 +60,7 @@ const NavMobileSideProfile = ({
         <SheetContent className="!bg-bg-primary !border-accent-border md:hidden overflow-y-auto thin-scrollbar">
           <SheetHeader>
             <SheetDescription>
-              <div>
-                <p className="text-red-500">Failed to load...</p>
-              </div>
+              <div className="text-red-500">Failed to load...</div>
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
@@ -99,9 +97,9 @@ const NavMobileSideProfile = ({
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <div
+          <button
             onClick={() => setOpen(true)}
-            className="w-[36px] h-[36px] center relative border border-accent-border rounded-full mt-px ml-2 cursor-pointer"
+            className="center gap-[2px] relative rounded-full mt-px ml-2 cursor-pointer group/edit"
           >
             <Image
               src={profilePirctureUrl}
@@ -109,9 +107,13 @@ const NavMobileSideProfile = ({
               width={36}
               height={36}
               quality={100}
-              className="w-[36px] h-[36px] rounded-full object-cover object-center z-10"
+              className="w-[36px] h-[36px] border border-accent-border rounded-full object-cover object-center z-10"
             />
-          </div>
+            <CgMenuLeftAlt
+              size={25}
+              className="text-accent-icon group-hover/edit:text-text-primary"
+            />
+          </button>
         </SheetTrigger>
         <SheetContent className="max-[308px]:w-screen !bg-bg-primary !border-accent-border overflow-y-auto thin-scrollbar max-[234px]:px-1 z-[99999999999999]">
           <SheetHeader>
@@ -130,22 +132,22 @@ const NavMobileSideProfile = ({
                   <h3 className="max-[375px]:text-[20px]">
                     {generalInfoContent?.name}
                   </h3>
-                  <p className="text-[17px] text-text-secondary">
+                  <div className="text-[17px] text-text-secondary">
                     {generalInfoContent?.job}
-                  </p>
+                  </div>
                 </div>
-                <p className="text-left text-xs text-text-secondary mt-2">
+                <div className="text-left text-xs text-text-secondary mt-2">
                   {generalInfoContent?.sentence}
-                </p>
+                </div>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <p className="text-xs">Theme</p>
+                  <div className="text-xs">Theme</div>
                 </div>
                 {/* Switch theme */}
                 <ToggleThemeMobile onClick={onClick} theme={theme} />
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <p className="text-xs">Explore</p>
+                  <div className="text-xs">Explore</div>
                 </div>
                 <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
                   {/* Welcome */}
@@ -159,7 +161,7 @@ const NavMobileSideProfile = ({
                         size={18}
                         className="text-accent-icon "
                       />
-                      Welcome <div className={getLinkClassDivMobile("/")} />
+                      Welcome <span className={getLinkClassDivMobile("/")} />
                     </Link>
                   </li>
 
@@ -172,7 +174,7 @@ const NavMobileSideProfile = ({
                     >
                       <GoCodeSquare size={18} className="text-accent-icon " />
                       Portfolio{" "}
-                      <div className={getLinkClassDivMobile("/portfolio")} />
+                      <span className={getLinkClassDivMobile("/portfolio")} />
                     </Link>
                   </li>
 
@@ -185,7 +187,7 @@ const NavMobileSideProfile = ({
                     >
                       <FaRegBookmark size={18} className="text-accent-icon " />
                       Writings{" "}
-                      <div className={getLinkClassDivMobile("/writings")} />
+                      <span className={getLinkClassDivMobile("/writings")} />
                     </Link>
                   </li>
 
@@ -233,14 +235,14 @@ const NavMobileSideProfile = ({
                     >
                       <GoCopilot size={18} className="text-accent-icon" />
                       ManuPilot
-                      <div
+                      <span
                         className={`${getLinkClassDivMobile(
                           "/manupilot"
                         )} ml-1`}
                       />
-                      <div className="absolute right-4 px-1 rounded-full border border-text-primary text-xs text-text-primary font-semibold">
+                      <span className="absolute right-4 px-1 rounded-full border border-text-primary text-xs text-text-primary font-semibold">
                         AI Chat
-                      </div>
+                      </span>
                     </Link>
                   </li>
 
@@ -253,7 +255,7 @@ const NavMobileSideProfile = ({
                     >
                       <LuBrain size={18} className="text-accent-icon" />
                       Dev Quiz{" "}
-                      <div className={getLinkClassDivMobile("/dev-quiz")} />
+                      <span className={getLinkClassDivMobile("/dev-quiz")} />
                     </Link>
                   </li>
 
@@ -269,7 +271,7 @@ const NavMobileSideProfile = ({
                         className="text-accent-icon"
                       />
                       Discussions{" "}
-                      <div className={getLinkClassDivMobile("/discussions")} />
+                      <span className={getLinkClassDivMobile("/discussions")} />
                     </Link>
                   </li>
 
@@ -282,7 +284,7 @@ const NavMobileSideProfile = ({
                     >
                       <GrContact size={18} className="text-accent-icon" />
                       Get in Touch{" "}
-                      <div className={getLinkClassDivMobile("/contact")} />
+                      <span className={getLinkClassDivMobile("/contact")} />
                     </Link>
                   </li>
                 </ul>
@@ -290,7 +292,7 @@ const NavMobileSideProfile = ({
                 {/* Contacts */}
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <p className="text-xs">Connect with me</p>
+                  <div className="text-xs">Connect with me</div>
                 </div>
 
                 <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
@@ -322,7 +324,6 @@ const NavMobileSideProfile = ({
                       target="_blank"
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
-                      {" "}
                       <FaLinkedin size={18} className="text-accent-icon" />
                       {generalInfoContent?.linkedInDisplayName}
                     </a>
@@ -333,7 +334,6 @@ const NavMobileSideProfile = ({
                       target="_blank"
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
-                      {" "}
                       <FaInstagram size={18} className="text-accent-icon" />
                       {generalInfoContent?.instagramDisplayName}
                     </a>
@@ -344,7 +344,6 @@ const NavMobileSideProfile = ({
                       target="_blank"
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
-                      {" "}
                       <FaFacebook size={18} className="text-accent-icon" />
                       {generalInfoContent?.facebookDisplayName}
                     </a>
@@ -357,9 +356,9 @@ const NavMobileSideProfile = ({
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
                       <FaDiscord size={18} className="text-accent-icon" />
-                      <p className="text-text-primary text-sm mb-px">
+                      <span className="text-text-primary text-sm mb-px">
                         {generalInfoContent?.discordDisplayName}
-                      </p>
+                      </span>
                       {generalInfoContent &&
                         generalInfoContent.discordDisplayName && (
                           <IoCopy size={18} className="text-text-primary" />
@@ -374,7 +373,6 @@ const NavMobileSideProfile = ({
                       download="Emanuele-Sgroi-Resume.pdf"
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
-                      {" "}
                       <CgFileDocument size={18} className="text-accent-icon" />
                       Resume
                       <IoMdDownload size={18} className="text-text-primary" />
@@ -383,7 +381,7 @@ const NavMobileSideProfile = ({
                 </ul>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <p className="text-xs">Other</p>
+                  <div className="text-xs">Other</div>
                 </div>
                 <div className="w-full relative center gap-2 mt-1">
                   <Link
@@ -393,17 +391,17 @@ const NavMobileSideProfile = ({
                   >
                     <RiFolderInfoLine size={18} className="text-accent-icon" />
                     About this Website
-                    <div
+                    <span
                       className={getLinkClassDivMobile("/about-this-website")}
                     />
                   </Link>
                 </div>
 
                 <div className="my-4 w-full h-px bg-accent-border" />
-                <p className="text-xs text-left text-accent-extra">
+                <div className="text-xs text-left text-accent-extra">
                   One day, I&apos;ll keep adding features to make this site look
                   even more GitHub-like. For now, enjoy it just as it is! 😄🚀✨
-                </p>
+                </div>
               </div>
             </SheetDescription>
           </SheetHeader>

@@ -52,6 +52,8 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const storedReactions =
       JSON.parse(localStorage.getItem(`reactions-${reply.id}`)) || {};
     setUserReactions(storedReactions);
@@ -102,10 +104,12 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
 
     // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
-    localStorage.setItem(
-      `reactions-${reply.id}`,
-      JSON.stringify(updatedUserReactions)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        `reactions-${reply.id}`,
+        JSON.stringify(updatedUserReactions)
+      );
+    }
   };
 
   return (

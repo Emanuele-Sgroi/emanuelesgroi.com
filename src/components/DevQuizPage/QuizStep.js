@@ -43,6 +43,8 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
 
   // Handle browser/tab navigation (external)
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleBeforeUnload = (e) => {
       e.preventDefault();
       e.returnValue = ""; // Required for most modern browsers to show a warning
@@ -56,6 +58,8 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
 
   // handle navigation (internal)
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     router.push = (url, as, options) => {
       if (url !== router.asPath) {
         setPendingUrl(() => () => originalPushRef.current(url, as, options));

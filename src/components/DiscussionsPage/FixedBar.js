@@ -32,6 +32,8 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
   );
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const handleScroll = () => {
       const scrollThreshold = 250;
       setIsVisible(window.scrollY > scrollThreshold);
@@ -45,14 +47,18 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
+    if (typeof window !== "undefined") {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

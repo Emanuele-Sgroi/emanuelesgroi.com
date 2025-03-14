@@ -21,7 +21,10 @@ const ProjectContentContainer = ({ project }) => {
   };
 
   return (
-    <div className="flex-1 max-w-[894px] flex flex-col gap-6 md:gap-4 max-md:border-t max-md:border-accent-border max-md:bg-bg-mobile-primary max-md:pt-6 ">
+    <div
+      className="flex-1 max-w-[894px] flex flex-col gap-6 md:gap-4 max-md:border-t max-md:border-accent-border max-md:bg-bg-mobile-primary max-md:pt-6 "
+      suppressHydrationWarning
+    >
       {/* Top link bar */}
       <div className="flex items-center justify-between gap-4 max-md:px-4">
         {demoLink && demoLink !== "none" ? (

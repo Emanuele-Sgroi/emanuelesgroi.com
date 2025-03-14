@@ -26,6 +26,7 @@ function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     function checkSize() {
       setIsMobile(window.innerWidth < breakpoint);
     }
@@ -429,11 +430,11 @@ const ManuPilotInput = ({
             <div className="max-sm:w-full flex max-sm:justify-between items-center gap-4 max-sm:px-3 sm:pr-4 pb-2 sm:pb-4">
               <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                 <Tooltip>
-                  <TooltipTrigger className="flex items-center">
+                  <TooltipTrigger asChild>
                     <button
                       onClick={() => setOpenAttachDialog(true)}
                       disabled={isFileLoading}
-                      className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
+                      className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
                     >
                       <GrAttachment size={20} className="text-accent-icon" />
                     </button>
@@ -449,11 +450,11 @@ const ManuPilotInput = ({
 
               <TooltipProvider delayDuration={100} skipDelayDuration={500}>
                 <Tooltip>
-                  <TooltipTrigger className="flex items-center">
+                  <TooltipTrigger asChild>
                     <button
                       onClick={sendUserMessage}
                       disabled={loading || isFileLoading}
-                      className="sm:p-1 rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
+                      className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
                     >
                       <VscSend size={20} className="text-accent-icon" />
                     </button>

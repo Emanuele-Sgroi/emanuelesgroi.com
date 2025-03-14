@@ -226,14 +226,14 @@ export default function ChatBody({
           ) : (
             <div className="w-full max-w-[600px] md:max-w-full mt-6 md:mt-0">
               {/* Project List */}
-              <Command className="!h-fit border border-accent-border bg-bg-primary !rounded-t-md !rounded-b-none !pb-0">
-                <CommandInput placeholder="Search a project to chat about" />
+              <Command className="!h-fit border border-accent-border bg-bg-primary !rounded-t-md !rounded-b-none !pb-0 ">
+                <CommandInput placeholder="Search a project to chat about " />
                 {!isPortfolioError ? (
-                  <CommandList className="bg-bg-tertiary">
+                  <CommandList className="bg-bg-tertiary ">
                     <CommandEmpty>No results found.</CommandEmpty>
                     <CommandGroup
                       heading="Portfolio"
-                      className="!max-h-[160px] !overflow-y-auto thin-scrollbar !bg-bg-tertiary"
+                      className="!max-h-[160px] !overflow-y-auto thin-scrollbar !bg-bg-tertiary "
                     >
                       {projectsRef.map((project, index) => {
                         const { projectTitle, aiQuestions, authorImage } =
@@ -294,13 +294,13 @@ export default function ChatBody({
               </Command>
 
               {/* General purpose chat */}
-              <div className="p-2 border-b border-x border-accent-border rounded-b-md">
+              <div className="p-2 border-b border-x border-accent-border rounded-b-md ">
                 <button
                   onClick={handleGeneralChatClick}
-                  className="w-full flex gap-1 items-center justify-between rounded-md hover:bg-bg-hover dark:hover:bg-bg-hover2 p-1"
+                  className="w-full flex gap-1 items-center justify-between rounded-md hover:bg-bg-hover dark:hover:bg-bg-hover2 p-1 "
                 >
-                  <div className="relative flex items-center gap-2 z-20">
-                    <p className="text-sm">General purpose chat</p>
+                  <div className="relative flex items-center gap-2 z-20 ">
+                    <p className="text-sm ">General purpose chat</p>
                   </div>
                   <FiArrowRight
                     size={16}

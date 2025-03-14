@@ -43,67 +43,69 @@ const KeepReadingSection = ({ blogPost }) => {
                   <Link
                     key={i}
                     href={`/writings/${postSlug}`}
-                    className="flex items-center gap-4 overflow-hidden group p-4 hover:bg-bg-hover transition rounded-lg"
+                    className="group"
                   >
-                    {/* Main Image */}
-                    {mainImage && mainImage.fields?.file?.url && (
-                      <div className="group relative w-[430px] h-[300px] overflow-hidden rounded-lg">
-                        <Image
-                          src={getAssetUrl(mainImage)}
-                          alt={postTitle}
-                          fill
-                          className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700 rounded-lg"
-                        />
-                      </div>
-                    )}
-
-                    {/* Text Content */}
-                    <div className="flex-1 pt-4 flex flex-col justify-between">
-                      <div>
-                        {/* Tags */}
-                        {tags && tags.length > 0 && (
-                          <div className="flex flex-wrap">
-                            {tags.map((tag, idx) => (
-                              <span
-                                key={idx}
-                                className="text-xs text-accent-extra flex items-center"
-                              >
-                                {tag}
-                                {/* Show the dot if it's NOT the last tag */}
-                                {idx < tags.length - 1 && (
-                                  <GoDotFill
-                                    size={5}
-                                    className="text-text-secondary mx-2"
-                                  />
-                                )}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Post Title */}
-                        <div className="w-fit group relative mt-2 sm:mt-3 mb-2 sm:mb-4 ">
-                          <h1 className="w-fit text-3xl sm:text-5xl font-bold  leading-tight text-text-primary z-0">
-                            {postTitle}
-                          </h1>
-
-                          <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  group-hover:w-full transition-all duration-500" />
+                    <article className="flex items-center gap-4 overflow-hidden p-4 hover:bg-bg-hover transition rounded-lg">
+                      {/* Main Image */}
+                      {mainImage && mainImage.fields?.file?.url && (
+                        <div className="group relative w-[430px] h-[300px] overflow-hidden rounded-lg">
+                          <Image
+                            src={getAssetUrl(mainImage)}
+                            alt={postTitle}
+                            fill
+                            className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700 rounded-lg"
+                          />
                         </div>
+                      )}
 
-                        {/* Small Description */}
-                        <p className="text-text-secondary mb-2 sm:mb-3">
-                          {smallDescription}
+                      {/* Text Content */}
+                      <div className="flex-1 pt-4 flex flex-col justify-between">
+                        <div>
+                          {/* Tags */}
+                          {tags && tags.length > 0 && (
+                            <div className="flex flex-wrap">
+                              {tags.map((tag, idx) => (
+                                <span
+                                  key={idx}
+                                  className="text-xs text-accent-extra flex items-center"
+                                >
+                                  {tag}
+                                  {/* Show the dot if it's NOT the last tag */}
+                                  {idx < tags.length - 1 && (
+                                    <GoDotFill
+                                      size={5}
+                                      className="text-text-secondary mx-2"
+                                    />
+                                  )}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Post Title */}
+                          <div className="w-fit group relative mt-2 sm:mt-3 mb-2 sm:mb-4 ">
+                            <h1 className="w-fit text-3xl sm:text-5xl font-bold  leading-tight text-text-primary z-0">
+                              {postTitle}
+                            </h1>
+
+                            <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  group-hover:w-full transition-all duration-500" />
+                          </div>
+
+                          {/* Small Description */}
+                          <p className="text-text-secondary mb-2 sm:mb-3">
+                            {smallDescription}
+                          </p>
+                        </div>
+                        {/* Author and Date Posted */}
+                        <p className="text-sm max-[300px]:text-text-primary text-text-primary mb-1 flex items-center">
+                          {new Date(datePosted).toLocaleDateString("en-US", {
+                            month: "long",
+                            day: "2-digit",
+                            year: "numeric",
+                          })}
                         </p>
                       </div>
-                      {/* Author and Date Posted */}
-                      <p className="text-sm max-[300px]:text-text-primary text-text-primary mb-1 flex items-center">
-                        {new Date(datePosted).toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "2-digit",
-                          year: "numeric",
-                        })}
-                      </p>
-                    </div>
+                    </article>
                   </Link>
                 );
               })}
@@ -125,70 +127,74 @@ const KeepReadingSection = ({ blogPost }) => {
                   <Link
                     key={i}
                     href={`/writings/${postSlug}`}
-                    className={`block overflow-hidden group ${
-                      i !== 2 &&
-                      "max-md:pb-6 max-md:border-b border-accent-border"
-                    }`}
+                    className="group"
                   >
-                    {/* Main Image */}
-                    {mainImage && mainImage.fields?.file?.url && (
-                      <div className="group relative w-full max-[390px]:h-[220px] max-[540px]:h-[250px] h-[350px] md:h-[250px] overflow-hidden rounded-lg">
-                        <Image
-                          src={getAssetUrl(mainImage)}
-                          alt={postTitle}
-                          fill
-                          className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700 rounded-lg"
-                        />
-                      </div>
-                    )}
-
-                    {/* Text Content */}
-                    <div className=" pt-4 flex flex-col justify-between">
-                      <div>
-                        {/* Tags */}
-                        {tags && tags.length > 0 && (
-                          <div className="flex flex-wrap">
-                            {tags.map((tag, idx) => (
-                              <span
-                                key={idx}
-                                className="text-xs text-accent-extra flex items-center"
-                              >
-                                {tag}
-                                {/* Show the dot if it's NOT the last tag */}
-                                {idx < tags.length - 1 && (
-                                  <GoDotFill
-                                    size={5}
-                                    className="text-text-secondary mx-2"
-                                  />
-                                )}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Post Title */}
-                        <div className="w-fit group relative mt-1  mb-2 ">
-                          <h1 className="w-fit text-xl font-bold leading-tight text-text-primary z-0">
-                            {postTitle}
-                          </h1>
-
-                          <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  group-hover:w-full transition-all duration-500" />
+                    <article
+                      className={`block overflow-hidden ${
+                        i !== 2 &&
+                        "max-md:pb-6 max-md:border-b border-accent-border"
+                      }`}
+                    >
+                      {/* Main Image */}
+                      {mainImage && mainImage.fields?.file?.url && (
+                        <div className="group relative w-full max-[390px]:h-[220px] max-[540px]:h-[250px] h-[350px] md:h-[250px] overflow-hidden rounded-lg">
+                          <Image
+                            src={getAssetUrl(mainImage)}
+                            alt={postTitle}
+                            fill
+                            className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700 rounded-lg"
+                          />
                         </div>
+                      )}
 
-                        {/* Small Description */}
-                        <p className="text-text-secondary text-sm mb-2 sm:mb-3">
-                          {smallDescription}
+                      {/* Text Content */}
+                      <div className=" pt-4 flex flex-col justify-between">
+                        <div>
+                          {/* Tags */}
+                          {tags && tags.length > 0 && (
+                            <div className="flex flex-wrap">
+                              {tags.map((tag, idx) => (
+                                <span
+                                  key={idx}
+                                  className="text-xs text-accent-extra flex items-center"
+                                >
+                                  {tag}
+                                  {/* Show the dot if it's NOT the last tag */}
+                                  {idx < tags.length - 1 && (
+                                    <GoDotFill
+                                      size={5}
+                                      className="text-text-secondary mx-2"
+                                    />
+                                  )}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Post Title */}
+                          <div className="w-fit group relative mt-1  mb-2 ">
+                            <h1 className="w-fit text-xl font-bold leading-tight text-text-primary z-0">
+                              {postTitle}
+                            </h1>
+
+                            <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  group-hover:w-full transition-all duration-500" />
+                          </div>
+
+                          {/* Small Description */}
+                          <p className="text-text-secondary text-sm mb-2 sm:mb-3">
+                            {smallDescription}
+                          </p>
+                        </div>
+                        {/* Author and Date Posted */}
+                        <p className="text-sm  text-text-primary">
+                          {new Date(datePosted).toLocaleDateString("en-US", {
+                            month: "long",
+                            day: "2-digit",
+                            year: "numeric",
+                          })}
                         </p>
                       </div>
-                      {/* Author and Date Posted */}
-                      <p className="text-sm  text-text-primary">
-                        {new Date(datePosted).toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "2-digit",
-                          year: "numeric",
-                        })}
-                      </p>
-                    </div>
+                    </article>
                   </Link>
                 );
               })}

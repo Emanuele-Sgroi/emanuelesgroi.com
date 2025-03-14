@@ -54,18 +54,20 @@ export default function ChatHeader({
   const [openNew, setOpenNew] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [openProjectsDialog, setOpenProjectsDialog] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   // Access the referenced projects
@@ -117,6 +119,7 @@ export default function ChatHeader({
 
   // function to start new conversation
   function handleNewConversation() {
+    setOpenAlertDialog(false);
     // Clear messages array
     setMessages([]);
     // Reset the chat to "no activeChat"
@@ -131,11 +134,10 @@ export default function ChatHeader({
     setOpenProjectsDialog(false);
   }
 
-  const truncateText = (text, maxLenght) => {
-    if (text.length > maxLenght) {
-      return text.substring(0, maxLenght) + "...";
-    }
-    return text;
+  const truncateText = (text = "", maxLength) => {
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
   };
 
   return (
@@ -146,14 +148,13 @@ export default function ChatHeader({
           {activeChat && messages.length < 1 && (
             <>
               <Popover open={openNew} onOpenChange={setOpenNew}>
-                <PopoverTrigger
-                  onMouseEnter={handleMouseEnterNew}
-                  onMouseLeave={handleMouseLeaveNew}
-                  aria-expanded={openNew}
-                >
+                <PopoverTrigger asChild>
                   <button
                     onClick={handleNewConversation}
-                    className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
+                    onMouseEnter={handleMouseEnterNew}
+                    onMouseLeave={handleMouseLeaveNew}
+                    aria-expanded={openNew}
+                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2"
                   >
                     <AiOutlinePlus size={18} className="text-accent-icon" />
                   </button>
@@ -170,12 +171,11 @@ export default function ChatHeader({
           {activeChat && (
             <>
               <Popover open={openProjects} onOpenChange={setOpenProjects}>
-                <PopoverTrigger
-                  onMouseEnter={handleMouseEnterProject}
-                  onMouseLeave={handleMouseLeaveProject}
-                  aria-expanded={openProjects}
-                >
+                <PopoverTrigger asChild>
                   <button
+                    onMouseEnter={handleMouseEnterProject}
+                    onMouseLeave={handleMouseLeaveProject}
+                    aria-expanded={openProjects}
                     onClick={() => {
                       setOpenProjectsDialog(true);
                     }}
@@ -196,54 +196,34 @@ export default function ChatHeader({
 
           {activeChat && messages.length > 0 && (
             <>
-              <AlertDialog>
-                <AlertDialogTrigger>
-                  <Popover open={openNew} onOpenChange={setOpenNew}>
-                    <PopoverTrigger
-                      onMouseEnter={handleMouseEnterNew}
-                      onMouseLeave={handleMouseLeaveNew}
-                      aria-expanded={openNew}
-                    >
-                      <button
-                        className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
-                      >
-                        <AiOutlinePlus size={18} className="text-accent-icon" />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
-                    >
-                      <p className="text-xs">Start a new conversation</p>
-                    </PopoverContent>
-                  </Popover>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="!z-[999999]">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Your current conversation with ManuPilot will be lost and
-                      cannot be recovered.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleNewConversation}>
-                      I&apos;m sure
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <Popover open={openNew} onOpenChange={setOpenNew}>
+                <PopoverTrigger asChild>
+                  <button
+                    onClick={() => setOpenAlertDialog(true)}
+                    onMouseEnter={handleMouseEnterNew}
+                    onMouseLeave={handleMouseLeaveNew}
+                    aria-expanded={openNew}
+                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2"
+                  >
+                    <AiOutlinePlus size={18} className="text-accent-icon" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
+                >
+                  <p className="text-xs">Start a new conversation</p>
+                </PopoverContent>
+              </Popover>
               <div className="bg-accent-border h-[25px] w-px mx-1"></div>
             </>
           )}
 
           <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              aria-expanded={open}
-            >
+            <PopoverTrigger asChild>
               <button
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                aria-expanded={open}
                 onClick={closeChat}
                 className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
               >
@@ -344,6 +324,26 @@ export default function ChatHeader({
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Alert dialog for starting new conversation */}
+
+      <AlertDialog open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
+        <AlertDialogContent className="!z-[999999999999]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your current conversation with ManuPilot will be lost and cannot
+              be recovered.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleNewConversation}>
+              I&apos;m sure
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

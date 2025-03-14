@@ -26,15 +26,16 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const handleMouseEnter = () => {
