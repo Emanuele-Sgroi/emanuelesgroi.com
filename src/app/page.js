@@ -3,6 +3,12 @@ import {
   fetchGeneralInfoContent,
 } from "@/utils/fetchCMSContent";
 import WelcomePage from "@/pages/WelcomePage";
+import { metadataByPage, defaultMetadata } from "@/config/metadata";
+
+export const generateMetadata = () => ({
+  ...defaultMetadata,
+  ...metadataByPage["/welcome"],
+});
 
 const Welcome = async () => {
   const { data: welcomeContent, error: welcomeError } =

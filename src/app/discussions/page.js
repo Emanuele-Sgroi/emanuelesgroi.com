@@ -3,6 +3,12 @@ import {
   fetchGeneralInfoContent,
 } from "@/utils/fetchCMSContent";
 import DiscussionsPage from "@/pages/DiscussionsPage";
+import { metadataByPage, defaultMetadata } from "@/config/metadata";
+
+export const generateMetadata = () => ({
+  ...defaultMetadata,
+  ...metadataByPage["/discussions"],
+});
 
 const Discussions = async () => {
   const { data: discussionContent, error: discussionError } =

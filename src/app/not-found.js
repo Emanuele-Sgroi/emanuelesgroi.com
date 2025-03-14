@@ -1,6 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
+import { metadataByPage } from "@/config/metadata";
+
+export const metadata = metadataByPage["/not-found"];
 
 const NotFound = () => {
   return (

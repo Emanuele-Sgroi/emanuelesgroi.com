@@ -30,7 +30,7 @@ const Academic = ({ writingsContent }) => {
     <div className="w-full center px-4 py-6 md:py-12 max-md:bg-bg-mobile-primary max-md:mt-4 max-md:border-b max-md:border-t max-md:border-accent-border">
       <div className="relative w-full max-w-[1280px]">
         <div className="flex">
-          <h1 className="text-4xl md:text-7xl font-bold ">{academicTitle}</h1>
+          <h2 className="text-4xl md:text-7xl font-bold ">{academicTitle}</h2>
         </div>
         <div className="p-2 md:p-4 border border-accent-border bg-bg-tertiary rounded-lg mt-4 flex flex-col gap-4">
           <p className="text-sm md:text-base text-text-secondary">
