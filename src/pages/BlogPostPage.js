@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import {
   BlogPostTopSection,
   BlogInfoAndShareSection,
@@ -10,7 +12,13 @@ import {
 } from "@/components";
 
 const BlogPostPage = ({ blogPost, writingsContent, error }) => {
-  if (!blogPost) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Ensure component is mounted on the client
+  }, []);
+
+  if (!blogPost || !isClient) {
     return <Loading />;
   }
 

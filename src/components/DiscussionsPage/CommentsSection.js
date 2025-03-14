@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { GoDotFill } from "react-icons/go";
 import { RiErrorWarningLine } from "react-icons/ri";
@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 //import "react-toastify/dist/ReactToastify.css";
 import { TopComment, CommentContainer, CommentInput } from "@/components";
 
-const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
+//const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
 
 const CommentsSection = ({
   generalInfoContent,
@@ -27,6 +27,11 @@ const CommentsSection = ({
     normalComments.filter((c) => !c.isTopComment && c.parentId !== null) // replies
   );
   const [sortOrder, setSortOrder] = useState("newest"); // Default sorting
+  const [authorName, setAuthorName] = useState("");
+
+  useEffect(() => {
+    setAuthorName(process.env.NEXT_PUBLIC_AUTHOR_NAME || "");
+  }, []);
 
   // Function for handling sorting
   const handleSortChange = (order) => {
@@ -60,7 +65,7 @@ const CommentsSection = ({
 
   // Function to handle top-level comment submission to database
   const handleCommentSubmit = async (newComment) => {
-    const isAuthor = newComment.name === AUTHOR_NAME;
+    const isAuthor = newComment.name === authorName;
 
     const comment = {
       name: isAuthor ? "Emanuele" : newComment.name,

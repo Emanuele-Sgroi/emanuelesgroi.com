@@ -15,15 +15,16 @@ const ToggleThemeButton = ({ onClick, theme }) => {
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const handleMouseEnter = () => {
@@ -41,18 +42,20 @@ const ToggleThemeButton = ({ onClick, theme }) => {
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={onClick}
-          className="max-[400px]:hidden relative center outline-none w-[32px] h-[32px] btn-secondary center"
-          aria-expanded={open}
-        >
-          {theme !== "light" ? (
-            <FaSun size={18} />
-          ) : (
-            <BsMoonStarsFill size={18} />
-          )}
+        <PopoverTrigger asChild>
+          <button
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={onClick}
+            className="max-[400px]:hidden relative center outline-none w-[32px] h-[32px] btn-secondary center"
+            aria-expanded={open}
+          >
+            {theme !== "light" ? (
+              <FaSun size={18} />
+            ) : (
+              <BsMoonStarsFill size={18} />
+            )}
+          </button>
         </PopoverTrigger>
         <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
           <p className="text-xs">

@@ -362,10 +362,16 @@ const ContributionChart = ({ word }) => {
                           );
                         } else {
                           // color styles
+                          // Deterministic function to get an index for color
+                          const getColorIndex = (x, y, colorsLength) => {
+                            return (x * 7 + y) % colorsLength; // A simple hashing method based on grid position
+                          };
+
+                          // Updated logic for assigning colors
                           const bgColor = isSquareActive
                             ? chartColors[
-                                Math.floor(Math.random() * chartColors.length)
-                              ]
+                                getColorIndex(x, y, chartColors.length)
+                              ] // Deterministic color selection
                             : "var(--other-chart-square)";
 
                           const borderColor = isSquareActive

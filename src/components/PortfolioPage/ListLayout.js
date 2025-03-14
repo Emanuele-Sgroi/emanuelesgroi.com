@@ -118,7 +118,7 @@ const ListLayout = ({ portfolio, selectedTag }) => {
               </div>
             </div>
             {/* Right */}
-            <div className="max-md:hidden max-w-[130px] flex-1 flex justify-end items-center">
+            {/* <div className="max-md:hidden max-w-[130px] flex-1 flex justify-end items-center">
               <button
                 onClick={() => toggleApproval(index)}
                 className="text-xs font-semibold center gap-2 px-3 py-1 border border-accent-border bg-bg-button hover:bg-bg-hover2 rounded-md"
@@ -130,7 +130,7 @@ const ListLayout = ({ portfolio, selectedTag }) => {
                 )}
                 {approvedProjects[index] ? "Approved" : "Approve"}
               </button>
-            </div>
+            </div> */}
           </div>
         );
       })}

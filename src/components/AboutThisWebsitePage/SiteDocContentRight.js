@@ -5,6 +5,7 @@ import { Link as ScrollLink } from "react-scroll";
 import { Button } from "@/components/ui/button";
 import { FiGithub } from "react-icons/fi";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import Link from "next/link";
 
 const SiteDocContentRight = () => {
   return (
@@ -24,16 +25,18 @@ const SiteDocContentRight = () => {
         {/* Buttons Section */}
         <div className="flex flex-col gap-3">
           {/* Source Code Button */}
-          <a
+          <Link
             href="https://github.com/Emanuele-Sgroi/emanuelesgroi.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Button className="w-full">
-              <FiGithub size={20} className="w-4 h-4 mr-2" />
-              View on GitHub
+              <span className="flex items-center">
+                <FiGithub size={20} className="w-4 h-4 mr-2" />
+                View on GitHub
+              </span>
             </Button>
-          </a>
+          </Link>
 
           {/* Scroll to Top */}
           <ScrollLink to="top" smooth={false} duration={500}>
@@ -54,15 +57,17 @@ const SiteDocContentRight = () => {
       </aside>
       <div className="md:hidden fixed right-6 bottom-24 center flex-col gap-2">
         {/* Source Code Button */}
-        <a
+        <Link
           href="https://github.com/Emanuele-Sgroi/emanuelesgroi.com"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Button className="w-[40px] h-[40px] p-0 rounded-full center">
-            <FiGithub size={20} />
+            <span>
+              <FiGithub size={20} />
+            </span>
           </Button>
-        </a>
+        </Link>
 
         {/* Scroll to Top */}
         <ScrollLink to="top" smooth={false} duration={1000} offset={-76}>

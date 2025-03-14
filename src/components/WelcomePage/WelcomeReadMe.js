@@ -230,38 +230,40 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
       </div>
       <div className="md:hidden w-full flex gap-4 mt-3 overflow-x-scroll hide-scrollbar">
         {pinnedTabs.map((tab, index) => (
-          <Link
-            key={index}
-            href={tab.linkTab}
-            className="h-[145px] min-w-[270px] border border-accent-border rounded-md p-3 flex flex-col justify-between first:ml-4 last:mr-4 max-md:bg-bg-button"
-          >
-            {/* Tab header */}
-            <div className="w-full flex flex-col">
-              <div className="w-fit border border-accent-border rounded-full p-1 mb-2">
-                <p className="text-[11.5px] font-semibold text-accent-icon leading-none">
-                  Public
+          <Link key={index} href={tab.linkTab} className="block group">
+            <div className="h-[145px] min-w-[270px] border border-accent-border rounded-md p-3 flex flex-col justify-between first:ml-4 last:mr-4 max-md:bg-bg-button">
+              {/* Tab header */}
+              <div className="w-full flex flex-col">
+                <div className="w-fit border border-accent-border rounded-full p-1 mb-2">
+                  <p className="text-[11.5px] font-semibold text-accent-icon leading-none">
+                    Public
+                  </p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <p className="w-auto text-[13px] leading-4 font-semibold text-text-primary">
+                    {tab.title}
+                  </p>
+                </div>
+                {/* Tab description */}
+                <p className="text-xs text-text-secondary my-2">
+                  {tab.description.substring(0, 40)}
                 </p>
               </div>
-              <div className="flex justify-start items-center gap-2">
-                <p className="w-auto text-[13px] leading-4 font-semibold  text-text-primary">
-                  {tab.title}
-                </p>
-              </div>
-              {/* Tab decription */}
-              <p className="text-xs text-text-secondary my-2">
-                {tab.description.substring(0, 40)}
-              </p>
-            </div>
 
-            {/* Tab footer */}
-            <div className="flex justify-start items-center gap-2">
-              <span className="w-[12px] h-[12px] bg-accent-active rounded-full"></span>
-              <Link
-                href={tab.linkCategory}
-                className="text-xs text-text-secondary hover:underline leading-none"
-              >
-                {tab.category}
-              </Link>
+              {/* Tab footer */}
+              <div className="flex justify-start items-center gap-2">
+                <span className="w-[12px] h-[12px] bg-accent-active rounded-full"></span>
+                {/* Use onClick instead of a nested Link */}
+                <span
+                  className="text-xs text-text-secondary hover:underline leading-none"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents the parent Link from triggering
+                    window.location.href = tab.linkCategory; // Redirects to category
+                  }}
+                >
+                  {tab.category}
+                </span>
+              </div>
             </div>
           </Link>
         ))}

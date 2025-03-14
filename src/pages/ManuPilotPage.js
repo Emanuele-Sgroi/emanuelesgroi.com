@@ -142,6 +142,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
   // ----- DRAG & DROP LOGIC -----
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     function handleDragEnter(e) {
       if (e.dataTransfer.types?.includes("Files")) {
         e.preventDefault();

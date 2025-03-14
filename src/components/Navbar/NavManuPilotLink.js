@@ -21,15 +21,16 @@ const NavManuPilotLink = () => {
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile("ontouchstart" in window || navigator.maxTouchPoints > 0);
+      setIsMobile(
+        typeof window !== "undefined" &&
+          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      );
     };
 
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
 
-    return () => {
-      window.removeEventListener("resize", checkIfMobile);
-    };
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const handleMouseEnter = () => {
@@ -61,17 +62,13 @@ const NavManuPilotLink = () => {
   return (
     <div className={`${isManupilot && "!hidden"} flex`}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={`${
-            isManupilot && "!hidden"
-          } max-md:hidden popover-1-trigger relative center outline-none`}
-          aria-expanded={open}
-        >
+        <PopoverTrigger asChild>
           <button
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            aria-expanded={open}
             onClick={openChat}
-            className={`relative w-[32px] h-[32px] btn-secondary center !rounded-br-none !rounded-tr-none ${
+            className={`max-md:hidden popover-1-trigger outline-none relative w-[32px] h-[32px] btn-secondary center !rounded-br-none !rounded-tr-none ${
               isManupilot && "!hidden"
             }`}
           >
@@ -92,17 +89,13 @@ const NavManuPilotLink = () => {
       </Popover>
 
       <Popover open={immersiveOpen} onOpenChange={setImmersiveOpen}>
-        <PopoverTrigger
-          onMouseEnter={handleMouseEnterImmersive}
-          onMouseLeave={handleMouseLeaveImmersive}
-          className={`${
-            isManupilot && "!hidden"
-          } popover-1-trigger relative center outline-none`}
-          aria-expanded={immersiveOpen}
-        >
+        <PopoverTrigger asChild>
           <Link
             href="/manupilot"
-            className={`relative w-[32px] h-[32px] btn-secondary center md:!rounded-bl-none md:!rounded-tl-none md:!border-l-0 ${
+            onMouseEnter={handleMouseEnterImmersive}
+            onMouseLeave={handleMouseLeaveImmersive}
+            aria-expanded={immersiveOpen}
+            className={`relative popover-1-trigger outline-none w-[32px] h-[32px] btn-secondary center md:!rounded-bl-none md:!rounded-tl-none md:!border-l-0 ${
               isManupilot && "!hidden"
             }`}
           >

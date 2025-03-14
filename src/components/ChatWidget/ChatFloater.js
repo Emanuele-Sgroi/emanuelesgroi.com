@@ -41,7 +41,7 @@ const ChatFloater = () => {
           quality={100}
           className={`w-[40px] md:w-[44px] h-auto object-contain ${
             bounce ? "epic-bounce" : ""
-          }`}
+          } `}
           priority={true}
           loading="eager"
         />

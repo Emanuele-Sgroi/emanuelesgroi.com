@@ -155,7 +155,7 @@ const NavSearchBar = ({
       <DialogTrigger asChild>
         <button
           onClick={() => setOpen(true)}
-          className="w-[32px] sm:w-[260px] h-[32px] btn-secondary hover:bg-transparent cursor-pointer flex items-center justify-center sm:justify-start"
+          className="w-[32px] sm:w-[200px] md:w-[260px] h-[32px] btn-secondary hover:bg-transparent cursor-pointer flex items-center justify-center sm:justify-start"
         >
           <HiOutlineSearch size={18} className="text-accent-icon" />
           <p className="max-sm:hidden text-sm flex items-center gap-1 text-accent-icon">
@@ -168,7 +168,7 @@ const NavSearchBar = ({
         </button>
       </DialogTrigger>
 
-      <DialogOverlay className="!flex !items-start !z-[99999999999999999999999999]">
+      <DialogOverlay className="!flex !items-start !z-[99999999999999999999999999] !bg-gray-100/10 dark:!bg-black/50">
         <DialogContent className="!top-1 !right-1/2 !-translate-y-0 p-0 border-none shadow-lg !w-full max-[1469px]:!max-w-[99%] !max-w-[1459px] !h-screen !max-h-[50%] [&>button]:hidden !z-[99999999999999999999999999]">
           <Command className="!w-full !max-w-full !h-full !max-h-full !border-2 !border-accent-border !rounded-lg !p-3 relative !bg-bg-primary !z-[99999999999999999999999999]">
             {/* Custom Search Icon */}
@@ -334,8 +334,10 @@ const NavSearchBar = ({
                     <CommandItem
                       key={index}
                       onSelect={() => {
-                        window.open(getAssetUrl(pdf), "_blank");
-                        setOpen(false);
+                        if (typeof window !== "undefined") {
+                          window.open(getAssetUrl(pdf), "_blank");
+                          setOpen(false);
+                        }
                       }}
                       className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
                     >
@@ -383,8 +385,10 @@ const NavSearchBar = ({
                   <CommandItem
                     key={link.name}
                     onSelect={() => {
-                      window.open(link.path, "_blank");
-                      setOpen(false);
+                      if (typeof window !== "undefined") {
+                        window.open(link.path, "_blank");
+                        setOpen(false);
+                      }
                     }}
                     className="!w-full !bg-transparent hover:!bg-bg-hover flex justify-between items-center gap-2 cursor-pointer"
                   >
