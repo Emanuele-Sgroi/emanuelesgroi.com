@@ -1,15 +1,16 @@
-// API call for openAI used for Manupilot
+// API route for OpenAI (ManuPilot AI)
+// Supports streaming responses & token count limit enforcement
 
 export const runtime = "nodejs";
 
 import OpenAI from "openai";
 
-// Initialize the OpenAI client
+// Initialize OpenAI client with API key from environment variables
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const MAX_TOKENS_FOR_PROMPT = 100000;
+const MAX_TOKENS_FOR_PROMPT = 100000; // Token limit before triggering summarization
 
 export async function POST(req) {
   try {
@@ -22,9 +23,11 @@ export async function POST(req) {
       );
     }
 
+    // Check token usage before sending the request
     const tokenCount = approximateTokenCount(messages);
 
     if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
+      // If token count exceeds the limit, request summarization
       const summarizeResponse = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/manupilot-summarize`,
         {
@@ -42,19 +45,21 @@ export async function POST(req) {
         );
       }
 
+      // Return summarized content
       const summarizedData = await summarizeResponse.json();
       return new Response(JSON.stringify(summarizedData), {
         status: 200,
       });
     }
 
+    // Request OpenAI chat completion with streaming enabled
     const chatCompletion = await openai.chat.completions.create({
       model: "chatgpt-4o-latest",
       messages,
-      stream: true, // ----> STREAMING
+      stream: true, // Enables response streaming
     });
 
-    //  Build a ReadableStream
+    // Setup streaming response
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
@@ -72,7 +77,6 @@ export async function POST(req) {
           console.error("Stream error:", err);
           controller.error(err);
         } finally {
-          // Close the stream when done
           controller.close();
         }
       },
@@ -86,10 +90,10 @@ export async function POST(req) {
         "Cache-Control": "no-cache, no-transform",
       },
     });
-    // ----------------------------------------------------------------------
   } catch (error) {
     console.error("Error with OpenAI API:", error);
 
+    // Handle OpenAI API-specific errors
     if (error instanceof OpenAI.APIError) {
       return new Response(
         JSON.stringify({
@@ -102,6 +106,7 @@ export async function POST(req) {
       );
     }
 
+    // Generic error response
     return new Response(
       JSON.stringify({ error: "An error occurred", details: error.message }),
       { status: 500 }
@@ -109,7 +114,9 @@ export async function POST(req) {
   }
 }
 
-/** A simple approximation: ~4 characters = 1 token */
+/**
+ * Approximate token count for messages (4 characters ≈ 1 token)
+ */
 function approximateTokenCount(messages) {
   let totalChars = 0;
   for (const msg of messages) {
@@ -119,41 +126,3 @@ function approximateTokenCount(messages) {
   }
   return Math.floor(totalChars / 4);
 }
-
-/////
-
-//     return new Response(JSON.stringify(chatCompletion.choices[0].message), {
-//       status: 200,
-//     });
-//   } catch (error) {
-//     console.error("Error with OpenAI API:", error);
-
-//     if (error instanceof OpenAI.APIError) {
-//       return new Response(
-//         JSON.stringify({
-//           status: error.status,
-//           message: error.message,
-//           code: error.code,
-//           type: error.type,
-//         }),
-//         { status: error.status || 500 }
-//       );
-//     }
-
-//     return new Response(
-//       JSON.stringify({ error: "An error occurred", details: error.message }),
-//       { status: 500 }
-//     );
-//   }
-// }
-
-// /** A simple approximation: ~4 characters = 1 token */
-// function approximateTokenCount(messages) {
-//   let totalChars = 0;
-//   for (const msg of messages) {
-//     if (msg?.content) {
-//       totalChars += msg.content.length;
-//     }
-//   }
-//   return Math.floor(totalChars / 4);
-// }

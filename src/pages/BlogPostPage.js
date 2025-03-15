@@ -11,17 +11,23 @@ import {
   ErrorMessage,
 } from "@/components";
 
+/**
+ * Blog Post Page
+ * Renders a blog post with details, content, and related sections.
+ */
 const BlogPostPage = ({ blogPost, writingsContent, error }) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // Ensure component is mounted on the client
+    setIsClient(true); // Ensures component is mounted before rendering content
   }, []);
 
+  // Show loading state while waiting for client-side rendering
   if (!blogPost || !isClient) {
     return <Loading />;
   }
 
+  // Show error message if data fetching fails
   if (error) {
     return <ErrorMessage />;
   }

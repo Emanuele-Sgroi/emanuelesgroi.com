@@ -1,11 +1,12 @@
-// This website currently host the db used from "discussions" on Supabase
-// Because I use SUpabase free plan, this project will be paused after 7 days if unused
-// This file is created to automate a simple query on Supabase useing a Cron Job
+// This website currently hosts the database for "discussions" on Supabase.
+// Supabase's free plan pauses inactive projects after 7 days.
+// This route runs a simple query as a keep-alive mechanism using a Cron Job.
 
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Simple GET request to prevent Supabase from pausing the database
 export async function GET() {
   try {
     await prisma.comment.findFirst(); // returns the first comment or null

@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// Handle creating a new comment
 export async function POST(request) {
   try {
     const {
@@ -19,12 +20,12 @@ export async function POST(request) {
     const newComment = await prisma.comment.create({
       data: {
         name,
-        avatar: avatar || null,
+        avatar: avatar || null, // Optional avatar
         content,
         parentId: parentId || null, // Assign parentId for replies
-        reactions: reactions || {},
-        isAuthor: isAuthor || false,
-        isTopComment: isTopComment || false,
+        reactions: reactions || {}, // Default to empty reactions object
+        isAuthor: isAuthor || false, // Mark if the author is responding
+        isTopComment: isTopComment || false, // Mark if pinned as a top comment
       },
     });
 
@@ -41,11 +42,12 @@ export async function POST(request) {
   }
 }
 
-export async function GET(request) {
+// Handle fetching all comments
+export async function GET() {
   try {
     const comments = await prisma.comment.findMany({
       orderBy: {
-        createdAt: "desc", // Sort comments by creation date
+        createdAt: "desc", // Retrieve comments in descending order
       },
     });
 
@@ -62,6 +64,7 @@ export async function GET(request) {
   }
 }
 
+// Handle updating comment reactions
 export async function PATCH(request) {
   try {
     const { id, reactions } = await request.json();

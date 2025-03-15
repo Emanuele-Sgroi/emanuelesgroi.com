@@ -9,17 +9,19 @@ import {
   DiscussionSideBar,
   FixedBar,
 } from "@/components";
-//import { useDiscussionContent } from "@/hooks/useDiscussionContent";
-//import { useGeneralInfoContent } from "@/hooks/useGeneralInfoContent";
 
+/**
+ * Discussions Page
+ * Simulates user discussions with a comment section and a sidebar.
+ */
 const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
-  // states
+  // State for handling loading, errors, and comments
   const [loading, setLoading] = useState(true);
   const [dbError, setDbError] = useState(false);
   const [topComment, setTopComment] = useState(null);
   const [normalComments, setNormalComments] = useState([]);
 
-  // Fetch comments from database
+  // Fetch comments from the database
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -27,17 +29,12 @@ const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
         if (!response.ok) throw new Error("Failed to fetch comments");
         const comments = await response.json();
 
-        // Find the top comment
+        // Find the top comment (The first comment at the top written by the author)
         const top = comments.find((comment) => comment.isTopComment);
         setTopComment(top);
 
-        const normal = comments.filter(
-          (comment) => !comment.isTopComment && comment.parentId === null
-        );
+        // Filter out normal (non-top) comments
         setNormalComments(comments);
-
-        // console.log("Top Comment:", top);
-        // console.log("Normal Comments:", comments);
 
         setDbError(false);
       } catch (err) {
@@ -51,27 +48,26 @@ const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
     fetchComments();
   }, []);
 
-  // show error or loading
+  // Show loading or error state
   if (!discussionContent || !generalInfoContent || loading) {
     return <Loading />;
   }
-
   if (error || dbError) {
     return <ErrorMessage />;
   }
 
   return (
     <>
-      {/* Fixed bar for scrolling */}
+      {/* Fixed top bar for scrolling up or down quickly */}
       <FixedBar
         discussionContent={discussionContent}
         generalInfoContent={generalInfoContent}
         comments={normalComments}
       />
       <section className="with-top_header max-md:gap-4">
-        {/* Header */}
+        {/* Page Header */}
         <DiscussionsHeader discussionContent={discussionContent} />
-        {/* Bottom part */}
+        {/*  Main content with comments and sidebar */}
         <div className="with-side-bar">
           <CommentsSection
             generalInfoContent={generalInfoContent}

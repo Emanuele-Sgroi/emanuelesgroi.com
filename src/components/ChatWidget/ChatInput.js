@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { allowedExtensions } from "@/utils/allowedExtensions";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function ChatInput({
   manuPilotContent,
@@ -45,7 +46,8 @@ export default function ChatInput({
   const [suggestionValue, setSuggestionValue] = useState("");
   const [lastUserMessage, setLastUserMessage] = useState(null);
   const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
+  //const [isMobile, setIsMobile] = useState(false);
 
   // Input states
   const textAreaRef = useRef(null);
@@ -137,19 +139,19 @@ export default function ChatInput({
   }
 
   // Popover handling
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" &&
+  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  //     );
+  //   };
 
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
+  //   return () => window.removeEventListener("resize", checkIfMobile);
+  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

@@ -1,31 +1,18 @@
-import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import "react-circular-progressbar/dist/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
-import { SplashScreenProvider } from "@/context/SplashScreenProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { ChatProvider } from "@/context/ChatProvider";
-import { Navbar, Footer, ChatWidget, ChatFloater } from "@/components";
-import { ToastContainer, toast } from "react-toastify";
-import SplashScreenWrapper from "@/components/SplashScreen/SplashScreenWrapper";
+import { Navbar, Footer, ChatWidget } from "@/components";
+import { ToastContainer } from "react-toastify";
 import { defaultMetadata } from "@/config/metadata";
 
-//export const dynamic = "force-dynamic";
-
-const inter = Inter({ subsets: ["latin"] });
-
+// Set default metadata for all pages
 export const metadata = defaultMetadata;
 
-// Dynamically import SplashScreen with ssr: false
-// const SplashScreen = dynamic(
-//   () => import("@/components/SplashScreen/SplashScreen"),
-//   {
-//     ssr: false,
-//   }
-// );
-
+// Lazy load the greeting popup (disabled for SSR)
 const GreetingPopup = dynamic(
   () => import("@/components/GreetingPopup/GreetingPopup"),
   {
@@ -36,20 +23,16 @@ const GreetingPopup = dynamic(
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <body className="porcodio">
+      <body>
         <ThemeProvider>
-          {/* <SplashScreenWrapper> */}
-          {/* <SplashScreen /> */}
           <ToastContainer />
           <ChatProvider>
             <GreetingPopup />
             <ChatWidget />
             <Navbar />
-            {/* <ChatFloater /> */}
             {children}
             <Footer />
           </ChatProvider>
-          {/* </SplashScreenWrapper> */}
         </ThemeProvider>
       </body>
     </html>

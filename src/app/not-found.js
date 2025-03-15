@@ -3,9 +3,11 @@ import Image from "next/image";
 import { images } from "@/utils/imageImport";
 import { metadataByPage } from "@/config/metadata";
 
+// Generate metadata for SEO
 export const metadata = metadataByPage["/not-found"];
 
 const NotFound = () => {
+  // Return simple UI for 404 Not Found
   return (
     <div className="w-full center rh-flex-col rh-p-loading gap-4">
       <div className="center border-2 border-accent-border rounded-full overflow-hidden">

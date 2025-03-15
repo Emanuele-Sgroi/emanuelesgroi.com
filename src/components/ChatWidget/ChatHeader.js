@@ -38,6 +38,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useChat } from "@/context/ChatProvider";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function ChatHeader({
   isOpen,
@@ -49,26 +50,27 @@ export default function ChatHeader({
   isPortfolioError,
 }) {
   const { messages, setMessages } = useChat();
+  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
   const [openNew, setOpenNew] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const [openProjectsDialog, setOpenProjectsDialog] = useState(false);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" &&
+  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  //     );
+  //   };
 
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
+  //   return () => window.removeEventListener("resize", checkIfMobile);
+  // }, []);
 
   // Access the referenced projects
   const projectsRef = portfolioContent?.projects?.map(

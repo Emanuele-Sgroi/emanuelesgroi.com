@@ -8,11 +8,17 @@ import {
   ErrorMessage,
 } from "@/components";
 
+/**
+ * Portfolio Page
+ * Displays the profile bar and portfolio projects.
+ */
 const PortfolioPage = ({ portfolioContent, generalInfoContent, error }) => {
+  // Show loading state while data is being fetched
   if (!portfolioContent || !generalInfoContent) {
     return <Loading />;
   }
 
+  // Show error message if fetching fails
   if (error) {
     return <ErrorMessage />;
   }

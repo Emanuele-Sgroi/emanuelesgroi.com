@@ -1,12 +1,12 @@
-// API call for openAI used for Manupilot
-// This is called when the conversation reaches the limit in terms of tokens.
-// The AI will make a summarise of the whole conversation, allowing the user to keep chatting in the same conversation
+// API for OpenAI summarization (ManuPilot)
+// Called when the conversation exceeds the token limit.
+// The AI summarizes the entire conversation, allowing users to continue chatting.
 
 import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const MAX_PROMPT_TOKENS = 100000; // ~100k
+const MAX_PROMPT_TOKENS = 100000; // Token limit before summarization
 
 export async function POST(req) {
   try {
@@ -27,7 +27,7 @@ export async function POST(req) {
     let tokenCount = approximateTokenCount(messages);
 
     if (tokenCount > MAX_PROMPT_TOKENS) {
-      // Summarize if needed
+      // Summarize if toke count exceeds the limit
       const shortened = await summarizeIfNeeded(messages);
       tokenCount = approximateTokenCount(shortened);
 
@@ -40,6 +40,7 @@ export async function POST(req) {
         );
       }
 
+      // Generate AI response with the summarized conversation
       const chatCompletion = await openai.chat.completions.create({
         model: "chatgpt-4o-latest",
         messages: shortened,
@@ -48,7 +49,7 @@ export async function POST(req) {
         status: 200,
       });
     } else {
-      // If under limit, just proceed
+      // If token count is within limits, proceed normally
       const chatCompletion = await openai.chat.completions.create({
         model: "chatgpt-4o-latest",
         messages,
@@ -59,6 +60,8 @@ export async function POST(req) {
     }
   } catch (error) {
     console.error("Error in /api/manupilot-summarize:", error);
+
+    // Handle OpenAI-specific errors
     if (error instanceof OpenAI.APIError) {
       return new Response(
         JSON.stringify({
@@ -77,10 +80,18 @@ export async function POST(req) {
   }
 }
 
+/**
+ * Summarizes conversation by keeping only the last 20 messages.
+ * This prevents hitting token limits while maintaining context.
+ */
 function summarizeIfNeeded(messages) {
-  return messages.slice(-20); // Example: Keep only the last 20 messages
+  return messages.slice(-20);
 }
 
+/**
+ * Approximates the token count for messages.
+ * Assumes ~4 characters per token.
+ */
 function approximateTokenCount(messages) {
   if (!Array.isArray(messages)) {
     throw new TypeError("Messages must be an array to count tokens.");

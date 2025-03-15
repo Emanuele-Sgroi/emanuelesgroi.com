@@ -1,9 +1,9 @@
 import { fetchProjectSlugs, fetchBlogPostSlugs } from "@/utils/fetchCMSContent";
 
 export async function GET() {
-  const baseUrl = "http://localhost:3000"; // Change this in production
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  // Fetch dynamic content
+  // Fetch dynamic content for projects and blog posts
   const { data: projectSlugs, error: projectError } = await fetchProjectSlugs();
   const { data: blogPostSlugs, error: blogError } = await fetchBlogPostSlugs();
 
@@ -11,7 +11,7 @@ export async function GET() {
     console.error("Error fetching project slugs:", projectError);
   if (blogError) console.error("Error fetching blog post slugs:", blogError);
 
-  // Static routes
+  // Define static routes that should always be included in the sitemap
   const staticRoutes = [
     "/",
     "/portfolio",
@@ -25,13 +25,13 @@ export async function GET() {
     .map((route) => `<url><loc>${baseUrl}${route}</loc></url>`)
     .join("");
 
-  // Dynamic project pages
+  // Include dynamic project pages in the sitemap
   const projectRoutes =
     projectSlugs
       ?.map((slug) => `<url><loc>${baseUrl}/portfolio/${slug}</loc></url>`)
       .join("") || "";
 
-  // Dynamic blog post pages
+  // Include dynamic blog post pages in the sitemap
   const blogRoutes =
     blogPostSlugs
       ?.map((slug) => `<url><loc>${baseUrl}/writings/${slug}</loc></url>`)
