@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import { getAssetUrl } from "@/utils/imageUtils";
-import { useRouter } from "next/navigation";
 import { IoClose, IoCodeSharp } from "react-icons/io5";
-import { PiCornersOutBold } from "react-icons/pi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiArrowRight } from "react-icons/fi";
 import {
@@ -40,6 +39,17 @@ import {
 import { useChat } from "@/context/ChatProvider";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+/**
+ * ChatHeader Component
+ *
+ * This is the header section of ManuPilot's chat interface. It includes:
+ * - A title for the chat window
+ * - Buttons to start a new conversation or attach a project
+ * - A close button to exit the chat
+ * - A dialog for selecting a project to chat about
+ * - An alert dialog for confirming when starting a new conversation
+ */
+
 export default function ChatHeader({
   isOpen,
   closeChat,
@@ -54,23 +64,8 @@ export default function ChatHeader({
   const [open, setOpen] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
   const [openNew, setOpenNew] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
   const [openProjectsDialog, setOpenProjectsDialog] = useState(false);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
 
   // Access the referenced projects
   const projectsRef = portfolioContent?.projects?.map(
@@ -299,8 +294,6 @@ export default function ChatHeader({
                               className="relative text-accent-icon z-20"
                             />
                           </button>
-
-                          {/* <div className="group/edit invisible group-hover/item:visible absolute top-0 left-0 w-full h-full !bg-bg-hover dark:!bg-bg-hover2 rounded-md  !z-10" /> */}
                         </CommandItem>
                       );
                     })}

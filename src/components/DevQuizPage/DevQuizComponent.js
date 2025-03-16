@@ -61,8 +61,16 @@ const topics = [
   },
 ];
 
+/**
+ * DevQuizComponent
+ *
+ * This component manages the dev quiz flow.
+ * It allows users to select topics, choose the number of questions,
+ * take the quiz, and view their results.
+ */
+
 const DevQuizComponent = () => {
-  const [quizStep, setQuizStep] = useState("welcome");
+  const [quizStep, setQuizStep] = useState("welcome"); // Controls quiz steps
   const [selectedTopics, setSelectedTopics] = useState([]); // Tracks topics selected by the user
   const [selectedQuestions, setSelectedQuestions] = useState([]); // Tracks final question counts
   const [quizResult, setQuizResult] = useState(null);

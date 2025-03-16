@@ -22,6 +22,17 @@ import { IoLogoGithub } from "react-icons/io";
 import { FaLinkedin, FaInstagram, FaFacebook, FaDiscord } from "react-icons/fa";
 import { IoCopy } from "react-icons/io5";
 
+/**
+ * ContactForm Component
+ *
+ * This component provides a contact form and social links for reaching out.
+ * It handles:
+ * - Form validation using React Hook Form & Zod
+ * - Sending messages via email using Email.js
+ * - Copying contact details to clipboard
+ * - Displaying social media links
+ */
+
 // Define the form schema using Zod
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -62,6 +73,7 @@ const ContactForm = ({ generalInfo }) => {
     }
   };
 
+  // copies text and show notification
   const copyText = (text) => {
     let copiedText = `${text}`;
 
@@ -78,70 +90,60 @@ const ContactForm = ({ generalInfo }) => {
 
   return (
     <>
-      <div className="md:hidden main-container ">
+      {/* Mobile view social links */}
+      <div className="md:hidden main-container">
         <div className="borded-container">
           <div className="w-full flex justify-start max-md:px-4">
             <p className="w-full text-xs monospace-text">
-              Emanuele-Sgroi
-              <span className="text-accent-icon mx-[2px]">/</span>
-              Contact
-              <span className="text-accent-icon">.js</span>
+              Emanuele-Sgroi<span className="text-accent-icon mx-[2px]">/</span>
+              Contact<span className="text-accent-icon">.js</span>
             </p>
           </div>
           <div className="w-full mt-6 mb-4 border-b border-accent-border pb-1 max-md:px-4">
             <h4 className="font-semibold max-md:text-xl">Connect With Me:</h4>
           </div>
-          {/* Socials */}
-          <div className="w-full flex flex-col justify-start items-start gap-4 px-4">
-            <div className="flex items-center gap-2">
-              <IoLogoGithub size={18} className="text-accent-icon" />
-              <a
-                href={`${generalInfo?.gitHubLink}`}
-                target="_blank"
-                className="text-text-primary hover:text-text-link hover:underline"
-              >
-                {generalInfo?.gitHubDisplayName}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaLinkedin size={18} className="text-accent-icon" />
-              <a
-                href={`${generalInfo?.linkedInLink}`}
-                target="_blank"
-                className="text-text-primary hover:text-text-link hover:underline"
-              >
-                {generalInfo?.linkedInDisplayName}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaInstagram size={18} className="text-accent-icon" />
-              <a
-                href={`${generalInfo?.instagramLink}`}
-                target="_blank"
-                className="text-text-primary hover:text-text-link hover:underline"
-              >
-                {generalInfo?.instagramDisplayName}
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaFacebook size={18} className="text-accent-icon" />
-              <a
-                href={`${generalInfo?.facebookLink}`}
-                target="_blank"
-                className="text-text-primary hover:text-text-link hover:underline"
-              >
-                {generalInfo?.facebookDisplayName}
-              </a>
-            </div>
+          {/* Social Media Links */}
+          <div className="w-full flex flex-col gap-4 px-4">
+            {[
+              {
+                icon: <IoLogoGithub size={18} className="text-accent-icon" />,
+                link: generalInfo?.gitHubLink,
+                display: generalInfo?.gitHubDisplayName,
+              },
+              {
+                icon: <FaLinkedin size={18} className="text-accent-icon" />,
+                link: generalInfo?.linkedInLink,
+                display: generalInfo?.linkedInDisplayName,
+              },
+              {
+                icon: <FaInstagram size={18} className="text-accent-icon" />,
+                link: generalInfo?.instagramLink,
+                display: generalInfo?.instagramDisplayName,
+              },
+              {
+                icon: <FaFacebook size={18} className="text-accent-icon" />,
+                link: generalInfo?.facebookLink,
+                display: generalInfo?.facebookDisplayName,
+              },
+            ].map(({ icon, link, display }, index) => (
+              <div key={index} className="flex items-center gap-2">
+                {icon}
+                <a
+                  href={link}
+                  target="_blank"
+                  className="text-text-primary hover:text-text-link hover:underline"
+                >
+                  {display}
+                </a>
+              </div>
+            ))}
+            {/* Discord (Copy to Clipboard) */}
             <div className="flex items-center gap-2">
               <FaDiscord size={18} className="text-accent-icon" />
               <p className="text-text-primary text-sm">
                 {generalInfo?.discordDisplayName}
               </p>
-              <button
-                onClick={() => copyText(generalInfo?.discordDisplayName)}
-                className="md:hidden"
-              >
+              <button onClick={() => copyText(generalInfo?.discordDisplayName)}>
                 <IoCopy size={18} className="text-text-primary" />
               </button>
             </div>
@@ -149,90 +151,47 @@ const ContactForm = ({ generalInfo }) => {
         </div>
       </div>
 
-      <div className="main-container ">
+      {/* Contact Form */}
+      <div className="main-container">
         <div className="borded-container">
-          <div className="w-full flex justify-start max-md:px-4">
-            <p className="max-md:hidden w-full text-xs monospace-text">
-              Emanuele-Sgroi
-              <span className="text-accent-icon mx-[2px]">/</span>
-              Contact
-              <span className="text-accent-icon">.js</span>
-            </p>
-          </div>
-          <div className="w-full md:mt-4 mb-4 border-b border-accent-border pb-4 md:pb-1 max-md:px-4 max-md:flex max-md:items-center max-md:gap-2">
-            <h4 className="font-semibold max-md:text-xl">Contact Form:</h4>
-          </div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full flex flex-col gap-4 max-md:px-4"
             >
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>
-                      Name<span className="ml-1 text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Your name"
-                        {...field}
-                        className="focus:outline-none !border !border-accent-border !bg-bg-tertiary"
-                        style={{ outline: "none", boxShadow: "none" }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="flex flex-col md:flex-row gap-4">
+              {["name", "email", "message"].map((field) => (
                 <FormField
+                  key={field}
                   control={form.control}
-                  name="email"
+                  name={field}
                   render={({ field }) => (
-                    <FormItem className="flex-1">
+                    <FormItem>
                       <FormLabel>
-                        Email<span className="ml-1 text-red-500">*</span>
+                        {field.name.charAt(0).toUpperCase() +
+                          field.name.slice(1)}
+                        <span className="ml-1 text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Your email"
-                          {...field}
-                          className="focus:outline-none !border !border-accent-border !bg-bg-tertiary"
-                          style={{ outline: "none", boxShadow: "none" }}
-                        />
+                        {field.name === "message" ? (
+                          <Textarea
+                            placeholder="Your message"
+                            {...field}
+                            rows={8}
+                            className="contact-input"
+                          />
+                        ) : (
+                          <Input
+                            placeholder={`Your ${field.name}`}
+                            {...field}
+                            className="contact-input"
+                          />
+                        )}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Message<span className="ml-1 text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Your message"
-                        {...field}
-                        rows={8}
-                        className="focus:outline-none !border !border-accent-border !bg-bg-tertiary"
-                        style={{ outline: "none", boxShadow: "none" }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+              ))}
               <div className="w-full">
                 {/* Submit Button */}
                 <Button
@@ -245,22 +204,6 @@ const ContactForm = ({ generalInfo }) => {
               </div>
             </form>
           </Form>
-          <p className="max-md:hidden w-full text-left max-lg:flex-col flex justify-start items-start lg:items-center gap-2 mt-8 text-sm text-text-secondary">
-            <FaArrowLeftLong size={20} className="text-accent-icon" />{" "}
-            Alternatively, you can reach out via any of the social media links
-            or directly through my email address.
-          </p>
-
-          <div className="md:hidden w-full flex max-[350px]:flex-col justify-start items-start gap-1 px-4 mt-6">
-            <p className="text-sm">Or reach out via email:</p>
-            <a
-              href={`mailto:${generalInfo?.email}`}
-              target="_blank"
-              className="text-accent-extra underline"
-            >
-              {generalInfo?.email}
-            </a>
-          </div>
         </div>
       </div>
     </>

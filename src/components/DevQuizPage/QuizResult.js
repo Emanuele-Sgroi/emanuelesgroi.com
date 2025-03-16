@@ -3,7 +3,25 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-//import "react-circular-progressbar/dist/styles.css";
+
+/**
+ * QuizResult Component
+ *
+ * Displays the quiz results, including:
+ * - Selected topics
+ * - Percentage score with an animated circular progress bar
+ * - Correct answers count
+ * - Elapsed time
+ * - Options to restart or leave the quiz
+ *
+ * Props:
+ * - selectedTopics: Array of topics selected for the quiz.
+ * - totalQuestions: Total number of questions answered.
+ * - correctAnswers: Number of correct answers.
+ * - elapsedTime: Time taken to complete the quiz (in seconds).
+ * - onRestart: Function to restart the quiz.
+ * - onLeave: Function to leave the quiz.
+ */
 
 const QuizResult = ({
   selectedTopics,

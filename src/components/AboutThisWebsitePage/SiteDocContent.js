@@ -1,3 +1,6 @@
+// This component serves as the main "About This Website" documentation page.
+// It explains the portfolio’s design, technologies used, features, and future plans.
+
 "use client";
 
 import React from "react";
@@ -54,6 +57,7 @@ const SiteDocContent = () => {
 
 export default SiteDocContent;
 
+// Introduction - Why I Built This Portfolio
 const Introduction = () => {
   return (
     <div className="flex flex-col gap-6 border-b border-accent-border pb-8">
@@ -178,6 +182,7 @@ const Introduction = () => {
   );
 };
 
+// Design & UI - How I made it look like GitHub
 const DesignAndUI = () => {
   const colorsDark = [
     { name: "BG Primary", hex: "#0d1117" },
@@ -389,6 +394,7 @@ const DesignAndUI = () => {
   );
 };
 
+// Tech Stack - Technologies and tools used to build this site
 const TechStack = () => {
   return (
     <div className="flex flex-col gap-6 border-b border-accent-border py-8">
@@ -684,6 +690,7 @@ const TechStack = () => {
   );
 };
 
+// Features Breakdown - Explanation of different sections of the portfolio
 const Features = () => {
   return (
     <div className="flex flex-col gap-6 border-b border-accent-border py-8">
@@ -1216,6 +1223,7 @@ const Features = () => {
   );
 };
 
+// Deployment & Future Plans - How it's hosted & what's next
 const DeploymentAndFuturePlans = () => {
   return (
     <div className="flex flex-col gap-6 border-b border-accent-border py-8">
@@ -1318,6 +1326,7 @@ const DeploymentAndFuturePlans = () => {
   );
 };
 
+// Thank You - Closing message & useful links
 const ThankYou = () => {
   return (
     <div className="flex flex-col gap-6 border-b border-accent-border py-8">
@@ -1382,6 +1391,7 @@ const ThankYou = () => {
   );
 };
 
+// Footer - For this page only the footer is a different component
 const DocFooter = () => {
   const currentYear = new Date().getFullYear();
   return (

@@ -106,6 +106,15 @@ const customComponents = {
   },
 };
 
+/**
+ * ChatBody Component
+ *
+ * This is the main AI chat interface for ManuPilot Quick Chat. It allows users to:
+ * - Select and chat about projects from the portfolio
+ * - Start a general-purpose chat
+ * - View AI-generated responses with support for Markdown & code blocks
+ */
+
 export default function ChatBody({
   activeChat,
   setActiveChat,
@@ -128,12 +137,12 @@ export default function ChatBody({
 
   const { messages } = useChat(); // get the messages from context
 
-  //helpfull states
+  // State for AI processing, scrolling, and UI behavior
   const [isThinking, setIsThinking] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
   const containerRef = useRef(null);
 
-  // Whenever messages change, if autoScroll is true => scroll to bottom
+  // Auto-scroll to bottom when messages change (if autoScroll is enabled)
   useEffect(() => {
     if (autoScroll) {
       const container = containerRef.current;
@@ -167,6 +176,7 @@ export default function ChatBody({
     setActiveChat({ type: "general" });
   };
 
+  // Truncate long text
   const truncateText = (text, maxLenght) => {
     if (text.length > maxLenght) {
       return text.substring(0, maxLenght) + "...";
@@ -174,7 +184,7 @@ export default function ChatBody({
     return text;
   };
 
-  // return states
+  // Loading state
   if (isManuPilotLoading || !manuPilotContent) {
     return (
       <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
@@ -183,6 +193,7 @@ export default function ChatBody({
     );
   }
 
+  // Error state
   if (isManuPilotError) {
     return (
       <div className="relative w-full h-[549px] center flex-col pt-2 px-4 pb-2">
@@ -276,8 +287,6 @@ export default function ChatBody({
                                 className="relative text-accent-icon z-20"
                               />
                             </button>
-
-                            {/* <div className="group/edit invisible group-hover/item:visible absolute top-0 left-0 w-full h-full !bg-bg-hover dark:!bg-bg-hover2 rounded-md  !z-10" /> */}
                           </CommandItem>
                         );
                       })}

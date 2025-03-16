@@ -7,16 +7,25 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 import { Link as ScrollLink } from "react-scroll";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
-import {
-  darcula,
-  oneLight,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+/**
+ * BlogContentSection Component
+ *
+ * This component is responsible for rendering a blog post, including:
+ * - The main blog content (fetched from Contentful)
+ * - A dynamically generated table of contents (TOC)
+ * - Syntax highlighting for code blocks
+ * - Author information
+ * - Tags associated with the post
+ */
 
 const BlogContentSection = ({ blogPost }) => {
   const { tags, author, imageAuthor, blogContent } = blogPost;
   const [activeSection, setActiveSection] = useState(null);
   const headingsRef = useRef([]);
 
+  // Effect to track the active section in the Table of Contents
   useEffect(() => {
     const sections = headingsRef.current.filter(Boolean); // Remove null values
 
@@ -137,11 +146,8 @@ const BlogContentSection = ({ blogPost }) => {
           </h6>
         );
       },
-      //   [BLOCKS.PARAGRAPH]: (node, children) => (
-      //     <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-lg mb-5 break-words">
-      //       {children}
-      //     </p>
-      //   ),
+
+      // Paragraph rendering with code block detection
       [BLOCKS.PARAGRAPH]: (node, children) => {
         // Check if all elements in the paragraph are marked as code
         const isCodeBlock = node.content.every((child) =>
@@ -149,7 +155,6 @@ const BlogContentSection = ({ blogPost }) => {
         );
 
         if (isCodeBlock) {
-          // const code = node.content.map((child) => child.value).join("\n");
           const code = node.content
             .map((child) => child.value)
             .join("")
@@ -164,7 +169,7 @@ const BlogContentSection = ({ blogPost }) => {
                 customStyle={{
                   margin: 0,
                   borderRadius: "8px",
-                  overflowX: "auto", // Ensures scrolling when needed
+                  overflowX: "auto",
                 }}
                 className="thin-scrollbar monospace-text text-sm md:text-base dark:!bg-bg-button !p-2"
               >
@@ -263,29 +268,29 @@ const BlogContentSection = ({ blogPost }) => {
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const asset = node?.data?.target?.fields;
 
-        // ✅ Ensure the asset exists and contains a valid URL
+        // Ensure the asset exists and contains a valid URL
         if (!asset || !asset.file || !asset.file.url) {
           console.warn("Missing image data from Contentful:", asset);
           return null; // Prevent rendering if no image data
         }
 
-        // ✅ Fix URL (Ensure HTTPS)
+        // Fix URL (Ensure HTTPS)
         const imageUrl = asset.file.url.startsWith("http")
           ? asset.file.url
           : `https:${asset.file.url}`;
 
-        // ✅ Extract Alt Text (Fallback to "Blog Image")
+        // Extract Alt Text (Fallback to "Blog Image")
         const altText = asset?.title || asset?.description || "Blog Image";
 
         return (
           <div className="w-full flex justify-center my-6">
             <Image
               src={imageUrl}
-              width={asset.file.details.image.width} // Use original width
-              height={asset.file.details.image.height} // Use original height
+              width={asset.file.details.image.width}
+              height={asset.file.details.image.height}
               alt={altText}
               className="max-w-full h-auto rounded-lg "
-              priority // Optimizes loading
+              priority
             />
           </div>
         );
@@ -298,7 +303,7 @@ const BlogContentSection = ({ blogPost }) => {
           <div className="my-4 rounded-md border border-gray-700 bg-gray-900 overflow-x-auto">
             <SyntaxHighlighter
               language={language}
-              style={darcula} // Dark theme (suitable for blogs)
+              style={darcula}
               wrapLongLines={true}
               customStyle={{
                 padding: "16px",
@@ -345,6 +350,8 @@ const BlogContentSection = ({ blogPost }) => {
               ))}
             </ul>
           </div>
+
+          {/* Render the blog content */}
           {documentToReactComponents(blogContent, options)}
           <div className="w-full flex max-md:flex-col items-start md:items-center gap-2 mt-10">
             <div className="flex flex-col justify-center">
@@ -352,6 +359,7 @@ const BlogContentSection = ({ blogPost }) => {
               <h4 className="text-sm poppins-light mb-2">Tags:</h4>
             </div>
 
+            {/* Tags Section */}
             <div className="flex flex-wrap gap-2 ">
               {tags.map((tag, index) => (
                 <span
@@ -363,6 +371,8 @@ const BlogContentSection = ({ blogPost }) => {
               ))}
             </div>
           </div>
+
+          {/* Author Section */}
           <div className="w-full flex flex-col mt-8 md:mt-12">
             <h3 className="text-text-primary text-left poppins-bold text-xl sm:text-3xl">
               Written by

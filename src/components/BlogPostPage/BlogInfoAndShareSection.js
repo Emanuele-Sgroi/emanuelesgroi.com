@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { LuClock } from "react-icons/lu";
 import { FaWhatsapp, FaLinkedin, FaFacebook } from "react-icons/fa";
@@ -12,34 +12,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const linkName = process.env.NEXT_PUBLIC_BASE_URL;
 
+/**
+ * BlogInfoAndShareSection Component
+ *
+ * Displays blog metadata (author, date, reading time) and share buttons for social media.
+ * - Generates a shareable post URL.
+ * - Provides social media share links (Twitter/X, WhatsApp, Facebook, LinkedIn).
+ * - Includes a copy-to-clipboard button with a tooltip.
+ */
+
 const BlogInfoAndShareSection = ({ blogPost }) => {
   const { author, datePosted, timeReading, postTitle, smallDescription } =
     blogPost;
+
   const pathname = usePathname();
   const postUrl = `${linkName}${pathname}`;
   const [showCopy, setShowCopy] = useState(false);
   const isMobile = useIsMobile();
-  // const [isMobile, setIsMobile] = useState(false);
 
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
-
+  // Show tooltip only on desktop
   const handleMouseEnter = () => {
     if (!isMobile) {
       setShowCopy(true);
@@ -52,6 +48,7 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
     }
   };
 
+  // Copies post URL to clipboard
   const copyLink = () => {
     navigator.clipboard
       .writeText(postUrl)
@@ -67,7 +64,7 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
   return (
     <div className="w-full center pt-6 max-[500px]:px-4 px-6 ">
       <div className="w-full max-w-[1020px]">
-        {/* Text  */}
+        {/* Blog Author & Metadata */}
         <div className="w-full flex justify-start md:justify-between items-start md:items-center max-md:flex-col gap-6 md:gap-4">
           <div className="flex flex-col items-start gap-2">
             <h6 className="poppins-semibold">{author}</h6>
@@ -86,7 +83,7 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
               </span>
             </div>
           </div>
-          {/* Share */}
+          {/* Social Share Section */}
           <div className="center max-[430px]:flex-col max-[430px]:items-start  gap-3">
             <p className="poppins-regular text-sm">Share:</p>
             <div className="center gap-3 max-[430px]:flex-wrap max-[430px]:justify-start">

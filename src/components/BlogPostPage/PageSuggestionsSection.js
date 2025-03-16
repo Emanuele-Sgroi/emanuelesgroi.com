@@ -7,6 +7,17 @@ import { LuBrain } from "react-icons/lu";
 import { GoCopilot } from "react-icons/go";
 import { MdOutlineNavigateNext } from "react-icons/md";
 
+/**
+ * PageSuggestionsSection Component
+ *
+ * Displays a set of links to other key sections of the website.
+ * Each suggestion includes:
+ * - An icon
+ * - A title
+ * - A short description
+ * - A button link to the section
+ */
+
 const PageSuggestionsSection = () => {
   const suggestions = [
     {
@@ -77,7 +88,6 @@ const PageSuggestionsSection = () => {
             ))}
           </div>
         </div>
-        {/* Scroll to top */}
       </div>
     </div>
   );

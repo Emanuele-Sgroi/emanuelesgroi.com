@@ -8,6 +8,19 @@ import {
 } from "@/components/ui/popover";
 import { IoMdPlay } from "react-icons/io";
 
+/**
+ * StyleSelectionMobile Component
+ *
+ * This component provides a mobile-friendly UI for selecting graph styles for the contribution chart.
+ * It allows users to switch between different chart styles using a popover menu.
+ *
+ * Props:
+ * - allStyles: Array of available style options.
+ * - chartStyle: Currently selected style ID.
+ * - setChartStyle: Function to update the selected style.
+ * - selectedStyle: Object representing the currently selected style.
+ */
+
 const StyleSelectionMobile = ({
   allStyles,
   chartStyle,
