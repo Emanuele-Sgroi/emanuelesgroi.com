@@ -21,22 +21,23 @@ import {
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { allowedExtensions } from "@/utils/allowedExtensions";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
-function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(false);
+// function useIsMobile(breakpoint = 768) {
+//   const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    function checkSize() {
-      setIsMobile(window.innerWidth < breakpoint);
-    }
-    checkSize();
-    window.addEventListener("resize", checkSize);
-    return () => window.removeEventListener("resize", checkSize);
-  }, [breakpoint]);
+//   useEffect(() => {
+//     if (typeof window === "undefined") return;
+//     function checkSize() {
+//       setIsMobile(window.innerWidth < breakpoint);
+//     }
+//     checkSize();
+//     window.addEventListener("resize", checkSize);
+//     return () => window.removeEventListener("resize", checkSize);
+//   }, [breakpoint]);
 
-  return isMobile;
-}
+//   return isMobile;
+// }
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 

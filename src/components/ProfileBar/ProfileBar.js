@@ -17,10 +17,12 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { images } from "@/utils/imageImport";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ProfileBar = ({ generalInfo }) => {
   const [showCopy, setShowCopy] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  //const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [showManuPilotBadge, setShowManuPilotBadge] = useState(true);
 
   useEffect(() => {
@@ -44,19 +46,19 @@ const ProfileBar = ({ generalInfo }) => {
     ? getAssetUrl(generalInfo.profilePicture)
     : "";
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" &&
+  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  //     );
+  //   };
 
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
+  //   return () => window.removeEventListener("resize", checkIfMobile);
+  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

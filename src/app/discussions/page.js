@@ -5,12 +5,14 @@ import {
 import DiscussionsPage from "@/pages/DiscussionsPage";
 import { metadataByPage, defaultMetadata } from "@/config/metadata";
 
+// Generate metadata for SEO
 export const generateMetadata = () => ({
   ...defaultMetadata,
   ...metadataByPage["/discussions"],
 });
 
 const Discussions = async () => {
+  // Fetch data From CMS
   const { data: discussionContent, error: discussionError } =
     await fetchDiscussionContent();
   const { data: generalInfoContent, error: generalInfoError } =

@@ -25,6 +25,7 @@ import {
   NavManuPilotLink,
   NavMobileSideProfile,
 } from "@/components";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const NavbarClient = ({
   generalInfoContent,
@@ -36,25 +37,26 @@ const NavbarClient = ({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const isManuPilotPage = pathname === "/manupilot";
   const isBlogPost = pathname.startsWith("/writings/");
   const isProjectDetails = pathname.startsWith("/portfolio/");
   const isSiteDoc = pathname === "/about-this-website";
+  const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" &&
+  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  //     );
+  //   };
 
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
+  //   return () => window.removeEventListener("resize", checkIfMobile);
+  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

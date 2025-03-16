@@ -1,3 +1,7 @@
+// Simple component for the chat floater
+//It displays a small floater in the bottom-right corner
+// It includes animations to drag attention
+
 "use client";
 
 import React, { useState, useEffect } from "react";

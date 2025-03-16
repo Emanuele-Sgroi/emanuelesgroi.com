@@ -11,27 +11,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PiCornersOutBold } from "react-icons/pi";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const NavManuPilotLink = () => {
   const pathname = usePathname();
   const { openChat } = useChat();
   const [open, setOpen] = useState(false);
   const [immersiveOpen, setImmersiveOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
+  //const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(
+  //       typeof window !== "undefined" &&
+  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  //     );
+  //   };
 
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener("resize", checkIfMobile);
 
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
+  //   return () => window.removeEventListener("resize", checkIfMobile);
+  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

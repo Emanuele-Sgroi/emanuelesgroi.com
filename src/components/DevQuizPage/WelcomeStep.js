@@ -1,5 +1,18 @@
 import React from "react";
 
+/**
+ * WelcomeStep Component
+ *
+ * Displays the welcome screen for the Dev Quiz.
+ * - Provides an introduction to the quiz.
+ * - Explains the purpose of using quizzes for memory training.
+ * - Guides users on how to proceed.
+ * - Contains a button to start the quiz.
+ *
+ * Props:
+ * - onStartQuiz: Function to initiate the quiz.
+ */
+
 const WelcomeStep = ({ onStartQuiz }) => (
   <>
     <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">

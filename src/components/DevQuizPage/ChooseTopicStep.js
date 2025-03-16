@@ -4,14 +4,29 @@ import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
+/**
+ * ChooseTopicStep Component
+ *
+ * This component allows users to select topics before starting the quiz.
+ *
+ * Props:
+ * - topics: Array of available topics to choose from.
+ * - onCancel: Function to cancel the selection and go back.
+ * - onTopicsSelected: Function to pass selected topics to the parent component.
+ */
+
 const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
+  // Initialize state with all topics pre-selected
   const [selectedTopics, setSelectedTopics] = useState(
     topics.reduce((acc, topic) => {
-      acc[topic.key] = true; // Pre-select all topics
+      acc[topic.key] = true;
       return acc;
     }, {})
   );
 
+  /**
+   * Toggles selection state for a topic
+   */
   const handleCheckboxChange = (key) => {
     setSelectedTopics((prev) => ({
       ...prev,
@@ -19,6 +34,9 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
     }));
   };
 
+  /**
+   * Handles form submission and passes selected topics
+   */
   const handleSubmit = () => {
     const selectedKeys = Object.keys(selectedTopics).filter(
       (key) => selectedTopics[key]
@@ -29,12 +47,13 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
 
   return (
     <>
+      {/* Header */}
       <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
         <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
           Choose Your Topic
         </h2>
       </div>
-
+      {/* Topic Selection Form */}
       <form className="max-md:px-4 w-full grid grid-cols-2 gap-2 sm:gap-4 mb-4">
         {topics.map((topic) => (
           <label
@@ -56,7 +75,7 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
           </label>
         ))}
       </form>
-
+      {/* Selection Status */}
       {Object.values(selectedTopics).filter(Boolean).length < 1 ? (
         <p className="text-center max-md:px-4 font-semibold text-red-500">
           Please select at least one topic.
@@ -70,6 +89,7 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
         </p>
       )}
 
+      {/* Action Buttons */}
       <div className="flex gap-4 mt-4 max-md:px-4">
         <button
           onClick={onCancel}

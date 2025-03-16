@@ -1,3 +1,7 @@
+// This component provides a navigation menu for the "About This Website" page.
+// It includes a table of contents with scrollable links for quick navigation
+// and a mobile-friendly menu using a sidebar drawer.
+
 "use client";
 
 import React, { useState } from "react";
@@ -199,20 +203,6 @@ const SiteDocNavigationMenu = () => {
             4. Features Breakdown
           </p>
           <ul className="mb-4">
-            {/* <li className="px-2 flex items-center">
-            <ScrollLink
-              to="side-profile-bar"
-              smooth={false}
-                        
-              duration={900}
-              spy={true}
-              offset={-80}
-              activeClass="!bg-bg-button"
-              className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
-            >
-              Side Profile Bar GitHub Style
-            </ScrollLink>
-          </li> */}
             <li className="px-2 flex items-center">
               <ScrollLink
                 to="welcome-page"
@@ -546,20 +536,6 @@ const SiteDocNavigationMenu = () => {
                     4. Features Breakdown
                   </p>
                   <ul className="mb-4">
-                    {/* <li className="px-2 flex items-center">
-            <ScrollLink
-              to="side-profile-bar"
-              smooth={false}
-                        onClick={() => setOpen(false)}
-              duration={1500}
-              spy={true}
-              offset={-116}
-              activeClass="!bg-bg-button"
-              className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
-            >
-              Side Profile Bar GitHub Style
-            </ScrollLink>
-          </li> */}
                     <li className="px-2 flex items-center">
                       <ScrollLink
                         to="welcome-page"

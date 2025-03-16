@@ -27,6 +27,18 @@ import {
 } from "@/components/ui/dialog";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { allowedExtensions } from "@/utils/allowedExtensions";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+/**
+ * ChatInput Component
+ *
+ * This component handles:
+ * - User message input
+ * - Sending messages to ManuPilot
+ * - Attaching and uploading files
+ * - AI response handling
+ * - Handling UI states like loading indicators and errors
+ */
 
 export default function ChatInput({
   manuPilotContent,
@@ -40,28 +52,35 @@ export default function ChatInput({
   setDroppedFile,
   switchToGeneralChat,
 }) {
+  // Context for chat messages
   const { messages, setMessages } = useChat();
+
+  // State for user input
   const [inputValue, setInputValue] = useState("");
   const [suggestionValue, setSuggestionValue] = useState("");
   const [lastUserMessage, setLastUserMessage] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Input states
-  const textAreaRef = useRef(null);
-  const [isFocused, setIsFocused] = useState(false);
+  // State for file upload
   const [isFileLoading, setIsFileLoading] = useState(false);
   const [fileLoadingProgress, setFileLoadingProgress] = useState(0);
-  const [showBadge, setShowBadge] = useState(false);
-  const [openAttachDialog, setOpenAttachDialog] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2MB file size limit
+
+  // State for UI interactions
+  const textAreaRef = useRef(null);
+  const isMobile = useIsMobile();
+  const [isFocused, setIsFocused] = useState(false);
+  const [openAttachDialog, setOpenAttachDialog] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [showBadge, setShowBadge] = useState(false);
   const [pendingFile, setPendingFile] = useState(null);
   const [pendingError, setPendingError] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(""); // for file upload only
 
-  const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
-
+  /**
+   * Effect to handle dropped files and read them on drop
+   */
   useEffect(() => {
     if (droppedFile) {
       // Drag & drop => we read the file right away (triggerType "direct")
@@ -70,7 +89,9 @@ export default function ChatInput({
     }
   }, [droppedFile, setDroppedFile]);
 
-  // function to read the file uploaded and handling visual spinner
+  /**
+   * Reads and validates a file, updates progress UI
+   */
   function readFileWithProgress(file, triggerType) {
     const ext = file.name.split(".").pop().toLowerCase();
 
@@ -136,21 +157,7 @@ export default function ChatInput({
     reader.readAsText(file);
   }
 
-  // Popover handling
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-      );
-    };
-
-    checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
-
-    return () => window.removeEventListener("resize", checkIfMobile);
-  }, []);
-
+  // handling popover on desktop
   const handleMouseEnter = () => {
     if (!isMobile) {
       setOpen(true);
@@ -163,7 +170,9 @@ export default function ChatInput({
     }
   };
 
-  // function to build the AI instructions
+  /**
+   * function to build the AI instructions
+   */
   function buildSystemMessage(aiInstructions, activeChat) {
     if (activeChat?.type === "project") {
       return {
@@ -185,7 +194,9 @@ export default function ChatInput({
     }
   }
 
-  // handle sending suggested questions
+  /**
+   * handle sending suggested questions
+   */
   function handleSendSuggestion(suggestion) {
     setSuggestionValue(suggestion);
   }
@@ -195,7 +206,9 @@ export default function ChatInput({
     handleSend();
   }, [suggestionValue]);
 
-  // functions to handle conversations with AI
+  /**
+   * Sends the user message or attached file to AI
+   */
   async function handleSend(userMsgOverride) {
     // Combine text + file check => allow sending if we have EITHER text OR file
     const typedText = userMsgOverride || inputValue.trim() || suggestionValue;
@@ -213,7 +226,6 @@ export default function ChatInput({
       // Adding a new user message
       const newUserMsg = {
         role: "user",
-        // content: text,
         content: typedText,
         file: selectedFile
           ? { name: selectedFile.name, content: fileContent }
@@ -331,6 +343,9 @@ export default function ChatInput({
     target.scrollTop = target.scrollHeight;
   };
 
+  /**
+   * Handles Enter key press for sending messages
+   */
   const handleKeyDown = (e) => {
     if (isMobile) {
       // For MOBILE: "Enter" => always newline, user must tap the send button

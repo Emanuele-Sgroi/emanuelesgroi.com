@@ -5,6 +5,17 @@ import characterMapLarge from "@/utils/characterMapLarge";
 import characterMapSmall from "@/utils/characterMapSmall";
 import StyleSelectionMobile from "./StyleSelectionMobile";
 
+/**
+ * ContributionChart Component
+ *
+ * This components is responsible to construct the customisable contribution chart visible in the welcome page.
+ * It handles:
+ * - User input (with max characters limit)
+ * - Mapping characters in the chart
+ * - Switching from big character to small character
+ * - Handling chart styles
+ */
+
 const ContributionChart = ({ word }) => {
   // Constants for grid dimensions (52 weeks, 7 days per week)
   const WEEKS = 52;
@@ -79,12 +90,13 @@ const ContributionChart = ({ word }) => {
     { id: "yellow", colors: contributionColorsYellow },
     emojiStyle,
   ];
-  // 1) Initialize state with safe defaults
+
+  // Initialize state with defaults
   const [chartStyle, setChartStyle] = useState("green");
   const [inputText, setInputText] = useState(word);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // 2) Once in the browser, read from sessionStorage if available
+  // Once in the browser, read from sessionStorage if available
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedStyle = window.sessionStorage.getItem(
@@ -99,21 +111,21 @@ const ContributionChart = ({ word }) => {
     }
   }, []);
 
-  // 3) Whenever inputText changes, store in sessionStorage
+  // Whenever inputText changes, store in sessionStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem("contributionChartInput", inputText);
     }
   }, [inputText]);
 
-  // 4) Whenever chartStyle changes, store in sessionStorage
+  // Whenever chartStyle changes, store in sessionStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem("contributionChartStyle", chartStyle);
     }
   }, [chartStyle]);
 
-  // 5) Track remaining characters for input
+  // Track remaining characters for input
   const [remainingChars, setRemainingChars] = useState(
     MAX_CHARACTERS - inputText.replace(/\s/g, "").length
   );
@@ -161,10 +173,8 @@ const ContributionChart = ({ word }) => {
     }
   };
 
-  // Map word to grid
+  // Map the word in the grid
   const getActiveSquares = (word) => {
-    const truncatedResult = { activeSquares: [], truncated: false };
-
     // Filter out invalid + uppercase
     word = word.toUpperCase().replace(/[^A-Z0-9\s]/g, "");
     let truncated = false;

@@ -6,10 +6,15 @@ import {
   darcula,
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
-
 import ThemeContext from "@/context/ThemeProvider";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
+
+/**
+ * ChatCodeBlock Component
+ *
+ * This component is needed for the creation of code blocks returned by the AI
+ */
 
 const ChatCodeBlock = ({ code, lang }) => {
   const { theme } = useContext(ThemeContext);

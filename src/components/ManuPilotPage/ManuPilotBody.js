@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ManuPilotCodeBlock from "./ManuPilotCodeBlock";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const customComponents = {
   hr: () => <hr className="border-accent-border my-4" />,
@@ -150,9 +151,10 @@ const ManuPilotBody = ({
   isThinking,
 }) => {
   const containerRef = useRef(null);
+  const isMobile = useIsMobile();
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  //const [isMobile, setIsMobile] = useState(false);
   const [randomIndices, setRandomIndices] = useState([]);
 
   // Scroll to bottom on new messages or loading
@@ -242,15 +244,15 @@ const ManuPilotBody = ({
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    function checkSize() {
-      setIsMobile(window.innerWidth < 640);
-    }
-    checkSize(); // run on mount
-    window.addEventListener("resize", checkSize);
-    return () => window.removeEventListener("resize", checkSize);
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   function checkSize() {
+  //     setIsMobile(window.innerWidth < 640);
+  //   }
+  //   checkSize(); // run on mount
+  //   window.addEventListener("resize", checkSize);
+  //   return () => window.removeEventListener("resize", checkSize);
+  // }, []);
 
   useEffect(() => {
     // On mount (or whenever isMobile changes), pick 3 random suggestions if on mobile

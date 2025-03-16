@@ -7,9 +7,17 @@ import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { GoDotFill } from "react-icons/go";
 
+/**
+ * KeepReadingSection Component
+ *
+ * Displays a list of related blog posts to encourage further reading.
+ * - Fetches all writings from the CMS.
+ * - Filters out the currently open blog post.
+ * - Displays either 1 featured post or up to 3 suggested posts.
+ */
+
 const KeepReadingSection = ({ blogPost }) => {
-  const { writingsContent, isWritingsLoading, isWritingsError } =
-    useWritingsContent();
+  const { writingsContent, isWritingsError } = useWritingsContent();
 
   // Access the referenced blog posts
   const blogPostsRef = writingsContent?.blogPosts?.map((post) => post.fields);
@@ -19,13 +27,16 @@ const KeepReadingSection = ({ blogPost }) => {
     (post) => post.postSlug !== blogPost.postSlug
   );
 
+  // Render only if there are additional blog posts to display
   if (writingsContent && !isWritingsError && filteredBlogPosts.length > 0) {
     return (
       <div className="w-full center max-[500px]:px-4 px-6 pt-20 md:pt-32">
         <div className="w-full max-w-[1232px] flex flex-col items-start justify-start">
+          {/* Section Title */}
           <h3 className="text-text-primary text-left poppins-bold text-xl sm:text-3xl">
             Keep Reading
           </h3>
+          {/* Display a single featured post if only one is available */}
           <div className="w-full h-[2px] bg-accent-border mt-3 mb-6"></div>
           {filteredBlogPosts && filteredBlogPosts.length === 1 && (
             <div className="w-full flex justify-start items-start">
@@ -37,7 +48,6 @@ const KeepReadingSection = ({ blogPost }) => {
                   smallDescription,
                   tags,
                   postSlug,
-                  author,
                 } = post;
                 return (
                   <Link
@@ -111,6 +121,7 @@ const KeepReadingSection = ({ blogPost }) => {
               })}
             </div>
           )}
+          {/* Display up to 3 related blog posts if more than one exists */}
           {filteredBlogPosts && filteredBlogPosts.length > 1 && (
             <div className="grid gap-6 md:gap-4 lg:md:gap-6 grid-cols-1 md:grid-cols-3 ">
               {filteredBlogPosts.slice(0, 3).map((post, i) => {
@@ -121,7 +132,6 @@ const KeepReadingSection = ({ blogPost }) => {
                   smallDescription,
                   tags,
                   postSlug,
-                  author,
                 } = post;
                 return (
                   <Link

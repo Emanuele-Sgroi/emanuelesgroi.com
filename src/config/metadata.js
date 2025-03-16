@@ -1,6 +1,8 @@
-const ogImageUrl = "/images/og-image.jpg"; // Stored in `public/images/`
+const my_url = process.env.NEXT_PUBLIC_BASE_URL; // Fallback for safety
+const ogImageUrl = `${my_url}/images/og-image.jpg`; // Absolute URL for Open Graph images
 
 export const defaultMetadata = {
+  metadataBase: new URL(my_url), // Required for correct OG image paths
   title: "Emanuele Sgroi | Full-Stack Developer",
   description:
     "Welcome to the portfolio of Emanuele Sgroi, a full-stack developer specializing in React, Next.js, and mobile development. Explore my projects, writings, and interactive Dev Quiz.",
@@ -21,15 +23,23 @@ export const defaultMetadata = {
   openGraph: {
     title: "Emanuele Sgroi | Full-Stack Developer, React & Next.js Expert",
     description:
-      "Explore Emanuele Sgroi’s portfolio, featuring projects in web and mobile development. Learn from writings, Dev Quiz, and AI-powered ManuPilot.",
-    url: "https://somedomain.com",
+      "Explore my portfolio showcasing my projects, blog posts, and interactive features such as Dev Quiz and ManuPilot AI.",
+    url: my_url,
     type: "website",
     images: [{ url: ogImageUrl }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Emanuele Sgroi | Full-Stack Developer",
+    description:
+      "Explore my portfolio showcasing my projects, blog posts, and interactive features such as Dev Quiz and ManuPilot AI.",
+    images: [ogImageUrl],
   },
 };
 
 export const metadataByPage = {
-  "/welcome": {
+  "/": {
+    // ✅ Homepage should be "/"
     title: "Welcome | Emanuele Sgroi",
     description:
       "Hi, I'm Emanuele Sgroi, a full-stack developer passionate about building web and mobile applications. Explore my projects, writings, and interactive Dev Quiz!",
@@ -87,7 +97,7 @@ export const metadataByPage = {
   },
   "/discussions": {
     title: "Discussions | Engage & Share Insights",
-    description: "Join discussions and say hi. just like on GitHub",
+    description: "Join discussions and say hi, just like on GitHub.",
     keywords: [
       "Developer Discussions",
       "Web Development Forum",
@@ -112,7 +122,7 @@ export const metadataByPage = {
   "/manupilot": {
     title: "ManuPilot AI | GitHub Copilot Clone",
     description:
-      "Meet ManuPilot, an AI-powered assistant dinspired by GitHub Copilot",
+      "Meet ManuPilot, an AI-powered assistant inspired by GitHub Copilot.",
     keywords: [
       "AI Chatbot",
       "Coding Assistant",

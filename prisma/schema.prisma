@@ -4,23 +4,23 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // Database connection string from environment variables
 }
 
 model Comment {
-  id            Int       @id @default(autoincrement())
-  name          String
-  avatar        String?
-  content       String
-  parentId      Int?      // Foreign key
-  createdAt     DateTime  @default(now())
-  reactions     Json      @default("{}") // To store likes and emoji reactions
-  isAuthor      Boolean   @default(false) // True if it's the author comment
-  isTopComment  Boolean   @default(false) // True if it's the top comment
+  id            Int       @id @default(autoincrement()) // Unique identifier
+  name          String // Commenter's name
+  avatar        String? // Avatar URL
+  content       String // Comment text
+  parentId      Int? // ID of the parent comment (for nested replies)
+  createdAt     DateTime  @default(now()) // Timestamp of creation
+  reactions     Json      @default("{}") // Stores likes and emoji reactions
+  isAuthor      Boolean   @default(false) // Indicates if the comment is from the content author
+  isTopComment  Boolean   @default(false) // Marks it as a top comment (The comment at the top of the page written by the Author)
 
-  // Self-referencing relationship
-  parent        Comment?  @relation("ParentChild", fields: [parentId], references: [id])
-  children      Comment[] @relation("ParentChild")
+  // Self-referencing relationship for nested comments
+  parent        Comment?  @relation("ParentChild", fields: [parentId], references: [id]) // Parent comment
+  children      Comment[] @relation("ParentChild") // Replies to this comment
 }
 
 

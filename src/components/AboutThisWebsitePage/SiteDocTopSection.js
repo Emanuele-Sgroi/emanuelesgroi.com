@@ -1,22 +1,10 @@
+// Top part used in the navigation menu on the left side
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { getAssetUrl } from "@/utils/imageUtils";
-import { usePathname } from "next/navigation";
-import { LuClock } from "react-icons/lu";
-import { FaWhatsapp, FaLinkedin, FaFacebook } from "react-icons/fa";
-import { RiTwitterXLine } from "react-icons/ri";
 import { FiArrowLeftCircle } from "react-icons/fi";
-import { IoCode } from "react-icons/io5";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ToastContainer, toast } from "react-toastify";
 
 const SiteDocTopSection = () => {
   const router = useRouter();

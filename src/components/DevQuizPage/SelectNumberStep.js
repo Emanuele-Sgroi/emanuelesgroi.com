@@ -4,6 +4,21 @@ import React, { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 
+/**
+ * SelectNumberStep Component
+ *
+ * Allows users to select the number of questions for each chosen topic.
+ * - Uses sliders to set question count per topic.
+ * - Displays total selected questions.
+ * - Provides navigation buttons to cancel, go back, or proceed.
+ *
+ * Props:
+ * - selectedQuestions: Array of topics with available questions.
+ * - onCancel: Function to cancel quiz setup.
+ * - onNext: Function to proceed with selected question counts.
+ * - onPrevious: Function to go back to the topic selection step.
+ */
+
 const SelectNumberStep = ({
   selectedQuestions,
   onCancel,

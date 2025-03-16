@@ -1,3 +1,7 @@
+// This component provides a right-side panel for the "About This Website" page.
+// It includes a short description, GitHub link, and quick navigation buttons
+// for scrolling to the top and bottom of the page.
+
 "use client";
 
 import React from "react";

@@ -21,6 +21,23 @@ import {
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import ThemeContext from "@/context/ThemeProvider";
 
+/**
+ * QuizStep Component
+ *
+ * This component handles the quiz logic, including:
+ * - Displaying questions with multiple-choice answers.
+ * - Keeping track of elapsed time.
+ * - Preventing accidental navigation.
+ * - Handling user answers and providing explanations.
+ * - Managing navigation between questions.
+ *
+ * Props:
+ * - questions: Array of questions to be displayed.
+ * - onCancel: Function to cancel the quiz.
+ * - onComplete: Function to complete the quiz and show results.
+ * - shuffleArray: Function to shuffle question options.
+ */
+
 const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);

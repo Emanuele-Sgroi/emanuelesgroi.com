@@ -9,7 +9,6 @@ import {
   Loading,
   ErrorMessage,
 } from "@/components";
-//import { useManuPilotContent } from "@/hooks/useManuPilotContent";
 import { useRouter } from "next/navigation";
 import {
   AlertDialog,
@@ -23,8 +22,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ToastContainer, toast } from "react-toastify";
 
-const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB file limits
 
+// Allowed file extensions for attachment uploads
 const allowedExtensions = [
   ".txt",
   ".csv",
@@ -120,12 +120,15 @@ const allowedExtensions = [
   ".adoc",
 ];
 
+/**
+ * ManuPilot AI Page
+ * - Handles AI-powered conversation
+ * - Supports file uploads & chat streaming
+ */
 const ManuPilotPage = ({ manuPilotContent, isError }) => {
-  //const [showNavigationWarning, setShowNavigationWarning] = useState(false);
-  //const [pendingUrl, setPendingUrl] = useState(null);
   const router = useRouter();
   const originalPushRef = useRef(router.push);
-  const [conversation, setConversation] = useState([]); // Store messages
+  const [conversation, setConversation] = useState([]);
   const [isThinking, setIsThinking] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -135,12 +138,11 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
   const [dragCounter, setDragCounter] = useState(0);
   const [abortController, setAbortController] = useState(null);
 
-  // handle tab close or route changes
+  // Handle navigation protection (prevents losing chat on page change)
   const { showNavigationWarning, setShowNavigationWarning, pendingUrl } =
     useNavigationProtection(conversation, router, originalPushRef);
 
-  // ----- DRAG & DROP LOGIC -----
-
+  // ---------------- DRAG & DROP LOGIC ----------------
   useEffect(() => {
     if (typeof window === "undefined") return;
     function handleDragEnter(e) {
@@ -210,15 +212,17 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
     };
   }, []);
 
+  // retunr Loading or error based on the CMS content
   if (!manuPilotContent) {
     return <Loading />;
   }
-
   if (isError) {
     return <ErrorMessage />;
   }
 
-  // handleSendMessage takes an object
+  /**
+   * Handles user messages & AI responses
+   */
   const handleSendMessage = async (newMessage) => {
     if (!newMessage) return;
     const { text, file } = newMessage;
@@ -230,9 +234,8 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
     const newAbortController = new AbortController();
     setAbortController(newAbortController);
 
-    // Add the user's new message to conversation state
+    // Add the usermessage to chat
     setConversation((prev) => [...prev, { role: "user", text, file }]);
-
     setIsThinking(true);
     setLoading(true);
     setError(null);
@@ -257,7 +260,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       });
 
       if (!response.ok) {
-        // If server responded with 4xx or 5xx
+        // handle error
         const errText = await response.text().catch(() => "");
         console.error("Error response text:", errText);
         setError({
@@ -274,14 +277,13 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         // -------------------------
         // STREAMING RESPONSE LOGIC
         // -------------------------
-        // The server is returning raw text in chunks (because we used stream: true)
+        // The server is returning raw text in chunks (because "stream: true" in api)
         if (!response.body) {
           throw new Error("ReadableStream not supported in this environment.");
         }
 
         // Stop showing "thinking message"
         setIsThinking(false);
-
         // Create an 'assistant' message with empty content
         setConversation((prev) => [
           ...prev,
@@ -300,7 +302,6 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
           if (value) {
             // Decode the current chunk into a string
             const chunkValue = decoder.decode(value, { stream: true });
-
             // Append this chunk to the last message in conversation
             setConversation((prev) => {
               // The last message should be the assistant's
@@ -337,6 +338,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
           });
           return;
         }
+
         // Otherwise, we assume data is the summarized assistant message
         // e.g. { role: "assistant", content: "some summary" }
         setConversation((prev) => [
@@ -344,20 +346,6 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
           { role: "assistant", content: data.content || "" },
         ]);
       }
-
-      // const data = await response.json();
-      // if (response.ok) {
-      //   setConversation((prev) => [
-      //     ...prev,
-      //     { role: "assistant", content: data.content },
-      //   ]);
-      // } else {
-      //   console.error("Error:", data.error);
-      //   setError({
-      //     type: "chat",
-      //     message: "There was an error generating a response.",
-      //   });
-      // }
     } catch (error) {
       setIsThinking(false);
       console.error("API error:", error);
@@ -432,7 +420,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
 };
 
 /**
- * A small hook to handle the "are you sure you want to leave" warning
+ * A small hook to handle the "are you sure you want to leave?" warning
  */
 function useNavigationProtection(conversation, router, originalPushRef) {
   const [showNavigationWarning, setShowNavigationWarning] = useState(false);

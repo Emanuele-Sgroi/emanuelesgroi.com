@@ -8,22 +8,39 @@ import AttachFileOverlay from "@/components/ManuPilotPage/AttachFileOverlay";
 import { useManuPilotContent } from "@/hooks/useManuPilotContent";
 import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
+/**
+ * ChatWidget Component
+ *
+ * This component handles:
+ * - Displaying the chat UI
+ * - Managing active chat states
+ * - Handling file drag & drop functionality
+ * - Switching between general and project-specific chats
+ */
+
 export default function ChatWidget() {
-  const { isOpen, closeChat, messages, setMessages } = useChat();
+  const { isOpen, closeChat } = useChat();
   const { portfolioContent, isPortfolioLoading, isPortfolioError } =
     usePortfolioContent();
   const { isManuPilotError, isManuPilotLoading, manuPilotContent } =
     useManuPilotContent();
   const pathname = usePathname();
   const isManuPilot = pathname === "/manupilot";
+
+  // State management
   const [activeChat, setActiveChat] = useState(null); // null | 'general' | { projectName: 'example', questions: [aiQuestions] }
   const [error, setError] = useState(null);
-  const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
+  const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB file size limit
+
+  // Drag and drop states
   const [isDraggingFile, setIsDraggingFile] = useState(false);
   const [droppedFile, setDroppedFile] = useState(null);
   const [dragCounter, setDragCounter] = useState(0);
   const [userSetGeneralChat, setUserSetGeneralChat] = useState(false);
 
+  /**
+   * Effect to determine if chat should be focused on a project based on URL
+   */
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!portfolioContent?.projects || userSetGeneralChat) return;
@@ -180,7 +197,7 @@ export default function ChatWidget() {
           switchToGeneralChat={switchToGeneralChat}
         />
       </div>
-      {/* for drag and drop */}
+      {/* Drag & Drop Overlay */}
       <AttachFileOverlay isDraggingFile={isDraggingFile} />
     </>
   );
