@@ -5,8 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { IoLogoGithub } from "react-icons/io";
-import { IoStar, IoStarOutline } from "react-icons/io5";
 import { ImEye } from "react-icons/im";
+
+/**
+ * GridLayout Component
+ *
+ * Displays portfolio projects in a grid layout.
+ * - Filters projects based on the selected technology tag.
+ * - Uses `ProjectCard` to render individual project details.
+ *
+ * Props:
+ * - portfolio: Object containing portfolio projects.
+ * - selectedTag: String representing the selected technology filter.
+ */
 
 const GridLayout = ({ portfolio, selectedTag }) => {
   // Access the referenced projects
@@ -55,6 +66,25 @@ const GridLayout = ({ portfolio, selectedTag }) => {
 
 export default GridLayout;
 
+/**
+ * ProjectCard Component
+ *
+ * Represents an individual portfolio project.
+ * - Displays project title, description, and main language.
+ * - Includes a project image with a hover effect.
+ * - Provides links to the live demo and source code (if available).
+ *
+ * Props:
+ * - projectTitle: String, title of the project.
+ * - projectSlug: String, unique identifier for project URL.
+ * - smallDescription: String, short description of the project.
+ * - mainLanguage: String, primary language used in the project.
+ * - mainLanguageColor: String, color associated with the main language.
+ * - demoLink: String, URL for the project demo.
+ * - codeLink: String, URL for the source code repository.
+ * - mainImage: Object, contains image data for the project.
+ */
+
 const ProjectCard = ({
   projectTitle,
   projectSlug,
@@ -66,15 +96,6 @@ const ProjectCard = ({
   mainImage,
   key,
 }) => {
-  const [approvedProjects, setApprovedProjects] = useState({});
-
-  const toggleApproval = (index) => {
-    setApprovedProjects((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
-
   return (
     <div
       key={key}
@@ -112,21 +133,6 @@ const ProjectCard = ({
           {/* Small Description */}
           <p className="text-text-secondary mb-2 sm:mb-3">{smallDescription}</p>
         </div>
-
-        {/* Approve button */}
-        {/* <div className="max-md:hidden w-full flex justify-end items-center mt-4">
-          <button
-            onClick={() => toggleApproval(key)}
-            className="text-xs font-semibold center gap-2 px-3 py-1 border border-accent-border bg-bg-button hover:bg-bg-hover2 rounded-md"
-          >
-            {approvedProjects[key] ? (
-              <IoStar size={16} className="text-[#E3B341]" />
-            ) : (
-              <IoStarOutline size={16} className="text-accent-icon" />
-            )}
-            {approvedProjects[key] ? "Approved" : "Approve"}
-          </button>
-        </div> */}
       </div>
 
       {/* Language and links */}

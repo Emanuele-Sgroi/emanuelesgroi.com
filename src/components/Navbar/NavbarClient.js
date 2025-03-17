@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import ThemeContext from "@/context/ThemeProvider";
 import Link from "next/link";
 import { RiHomeSmileLine } from "react-icons/ri";
 import { GoCodeSquare, GoCommentDiscussion } from "react-icons/go";
 import { FaRegBookmark } from "react-icons/fa6";
 import { GrContact } from "react-icons/gr";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { TbSchool } from "react-icons/tb";
-import { BsVectorPen } from "react-icons/bs";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { LuBrain } from "react-icons/lu";
 import { usePathname } from "next/navigation";
@@ -27,6 +24,22 @@ import {
 } from "@/components";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+/**
+ * NavbarClient Component
+ *
+ * The client-side navigation bar for the website.
+ * - Displays links to different sections, including Portfolio, Writings, Dev Quiz, Discussions, and Contact.
+ * - Supports both desktop and mobile navigation.
+ * - Integrates a search bar, theme toggle, and ManuPilot link.
+ * - Uses CMS content for dynamic navigation options.
+ *
+ * Props:
+ * - generalInfoContent: Object containing general site info from CMS.
+ * - portfolioContent: Object containing portfolio-related content from CMS.
+ * - writingsContent: Object containing writings-related content from CMS.
+ * - error: Boolean indicating if there's an error fetching content.
+ */
+
 const NavbarClient = ({
   generalInfoContent,
   portfolioContent,
@@ -37,38 +50,11 @@ const NavbarClient = ({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
   const isManuPilotPage = pathname === "/manupilot";
   const isBlogPost = pathname.startsWith("/writings/");
   const isProjectDetails = pathname.startsWith("/portfolio/");
   const isSiteDoc = pathname === "/about-this-website";
   const isMobile = useIsMobile();
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
-
-  const handleMouseEnter = () => {
-    if (!isMobile) {
-      setOpen(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!isMobile) {
-      setOpen(false);
-    }
-  };
 
   const getLinkClassDiv = (path) => {
     return pathname === path
@@ -186,63 +172,6 @@ const NavbarClient = ({
               />
             </div>
 
-            {/* <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="max-[430px]:hidden relative center outline-none"
-                aria-haspopup="menu"
-                aria-expanded={open}
-              >
-                <div className="flex justify-center items-center cursor-pointer gap-1 text-text-primary text-sm hover-box">
-                  <FaRegBookmark size={18} className="text-accent-icon" />
-                  Writings
-                  <IoMdArrowDropdown size={18} className="text-text-primary" />
-                </div>
-                <div
-                  className={getLinkClassDiv("/writings/blog")}
-                  style={{ width: `calc(100% + 10px)` }}
-                />
-                <div
-                  className={getLinkClassDiv("/writings/academic")}
-                  style={{ width: `calc(100% + 10px)` }}
-                />
-              </PopoverTrigger>
-              <PopoverContent
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="max-[430px]:hidden w-[150px] p-2 bg-bg-button border-accent-border mt-[-4px]"
-                role="menu"
-              >
-                <ul className="w-full">
-                  <li role="menuitem" className="w-full mb-1">
-                    <Link
-                      href="/writings/blog"
-                      className={`w-full flex items-center gap-2 hover-box text-text-primary ${getLinkClassText(
-                        "/writings/blog"
-                      )}`}
-                      onClick={() => setOpen(false)}
-                    >
-                      <BsVectorPen size={18} className="text-accent-icon " />
-                      Blog
-                    </Link>
-                  </li>
-                  <li role="menuitem" className="w-full">
-                    <Link
-                      href="/writings/academic"
-                      className={`w-full flex items-center gap-2 hover-box text-text-primary ${getLinkClassText(
-                        "/writings/academic"
-                      )}`}
-                      onClick={() => setOpen(false)}
-                    >
-                      <TbSchool size={18} className="text-accent-icon " />
-                      Academic
-                    </Link>
-                  </li>
-                </ul>
-              </PopoverContent>
-            </Popover> */}
-
             {/* Dev Quiz */}
             <div className="max-[530px]:hidden relative center">
               <Link
@@ -353,47 +282,6 @@ const NavbarClient = ({
                   </Link>
                   <div className={getLinkClassDivMobile("/writings")} />
                 </li>
-
-                {/* <li className="min-[431px]:hidden center gap-1 text-text-secondary text-sm">
-                  <FaRegBookmark size={18} className="text-accent-icon " />
-                  Writings
-                  <IoMdArrowDropdown size={18} className="text-text-primary" />
-                </li> */}
-                {/* Writings - sublinks */}
-                {/* <li className="min-[431px]:hidden">
-                  <ul className="w-full flex flex-col gap-2 ml-4 mt-[-5px]">
-                    <li className="w-full flex justify-start items-center gap-2">
-                      <Link
-                        href="/writings/blog"
-                        className={`flex items-center gap-2 text-text-primary ${getLinkClassText(
-                          "/writings/blog"
-                        )}`}
-                        onClick={() => setOpenSideMenu(false)}
-                      >
-                        <BsVectorPen size={18} className="text-accent-icon" />
-                        Blog
-                      </Link>
-                      <div
-                        className={getLinkClassDivMobile("/writings/blog")}
-                      />
-                    </li>
-                    <li className="w-full flex justify-start items-center gap-2">
-                      <Link
-                        href="/writings/academic"
-                        className={`flex items-center gap-2 text-text-primary ${getLinkClassText(
-                          "/writings/academic"
-                        )}`}
-                        onClick={() => setOpenSideMenu(false)}
-                      >
-                        <TbSchool size={18} className="text-accent-icon" />
-                        Academic
-                      </Link>
-                      <div
-                        className={getLinkClassDivMobile("/writings/academic")}
-                      />
-                    </li>
-                  </ul>
-                </li> */}
 
                 {/* Dev Quiz */}
                 <li className="relative center min-[531px]:hidden gap-2">

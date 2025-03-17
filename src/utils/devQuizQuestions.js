@@ -1,3 +1,29 @@
+/**
+ * This File Contains the questions used in Dev Quiz.
+ * This file contains question sets for various technical topics, categorized into arrays of objects.
+ * Each object in the arrays represents a question and its related details for a specific topic.
+ *
+ * Each question object has the following structure:
+ * - `id`: A unique identifier for the question.
+ * - `topic`: The subject or category of the question (e.g., React, JavaScript, Node.js).
+ * - `question`: The text of the question being asked.
+ * - `language`: (Optional) A string indicating the programming language for the code-related question.
+ * - `code`: (Optional) A boolean value indicating if the question involves code.
+ * - `options`: An array of possible answers, each with a `text` property and an optional `code` property.
+ * - `answer`: The correct answer for the question.
+ * - `explanation`: An explanation of why the answer is correct, with optional code.
+ *
+ * The question sets cover various topics including:
+ * - Core Concepts (e.g., Polymorphism in OOP)
+ * - React (e.g., useEffect hook)
+ * - Next.js (e.g., getServerSideProps)
+ * - JavaScript (e.g., Function Hoisting)
+ * - Node.js (e.g., fs module)
+ * - React Native (e.g., Cross-platform mobile apps)
+ * - API (e.g., HTTP status codes)
+ *
+ */
+
 // CORE CONCEPTS
 export const coreConceptsQuestions = [
   {

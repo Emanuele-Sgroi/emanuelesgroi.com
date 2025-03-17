@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 
+// Avatars gallery --> I picked them randomly
 const avatars = [
   {
     name: "a",
@@ -201,6 +202,11 @@ const avatars = [
   },
 ];
 
+/**
+ * DiscussionSideBar Component
+ *
+ * Displays discussion category, labels, avatar gallery, and an engagement prompt.
+ */
 const DiscussionSideBar = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-4">

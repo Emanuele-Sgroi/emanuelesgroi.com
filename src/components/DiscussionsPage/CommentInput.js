@@ -9,8 +9,10 @@ import { FiItalic } from "react-icons/fi";
 import { IoIosLink } from "react-icons/io";
 import { CodeBlock, ProfileAvatarSelector } from "@/components";
 
+// Base URL for Dicebar API for custom avatars
 const DICEBEAR_BASE_URL = "https://api.dicebear.com/9.x";
 
+// Custom Markdown components for rendering formatted content
 const customComponents = {
   blockquote: ({ children }) => (
     <blockquote className="border-l-4 border-text-primary pl-3 opacity-40 italic mb-2">
@@ -35,7 +37,6 @@ const customComponents = {
   ),
   li: ({ children }) => <li className="mb-1">{children}</li>,
   code: ({ inline, className, children }) => {
-    //const language = /language-(\w+)/.exec(className || "")?.[1] || "plaintext";
     return !inline ? (
       <CodeBlock code={String(children).trim()} lang="javascript" />
     ) : (
@@ -46,6 +47,19 @@ const customComponents = {
   },
 };
 
+/**
+ * CommentInput Component
+ *
+ * Provides a text input area for writing comments and replies, supporting Markdown formatting.
+ *
+ * Props:
+ * - placeholder: Placeholder text for input field
+ * - onSubmit: Function to handle comment submission
+ * - showToggle: Whether to show/hide the input initially
+ * - isReply: Boolean indicating if the input is for a reply
+ * - parentId: ID of the parent comment (for replies)
+ */
+
 const CommentInput = ({
   placeholder,
   onSubmit,
@@ -53,22 +67,31 @@ const CommentInput = ({
   isReply = false,
   parentId,
 }) => {
-  const [inputVisible, setInputVisible] = useState(!showToggle); // Default to visible for normal comments
+  // State for managing input visibility
+  const [inputVisible, setInputVisible] = useState(!showToggle);
+  // State for storing user input
   const [inputValue, setInputValue] = useState("");
+  // State for storing user name
   const [name, setName] = useState("");
-  const [avatarType, setAvatarType] = useState("adventurer"); // State for avatar type
-  const [activeTab, setActiveTab] = useState("write"); // "write" or "preview"
+  // State for selecting avatar type
+  const [avatarType, setAvatarType] = useState("adventurer");
+  // State for active tab: "write" or "preview"
+  const [activeTab, setActiveTab] = useState("write");
 
+  // Handles input change
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  // Handles comment submission
   const handleSubmit = () => {
     if (!name.trim() || !inputValue.trim()) {
       alert("Name and content cannot be empty.");
       return;
     }
     setInputVisible(!showToggle);
+
+    // Generate avatar URL using Dicebear API
     const avatar = `${DICEBEAR_BASE_URL}/${avatarType}/svg?seed=${encodeURIComponent(
       name
     )}`;
@@ -79,9 +102,13 @@ const CommentInput = ({
       parentId,
     });
 
-    setInputValue("");
+    setInputValue(""); // Reset input field
   };
 
+  /**
+   * Inserts predefined Markdown syntax into the input field
+   * based on the selected formatting option
+   */
   const addMarkdown = (symbol) => {
     const cursorPosition = inputValue.length;
     let markdownSnippet = "";
@@ -120,6 +147,9 @@ const CommentInput = ({
     );
   };
 
+  /**
+   * Handles Enter key behavior for list continuation
+   */
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault(); // Prevent default newline behavior
@@ -129,14 +159,14 @@ const CommentInput = ({
 
       let newLinePrefix = "";
 
-      // Handle ordered lists
+      // Ordered list continuation
       const orderedMatch = currentLine.match(/^(\d+)\.\s/);
       if (orderedMatch) {
         const nextNumber = parseInt(orderedMatch[1], 10) + 1;
         newLinePrefix = `${nextNumber}. `;
       }
 
-      // Handle unordered lists
+      // Unordered list continuation
       const unorderedMatch = currentLine.match(/^-\s/);
       if (unorderedMatch) {
         newLinePrefix = "- ";
@@ -158,6 +188,7 @@ const CommentInput = ({
         </button>
       ) : (
         <div className="flex flex-col gap-4 ">
+          {/* Avatar and Name Selector */}
           <ProfileAvatarSelector
             name={name}
             setName={setName}
@@ -312,9 +343,6 @@ const CommentInput = ({
                 </div>
               ) : (
                 <div className="w-full py-2 text-sm bg-bg-primary text-text-primary">
-                  {/* <ReactMarkdown>
-                      {inputValue || "Nothing to preview"}
-                    </ReactMarkdown> */}
                   <ReactMarkdown components={customComponents}>
                     {inputValue || "Nothing to preview"}
                   </ReactMarkdown>

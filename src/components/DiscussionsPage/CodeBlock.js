@@ -8,6 +8,12 @@ import {
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import ThemeContext from "@/context/ThemeProvider";
 
+/**
+ * CodeBlock Component
+ *
+ * This component is needed for the creation of code blocks in the discussions page
+ */
+
 const CodeBlock = ({ code, lang }) => {
   const { theme } = useContext(ThemeContext);
   return (

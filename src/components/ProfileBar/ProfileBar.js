@@ -19,9 +19,18 @@ import { images } from "@/utils/imageImport";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+/**
+ * ProfileBar Component
+ *
+ * Displays the author's profile information, including:
+ * - Profile picture, name, job title, and status emoji.
+ * - Contact details (email, GitHub, LinkedIn, etc.).
+ * - Links to social media and downloadable resume.
+ * - ManuPilot badge with a link to open ManuPilot AI.
+ */
+
 const ProfileBar = ({ generalInfo }) => {
   const [showCopy, setShowCopy] = useState(false);
-  //const [isMobile, setIsMobile] = useState(false);
   const isMobile = useIsMobile();
   const [showManuPilotBadge, setShowManuPilotBadge] = useState(true);
 
@@ -45,20 +54,6 @@ const ProfileBar = ({ generalInfo }) => {
   const profilePirctureUrl = generalInfo?.profilePicture
     ? getAssetUrl(generalInfo.profilePicture)
     : "";
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

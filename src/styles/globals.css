@@ -1,10 +1,30 @@
+/* globals.css
+
+This file contains all global styles written in pure CSS. It includes foundational styles for HTML elements like h1, h2, etc., as well as utility classes. 
+Additionally, it defines font declarations, color variables for both light and dark themes, and various other global styles.
+
+Note: While this file may appear lengthy and potentially overwhelming to some, it is a personal choice driven by my preference for simplicity and efficiency. 
+Since I rely on Tailwind for 95% of my styling, I avoid creating excessive CSS or SCSS files to keep things less complex. 
+Despite using Tailwind predominantly, I still prefer to define custom classes for repetitive styles, animations, or specific media queries that Tailwind doesn’t cover or that requires more code.
+
+Regarding media queries, you will notice several adjustments for element width, height, and layout. These are temporary solutions I implemented to address a visual bug I encountered. 
+After many attempts to resolve the issue, I decided to use a quick and less ideal fix to save time. I plan to revisit and refine these solutions when I have more time.
+
+*/
+
+/* Import font from google fonts */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* Tailwind imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Light mode variables */
+
+/* Define all the necessary CSS variables for light mode styling.
+   This includes background colors, text colors, border colors, and custom styles for elements like buttons, tags, and charts.
+   It also includes font sizes, font families, and layout utilities used throughout the site. */
 :root {
   --bg-primary: #ffffff;
   --bg-secondary: #f6f8fa;
@@ -102,6 +122,11 @@
 }
 
 /* Dark mode variables */
+
+/* Define all the necessary CSS variables for dark mode styling.
+   These variables override the light mode defaults to create a darker, high-contrast theme.
+   Similar to the light mode section, it covers background colors, text colors, borders, and other custom styles for elements like tags and charts.
+   Dark mode also includes specific gradient and scrollbar styles. */
 .dark {
   --bg-primary: #0d1117;
   --bg-secondary: #010409;
@@ -175,8 +200,7 @@
   --scrollbar-active: #a1a1a1;
 }
 
-/* Extra Fonts Families */
-
+/*---------------------------EXTRA FONT FAMILIES------------------------------------------ */
 .monospace-text {
   font-family: var(--fontStack-monospace) !important;
 }
@@ -294,7 +318,7 @@
   font-style: italic;
 }
 
-/* Default global styles */
+/*----------------------------------------------------- GLOBAL STYLES FOR HTML ELEMENTS-----------------------------------------------------------------*/
 
 html {
   box-sizing: border-box;
@@ -311,11 +335,7 @@ html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit; /* Apply box-sizing to all elements */
-}
-
-body:has(.splash-container) {
-  overflow: hidden;
+  box-sizing: inherit;
 }
 
 body {
@@ -328,13 +348,6 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* transition: background-color 0.1s ease-in-out; */
-}
-
-section,
-div,
-nav {
-  /* transition: background-color 0.2s ease, color 0.2s ease; */
 }
 
 nav {
@@ -394,15 +407,20 @@ a {
   text-underline-offset: 1px;
 }
 
-/* Flex styles */
+blockquote {
+  color: #6b7280;
+}
 
+/*-----------------------------------------------------UTILITY CLASSES------------------------------------------------------ */
+
+/* Flex center */
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Div styles */
+/* Div styles used across pages */
 
 .with-profile-bar {
   display: flex;
@@ -463,6 +481,7 @@ a {
   background-color: var(--bg-hover);
 }
 
+/* Responsive touch to some classes above */
 @media (max-width: 767px) {
   body {
     background: var(--bg-mobile-body);
@@ -492,6 +511,7 @@ a {
   }
 }
 
+/* -----------------STYLES FOR MANUPILOT PAGE AND QUICK CHAT--------------------- */
 .manupilot-main-container {
   width: 100%;
   height: calc(100svh - 63px); /* counting the navbar height */
@@ -504,7 +524,16 @@ a {
 /* Let the Body expand + shrink to show its scrollbar */
 .manupilot-main-container > *:nth-child(2) {
   flex: 1 1 0;
-  min-height: 0; /* critical so content can shrink below its size */
+  min-height: 0;
+}
+
+.manupilot-shimmer {
+  background: linear-gradient(to right, #007bff 0%, #f850a4 50%, #007bff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6.5s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -519,20 +548,39 @@ a {
   }
 }
 
-.manupilot-shimmer {
-  /* A triple color gradient for stronger contrast */
-  background: linear-gradient(to right, #007bff 0%, #f850a4 50%, #007bff 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent; /* hides the real text, showing gradient only */
+/* ManuPilot */
 
-  /* Slower, with ease-in-out to emphasize the wave */
-  animation: shimmer 6.5s ease-in-out infinite;
+.manupilot-background-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--other-chart-green2),
+    var(--other-chart-green3),
+    var(--other-chart-green2),
+    var(--other-chart-green3),
+    var(--other-chart-blue2),
+    var(--other-chart-blue3),
+    var(--other-chart-purple2),
+    var(--other-chart-orange3),
+    var(--other-chart-red2),
+    var(--other-chart-yellow3)
+  );
+  background-size: 600% 600%;
+  animation: gradient-rotate 6s ease infinite;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* ManuPilot chat */
-
 .chat-starting-animation {
   opacity: 0;
   transform: translateY(-100%);
@@ -550,7 +598,72 @@ a {
   }
 }
 
-/* Buttons styles */
+/* ManuPilot Chat floater */
+
+.animate-fade-in-floater {
+  animation: fade-in-floater 1.9s cubic-bezier(0.25, 0.5, 0.5, 1) forwards;
+}
+
+@keyframes fade-in-floater {
+  0% {
+    opacity: 1;
+    transform: translateX(100px) translateY(0) rotateY(0);
+  }
+  20% {
+    transform: translateX(-20px) translateY(0) rotateY(0);
+  }
+  30% {
+    transform: translateX(-30px) translateY(-20px) rotateY(0);
+  }
+  70% {
+    transform: translateX(0px) translateY(-20px) rotate(360deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+.epic-bounce {
+  animation: epic-bounce 1.2s cubic-bezier(0.33, 1.4, 0.68, 1) forwards;
+}
+
+@keyframes epic-bounce {
+  0% {
+    transform: translateX(0) translateY(0) scaleX(1) rotate(0);
+  }
+  10% {
+    transform: translateX(0) translateY(0) scaleX(1.2) scaleY(0.8) rotate(0);
+  }
+  20% {
+    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(0);
+  }
+  50% {
+    transform: translateX(0) translateY(-50px) scaleX(1) scaleY(1) rotate(0);
+  }
+  80% {
+    transform: translateX(0) translateY(-50px) scaleX(1) scaleY(1)
+      rotate(360deg);
+  }
+  90% {
+    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(360deg);
+  }
+  95% {
+    transform: translateX(0) translateY(0) scaleX(1.2) scaleY(0.8)
+      rotate(360deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .epic-bounce {
+    animation-play-state: paused;
+  }
+}
+
+/* -----------------BUTTONS--------------------- */
 
 .btn-primary {
   background-color: var(--accent-extra);
@@ -626,7 +739,7 @@ a {
   background-color: #388bfd33;
 }
 
-/* tags styles */
+/* -----------------TAGS--------------------- */
 .tag-primary {
   display: inline-block;
   padding: 0px 7px;
@@ -647,71 +760,10 @@ a {
   color: var(--tag-hover-text);
 }
 
-/* Splash styles */
-
-/* Splash container */
-.splash-container {
-  background-color: #0d1117;
-  opacity: 1;
-  animation-name: end-splash;
-  animation-duration: 0.6s;
-  animation-fill-mode: forwards;
-  animation-delay: 2.4s;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999999;
-}
-
-/* keyframe for ending the splash smoothly */
-@keyframes end-splash {
-  to {
-    opacity: 0;
-  }
-}
-
-/* Splash text styles */
-.splash-text {
-  color: #f0f6fc;
-  margin: 0 auto;
-}
-
-.splash-text span {
-  opacity: 0;
-  animation: appear 1.5s forwards;
-}
-
-/* Keyframes for appearance */
-@keyframes appear {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Adding delay to each span */
-.splash-text span:nth-child(1) {
-  animation-delay: 0.4s;
-}
-.splash-text span:nth-child(2) {
-  animation-delay: 0.6s;
-}
-.splash-text span:nth-child(3) {
-  animation-delay: 0.8s;
-}
-.splash-text span:nth-child(4) {
-  animation-delay: 1s;
-}
-.splash-text span:nth-child(5) {
-  animation-delay: 1.2s;
-}
-
-/* Contribution chart styles */
+/* -----------------CONTRIBUTION CHART--------------------- */
 
 .months-row {
   display: grid;
-  /* grid-template-columns: repeat(12, 1fr); */
   grid-template-columns: repeat(12, minmax(40px, 1fr));
   text-align: center;
   font-size: 12px;
@@ -723,7 +775,6 @@ a {
 
 .weekdays-column {
   display: grid;
-  /* grid-template-rows: repeat(3, 1fr); */
   grid-template-rows: repeat(3, minmax(14px, 1fr));
   font-size: 12px;
   margin-right: 10px;
@@ -748,7 +799,7 @@ a {
   border-radius: 2px;
 }
 
-/* GreetingPopup styles */
+/* -----------------GREETING POPUP--------------------- */
 
 .gp-overlay {
   width: 100%;
@@ -819,7 +870,7 @@ a {
   }
 }
 
-/* Other */
+/* -----------------SCROLL BARS--------------------- */
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
 .hide-scrollbar::-webkit-scrollbar {
@@ -916,161 +967,8 @@ html::-webkit-scrollbar-thumb:active {
   background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23808080'><polygon points='0,0 100,0 50,50'/></svg>");
 }
 
-/* ManuPilot */
-
-.manupilot-background-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--other-chart-green2),
-    var(--other-chart-green3),
-    var(--other-chart-green2),
-    var(--other-chart-green3),
-    var(--other-chart-blue2),
-    var(--other-chart-blue3),
-    var(--other-chart-purple2),
-    var(--other-chart-orange3),
-    var(--other-chart-red2),
-    var(--other-chart-yellow3)
-  );
-  background-size: 600% 600%;
-  animation: gradient-rotate 6s ease infinite;
-}
-
-@keyframes gradient-rotate {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Tailwind */
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-@layer base {
-  body {
-    @apply font-sans;
-  }
-  :root {
-    --radius: 0.5rem;
-  }
-}
-
-/* Temporary */
-
-.temp-width {
-  /* width: clamp(70%, 60vw, 100%); */
-  width: 100%;
-}
-
-@media (max-width: 1210px) {
-  .temp-width {
-    width: 705px;
-  }
-}
-
-@media (max-width: 1185px) {
-  .temp-width {
-    width: 671px;
-  }
-}
-
-@media (max-width: 1155px) {
-  .temp-width {
-    width: 641px;
-  }
-}
-
-@media (max-width: 1116px) {
-  .temp-width {
-    width: 602px;
-  }
-}
-
-@media (max-width: 1076px) {
-  .temp-width {
-    width: 562px;
-  }
-}
-
-@media (max-width: 1042px) {
-  .temp-width {
-    width: 528px;
-  }
-}
-
-@media (max-width: 960px) {
-  .temp-width {
-    width: 486px;
-  }
-}
-
-@media (max-width: 918px) {
-  .temp-width {
-    width: 444px;
-  }
-}
-
-@media (max-width: 885px) {
-  .temp-width {
-    width: 410px;
-  }
-}
-
-@media (max-width: 850px) {
-  .temp-width {
-    width: 374px;
-  }
-}
-
-@media (max-width: 806px) {
-  .temp-width {
-    width: 332px;
-  }
-}
-
-@media (max-width: 767px) {
-  .temp-width {
-    width: 100%;
-  }
-}
-
-/* special styles for height responsiveness, when user rotate the phone */
-
-.rh-flex-col {
-  flex-direction: column;
-}
-
-.rh-p-loading {
-  padding: 80px 16px;
-}
-
-@media (max-height: 500px) {
-  .rh-flex-col {
-    flex-direction: row;
-  }
-  .rh-p-loading {
-    padding: 46px 12px;
-  }
-}
-
-blockquote {
-  color: #6b7280;
-}
-
-/* Writings */
-
+/* -----------------STYLES FOR WRITING PAGE--------------------- */
 .writings-header-gradient {
-  /* Adjust the colors/percents to your preference */
   background: linear-gradient(
     to right,
     var(--gradient-wr-indigo) 0%,
@@ -1084,7 +982,6 @@ blockquote {
 
 @media (max-width: 1024px) {
   .writings-header-gradient {
-    /* Adjust the colors/percents to your preference */
     background: linear-gradient(
       to right,
       var(--gradient-wr-indigo) 0%,
@@ -1189,7 +1086,7 @@ blockquote {
   --_p: 100%;
 }
 
-/* Blog post */
+/* -----------------STYLES FOR BLOG POST--------------------- */
 
 .blog-header-gradient {
   position: absolute;
@@ -1207,66 +1104,101 @@ blockquote {
   );
 }
 
-.animate-fade-in-floater {
-  animation: fade-in-floater 1.9s cubic-bezier(0.25, 0.5, 0.5, 1) forwards;
-}
+/* ------------------------------ STYLES IMPORTED AUTOMATICALLY BY TAILWIND --------------------------------------------*/
 
-@keyframes fade-in-floater {
-  0% {
-    opacity: 1;
-    transform: translateX(100px) translateY(0) rotateY(0);
-  }
-  20% {
-    transform: translateX(-20px) translateY(0) rotateY(0);
-  }
-  30% {
-    transform: translateX(-30px) translateY(-20px) rotateY(0);
-  }
-  70% {
-    transform: translateX(0px) translateY(-20px) rotate(360deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) rotateY(0);
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-.epic-bounce {
-  animation: epic-bounce 1.2s cubic-bezier(0.33, 1.4, 0.68, 1) forwards;
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  :root {
+    --radius: 0.5rem;
+  }
 }
 
-@keyframes epic-bounce {
-  0% {
-    transform: translateX(0) translateY(0) scaleX(1) rotate(0);
+/* -------------------------------------------------------TEMPORARY CLASSES-------------------------------------------------------*/
+
+/* The styles below were implemented as temporary fixes to address visual bugs, as mentioned at the top of this file.
+   These classes will be reviewed and removed once the underlying issues are resolved. */
+
+.temp-width {
+  width: 100%;
+}
+
+@media (max-width: 1210px) {
+  .temp-width {
+    width: 705px;
   }
-  10% {
-    transform: translateX(0) translateY(0) scaleX(1.2) scaleY(0.8) rotate(0);
+}
+
+@media (max-width: 1185px) {
+  .temp-width {
+    width: 671px;
   }
-  20% {
-    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(0);
+}
+
+@media (max-width: 1155px) {
+  .temp-width {
+    width: 641px;
   }
-  50% {
-    transform: translateX(0) translateY(-50px) scaleX(1) scaleY(1) rotate(0);
+}
+
+@media (max-width: 1116px) {
+  .temp-width {
+    width: 602px;
   }
-  80% {
-    transform: translateX(0) translateY(-50px) scaleX(1) scaleY(1)
-      rotate(360deg);
+}
+
+@media (max-width: 1076px) {
+  .temp-width {
+    width: 562px;
   }
-  90% {
-    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(360deg);
+}
+
+@media (max-width: 1042px) {
+  .temp-width {
+    width: 528px;
   }
-  95% {
-    transform: translateX(0) translateY(0) scaleX(1.2) scaleY(0.8)
-      rotate(360deg);
+}
+
+@media (max-width: 960px) {
+  .temp-width {
+    width: 486px;
   }
-  100% {
-    transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(360deg);
+}
+
+@media (max-width: 918px) {
+  .temp-width {
+    width: 444px;
+  }
+}
+
+@media (max-width: 885px) {
+  .temp-width {
+    width: 410px;
+  }
+}
+
+@media (max-width: 850px) {
+  .temp-width {
+    width: 374px;
+  }
+}
+
+@media (max-width: 806px) {
+  .temp-width {
+    width: 332px;
   }
 }
 
 @media (max-width: 767px) {
-  .epic-bounce {
-    animation-play-state: paused;
+  .temp-width {
+    width: 100%;
   }
 }
 
@@ -2051,5 +1983,24 @@ blockquote {
 @media (max-height: 55px) {
   .temp-h-chat-widget-body {
     max-height: 0px;
+  }
+}
+
+/* special styles for height responsiveness, when user rotate the phone */
+
+.rh-flex-col {
+  flex-direction: column;
+}
+
+.rh-p-loading {
+  padding: 80px 16px;
+}
+
+@media (max-height: 500px) {
+  .rh-flex-col {
+    flex-direction: row;
+  }
+  .rh-p-loading {
+    padding: 46px 12px;
   }
 }

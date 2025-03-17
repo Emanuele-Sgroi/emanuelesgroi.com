@@ -1,3 +1,5 @@
+// Util file that work as an import/export for local images
+
 import boxoctocat from "../../public/images/boxoctocat.png";
 import deckfailcat from "../../public/images/deckfailcat.png";
 import privateinvestocat from "../../public/images/privateinvestocat.jpg";

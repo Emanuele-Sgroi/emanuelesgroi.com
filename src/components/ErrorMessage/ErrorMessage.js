@@ -2,6 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
 
+/**
+ * ErrorMessage Component
+ *
+ * Displays a user-friendly error message along with an image
+ * indicating that something went wrong.
+ * This components is used across multiple pages
+ */
+
 const ErrorMessage = () => {
   return (
     <div className="w-full center rh-flex-col rh-p-loading gap-4">

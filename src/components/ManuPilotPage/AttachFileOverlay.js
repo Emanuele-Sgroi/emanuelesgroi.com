@@ -2,6 +2,17 @@ import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
 
+/**
+ * AttachFileOverlay Component
+ *
+ * Displays an overlay when a file is being dragged over the page.
+ * - Provides a visual cue to indicate file attachment is possible.
+ * - Supports adding text or code files to the chat.
+ *
+ * Props:
+ * - isDraggingFile: Boolean indicating whether a file is being dragged.
+ */
+
 const AttachFileOverlay = ({ isDraggingFile }) => {
   if (isDraggingFile) {
     return (

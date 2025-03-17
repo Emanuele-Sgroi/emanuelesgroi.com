@@ -1,15 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
+import React from "react";
 import Link from "next/link";
 import { IoLogoGithub } from "react-icons/io";
-import { IoStar, IoStarOutline } from "react-icons/io5";
 import { ImEye } from "react-icons/im";
 
-const ListLayout = ({ portfolio, selectedTag }) => {
-  const [approvedProjects, setApprovedProjects] = useState({});
+/**
+ * ListLayout Component
+ *
+ * Displays portfolio projects in a list layout.
+ * - Filters projects based on the selected technology tag.
+ * - Shows project title, description, main language, and links to demo/code (if available).
+ *
+ * Props:
+ * - portfolio: Object containing portfolio projects.
+ * - selectedTag: String representing the selected technology filter.
+ */
 
+const ListLayout = ({ portfolio, selectedTag }) => {
   // Access the referenced projects
   const projectsRef = portfolio?.projects?.map((project) => project.fields);
 
@@ -21,13 +29,6 @@ const ListLayout = ({ portfolio, selectedTag }) => {
         )
       )
     : projectsRef;
-
-  const toggleApproval = (index) => {
-    setApprovedProjects((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
 
   return (
     <div className="w-full center flex-col max-md:bg-bg-mobile-primary max-md:mt-4 max-md:border-t max-md:border-accent-border">
@@ -117,20 +118,6 @@ const ListLayout = ({ portfolio, selectedTag }) => {
                 )}
               </div>
             </div>
-            {/* Right */}
-            {/* <div className="max-md:hidden max-w-[130px] flex-1 flex justify-end items-center">
-              <button
-                onClick={() => toggleApproval(index)}
-                className="text-xs font-semibold center gap-2 px-3 py-1 border border-accent-border bg-bg-button hover:bg-bg-hover2 rounded-md"
-              >
-                {approvedProjects[index] ? (
-                  <IoStar size={16} className="text-[#E3B341]" />
-                ) : (
-                  <IoStarOutline size={16} className="text-accent-icon" />
-                )}
-                {approvedProjects[index] ? "Approved" : "Approve"}
-              </button>
-            </div> */}
           </div>
         );
       })}

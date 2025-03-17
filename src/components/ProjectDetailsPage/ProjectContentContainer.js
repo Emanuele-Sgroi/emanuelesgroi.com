@@ -7,6 +7,24 @@ import { SiKdenlive } from "react-icons/si";
 import { FiBookOpen } from "react-icons/fi";
 import { ProjectReadme, ProjectGallery } from "@/components";
 
+/**
+ * ProjectContentContainer Component
+ *
+ * Manages the main content of a project details page, including:
+ * - Navigation tabs for switching between "Readme" and "Screenshots."
+ * - Links to the project's demo and source code, with fallback messages if unavailable.
+ * - Displays either the project Readme or a gallery of screenshots based on user selection.
+ *
+ * Features:
+ * - Uses state to control active tabs ("Readme" or "Screenshots").
+ * - Provides visual feedback for selected tabs with underlines and font changes.
+ * - Buttons for demo and source code dynamically adjust based on availability.
+ * - Responsive and accessible layout with adaptive UI elements.
+ *
+ * Props:
+ * - project: Object containing project details such as demo link, source code link, and readme content.
+ */
+
 const ProjectContentContainer = ({ project }) => {
   const { demoLink, codeLink, readme } = project;
   const [activeTab, setActiveTab] = useState("readme");

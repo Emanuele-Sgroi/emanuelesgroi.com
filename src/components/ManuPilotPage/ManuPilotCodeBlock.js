@@ -11,6 +11,12 @@ import ThemeContext from "@/context/ThemeProvider";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
 
+/**
+ * ManuPilotCodeBlock Component
+ *
+ * This component is needed for the creation of code blocks returned by the AI
+ */
+
 const ManuPilotCodeBlock = ({ code, lang }) => {
   const { theme } = useContext(ThemeContext);
   const [copied, setCopied] = React.useState(false);

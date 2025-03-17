@@ -10,8 +10,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Base URL for generating avatars using DiceBear API
 const DICEBEAR_BASE_URL = "https://api.dicebear.com/9.x";
 
+// Available avatar styles
 const avatarStyles = [
   { value: "adventurer", label: "Adventurer" },
   { value: "avataaars", label: "Avataaars" },
@@ -25,6 +27,17 @@ const avatarStyles = [
   { value: "personas", label: "Personas" },
 ];
 
+/**
+ * ProfileAvatarSelector Component
+ *
+ * Allows users to input a name and select an avatar style, generating a dynamic avatar preview.
+ *
+ * Props:
+ * - name: The user's input name.
+ * - setName: Function to update the name state.
+ * - avatarType: The currently selected avatar style.
+ * - setAvatarType: Function to update the avatar style state.
+ */
 const ProfileAvatarSelector = ({
   name,
   setName,

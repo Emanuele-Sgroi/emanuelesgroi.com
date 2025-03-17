@@ -5,6 +5,18 @@ import { images } from "@/utils/imageImport";
 import Image from "next/image";
 import { RiFolderInfoLine } from "react-icons/ri";
 
+/**
+ * AboutThisWebsite Component
+ *
+ * Displays an informational section about the website at the bottom of the portfolio page.
+ * - Includes a title and descriptive text about the site.
+ * - Shows an illustration (laptop octocat) for visual appeal.
+ * - Provides a link to the "About This Website" page for more details.
+ *
+ * Props:
+ * - portfolio: Object containing text content for the section.
+ */
+
 const AboutThisWebsite = ({ portfolio }) => {
   const { aboutThisWebsiteTitle, aboutText1, aboutText2, aboutText3 } =
     portfolio;

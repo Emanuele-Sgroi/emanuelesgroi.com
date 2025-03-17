@@ -11,6 +11,33 @@ import {
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
+/**
+ * ProjectReadme Component
+ *
+ * Displays the project's README content, tech stack, and languages used.
+ *
+ * Features:
+ * - **Contentful Rich Text Rendering**: Transforms Contentful's rich text format into React components.
+ * - **Custom Styling for Text**:
+ *   - Supports headings (H1-H6), paragraphs, lists, links, quotes, tables, and embedded assets.
+ *   - Includes custom styling for bold, italic, underline, superscript, subscript, and strikethrough text.
+ * - **Code Block Highlighting**:
+ *   - Uses `react-syntax-highlighter` for syntax highlighting.
+ *   - Defaults to the **Darcula** theme for a dark-mode friendly appearance.
+ * - **Dynamic Tech Stack Display**:
+ *   - Groups technologies by category (e.g., **Frontend**, **Backend**, **Database**, etc.).
+ *   - Displays each tech's logo and a brief description.
+ * - **Languages Section**:
+ *   - Lists all programming languages used in the project.
+ *   - Shows a colour indicator for each language.
+ *
+ * Props:
+ * - `project`: Object containing:
+ *   - `readme`: The project's README content (Contentful rich text format).
+ *   - `techStack`: Array of technologies used in the project, categorized.
+ *   - `languages`: JSON string or array listing the programming languages used.
+ */
+
 const ProjectReadme = ({ project }) => {
   const { readme, techStack, languages } = project;
 

@@ -10,24 +10,22 @@ import {
 } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+/**
+ * ToggleThemeButton Component
+ *
+ * Provides a button for switching between light and dark themes.
+ * - Displays a sun icon for dark mode and a moon icon for light mode.
+ * - Shows a tooltip on hover (desktop only) indicating the current theme.
+ * - Uses a popover for tooltip display.
+ *
+ * Props:
+ * - onClick: Function to toggle the theme.
+ * - theme: String indicating the current theme ("light" or "dark").
+ */
+
 const ToggleThemeButton = ({ onClick, theme }) => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
-  //const [isMobile, setIsMobile] = useState(false);
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

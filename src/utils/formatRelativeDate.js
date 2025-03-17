@@ -1,3 +1,5 @@
+// util function for data formatting, right now used only in the discussion page
+
 export const formatRelativeDate = (dateString) => {
   const now = new Date();
   const givenDate = new Date(dateString);

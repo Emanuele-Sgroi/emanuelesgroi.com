@@ -2,9 +2,37 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
-import { GoDotFill } from "react-icons/go";
+
+/**
+ * Academic Component
+ *
+ * Displays a list of academic papers organized by academic year.
+ * Each academic year has a set of papers that include:
+ * - Title, description, module, and associated image.
+ * - Option to download the paper as a PDF.
+ * - Marking dissertation papers with a crown emoji.
+ *
+ * Features:
+ * - Toggle between academic years (2021-2022, 2022-2023, 2023-2024) using a year selector.
+ * - For each paper, shows an image (if available), title, module, description, and a download link for the PDF.
+ * - Dissertation papers are highlighted with a crown emoji.
+ *
+ * Props:
+ * - writingsContent: Object containing academic content data.
+ *    - academicTitle: The main title of the academic section.
+ *    - academicDescription: A brief description of the academic section.
+ *    - bewareText: A warning or notice related to the content.
+ *    - academicPdf1, academicPdf2, academicPdf3: Arrays containing academic papers for each year.
+ *
+ * State:
+ * - activeYear: The currently selected academic year, with its corresponding papers.
+ *
+ * Each paper:
+ * - Includes a download link for the corresponding PDF.
+ * - Has an image (optional) and a description.
+ * - If it's a dissertation, it is marked with a crown emoji.
+ */
 
 const Academic = ({ writingsContent }) => {
   const {

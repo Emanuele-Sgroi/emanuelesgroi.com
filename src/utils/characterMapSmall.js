@@ -1,3 +1,5 @@
+// Mapping Small characters, used in the contribution chart, in the Welcome Page
+
 const characterMapSmall = {
   A: [
     [0, 1, 0],

@@ -144,6 +144,20 @@ const customComponents = {
   },
 };
 
+/**
+ * ManuPilotBody Component
+ *
+ * Displays the Body for ManuPilot, featuring:
+ * - Initial screen with animated icon and suggested questions
+ * - Chat body with AI and User Bubble covering also the "file attatchment"
+ *
+ * Props:
+ * @param {Array} props.conversation - Array of conversation messages.
+ * @param {boolean} props.loading - Indicates if the AI is processing a response.
+ * @param {Function} props.handleSendMessage - Function to send a message.
+ * @param {boolean} props.isThinking - Indicates if the AI is "thinking".
+ */
+
 const ManuPilotBody = ({
   conversation,
   loading,
@@ -154,18 +168,8 @@ const ManuPilotBody = ({
   const isMobile = useIsMobile();
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
-  //const [isMobile, setIsMobile] = useState(false);
   const [randomIndices, setRandomIndices] = useState([]);
 
-  // Scroll to bottom on new messages or loading
-  // useEffect(() => {
-  //   if (containerRef.current) {
-  //     containerRef.current.scrollTo({
-  //       top: containerRef.current.scrollHeight,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, [conversation, loading]);
   useEffect(() => {
     if (!containerRef.current) return;
     if (!autoScroll) return; // If user has "broken" from bottom, do nothing
@@ -175,34 +179,6 @@ const ManuPilotBody = ({
       behavior: "smooth",
     });
   }, [conversation, loading, autoScroll]);
-
-  // Update scroll state dynamically
-  // useEffect(() => {
-  //   const SCROLL_THRESHOLD = 200;
-
-  //   const handleScroll = () => {
-  //     if (!containerRef.current) return;
-
-  //     const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
-
-  //     // Check if the content is scrollable and user is far enough from the bottom
-  //     const isScrollable = scrollHeight > clientHeight;
-  //     const isNearBottom =
-  //       scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD;
-
-  //     setShowScrollToBottom(isScrollable && !isNearBottom);
-  //   };
-
-  //   handleScroll(); // Initialize state
-  //   const container = containerRef.current;
-  //   container?.addEventListener("scroll", handleScroll);
-  //   window.addEventListener("resize", handleScroll);
-
-  //   return () => {
-  //     container?.removeEventListener("scroll", handleScroll);
-  //     window.removeEventListener("resize", handleScroll);
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -243,16 +219,6 @@ const ManuPilotBody = ({
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (typeof window === "undefined") return;
-  //   function checkSize() {
-  //     setIsMobile(window.innerWidth < 640);
-  //   }
-  //   checkSize(); // run on mount
-  //   window.addEventListener("resize", checkSize);
-  //   return () => window.removeEventListener("resize", checkSize);
-  // }, []);
 
   useEffect(() => {
     // On mount (or whenever isMobile changes), pick 3 random suggestions if on mobile

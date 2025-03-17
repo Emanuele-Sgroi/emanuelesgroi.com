@@ -2,6 +2,25 @@ import React from "react";
 import { images } from "@/utils/imageImport";
 import Image from "next/image";
 
+/**
+ * TopHeaderAnimated Component
+ *
+ * Displays an animated header section for the writings page, featuring:
+ * - A title and subtitle with a smooth layout for both desktop and mobile views.
+ * - Several animated images that move and change their size, including copilot, models, workflow, sparkles, arrows, and donut images.
+ * - A gradient background and blur overlay to enhance the visual appeal.
+ *
+ * Features:
+ * - A set of animated images, with different sizes and positions, that create dynamic motion across the screen.
+ * - Support for both desktop (with a large set of images) and mobile (with specific smaller images) views.
+ * - The component includes an overlay for added depth and focus on the content.
+ * - Uses Next.js's `Image` component for optimal image loading performance and quality.
+ * - Includes specific CSS classes and animations for a lively, interactive design.
+ *
+ * Props:
+ * - writingsContent: Object containing content data such as `topTitle`, `topSubtitle`, and other dynamic text for the header section.
+ */
+
 const TopHeaderAnimated = ({ writingsContent }) => {
   const { topTitle, topSubtitle } = writingsContent;
   return (

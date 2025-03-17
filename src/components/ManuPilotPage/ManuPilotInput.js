@@ -23,23 +23,25 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { allowedExtensions } from "@/utils/allowedExtensions";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-// function useIsMobile(breakpoint = 768) {
-//   const [isMobile, setIsMobile] = useState(false);
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB max file size
 
-//   useEffect(() => {
-//     if (typeof window === "undefined") return;
-//     function checkSize() {
-//       setIsMobile(window.innerWidth < breakpoint);
-//     }
-//     checkSize();
-//     window.addEventListener("resize", checkSize);
-//     return () => window.removeEventListener("resize", checkSize);
-//   }, [breakpoint]);
-
-//   return isMobile;
-// }
-
-const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
+/**
+ * ManuPilotInput Component
+ *
+ * Handles user input for ManuPilot, including:
+ * - A text input area with auto-resize and auto-scroll
+ * - File attachment support for text and code files
+ * - A send button to submit messages
+ * - Keyboard shortcuts for improved usability
+ *
+ * Props:
+ * - loading: Boolean indicating if a message is being sent
+ * - handleSendMessage: Function to send a message
+ * - error: Object representing an error state
+ * - clearError: Function to clear an error
+ * - droppedFile: File object representing a dropped file
+ * - setDroppedFile: Function to update the dropped file state
+ */
 
 const ManuPilotInput = ({
   loading,
@@ -64,100 +66,6 @@ const ManuPilotInput = ({
   const [showBadge, setShowBadge] = useState(false);
   const textAreaRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
-  // const allowedExtensions = [
-  //   ".txt",
-  //   ".csv",
-  //   ".json",
-  //   ".js",
-  //   ".jsx",
-  //   ".ts",
-  //   ".tsx",
-  //   ".html",
-  //   ".css",
-  //   ".scss",
-  //   ".sass",
-  //   ".php",
-  //   ".py",
-  //   ".java",
-  //   ".c",
-  //   ".cpp",
-  //   ".h",
-  //   ".hpp",
-  //   ".cs",
-  //   ".rb",
-  //   ".swift",
-  //   ".kt",
-  //   ".go",
-  //   ".rs",
-  //   ".sh",
-  //   ".bash",
-  //   ".yaml",
-  //   ".yml",
-  //   ".xml",
-  //   ".ini",
-  //   ".md",
-  //   ".sql",
-  //   ".env",
-  //   ".gitignore",
-  //   ".npmrc",
-  //   ".editorconfig",
-  //   ".babelrc",
-  //   ".prettierrc",
-  //   ".eslintrc",
-  //   ".prisma",
-  //   ".db",
-  //   ".dbml",
-  //   ".psql",
-  //   ".pgsql",
-  //   ".mongo",
-  //   ".nosql",
-  //   ".sqlite",
-  //   ".mjs",
-  //   ".vue",
-  //   ".svelte",
-  //   ".angular",
-  //   ".elm",
-  //   ".ejs",
-  //   ".hbs",
-  //   ".njk",
-  //   ".lit",
-  //   ".mjml",
-  //   ".sol",
-  //   ".vyper",
-  //   ".wasm",
-  //   ".ipynb",
-  //   ".r",
-  //   ".dvc",
-  //   ".pkl",
-  //   ".dart",
-  //   ".erl",
-  //   ".ex",
-  //   ".exs",
-  //   ".scala",
-  //   ".clj",
-  //   ".lisp",
-  //   ".ml",
-  //   ".hs",
-  //   ".scheme",
-  //   ".nim",
-  //   ".toml",
-  //   ".makefile",
-  //   ".cmake",
-  //   ".gradle",
-  //   ".dockerfile",
-  //   ".compose",
-  //   ".zshrc",
-  //   ".bashrc",
-  //   ".bash_profile",
-  //   ".profile",
-  //   ".fish",
-  //   ".rst",
-  //   ".asciidoc",
-  //   ".tex",
-  //   ".latex",
-  //   ".bib",
-  //   ".adoc",
-  // ];
 
   useEffect(() => {
     if (droppedFile) {

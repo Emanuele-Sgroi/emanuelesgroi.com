@@ -13,8 +13,14 @@ import {
 import { FaRegSmile } from "react-icons/fa";
 import { CodeBlock } from "@/components";
 
+/**
+ * Predefined emoji reactions available for comments
+ */
 const emojis = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"];
 
+/**
+ * Custom Markdown components for rendering formatted content
+ */
 const customComponents = {
   blockquote: ({ children }) => (
     <blockquote className="border-l-4 border-text-primary pl-3 opacity-40 italic mb-2">
@@ -49,12 +55,24 @@ const customComponents = {
   },
 };
 
+/**
+ * TopComment Component
+ *
+ * Displays the most relevant or upvoted comment at the top of a discussion.
+ *
+ * Props:
+ * - profilePicture: URL of the author's profile picture.
+ * - topComment: Object containing comment details (id, name, content, reactions, etc.).
+ */
+
 const TopComment = ({ profilePicture, topComment }) => {
+  // State for managing likes and reactions
   const [likes, setLikes] = useState(topComment?.reactions?.likes || 0); // Separate state for likes
   const [reactions, setReactions] = useState(topComment?.reactions || {});
   const [userReactions, setUserReactions] = useState({});
   const [open, setOpen] = useState(false);
 
+  // Load user reactions from localStorage on component mount
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -64,6 +82,9 @@ const TopComment = ({ profilePicture, topComment }) => {
     setUserReactions(storedReactions);
   }, [topComment.id]);
 
+  /**
+   * Updates reactions in the database
+   */
   const updateReactionsInDB = async (newReactions) => {
     try {
       await fetch("/api/comments", {
@@ -81,6 +102,9 @@ const TopComment = ({ profilePicture, topComment }) => {
     }
   };
 
+  /**
+   * Handles the like button toggle
+   */
   const handleLike = () => {
     const updatedLikes = userReactions.like ? likes - 1 : likes + 1; // Toggle like
     const updatedReactions = { ...reactions, likes: updatedLikes };
@@ -107,6 +131,9 @@ const TopComment = ({ profilePicture, topComment }) => {
     }
   };
 
+  /**
+   * Handles emoji reactions
+   */
   const handleEmojiReaction = (emoji) => {
     const currentCount = reactions[emoji] || 0;
     const isUserReacted = !!userReactions[emoji];

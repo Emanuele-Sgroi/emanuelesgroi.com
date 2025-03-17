@@ -8,6 +8,18 @@ import {
   AboutThisWebsite,
 } from "@/components";
 
+/**
+ * PortfolioContainer Component
+ *
+ * Manages the display of portfolio projects with sorting and layout options.
+ * - Allows switching between list and grid layouts.
+ * - Filters projects based on selected tags.
+ * - Displays an "About This Website" section at the bottom.
+ *
+ * Props:
+ * - portfolio: Array of portfolio projects.
+ */
+
 const PortfolioContainer = ({ portfolio }) => {
   const [activeLayout, setActiveLayout] = useState("list");
   const [selectedTag, setSelectedTag] = useState("");

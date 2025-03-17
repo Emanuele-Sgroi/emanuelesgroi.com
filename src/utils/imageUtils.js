@@ -1,3 +1,13 @@
+/**
+ * This file contains utility functions for handling image URLs in a CMS-based project.
+ *
+ * - `getOptimizedImageUrl`: Returns an optimized image URL with specified width and WebP format for better performance.
+ * - `getAssetUrl`: Retrieves the direct URL of an asset, ensuring it is correctly formatted with `https://`.
+ * - `generateImagePreloadTags`: Generates HTML preload tags for a list of assets to optimize image loading.
+ *
+ * These functions are needed for bypassing the nested data returned by Contentful CMS, so the images can be accessed quickly
+ */
+
 export function getOptimizedImageUrl(asset, width = 1920) {
   if (!asset.fields?.file?.url) {
     return "";

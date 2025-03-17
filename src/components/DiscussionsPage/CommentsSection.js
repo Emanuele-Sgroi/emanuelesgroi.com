@@ -5,10 +5,19 @@ import { getAssetUrl } from "@/utils/imageUtils";
 import { GoDotFill } from "react-icons/go";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
 import { TopComment, CommentContainer, CommentInput } from "@/components";
 
-//const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
+/**
+ * CommentsSection Component
+ *
+ * Displays the top comment, all normal comments, and allows users to add new comments.
+ * Supports sorting comments by newest, oldest, or top-rated.
+ *
+ * Props:
+ * - generalInfoContent: Contains general user information, including profile picture.
+ * - topComment: The featured comment displayed at the top.
+ * - normalComments: Array of all user comments.
+ */
 
 const CommentsSection = ({
   generalInfoContent,
@@ -19,21 +28,28 @@ const CommentsSection = ({
   const profilePictureUrl = generalInfoContent?.profilePicture
     ? getAssetUrl(generalInfoContent.profilePicture)
     : "";
-  // states to get the right comment types
+  // State to store top-level comments (comments that are not replies and not marked as top comments)
   const [comments, setComments] = useState(
-    normalComments.filter((c) => !c.isTopComment && c.parentId === null) // top-level comments
+    normalComments.filter((c) => !c.isTopComment && c.parentId === null)
   );
+  // State to store replies (comments that have a parent ID)
   const [replies, setReplies] = useState(
     normalComments.filter((c) => !c.isTopComment && c.parentId !== null) // replies
   );
+  // State to track sorting order (default is newest)
   const [sortOrder, setSortOrder] = useState("newest"); // Default sorting
+  // State to store author's name
   const [authorName, setAuthorName] = useState("");
 
+  // Fetch the author's name from environment variables
   useEffect(() => {
     setAuthorName(process.env.NEXT_PUBLIC_AUTHOR_NAME || "");
   }, []);
 
-  // Function for handling sorting
+  /**
+   * Handles sorting logic based on selected sort order.
+   * Supports "oldest", "newest", and "top" (most reactions).
+   */
   const handleSortChange = (order) => {
     setSortOrder(order);
 
@@ -63,7 +79,9 @@ const CommentsSection = ({
     setComments(sortedComments);
   };
 
-  // Function to handle top-level comment submission to database
+  /**
+   * Handles submission of new top-level comments to the database.
+   */
   const handleCommentSubmit = async (newComment) => {
     const isAuthor = newComment.name === authorName;
 
@@ -101,7 +119,7 @@ const CommentsSection = ({
       toast.error("Failed to post your comment. Please try again later.");
     }
   };
-  //max-[915px]:max-w-full min-[1000px]:max-w-[750px]
+
   return (
     <div className="w-full max-[915px]:max-w-full min-[916px]:max-w-[660px] lg:max-w-[750px] xl:max-w-[905px] flex flex-col">
       {/* Display top comment */}
