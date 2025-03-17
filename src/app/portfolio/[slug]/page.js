@@ -45,7 +45,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: project.postTitle || "Blog Post | Emanuele Sgroi",
       description: project.smallDescription || "Read this blog post.",
-      url: `https://somedomain.com/blog/${params.slug}`,
+      url: `https://www.emanuelesgroi.com/blog/${params.slug}`,
       type: "article",
       images: [
         { url: getAssetUrl(project.mainImage) || "/images/og-image.jpg" },

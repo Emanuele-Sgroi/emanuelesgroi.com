@@ -71,7 +71,6 @@ export const defaultMetadata = {
 
 export const metadataByPage = {
   "/": {
-    // ✅ Homepage should be "/"
     title: "Welcome | Emanuele Sgroi",
     description:
       "Hi, I'm Emanuele Sgroi, a full-stack developer passionate about building web and mobile applications. Explore my projects, writings, and interactive Dev Quiz!",
