@@ -1,3 +1,5 @@
+// All extensions allowed when attaching a file in manuPilot
+
 export const allowedExtensions = [
   ".txt",
   ".csv",

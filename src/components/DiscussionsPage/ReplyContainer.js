@@ -12,6 +12,10 @@ import {
 import { FaRegSmile } from "react-icons/fa";
 import { CodeBlock } from "@/components";
 
+/**
+ * Custom Markdown components for rendering formatted content
+ */
+
 const customComponents = {
   blockquote: ({ children }) => (
     <blockquote className="border-l-4 border-text-primary pl-3 opacity-40 italic mb-2">
@@ -46,11 +50,25 @@ const customComponents = {
   },
 };
 
+/**
+ * ReplyContainer Component
+ *
+ * Displays an individual reply with the author's name, avatar, timestamp,
+ * Markdown-formatted content, and emoji reactions.
+ *
+ * Props:
+ * - reply: Object containing reply details (id, name, content, avatar, reactions, etc.).
+ * - emojis: Array of available emoji reactions.
+ * - authorPicture: URL of the author's profile picture.
+ */
+
 const ReplyContainer = ({ reply, emojis, authorPicture }) => {
+  // State for storing reactions and user-specific reactions
   const [reactions, setReactions] = useState(reply?.reactions || {});
   const [userReactions, setUserReactions] = useState({});
   const [open, setOpen] = useState(false);
 
+  // Load user reactions from localStorage and initialize reaction states
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -68,6 +86,9 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
     setReactions(initialReactions);
   }, [reply.id, reply.reactions]);
 
+  /**
+   * Updates reactions in the database
+   */
   const updateReactionsInDB = async (newReactions) => {
     try {
       await fetch("/api/comments", {
@@ -85,6 +106,9 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
     }
   };
 
+  /**
+   * Handles emoji reaction toggling
+   */
   const handleEmojiReaction = (emoji) => {
     const currentCount = reactions[emoji] || 0;
     const isUserReacted = !!userReactions[emoji];

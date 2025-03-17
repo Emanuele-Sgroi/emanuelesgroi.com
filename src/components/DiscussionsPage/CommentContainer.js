@@ -13,10 +13,10 @@ import {
 import { FaRegSmile } from "react-icons/fa";
 import { ReplyContainer, CodeBlock, CommentInput } from "@/components";
 
+// Predefined set of emoji reactions
 const emojis = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"];
 
-//const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME;
-
+// Custom Markdown components for rendering formatted content
 const customComponents = {
   blockquote: ({ children }) => (
     <blockquote className="border-l-4 border-text-primary pl-3 opacity-40 italic mb-2">
@@ -41,7 +41,6 @@ const customComponents = {
   ),
   li: ({ children }) => <li className="mb-1">{children}</li>,
   code: ({ inline, className, children }) => {
-    //const language = /language-(\w+)/.exec(className || "")?.[1] || "plaintext";
     return !inline ? (
       <CodeBlock code={String(children).trim()} lang="javascript" />
     ) : (
@@ -52,6 +51,23 @@ const customComponents = {
   },
 };
 
+/**
+ * CommentContainer Component
+ *
+ * Displays a comment with user reactions, likes, replies, and markdown formatting.
+ * Includes:
+ * - User avatar, name, timestamp
+ * - Markdown-formatted comment content
+ * - Like and emoji reactions
+ * - Reply section with nested replies
+ *
+ * Props:
+ * - authorPicture: URL of the author's profile picture
+ * - comment: Object containing comment details (id, name, content, avatar, reactions, etc.)
+ * - replies: Array of replies associated with the comment
+ * - setReplies: Function to update replies state
+ */
+
 const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
   const [likes, setLikes] = useState(comment?.reactions?.likes || 0); // Separate state for likes
   const [reactions, setReactions] = useState(comment?.reactions || {});
@@ -59,6 +75,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
   const [open, setOpen] = useState(false);
   const [authorName, setAuthorName] = useState("");
 
+  // Load user reactions from localStorage and initialize reaction states
   useEffect(() => {
     setAuthorName(process.env.NEXT_PUBLIC_AUTHOR_NAME || "");
 
@@ -86,6 +103,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
     setLikes(initialLikes);
   }, [comment.id, comment.reactions]);
 
+  // Function to update reactions in the database
   const updateReactionsInDB = async (newReactions) => {
     try {
       await fetch("/api/comments", {
@@ -103,23 +121,23 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
     }
   };
 
+  // Handles liking a comment
   const handleLike = () => {
-    const isLiked = !!userReactions.like; // Check if the user has already liked
-    const updatedLikes = isLiked ? likes - 1 : likes + 1; // Toggle like count
+    const isLiked = !!userReactions.like;
+    const updatedLikes = isLiked ? likes - 1 : likes + 1;
     const updatedReactions = { ...reactions, likes: updatedLikes };
     const updatedUserReactions = { ...userReactions };
 
     if (isLiked) {
-      delete updatedUserReactions.like; // Remove the like if already liked
+      delete updatedUserReactions.like;
     } else {
-      updatedUserReactions.like = true; // Add the like if not liked yet
+      updatedUserReactions.like = true;
     }
 
     setLikes(updatedLikes);
     setReactions(updatedReactions);
     setUserReactions(updatedUserReactions);
 
-    // Update in database and localStorage
     updateReactionsInDB(updatedReactions);
     if (typeof window !== "undefined") {
       localStorage.setItem(
@@ -129,6 +147,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
     }
   };
 
+  // Handles reacting a comment with emojis
   const handleEmojiReaction = (emoji) => {
     const currentCount = reactions[emoji] || 0; // Get current count
     const isUserReacted = !!userReactions[emoji]; // Check if the user reacted with this emoji
@@ -158,6 +177,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
     }
   };
 
+  // Handle submitting a reply to the parent comment
   const handleReplySubmit = async (replyContent) => {
     const isAuthor = replyContent.name === authorName;
 

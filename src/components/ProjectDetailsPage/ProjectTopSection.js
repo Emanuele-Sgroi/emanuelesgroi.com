@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { usePathname } from "next/navigation";
-import { LuClock } from "react-icons/lu";
 import { FaWhatsapp, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import { FiArrowLeftCircle } from "react-icons/fi";
@@ -20,27 +19,32 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 const linkName = process.env.NEXT_PUBLIC_BASE_URL;
 
+/**
+ * ProjectTopSection Component
+ *
+ * Displays the top section of the project details page, including:
+ * - Project title, author image, and a brief description.
+ * - A "Go Back" button to navigate back to the portfolio page.
+ * - Social media sharing options for Twitter/X, WhatsApp, Facebook, and LinkedIn.
+ * - A "Copy Link" button to copy the project URL to the clipboard.
+ *
+ * Features:
+ * - Dynamically generates a shareable link based on the current URL.
+ * - Uses state to control the visibility of the "Copy Link" tooltip.
+ * - Ensures a mobile-friendly and responsive design.
+ * - Disables transitions when rendering server-side for improved SSR performance.
+ *
+ * Props:
+ * - project: Object containing details such as the project title, author image, and description.
+ * - isClient: Boolean indicating whether the component is rendered on the client side.
+ */
+
 const ProjectTopSection = ({ project, isClient }) => {
   const { authorImage, projectTitle, smallDescription } = project;
   const pathname = usePathname();
   const postUrl = `${linkName}${pathname}`;
   const [showCopy, setShowCopy] = useState(false);
-  // const [isMobile, setIsMobile] = useState(false);
   const isMobile = useIsMobile();
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

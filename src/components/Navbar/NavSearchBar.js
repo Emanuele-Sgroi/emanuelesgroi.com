@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-  DialogClose,
   DialogOverlay,
 } from "@/components/ui/dialog";
 import {
@@ -34,6 +33,22 @@ import { HiAcademicCap } from "react-icons/hi2";
 import { PiCornersOutBold } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import { useChat } from "@/context/ChatProvider";
+
+/**
+ * NavSearchBar Component
+ *
+ * Provides a global search bar for navigating the website.
+ * - Searches through projects, blog posts, academic papers, and key website pages.
+ * - Supports quick access to ManuPilot's immersive and quick chat modes.
+ * - Includes keyboard shortcut "/" to open the search bar.
+ * - Displays search results dynamically as the user types.
+ * - Highlights search results and allows navigation via keyboard.
+ *
+ * Props:
+ * - generalInfoContent: Object containing general site information.
+ * - portfolioContent: Object containing portfolio-related content.
+ * - writingsContent: Object containing blog posts and academic papers.
+ */
 
 const NavSearchBar = ({
   generalInfoContent,

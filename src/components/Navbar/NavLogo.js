@@ -3,6 +3,12 @@
 import React from "react";
 import Link from "next/link";
 
+/**
+ * NavLogo Component
+ *
+ * Displays the website's logo and name.
+ */
+
 const NavLogo = () => {
   return (
     <Link

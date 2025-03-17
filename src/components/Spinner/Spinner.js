@@ -1,4 +1,10 @@
-"use client"; // only necessary if you rely on client-side features, e.g. animation
+"use client";
+
+/**
+ * Spinner Component
+ *
+ * A simple SVG-based loading spinner that rotates continuously.
+ */
 
 export default function Spinner() {
   return (

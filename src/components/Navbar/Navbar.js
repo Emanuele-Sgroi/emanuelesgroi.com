@@ -5,6 +5,19 @@ import {
 } from "@/utils/fetchCMSContent";
 import NavbarClient from "./NavbarClient";
 
+/**
+ * Navbar Component
+ *
+ * Fetches CMS content and passes it to NavbarClient.
+ * - Retrieves general info, portfolio, and writings content from the CMS.
+ * - Handles potential errors and passes them to the client-side navbar.
+ *
+ * Uses:
+ * - NavbarClient: The client-side navigation component.
+ *
+ * Asynchronous Component.
+ */
+
 const Navbar = async () => {
   const { data: generalInfoContent, error: generalInfoError } =
     await fetchGeneralInfoContent();

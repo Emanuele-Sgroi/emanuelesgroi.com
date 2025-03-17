@@ -1,3 +1,35 @@
+/**
+ * Metadata Configuration
+ *
+ * This file contains the default metadata and page-specific metadata for the portfolio website.
+ * It provides SEO-friendly metadata, including Open Graph and Twitter card information, for all pages.
+ * The metadata is dynamically populated for each page of the site.
+ *
+ * The `defaultMetadata` includes:
+ * - **Metadata base URL**: This is the base URL for the website, typically retrieved from the environment variable.
+ * - **Title**: A generic title for the website.
+ * - **Description**: A brief description of the website for search engines and social media.
+ * - **Keywords**: A list of keywords that represent the content of the site for search engines.
+ * - **Open Graph**: Meta tags for sharing on social media (like Facebook and LinkedIn).
+ * - **Twitter**: Meta tags for sharing on Twitter, including card type and image.
+
+ * The `metadataByPage` contains specific metadata for each page of the site:
+ * - **Home**: Metadata for the homepage, including a brief introduction and portfolio-related keywords.
+ * - **Portfolio**: Metadata for the portfolio section of the website.
+ * - **Writings**: Metadata for the blog and academic writings section.
+ * - **Dev Quiz**: Metadata for the interactive coding quiz section.
+ * - **Discussions**: Metadata for the discussions page, where users can engage with content.
+ * - **Contact**: Metadata for the contact page.
+ * - **ManuPilot**: Metadata for the AI assistant page.
+ * - **About This Website**: Metadata for the page explaining how the website was built.
+ * - **Not Found**: Metadata for the 404 page that appears when a page is not found.
+ *
+ * The metadata for each page includes:
+ * - **Title**: The title of the page.
+ * - **Description**: A description of the page content.
+ * - **Keywords**: A list of keywords related to the content on the page, helping with search engine optimization.
+ */
+
 const my_url = process.env.NEXT_PUBLIC_BASE_URL; // Fallback for safety
 const ogImageUrl = `${my_url}/images/og-image.jpg`; // Absolute URL for Open Graph images
 

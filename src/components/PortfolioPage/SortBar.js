@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { TbLayoutListFilled } from "react-icons/tb";
 import { BsFillGridFill } from "react-icons/bs";
 import { GoTriangleDown } from "react-icons/go";
 import { GoCopilot } from "react-icons/go";
-import { FaRandom, FaAngleRight } from "react-icons/fa";
+import { FaRandom } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import { IoIosCloseCircle } from "react-icons/io";
 import {
@@ -23,6 +23,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useChat } from "@/context/ChatProvider";
+
+/**
+ * SortBar Component
+ *
+ * Provides sorting and filtering options for the portfolio page.
+ * - Allows users to toggle between list and grid layouts.
+ * - Filters projects by technology tags.
+ * - Includes a "Random" button to navigate to a random project.
+ * - Integrates a button to ask ManuPilot AI for assistance.
+ *
+ * Props:
+ * - portfolio: Object containing portfolio projects.
+ * - activeLayout: String indicating the current layout ("list" or "grid").
+ * - setActiveLayout: Function to update the active layout.
+ * - selectedTag: String representing the currently selected technology tag.
+ * - setSelectedTag: Function to update the selected tag.
+ */
 
 const SortBar = ({
   portfolio,

@@ -5,6 +5,32 @@ import { IoMdCheckmark } from "react-icons/io";
 import { TfiClose } from "react-icons/tfi";
 import { IoCodeDownloadSharp } from "react-icons/io5";
 
+/**
+ * ProjectSideBar Component
+ *
+ * Displays project-related metadata, including:
+ * - A short project description.
+ * - Technology tags.
+ * - Indicators for whether the project was designed and developed.
+ * - A categorized breakdown of the tech stack used.
+ * - A language distribution bar showing programming languages used.
+ *
+ * Features:
+ * - **Expandable Section**: On smaller screens, the content is initially collapsed and can be expanded.
+ * - **Categorized Tech Stack**: Groups technologies into categories (e.g., Frontend, Backend, Database).
+ * - **Designed & Developed Indicators**: Uses checkmarks for Yes or No
+ * - **Language Usage Bar**: Displays a colour-coded distribution of programming languages used in the project.
+ *
+ * Props:
+ * - `project`: Object containing:
+ *   - `smallDescription`: A brief summary of the project.
+ *   - `techTagsBulk`: An array of tech-related tags.
+ *   - `designed`: Boolean indicating if the project was designed by the owner.
+ *   - `developed`: Boolean indicating if the project was developed by the owner.
+ *   - `techStack`: Array of technologies used, categorized by type.
+ *   - `languages`: JSON string or array containing programming language distribution details.
+ */
+
 const ProjectSideBar = ({ project }) => {
   const {
     smallDescription,

@@ -1,3 +1,5 @@
+// Mapping Large characters, used in the contribution chart, in the Welcome Page
+
 const characterMapLarge = {
   A: [
     [0, 1, 1, 1, 0],

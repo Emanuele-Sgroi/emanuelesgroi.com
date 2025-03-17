@@ -6,7 +6,6 @@ import { RiHomeSmileLine, RiFolderInfoLine } from "react-icons/ri";
 import { GoCodeSquare, GoCommentDiscussion, GoCopilot } from "react-icons/go";
 import { GrContact } from "react-icons/gr";
 import { IoLogoGithub, IoMdDownload } from "react-icons/io";
-import { TbSchool } from "react-icons/tb";
 import { FaRegBookmark } from "react-icons/fa6";
 import {
   FaSun,
@@ -15,8 +14,8 @@ import {
   FaFacebook,
   FaDiscord,
 } from "react-icons/fa";
-import { BsVectorPen, BsMoonStarsFill } from "react-icons/bs";
-import { LuBrain, LuSquareMenu } from "react-icons/lu";
+import { BsMoonStarsFill } from "react-icons/bs";
+import { LuBrain } from "react-icons/lu";
 import { TfiEmail } from "react-icons/tfi";
 import { IoCopy } from "react-icons/io5";
 import { CgFileDocument, CgMenuLeftAlt } from "react-icons/cg";
@@ -30,8 +29,26 @@ import {
 } from "@/components/ui/sheet";
 import { getAssetUrl } from "@/utils/imageUtils";
 import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Skeleton } from "@/components/ui/skeleton";
+
+/**
+ * NavMobileSideProfile Component
+ *
+ * Displays a mobile-friendly side menu with profile details and navigation links.
+ * - Shows the user's profile picture, name, and job title.
+ * - Includes theme toggle functionality.
+ * - Provides navigation links to various sections like Portfolio, Writings, ManuPilot, Dev Quiz, Discussions, and Contact.
+ * - Displays social media and contact links, including email, GitHub, LinkedIn, Instagram, Facebook, and Discord.
+ * - Allows users to download the resume.
+ * - Includes an "About This Website" section for additional details.
+ *
+ * Props:
+ * - onClick: Function to toggle the website theme.
+ * - theme: String indicating the current theme (light/dark).
+ * - generalInfoContent: Object containing user profile details from the CMS.
+ * - error: Boolean indicating if there's an error loading content.
+ */
 
 const NavMobileSideProfile = ({
   onClick,
@@ -190,41 +207,6 @@ const NavMobileSideProfile = ({
                       <span className={getLinkClassDivMobile("/writings")} />
                     </Link>
                   </li>
-
-                  {/* <li className="w-full flex justify-start items-center gap-2">
-                    <Link
-                      href="/writings/blog"
-                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
-                      onClick={() => setOpen(false)}
-                    >
-                      <BsVectorPen size={18} className="text-accent-icon" />
-                      <p className="text-sm">
-                        Writings
-                        <span className="text-accent-icon mx-[3px]">/</span>
-                        Blog
-                      </p>{" "}
-                      <div
-                        className={getLinkClassDivMobile("/writings/blog")}
-                      />
-                    </Link>
-                  </li>
-                  <li className="w-full flex justify-start items-center gap-2">
-                    <Link
-                      href="/writings/academic"
-                      className={`w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button `}
-                      onClick={() => setOpen(false)}
-                    >
-                      <TbSchool size={18} className="text-accent-icon" />
-                      <p className="text-sm">
-                        Writings
-                        <span className="text-accent-icon mx-[3px]">/</span>
-                        Academic
-                      </p>{" "}
-                      <div
-                        className={getLinkClassDivMobile("/writings/academic")}
-                      />
-                    </Link>
-                  </li> */}
 
                   {/* ManuPilot */}
                   <li className="w-full flex justify-start items-center gap-2">

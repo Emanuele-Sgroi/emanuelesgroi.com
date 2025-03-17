@@ -1,8 +1,14 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { IoLogoGithub } from "react-icons/io";
 import { usePathname } from "next/navigation";
+
+/**
+ * Footer Component
+ *
+ * Displays footer navigation links and copyright information.
+ * The footer is hidden on certain pages (ManuPilot and About This Website).
+ */
 
 const Footer = () => {
   const pathname = usePathname();

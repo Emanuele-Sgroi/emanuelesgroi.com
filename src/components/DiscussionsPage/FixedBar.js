@@ -7,6 +7,18 @@ import { formatRelativeDate } from "@/utils/formatRelativeDate";
 import { GoDotFill } from "react-icons/go";
 import { IoCaretUp, IoCaretDown } from "react-icons/io5";
 
+/**
+ * FixedBar Component
+ *
+ * A fixed navigation bar that appears at the top of the page when the user scrolls down.
+ * Displays discussion title, author, comment count, and buttons to navigate to the top/bottom.
+ *
+ * Props:
+ * - discussionContent: Object containing title, author's name, introductory text, and category.
+ * - comments: Array of all user comments.
+ * - generalInfoContent: Object containing general user information, including profile picture.
+ */
+
 const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
   // Retrieve image URLs from content
   const profilePictureUrl = generalInfoContent?.profilePicture

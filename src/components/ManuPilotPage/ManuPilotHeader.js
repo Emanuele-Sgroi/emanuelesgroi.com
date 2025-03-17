@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -27,6 +27,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+
+/**
+ * ManuPilotHeader Component
+ *
+ * Displays the header for ManuPilot, featuring:
+ * - A reset conversation button with a confirmation dialog
+ * - A dropdown to display the current AI model (GPT-4o)
+ *
+ * Props:
+ * - onClickReset: Function to reset the chat conversation
+ * - conversation: Array representing the current chat messages
+ */
 
 const ManuPilotHeader = ({ onClickReset, conversation }) => {
   const [openAlertDialog, setOpenAlertDialog] = useState(false);

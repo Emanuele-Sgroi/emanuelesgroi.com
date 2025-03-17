@@ -13,27 +13,27 @@ import {
 import { PiCornersOutBold } from "react-icons/pi";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+/**
+ * NavManuPilotLink Component
+ *
+ * Provides navigation links for ManuPilot AI assistant.
+ * - Includes a quick chat button for accessing ManuPilot in a popover.
+ * - Includes a link to an immersive ManuPilot conversation page.
+ * - Supports tooltips on hover for better user experience.
+ * - Adjusts behavior for mobile and desktop views.
+ *
+ * Features:
+ * - Uses popovers to provide quick descriptions.
+ * - Handles mouse interactions to show tooltips only on non-mobile devices.
+ * - Hides the component when already on the ManuPilot page.
+ */
+
 const NavManuPilotLink = () => {
   const pathname = usePathname();
   const { openChat } = useChat();
   const [open, setOpen] = useState(false);
   const [immersiveOpen, setImmersiveOpen] = useState(false);
   const isMobile = useIsMobile();
-  //const [isMobile, setIsMobile] = useState(false);
-
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(
-  //       typeof window !== "undefined" &&
-  //         ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  //     );
-  //   };
-
-  //   checkIfMobile();
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
 
   const handleMouseEnter = () => {
     if (!isMobile) {

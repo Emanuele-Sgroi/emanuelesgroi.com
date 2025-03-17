@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getAssetUrl } from "@/utils/imageUtils";
@@ -8,6 +8,33 @@ import { RiBookMarkedFill } from "react-icons/ri";
 import { VscPinned } from "react-icons/vsc";
 import { ContributionChart } from "@/components";
 import ProfileViews from "./ProfileViews";
+
+/**
+ * WelcomeReadMe Component
+ *
+ * Displays a GitHub-style README section on the welcome page, including:
+ * - A welcome message and brief about section.
+ * - A technology stack showcasing skills with icons and colors.
+ * - Pinned projects or tabs for quick access.
+ * - A contribution chart with a customizable word display.
+ *
+ * Features:
+ * - Dynamically loads skills and pinned tabs from the provided data.
+ * - Utilizes a structured layout with headers, descriptions, and visual elements.
+ * - Integrates a contribution chart similar to GitHub's activity chart.
+ *
+ * Props:
+ * - `welcome`: Object containing all the necessary content, including:
+ *   - `readmeTitle`: Title of the README section.
+ *   - `welcomeTitle`: Main welcome message.
+ *   - `aboutText`: A short introduction about the developer.
+ *   - `stackTitle`: Title for the tech stack section.
+ *   - `stackReference`: List of skills (with icons, colors, and names).
+ *   - `exploreText`: Text inviting users to explore more.
+ *   - `pinnedTitle`: Title for the pinned tabs section.
+ *   - `pinnedTabReference`: List of pinned projects or tabs.
+ *   - `chartWord`: Word displayed in the contribution chart.
+ */
 
 const WelcomeReadMe = ({ welcome }) => {
   const {
@@ -119,62 +146,6 @@ const ReadmeTitle = ({ title }) => {
     </p>
   );
 };
-
-// const ProfileViews = () => {
-//   // Retrieve the number from session storage or start at 9
-//   const initialNumber = Number(sessionStorage.getItem("number") || 9);
-//   const [views, setViews] = useState(initialNumber); // initial value for profile views
-//   const [targetNumber, setTargetNumber] = useState(initialNumber); // Target number of views to reach
-
-//   useEffect(() => {
-//     // Save the number to session storage whenever it updates
-//     sessionStorage.setItem("number", views);
-//   }, [views]);
-
-//   useEffect(() => {
-//     // Function to generate a new random target number
-//     const generateTargetNumber = () => {
-//       const randomIncrement = Math.floor(Math.random() * 12) + 1; // Random number between 1 and 12
-//       setTargetNumber((prevTarget) => prevTarget + randomIncrement);
-//     };
-
-//     // Smoothly animate the number from `number` to `targetNumber`
-//     const smoothIncrement = () => {
-//       if (views < targetNumber) {
-//         setViews((prevNumber) => prevNumber + 1);
-//       }
-//     };
-
-//     // Generate a new target number every 4 seconds
-//     const targetInterval = setInterval(generateTargetNumber, 4000);
-
-//     // Animate the number every 100ms for a smooth effect
-//     const animationInterval = setInterval(smoothIncrement, 100);
-
-//     // Cleanup intervals on component unmount
-//     return () => {
-//       clearInterval(targetInterval);
-//       clearInterval(animationInterval);
-//     };
-//   }, [views, targetNumber]);
-
-//   return (
-//     <div className="w-full mt-5 flex justify-start max-md:px-4">
-//       <div className=" center">
-//         <div className="bg-accent-icon pl-2 pr-1 py-1 rounded-s-sm ">
-//           <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
-//             Profile views
-//           </p>
-//         </div>
-//         <div className="bg-[#0969da] pl-1 pr-2 py-1 rounded-e-sm">
-//           <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
-//             {views}
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 const PinnedTabs = ({ title, pinnedTabs }) => {
   return (

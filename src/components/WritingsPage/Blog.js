@@ -8,6 +8,33 @@ import { GoDotFill } from "react-icons/go";
 
 const POSTS_PER_PAGE = 6;
 
+/**
+ * Blog Component
+ *
+ * Displays a list of blog posts with pagination and detailed post information.
+ * Each post includes:
+ * - A title, description, tags, author, and date.
+ * - A main image with hover effects for interactivity.
+ * - Pagination controls to navigate between multiple pages of posts.
+ *
+ * Features:
+ * - Supports paginated view with 6 posts per page.
+ * - Displays tags for each post with separator dots.
+ * - Animates the display of post titles with hover effects.
+ * - Displays a "More posts coming soon" message when the last page is reached.
+ * - Handles date formatting for when each post was published.
+ *
+ * Props:
+ * - writingsContent: Object containing blog content data such as `blogTitle` and `blogPosts`.
+ *    - blogTitle: The title of the blog section.
+ *    - blogPosts: Array of blog posts with fields like `mainImage`, `datePosted`, `postTitle`, `smallDescription`, `tags`, and `author`.
+ *
+ * Pagination:
+ * - Tracks the current page and allows users to navigate between pages.
+ * - Provides previous, next, and page number controls.
+ * - Disables navigation buttons when at the first or last page.
+ */
+
 const Blog = ({ writingsContent }) => {
   const { blogTitle, blogPosts } = writingsContent;
 

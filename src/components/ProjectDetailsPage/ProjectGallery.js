@@ -12,6 +12,26 @@ const breakpointColumns = {
   640: 1, // Mobile screens → 1 column
 };
 
+/**
+ * ProjectGallery Component
+ *
+ * Displays the project's image gallery using either a **Masonry Grid** or a **Standard Grid** layout.
+ *
+ * Features:
+ * - **Masonry Grid**: Used when images have mixed aspect ratios (`hasMixedSideImages` is `true`).
+ * - **Standard Grid**: Used when all images have a uniform aspect ratio or are mobile-optimized (`isMobileOnly` is `true`).
+ * - **Lightbox functionality**: Allows images to be opened in a modal with zoom and download options.
+ * - **Responsive design**: Adjusts grid layout based on screen size.
+ * - **Hover effect**: Slight zoom-in effect on images for better user experience.
+ *
+ * Props:
+ * - `project`: Object containing:
+ *   - `projectTitle`: The name of the project (used for accessibility and alt tags).
+ *   - `hasMixedSideImages`: Boolean indicating if the images have different aspect ratios (triggers Masonry Grid).
+ *   - `isMobileOnly`: Boolean indicating if the gallery should be optimized for mobile screens.
+ *   - `projectImages`: Array of image objects to be displayed.
+ */
+
 const ProjectGallery = ({ project }) => {
   const { projectTitle, hasMixedSideImages, isMobileOnly, projectImages } =
     project;

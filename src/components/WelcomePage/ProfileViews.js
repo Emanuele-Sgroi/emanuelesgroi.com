@@ -1,12 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { getAssetUrl } from "@/utils/imageUtils";
-import { RiBookMarkedFill } from "react-icons/ri";
-import { VscPinned } from "react-icons/vsc";
-import { ContributionChart } from "@/components";
+
+/**
+ * ProfileViews Component
+ *
+ * Displays a dynamic profile views counter that:
+ * - Starts with a default value (9) and retrieves stored value from sessionStorage.
+ * - Randomly increases the view count at intervals to create an engaging effect.
+ * - Smoothly animates the increment in small steps for a natural feel.
+ * - Updates sessionStorage to persist the count across page refreshes.
+ *
+ * Features:
+ * - Uses `sessionStorage` to store and retrieve the profile view count.
+ * - Generates a new random target number every 4 seconds.
+ * - Animates the count incrementally every 100ms to reach the target.
+ * - Styled with GitHub-inspired labels for profile views.
+ */
 
 const ProfileViews = () => {
   // Start with a default value (e.g., 9)
