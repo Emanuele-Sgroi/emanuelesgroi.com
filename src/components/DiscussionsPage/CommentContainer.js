@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { FaRegSmile } from "react-icons/fa";
 import { ReplyContainer, CodeBlock, CommentInput } from "@/components";
+import { ToastContainer, toast } from "react-toastify";
 
 // Predefined set of emoji reactions
 const emojis = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"];

@@ -68,7 +68,7 @@ const Academic = ({ writingsContent }) => {
         </div>
 
         {/* Pick year menu */}
-        <div className="mb-4 mt-4 md:mt-6">
+        <div className="mb-6 mt-6">
           <div className="flex justify-between items-center flex-wrap  gap-2">
             {/* Pick year menu */}
             <div className="flex items-center max-[300px]:bg-transparent bg-bg-button rounded-md flex-wrap">
@@ -133,36 +133,50 @@ const Academic = ({ writingsContent }) => {
             return (
               <div
                 key={index}
-                className="relative w-full md:w-[298.5px] rounded-md p-4 center flex-col border border-accent-border bg-bg-tertiary hover:bg-bg-hover"
+                className="relative w-full md:w-[298.5px] rounded-md p-4 border border-accent-border bg-bg-tertiary hover:bg-bg-hover flex flex-col justify-between min-h-[320px]"
               >
-                <p className="text-xs text-accent-extra text-center">
-                  {module}
-                </p>
-                {/* Image */}
-                {image && image.fields?.file?.url && (
-                  <div className="relative p-2 bg-[#6b747e] dark:bg-[#f0f6fc] center rounded-xl mt-3 overflow-hidden">
-                    <Image
-                      src={getAssetUrl(image)}
-                      alt={title}
-                      width={40}
-                      height={40}
-                      quality={100}
-                      priority
-                      className="object-cover object-center w-[33px] h-[33px]"
-                    />
-                  </div>
-                )}
-                <h4 className="text-lg font-semibold mt-3 text-center">
-                  {title}
-                </h4>
-                <p className="text-xs text-text-secondary mt-2 text-center">
-                  {description}
-                </p>
+                <div className="flex flex-col items-center">
+                  <p
+                    className={`text-xs text-accent-extra text-center ${
+                      isDissertation && "max-[295px]:px-4"
+                    }`}
+                  >
+                    {module}
+                  </p>
+
+                  {/* Image */}
+                  {image && image.fields?.file?.url && (
+                    <div className="relative p-2 bg-[#6b747e] dark:bg-[#f0f6fc] center rounded-xl mt-3 overflow-hidden">
+                      <Image
+                        src={getAssetUrl(image)}
+                        alt={title}
+                        width={40}
+                        height={40}
+                        quality={100}
+                        priority
+                        className="object-cover object-center w-[33px] h-[33px]"
+                      />
+                    </div>
+                  )}
+
+                  <h4 className="text-lg font-semibold mt-3 text-center">
+                    {title}
+                  </h4>
+                </div>
+
+                {/* Description (flex-grow ensures it expands while keeping the button at the bottom) */}
+                <div className="flex-grow">
+                  <p className="text-xs text-text-secondary mt-2 text-center">
+                    {description}
+                  </p>
+                </div>
+
+                {/* Download Button at the Bottom */}
                 <a
                   href={getAssetUrl(pdf)}
                   target="_blank"
                   download={`CS_${academicYear}_${module}_${title}_by_Emanuele_Sgroi`}
-                  className="btn-primary mt-3 center text-center"
+                  className="btn-primary mt-6 center text-center"
                 >
                   📂 Download PDF
                 </a>

@@ -209,7 +209,7 @@ const avatars = [
  */
 const DiscussionSideBar = () => {
   return (
-    <div className="flex flex-col items-start justify-start gap-4">
+    <div className="flex flex-col items-start justify-start gap-4 max-[915px]:max-w-full max-[1080px]:max-w-[260px] max-w-[312px]">
       {/* Category */}
       <div className="flex flex-col gap-2 max-md:px-4">
         <p className="text-xs text-text-secondary font-semibold">Category</p>

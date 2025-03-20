@@ -72,94 +72,99 @@ const Blog = ({ writingsContent }) => {
             } = post;
 
             return (
-              <Link
-                key={i}
-                href={`/writings/${postSlug}`}
-                className="block overflow-hidden group"
-              >
-                <div className="w-full h-full flex flex-col">
-                  {/* Main Image */}
-                  {mainImage && mainImage.fields?.file?.url && (
-                    <div className="relative w-full max-[340px]:h-[215px] max-[450px]:h-[235px] h-[290px] sm:h-[320px] overflow-hidden rounded-md">
-                      <Image
-                        src={getAssetUrl(mainImage)}
-                        alt={postTitle}
-                        fill
-                        priority
-                        className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700"
-                      />
-                    </div>
-                  )}
+              <div key={i} className="w-full">
+                <Link
+                  // key={i}
+                  href={`/writings/${postSlug}`}
+                  className="block overflow-hidden group"
+                >
+                  <div className="w-full h-full flex flex-col">
+                    {/* Main Image */}
+                    {mainImage && mainImage.fields?.file?.url && (
+                      <div className="relative w-full max-[340px]:h-[215px] max-[450px]:h-[235px] h-[290px] sm:h-[320px] overflow-hidden rounded-md">
+                        <Image
+                          src={getAssetUrl(mainImage)}
+                          alt={postTitle}
+                          fill
+                          priority
+                          className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-all duration-700"
+                        />
+                      </div>
+                    )}
 
-                  {/* Text Content */}
-                  <div className="pt-4 flex flex-col justify-between flex-1">
-                    <div>
-                      {/* Tags */}
-                      {tags && tags.length > 0 && (
-                        <div className="flex flex-wrap">
-                          {tags.map((tag, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs text-accent-extra flex items-center"
-                            >
-                              {tag}
-                              {/* Show the dot if it's NOT the last tag */}
-                              {idx < tags.length - 1 && (
-                                <GoDotFill
-                                  size={5}
-                                  className="text-text-secondary mx-2"
-                                />
-                              )}
-                            </span>
-                          ))}
+                    {/* Text Content */}
+                    <div className="pt-4 flex flex-col justify-between flex-1">
+                      <div>
+                        {/* Tags */}
+                        {tags && tags.length > 0 && (
+                          <div className="flex flex-wrap">
+                            {tags.map((tag, idx) => (
+                              <span
+                                key={idx}
+                                className="text-xs text-accent-extra flex items-center"
+                              >
+                                {tag}
+                                {/* Show the dot if it's NOT the last tag */}
+                                {idx < tags.length - 1 && (
+                                  <GoDotFill
+                                    size={5}
+                                    className="text-text-secondary mx-2"
+                                  />
+                                )}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Post Title */}
+                        <div className="w-fit group relative mt-2 sm:mt-3 mb-2 sm:mb-4">
+                          <h1 className="w-fit text-3xl sm:text-5xl font-bold leading-tight text-text-primary z-0">
+                            {postTitle}
+                          </h1>
+                          <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 group-hover:w-full transition-all duration-500" />
                         </div>
-                      )}
 
-                      {/* Post Title */}
-                      <div className="w-fit group relative mt-2 sm:mt-3 mb-2 sm:mb-4">
-                        <h1 className="w-fit text-3xl sm:text-5xl font-bold leading-tight text-text-primary z-0">
-                          {postTitle}
-                        </h1>
-                        <span className="max-md:hidden absolute -bottom-2 left-0 w-0 h-px bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 group-hover:w-full transition-all duration-500" />
+                        {/* Small Description */}
+                        <p className="text-text-secondary mb-2 sm:mb-3">
+                          {smallDescription}
+                        </p>
                       </div>
 
-                      {/* Small Description */}
-                      <p className="text-text-secondary mb-2 sm:mb-3">
-                        {smallDescription}
+                      {/* Author and Date Posted */}
+                      <p className="text-sm text-gray-500 mb-1 flex items-center">
+                        {author && (
+                          <>
+                            <span className="text-text-primary font-bold">
+                              {author}
+                            </span>
+                            <span className="mx-2">
+                              <GoDotFill
+                                size={5}
+                                className="text-text-secondary"
+                              />
+                            </span>
+                          </>
+                        )}
+                        {new Date(datePosted).toLocaleDateString("en-US", {
+                          month: "long",
+                          day: "2-digit",
+                          year: "numeric",
+                        })}
                       </p>
                     </div>
-
-                    {/* Author and Date Posted */}
-                    <p className="text-sm text-gray-500 mb-1 flex items-center">
-                      {author && (
-                        <>
-                          <span className="text-text-primary font-bold">
-                            {author}
-                          </span>
-                          <span className="mx-2">
-                            <GoDotFill
-                              size={5}
-                              className="text-text-secondary"
-                            />
-                          </span>
-                        </>
-                      )}
-                      {new Date(datePosted).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "2-digit",
-                        year: "numeric",
-                      })}
-                    </p>
                   </div>
-                </div>
-              </Link>
+                </Link>
+                <div
+                  className={`md:hidden w-full h-px mt-4 bg-accent-border`}
+                ></div>
+              </div>
             );
           })}
         </div>
 
         {/* Coming soon text */}
         {currentPage === totalPages && (
-          <div className="w-full center mt-4 sm:mt-8">
+          <div className="w-full center mt-8">
             <p className="uppercase sm:text-lg font-bold text-text-secondary text-center ">
               More posts coming soon
             </p>
