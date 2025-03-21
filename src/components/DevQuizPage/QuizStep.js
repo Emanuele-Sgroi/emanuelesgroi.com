@@ -334,15 +334,17 @@ const NavigationWarning = ({
 
 const CodeBlock = ({ code, lang }) => {
   const { theme } = useContext(ThemeContext);
-  return (
-    <SyntaxHighlighter
-      showLineNumbers={true}
-      wrapLongLines={true}
-      language={lang}
-      style={theme === "dark" ? darcula : oneLight}
-      className="w-full rounded-md border border-accent-border"
-    >
-      {code}
-    </SyntaxHighlighter>
-  );
+  if (typeof code === "string") {
+    return (
+      <SyntaxHighlighter
+        showLineNumbers={true}
+        wrapLongLines={true}
+        language={lang}
+        style={theme === "dark" ? darcula : oneLight}
+        className="w-full rounded-md border border-accent-border"
+      >
+        {code}
+      </SyntaxHighlighter>
+    );
+  }
 };
