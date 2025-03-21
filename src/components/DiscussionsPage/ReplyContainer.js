@@ -70,7 +70,7 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
 
   // Load user reactions from localStorage and initialize reaction states
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !reply?.id) return;
 
     const storedReactions =
       JSON.parse(localStorage.getItem(`reactions-${reply.id}`)) || {};
@@ -110,6 +110,8 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
    * Handles emoji reaction toggling
    */
   const handleEmojiReaction = (emoji) => {
+    if (!reply?.id) return;
+
     const currentCount = reactions[emoji] || 0;
     const isUserReacted = !!userReactions[emoji];
     const updatedReactions = { ...reactions };
@@ -148,7 +150,7 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
               width={32}
               height={32}
               quality={100}
-              className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
+              className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-[#152A45] z-10"
             />
           </>
         ) : (
@@ -160,7 +162,7 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
                 width={32}
                 height={32}
                 quality={100}
-                className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-like-bg-active z-10"
+                className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full object-cover object-center border border-accent-border bg-[#152A45] z-10"
               />
             ) : (
               <div className="md:w-[30px] md:h-[30px] md:min-h-[30px] md:min-w-[30px] w-[28px] h-[28px] min-h-[28px] min-w-[28px] rounded-full bg-bg-button flex items-center justify-center text-base font-semibold text-accent-icon border border-accent-border z-10">
@@ -206,7 +208,9 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
                     <li
                       key={i}
                       className={`text-lg p-1 cursor-pointer hover:bg-bg-hover rounded-md ${
-                        userReactions[em] ? "bg-like-bg-active" : ""
+                        reply?.id && userReactions[em]
+                          ? "bg-like-bg-active"
+                          : ""
                       }`}
                       onClick={() => handleEmojiReaction(em)}
                     >

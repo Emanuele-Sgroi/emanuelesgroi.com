@@ -154,6 +154,13 @@ const ContactForm = ({ generalInfo }) => {
       {/* Contact Form */}
       <div className="main-container">
         <div className="borded-container">
+          <div className="w-full flex justify-start max-md:px-4 mb-6">
+            <p className="w-full text-xs monospace-text">
+              Emanuele-Sgroi<span className="text-accent-icon mx-[2px]">/</span>
+              Contact<span className="text-accent-icon">.js</span>
+            </p>
+          </div>
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -204,6 +211,15 @@ const ContactForm = ({ generalInfo }) => {
               </div>
             </form>
           </Form>
+
+          <div className="max-md:hidden w-full flex items-center justify-start mt-8">
+            <p className="flex items-center gap-4">
+              <span>
+                <FaArrowLeftLong size={18} className="text-accent-icon" />
+              </span>{" "}
+              Alternatively, you can contact me on my socials
+            </p>
+          </div>
         </div>
       </div>
     </>

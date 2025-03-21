@@ -207,7 +207,10 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
         throw new Error("Failed to save the reply.");
       }
 
-      setReplies((prevReplies) => [...prevReplies, newReply]);
+      //setReplies((prevReplies) => [...prevReplies, newReply]);
+
+      const savedReply = await response.json();
+      setReplies((prevReplies) => [...prevReplies, savedReply]);
       console.log("Reply saved successfully");
       toast.success("Your reply has been published!");
     } catch (error) {
@@ -324,16 +327,18 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
       {replies.length > 0 && (
         <div className="relative w-full pt-4 pr-0 pb-2 pl-2 md:pl-4 bg-bg-primary md:bg-bg-secondary border-t border-accent-border overflow-hidden">
           {/* Line */}
-          <div className="w-px h-full bg-accent-icon absolute bottom-0 top-[30px] left-[23px] z-0" />
-          {replies.map((reply, i) => (
-            <ReplyContainer
-              key={reply.id}
-              reply={reply}
-              emojis={emojis}
-              updateReactionsInDB={updateReactionsInDB}
-              authorPicture={authorPicture}
-            />
-          ))}
+          <div className="w-px h-full bg-accent-icon absolute bottom-0 top-[30px] left-[22px] md:left-[30px] z-0" />
+          {[...replies]
+            .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+            .map((reply, i) => (
+              <ReplyContainer
+                key={reply.id}
+                reply={reply}
+                emojis={emojis}
+                updateReactionsInDB={updateReactionsInDB}
+                authorPicture={authorPicture}
+              />
+            ))}
         </div>
       )}
       {/* Reply input container */}
