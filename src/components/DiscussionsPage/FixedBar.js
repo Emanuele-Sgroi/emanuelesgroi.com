@@ -128,7 +128,8 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
                 className="text-accent-icon max-[388px]:hidden"
               />
               <span className="max-[388px]:hidden">
-                {comments.filter((comment) => comment.parentId === null).length}{" "}
+                {comments.filter((comment) => comment.parentId === null)
+                  .length - 1}{" "}
                 Comment
                 {comments.filter((comment) => comment.parentId === null)
                   .length !== 1 && "s"}

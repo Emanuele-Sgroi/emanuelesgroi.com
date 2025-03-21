@@ -94,7 +94,8 @@ const CommentInput = ({
     // Generate avatar URL using Dicebear API
     const avatar = `${DICEBEAR_BASE_URL}/${avatarType}/svg?seed=${encodeURIComponent(
       name
-    )}`;
+    )}&backgroundType=solid,gradientLinear&backgroundColor=ffdfbf,ffd5dc,d1d4f9,c0aede,b6e3f4`;
+
     onSubmit({
       name,
       avatar,
@@ -102,7 +103,11 @@ const CommentInput = ({
       parentId,
     });
 
-    setInputValue(""); // Reset input field
+    // reset fields
+    setInputValue("");
+    setName("");
+    setAvatarType("adventurer");
+    setActiveTab("write");
   };
 
   /**

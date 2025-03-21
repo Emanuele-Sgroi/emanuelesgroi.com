@@ -47,7 +47,7 @@ const ProfileAvatarSelector = ({
   const avatarUrl = name
     ? `${DICEBEAR_BASE_URL}/${avatarType}/svg?seed=${encodeURIComponent(
         name
-      )}&backgroundType=solid,gradientLinear&accessoriesProbability=50&facialHairProbability=50&mask[]&maskProbability=0&skinColor=edb98a,ffdbb4&backgroundColor=ffdfbf,ffd5dc,d1d4f9,c0aede,b6e3f4`
+      )}&backgroundType=solid,gradientLinear&backgroundColor=ffdfbf,ffd5dc,d1d4f9,c0aede,b6e3f4`
     : null; // Show placeholder if name is empty
 
   return (

@@ -209,8 +209,8 @@ const CommentsSection = ({
           })}
         </div>
       )}
-      <div className="w-full flex flex-col mt-4">
-        <div className="w-full h-[2px] bg-accent-border mb-4" />
+      <div className="w-full flex flex-col mt-6 md:mt-4">
+        <div className="max-md:hidden w-full h-[2px] bg-accent-border mb-4" />
         <h5 className="font-semibold max-md:px-4">Add a comment</h5>
         {/* Normal comments input */}
         <div className="mt-4 max-md:p-2 max-md:bg-bg-mobile-primary max-md:border-b max-md:border-t border-accent-border">
