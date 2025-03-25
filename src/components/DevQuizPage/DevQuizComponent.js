@@ -13,51 +13,106 @@ import {
   nodeJsQuestions,
   apiQuestions,
   reactNativeQuestions,
+  htmlQuestions,
+  cssQuestions,
+  typeScriptQuestions,
+  blockchainQuestions,
+  databaseQuestions,
+  cloudQuestions,
 } from "@/utils/devQuizQuestions"; // import all topics created in /utils/devQuizQuestions.js
 
 // Group all topics
 const topics = [
   {
     name: "Core Concepts",
-    description: "Includes OOP, Data Structures, Algorithms, and more",
+    description:
+      "Essential fundamentals including OOP, Data Structures, Algorithms, and problem-solving patterns.",
     key: "CoreConcepts",
     questions: coreConceptsQuestions,
   },
   {
+    name: "JavaScript",
+    description:
+      "Deep dive into the language itself: syntax, types, closures, prototypes, and more.",
+    key: "JavaScript",
+    questions: javascriptQuestions,
+  },
+  {
+    name: "TypeScript",
+    description:
+      "Covers static typing, interfaces, generics, compiler options, and advanced TS features.",
+    key: "TypeScript",
+    questions: typeScriptQuestions,
+  },
+  {
+    name: "Node.js",
+    description:
+      "Focus on the runtime environment: event loop, FS module, middleware, async patterns, etc.",
+    key: "NodeJS",
+    questions: nodeJsQuestions,
+  },
+  {
+    name: "Database",
+    description:
+      "SQL vs. NoSQL, indexing, normalization, transactions, and practical query examples.",
+    key: "Database",
+    questions: databaseQuestions,
+  },
+  {
+    name: "Cloud",
+    description:
+      "Cloud services overview (AWS, Azure, GCP), deployments, IaC, serverless, scaling, and more.",
+    key: "Cloud",
+    questions: cloudQuestions,
+  },
+  {
+    name: "HTML",
+    description:
+      "Semantic tags, forms, accessibility, responsive design, and HTML5 APIs.",
+    key: "HTML",
+    questions: htmlQuestions,
+  },
+  {
+    name: "CSS",
+    description:
+      "Styling techniques, layouts (Flexbox/Grid), responsiveness, preprocessors, performance, etc.",
+    key: "CSS",
+    questions: cssQuestions,
+  },
+  {
     name: "React",
-    description: "Covers React Hooks, Virtual DOM, Lifecycle, and more",
+    description:
+      "Covers React Hooks, Virtual DOM, lifecycle, state management, and ecosystem best practices.",
     key: "React",
     questions: reactQuestions,
   },
   {
     name: "Next.js",
-    description: "Topics include SSR, SSG, API Routes, and more",
+    description:
+      "Server-side rendering (SSR), static site generation (SSG), routing, API routes, and optimizations.",
     key: "NextJS",
     questions: nextQuestions,
   },
   {
-    name: "JavaScript",
-    description: "Covers the programming language in general",
-    key: "JavaScript",
-    questions: javascriptQuestions,
-  },
-  {
-    name: "Node.js",
-    description: "Explores Event Loop, Middleware, File System, and more",
-    key: "NodeJS",
-    questions: nodeJsQuestions,
-  },
-  {
     name: "React Native",
-    description: "Mobile Development with React",
+    description:
+      "Mobile development with React. Components, styling, navigation, and platform APIs.",
     key: "ReactNative",
     questions: reactNativeQuestions,
   },
   {
     name: "API",
-    description: "Includes HTTP Methods, Status Codes, JWT, and more",
+    description:
+      "HTTP methods, REST principles, authentication (JWT), GraphQL, error handling, and best practices.",
     key: "API",
     questions: apiQuestions,
+  },
+  {
+    name: "Blockchain",
+    description:
+      "Consensus mechanisms, smart contracts, dApp development, security, and real-world blockchain use cases.",
+    key: "Blockchain",
+    questions: blockchainQuestions,
   },
 ];
 

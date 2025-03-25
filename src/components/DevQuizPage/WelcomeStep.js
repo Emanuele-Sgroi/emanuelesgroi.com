@@ -20,14 +20,18 @@ const WelcomeStep = ({ onStartQuiz }) => (
         Welcome to Dev Quiz
       </h1>
     </div>
-    <p className="max-md:px-4 text-center text-text-secondary text-lg">
-      As developers, we have to remember a lot. Like any skill, memory needs
-      practice. I&apos;ve always loved using quizzes and flashcards to train my
-      brain to remember hard concepts, so I decided to create my own.
+    <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
+      As developers, there&apos;s always a ton to keep in mind. Like any skill,
+      memory needs regular practice. I&apos;ve always enjoyed using quizzes and
+      flashcards to sharpen my brain for those tricky concepts, so I went ahead
+      and built my own.
     </p>
-    <p className="max-md:px-4 text-center text-text-secondary text-lg">
-      No difficulty levels here! Questions are random and come in all levels of
-      challenge.
+    <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
+      No difficulty levels here! questions are pulled at random, mixing
+      everything from beginner to advanced.
+    </p>
+    <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
+      Have Fun 💪
     </p>
     <p className="max-md:px-4 text-center text-text-primary text-xs sm:text-sm mb-4">
       Pick a topic <span className="text-accent-extra">&gt;</span> Set the
