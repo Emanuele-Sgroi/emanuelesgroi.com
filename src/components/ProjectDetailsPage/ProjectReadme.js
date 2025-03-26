@@ -73,71 +73,63 @@ const ProjectReadme = ({ project }) => {
         </span>
       ),
       [MARKS.BOLD]: (text) => (
-        <strong className="poppins-bold text-text-primary">{text}</strong>
+        <strong className=" text-text-primary">{text}</strong>
       ),
-      [MARKS.ITALIC]: (text) => (
-        <em className="poppins-italic text-text-primary">{text}</em>
-      ),
+      [MARKS.ITALIC]: (text) => <em className="text-text-primary">{text}</em>,
       [MARKS.UNDERLINE]: (text) => (
         <span className="underline text-text-primary">{text}</span>
       ),
-      [MARKS.SUPERSCRIPT]: (text) => (
-        <sup className="align-super poppins-regular">{text}</sup>
-      ),
-      [MARKS.SUBSCRIPT]: (text) => (
-        <sub className="align-sub poppins-regular">{text}</sub>
-      ),
+      [MARKS.SUPERSCRIPT]: (text) => <sup className="align-super ">{text}</sup>,
+      [MARKS.SUBSCRIPT]: (text) => <sub className="align-sub ">{text}</sub>,
       [MARKS.STRIKETHROUGH]: (text) => (
-        <s className="line-through text-text-secondary poppins-regular">
-          {text}
-        </s>
+        <s className="line-through text-text-secondary ">{text}</s>
       ),
     },
     renderNode: {
       [BLOCKS.HEADING_1]: (node, children) => {
         return (
-          <h1 className="max-w-full poppins-bold text-4xl md:text-5xl text-text-primary leading-tight mt-8 md:mt-10 mb-5 break-words">
+          <h1 className="max-w-full  text-4xl md:text-5xl text-text-primary leading-tight mt-8 md:mt-10 mb-5 break-words">
             {children}
           </h1>
         );
       },
       [BLOCKS.HEADING_2]: (node, children) => {
         return (
-          <h2 className="poppins-bold text-3xl md:text-4xl text-text-primary leading-tight mt-8 mb-4">
+          <h2 className=" text-3xl md:text-4xl text-text-primary leading-tight mt-8 mb-4 font-bold">
             {children}
           </h2>
         );
       },
       [BLOCKS.HEADING_3]: (node, children) => {
         return (
-          <h3 className="poppins-semibold text-2xl md:text-3xl text-text-primary leading-tight mt-6 mb-3">
+          <h3 className=" text-2xl md:text-3xl text-text-primary leading-tight mt-6 mb-3 font-semibold">
             {children}
           </h3>
         );
       },
       [BLOCKS.HEADING_4]: (node, children) => {
         return (
-          <h4 className="poppins-semibold text-xl md:text-2xl text-text-primary leading-tight mt-4 mb-3">
+          <h4 className=" text-xl md:text-2xl text-text-primary leading-tight mt-4 mb-3 font-semibold">
             {children}
           </h4>
         );
       },
       [BLOCKS.HEADING_5]: (node, children) => {
         return (
-          <h5 className="poppins-medium text-lg md:text-xl text-text-primary leading-tight mt-3 mb-3">
+          <h5 className=" text-lg md:text-xl text-text-primary leading-tight mt-3 mb-3 font-semibold">
             {children}
           </h5>
         );
       },
       [BLOCKS.HEADING_6]: (node, children) => {
         return (
-          <h6 className="poppins-medium text-base md:text-lg text-text-primary leading-tight mt-2 mb-2">
+          <h6 className=" text-base md:text-lg text-text-primary leading-tight mt-2 mb-2 font-semibold">
             {children}
           </h6>
         );
       },
       [BLOCKS.PARAGRAPH]: (node, children) => (
-        <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-base md:text-lg mb-5 break-words">
+        <p className=" leading-[30px] text-text-primary tracking-[0.01em] text-base md:text-lg mb-5 break-words">
           {children}
         </p>
       ),
@@ -149,7 +141,7 @@ const ProjectReadme = ({ project }) => {
             href={url}
             target={isExternal ? "_blank" : "_self"}
             rel={isExternal ? "noopener noreferrer" : ""}
-            className="text-text-link underline poppins-regular leading-[30px] tracking-[0.01em] text-base md:text-lg break-words"
+            className="text-text-link underline  leading-[30px] tracking-[0.01em] text-base md:text-lg break-words"
           >
             {children}
           </a>
@@ -162,10 +154,10 @@ const ProjectReadme = ({ project }) => {
         <ol className="list-decimal pl-6">{children}</ol>
       ),
       [BLOCKS.LIST_ITEM]: (node, children) => {
-        return <li className="text-base md:text-lg mb-[22px]">{children}</li>;
+        return <li className="text-base md:text-lg mb-0">{children}</li>;
       },
       [BLOCKS.QUOTE]: (node, children) => (
-        <blockquote className="border-l-4 border-t border-r border-b !border-l-other-chart-blue3 max-md:!text-sm border-accent-border !bg-bg-button poppins-regular pl-4 pt-4 pb-1 pr-4 mb-4 rounded-e-xl">
+        <blockquote className="border-l-4 border-t border-r border-b !border-l-other-chart-blue3 max-md:!text-sm border-accent-border !bg-bg-button  pl-4 pt-4 pb-1 pr-4 mb-4 rounded-e-xl">
           {children}
         </blockquote>
       ),
@@ -200,7 +192,7 @@ const ProjectReadme = ({ project }) => {
         }
 
         return (
-          <th className="px-4 py-2 bg-other-chart-blue3 border border-[#b9c2ff] dark:border-accent-border text-left text-sm md:text-lg poppins-bold text-white">
+          <th className="px-4 py-2 bg-other-chart-blue3 border border-[#b9c2ff] dark:border-accent-border text-left text-sm md:text-lg  text-white">
             {textContent}
           </th>
         );
@@ -217,7 +209,7 @@ const ProjectReadme = ({ project }) => {
         }
 
         return (
-          <td className="px-4 py-2 border border-[#b9c2ff] dark:border-accent-border text-sm md:text-base poppins-regular">
+          <td className="px-4 py-2 border border-[#b9c2ff] dark:border-accent-border text-sm md:text-base ">
             {textContent}
           </td>
         );
@@ -279,10 +271,10 @@ const ProjectReadme = ({ project }) => {
   };
 
   return (
-    <div className=" w-full  md:p-8  max-md:pb-8 max-md:py-4 max-md:px-4">
+    <div className=" w-full  md:px-8 md:pb-8 pt-0 max-md:pb-8 max-md:py-4 max-md:px-4">
       {documentToReactComponents(readme, options)}
       <div className="w-full mt-12">
-        <h2 className="poppins-bold text-2xl md:text-4xl text-text-primary leading-tight  mb-4">
+        <h2 className=" text-2xl md:text-4xl text-text-primary leading-tight font-semibold mb-4">
           How I built this project
         </h2>
         <div className="w-full h-px bg-accent-border mb-5" />
@@ -291,7 +283,7 @@ const ProjectReadme = ({ project }) => {
             Object.entries(categorizedTechStack).map(
               ([category, technologies]) => (
                 <li key={category}>
-                  <h5 className="poppins-medium text-lg md:text-xl text-text-primary leading-tight mb-3">
+                  <h5 className=" text-lg md:text-xl text-text-primary leading-tight mb-3">
                     {category}
                   </h5>
                   <div className="flex flex-col gap-3 mt-1">
@@ -310,11 +302,11 @@ const ProjectReadme = ({ project }) => {
                             quality={100}
                             className="w-[22px] md:w-[24px] h-auto"
                           />
-                          <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-base">
+                          <p className=" leading-[30px] text-text-primary tracking-[0.01em] text-base">
                             {tech.name}:
                           </p>
                         </div>
-                        <p className="poppins-regular leading-[30px] text-text-secondary tracking-[0.01em] text-base">
+                        <p className=" leading-[30px] text-text-secondary tracking-[0.01em] text-base">
                           {tech.description}
                         </p>
                       </div>
@@ -324,7 +316,7 @@ const ProjectReadme = ({ project }) => {
               )
             )}
           <li>
-            <h5 className="poppins-medium text-lg md:text-xl text-text-primary leading-tight mb-3">
+            <h5 className=" text-lg md:text-xl text-text-primary leading-tight mb-3">
               Languages
             </h5>
             <div className="w-full flex flex-col gap-2">
@@ -336,7 +328,7 @@ const ProjectReadme = ({ project }) => {
                     style={{ backgroundColor: lang.color }}
                   />
                   {/* Language Name */}
-                  <p className="poppins-regular leading-[30px] text-text-primary tracking-[0.01em] text-base">
+                  <p className=" leading-[30px] text-text-primary tracking-[0.01em] text-base">
                     {lang.name}
                   </p>
                 </div>
