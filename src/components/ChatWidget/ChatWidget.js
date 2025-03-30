@@ -7,6 +7,7 @@ import { allowedExtensions } from "@/utils/allowedExtensions";
 import AttachFileOverlay from "@/components/ManuPilotPage/AttachFileOverlay";
 import { useManuPilotContent } from "@/hooks/useManuPilotContent";
 import { usePortfolioContent } from "@/hooks/usePortfolioContent";
+import { ToastContainer, toast } from "react-toastify";
 
 /**
  * ChatWidget Component
