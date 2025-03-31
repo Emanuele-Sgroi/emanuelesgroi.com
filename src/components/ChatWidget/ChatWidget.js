@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
  * - Displaying the chat UI
  * - Managing active chat states
  * - Handling file drag & drop functionality
- * - Switching between general and project-specific chats
+ * - Switching between general and project-specific chat
  */
 
 export default function ChatWidget() {
