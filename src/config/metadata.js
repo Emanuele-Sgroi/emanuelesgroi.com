@@ -37,7 +37,7 @@ export const defaultMetadata = {
   metadataBase: new URL(my_url), // Required for correct OG image paths
   title: "Emanuele Sgroi | Full-Stack Developer",
   description:
-    "Welcome to the portfolio of Emanuele Sgroi, a full-stack developer specializing in React, Next.js, and mobile development. Explore my projects, writings, and interactive features.",
+    "Hi, I’m Emanuele Sgroi — a full-stack developer who enjoys building web and mobile apps with React, Next.js, and modern tools. This portfolio showcases my projects, writings, and a few interactive features I’ve built along the way.",
   keywords: [
     "Emanuele Sgroi",
     "Full-Stack Developer",
@@ -55,7 +55,7 @@ export const defaultMetadata = {
   openGraph: {
     title: "Emanuele Sgroi | Full-Stack Developer",
     description:
-      "Explore my portfolio showcasing my projects, blog posts, and interactive features such as Dev Quiz and ManuPilot AI.",
+      "A portfolio by Emanuele Sgroi — full-stack developer building web and mobile apps with React, Next.js, and modern tools.",
     url: my_url,
     type: "website",
     images: [{ url: ogImageUrl }],
@@ -64,7 +64,7 @@ export const defaultMetadata = {
     card: "summary_large_image",
     title: "Emanuele Sgroi | Full-Stack Developer",
     description:
-      "Explore my portfolio showcasing my projects, blog posts, and interactive features such as Dev Quiz and ManuPilot AI.",
+      "A portfolio by Emanuele Sgroi — full-stack developer building web and mobile apps with React, Next.js, and modern tools.",
     images: [ogImageUrl],
   },
 };
@@ -73,7 +73,7 @@ export const metadataByPage = {
   "/": {
     title: "Welcome | Emanuele Sgroi",
     description:
-      "Hi, I'm Emanuele Sgroi, a full-stack developer passionate about building web and mobile applications. Explore my projects, writings, and interactive Dev Quiz!",
+      "Hi, I’m Emanuele Sgroi — a full-stack developer who enjoys building web and mobile apps with React, Next.js, and modern tools. This portfolio showcases my projects, writings, and a few interactive features I’ve built along the way.",
     keywords: [
       "Portfolio",
       "Projects",
@@ -114,8 +114,7 @@ export const metadataByPage = {
   },
   "/dev-quiz": {
     title: "Dev Quiz | Get prepared for interviews",
-    description:
-      "Improve your coding knowledge with my interactive Dev Quiz. Topics include JavaScript, React, Next.js, and algorithms.",
+    description: "Improve your coding knowledge with my interactive Dev Quiz.",
     keywords: [
       "Dev Quiz",
       "Coding Quiz",
