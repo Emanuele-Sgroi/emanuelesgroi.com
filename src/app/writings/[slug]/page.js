@@ -24,14 +24,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { data: blogPost, error } = await fetchBlogPost(params.slug);
 
+  const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
+
   if (error || !blogPost) {
     return {
+      metadataBase,
       title: "Blog Post Not Found | Emanuele Sgroi",
       description: "Oops! This blog post doesn't exist.",
     };
   }
 
+  const ogImage = getAssetUrl(blogPost.mainImage) || "/images/og-image.jpg";
+
   return {
+    metadataBase,
     title: blogPost.postTitle || "Blog Post | Emanuele Sgroi",
     description: blogPost.smallDescription || "Read this blog post.",
     keywords: blogPost.metaKeywords?.split(", ") || [
@@ -43,11 +49,15 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: blogPost.postTitle || "Blog Post | Emanuele Sgroi",
       description: blogPost.smallDescription || "Read this blog post.",
-      url: `https://www.emanuelesgroi.com/writings/${params.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}writings/${params.slug}`,
       type: "article",
-      images: [
-        { url: getAssetUrl(blogPost.mainImage) || "/images/og-image.jpg" },
-      ],
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blogPost.postTitle || "Blog Post | Emanuele Sgroi",
+      description: blogPost.smallDescription || "Read this blog post.",
+      images: [ogImage],
     },
   };
 }
