@@ -24,14 +24,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { data: project, error } = await fetchProject(params.slug);
 
+  const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
+
   if (error || !project) {
     return {
+      metadataBase,
       title: "Project Not Found | Emanuele Sgroi",
       description: "Oops! This page doesn't exist.",
     };
   }
 
+  const ogImage = getAssetUrl(project.mainImage) || "/images/og-image.jpg";
+
   return {
+    metadataBase,
     title: project.projectTitle || "Project Details | Emanuele Sgroi",
     description: project.smallDescription || "Check this project.",
     keywords: project.metaKeywords?.split(", ") || [
@@ -43,13 +49,17 @@ export async function generateMetadata({ params }) {
       "Software Engineer",
     ],
     openGraph: {
-      title: project.postTitle || "Blog Post | Emanuele Sgroi",
-      description: project.smallDescription || "Read this blog post.",
-      url: `https://www.emanuelesgroi.com/blog/${params.slug}`,
-      type: "article",
-      images: [
-        { url: getAssetUrl(project.mainImage) || "/images/og-image.jpg" },
-      ],
+      title: project.postTitle || "Project Details | Emanuele Sgroi",
+      description: project.smallDescription || "Check this project.",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}portfolio/${params.slug}`,
+      type: "website",
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.projectTitle || "Project Details | Emanuele Sgroi",
+      description: project.smallDescription || "Check this project.",
+      images: [ogImage],
     },
   };
 }
