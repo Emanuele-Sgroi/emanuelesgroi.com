@@ -63,6 +63,8 @@ export { default as NavSearchBar } from "./Navbar/NavSearchBar";
 export { default as ToggleThemeButton } from "./Navbar/ToggleThemeButton";
 export { default as NavManuPilotLink } from "./Navbar/NavManuPilotLink";
 export { default as NavMobileSideProfile } from "./Navbar/NavMobileSideProfile";
+export { default as SwitchLanguageNavbar } from "./Navbar/SwitchLanguageNavbar";
+export { default as SwitchLanguageSidebar } from "./Navbar/SwitchLanguageSidebar";
 
 // Exporting Components for --> About This Website Page
 export { default as SiteDocTopSection } from "./AboutThisWebsitePage/SiteDocTopSection";

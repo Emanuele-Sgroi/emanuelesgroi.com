@@ -5,9 +5,12 @@ import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { ChatProvider } from "@/context/ChatProvider";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { Navbar, Footer, ChatWidget } from "@/components";
 import { ToastContainer } from "react-toastify";
 import { defaultMetadata } from "@/config/metadata";
+
+import TestLanguages from "@/components/TestLanguages";
 
 // Set default metadata for all pages
 export const metadata = defaultMetadata;
@@ -25,14 +28,17 @@ export default function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body>
         <ThemeProvider>
-          <ToastContainer />
-          <ChatProvider>
-            <GreetingPopup />
-            <ChatWidget />
-            <Navbar />
-            {children}
-            <Footer />
-          </ChatProvider>
+          <LanguageProvider>
+            <ToastContainer />
+            <ChatProvider>
+              <GreetingPopup />
+              <ChatWidget />
+              <Navbar />
+              {children}
+              <Footer />
+              <TestLanguages />
+            </ChatProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

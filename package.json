@@ -32,6 +32,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "contentful": "^11.2.0",
+    "country-flag-icons": "^1.5.18",
     "dotenv": "^16.4.5",
     "emailjs-com": "^3.2.0",
     "lucide-react": "^0.453.0",

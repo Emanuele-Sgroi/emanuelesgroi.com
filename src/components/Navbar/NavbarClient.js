@@ -21,6 +21,7 @@ import {
   ToggleThemeButton,
   NavManuPilotLink,
   NavMobileSideProfile,
+  SwitchLanguageNavbar,
 } from "@/components";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
@@ -101,7 +102,9 @@ const NavbarClient = ({
             />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <NavManuPilotLink />
+            <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
             <ToggleThemeButton onClick={toggleTheme} theme={theme} />
+            <SwitchLanguageNavbar />
 
             {/* Mobile only */}
             <NavMobileSideProfile

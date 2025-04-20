@@ -31,6 +31,7 @@ import { getAssetUrl } from "@/utils/imageUtils";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SwitchLanguageSidebar } from "@/components";
 
 /**
  * NavMobileSideProfile Component
@@ -158,11 +159,11 @@ const NavMobileSideProfile = ({
                 </div>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <div className="text-xs">Theme</div>
+                  <div className="text-xs">Settings</div>
                 </div>
                 {/* Switch theme */}
                 <ToggleThemeMobile onClick={onClick} theme={theme} />
-
+                <SwitchLanguageSidebar />
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
                   <div className="text-xs">Explore</div>
                 </div>
