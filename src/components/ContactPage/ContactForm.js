@@ -93,13 +93,7 @@ const ContactForm = ({ generalInfo }) => {
       {/* Mobile view social links */}
       <div className="md:hidden main-container">
         <div className="borded-container">
-          <div className="w-full flex justify-start max-md:px-4">
-            <p className="w-full text-xs monospace-text">
-              Emanuele-Sgroi<span className="text-accent-icon mx-[2px]">/</span>
-              Contact<span className="text-accent-icon">.js</span>
-            </p>
-          </div>
-          <div className="w-full mt-6 mb-4 border-b border-accent-border pb-1 max-md:px-4">
+          <div className="w-full  mb-4 border-b border-accent-border pb-1 max-md:px-4">
             <h4 className="font-semibold max-md:text-xl">Connect With Me:</h4>
           </div>
           {/* Social Media Links */}
@@ -212,12 +206,16 @@ const ContactForm = ({ generalInfo }) => {
             </form>
           </Form>
 
-          <div className="max-md:hidden w-full flex items-center justify-start mt-8">
-            <p className="flex items-center gap-4">
+          <div className="w-full flex items-center justify-start mt-8 max-md:px-4">
+            <p className="max-md:hidden flex items-center gap-4">
               <span>
                 <FaArrowLeftLong size={18} className="text-accent-icon" />
               </span>{" "}
               Alternatively, you can contact me on my socials
+            </p>
+            <p className="md:hidden text-sm">
+              Or contact me directly via email:{" "}
+              <a href={`mailto:${generalInfo?.email}`}>{generalInfo?.email}</a>
             </p>
           </div>
         </div>

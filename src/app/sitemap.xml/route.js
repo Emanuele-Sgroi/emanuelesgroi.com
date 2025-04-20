@@ -1,7 +1,12 @@
 import { fetchProjectSlugs, fetchBlogPostSlugs } from "@/utils/fetchCMSContent";
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  let baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  // Remove trailing slash if it exists
+  if (baseUrl.endsWith("/")) {
+    baseUrl = baseUrl.slice(0, -1);
+  }
 
   // Fetch dynamic content for projects and blog posts
   const { data: projectSlugs, error: projectError } = await fetchProjectSlugs();
