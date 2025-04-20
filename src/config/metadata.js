@@ -37,7 +37,7 @@ export const defaultMetadata = {
   metadataBase: new URL(my_url), // Required for correct OG image paths
   title: "Emanuele Sgroi | Full-Stack Developer",
   description:
-    "Welcome to the portfolio of Emanuele Sgroi, a full-stack developer specializing in React, Next.js, and mobile development. Explore my projects, writings, and interactive Dev Quiz.",
+    "Welcome to the portfolio of Emanuele Sgroi, a full-stack developer specializing in React, Next.js, and mobile development. Explore my projects, writings, and interactive features.",
   keywords: [
     "Emanuele Sgroi",
     "Full-Stack Developer",
@@ -53,7 +53,7 @@ export const defaultMetadata = {
     "Coding Tutorials",
   ],
   openGraph: {
-    title: "Emanuele Sgroi | Full-Stack Developer, React & Next.js Expert",
+    title: "Emanuele Sgroi | Full-Stack Developer",
     description:
       "Explore my portfolio showcasing my projects, blog posts, and interactive features such as Dev Quiz and ManuPilot AI.",
     url: my_url,
