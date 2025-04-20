@@ -144,7 +144,7 @@ const NavSearchBar = ({
   const otherLinks = [
     {
       icon: <RiFileListLine size={18} className="text-accent-icon" />,
-      name: "Site Map",
+      name: "Site Map XML",
       path: "/sitemap.xml",
       label: "Open",
     },

@@ -148,6 +148,13 @@ const ReadmeTitle = ({ title }) => {
 };
 
 const PinnedTabs = ({ title, pinnedTabs }) => {
+  const truncateText = (text, max) => {
+    if (text.length > max) {
+      return text.substring(0, max) + "...";
+    }
+    return text;
+  };
+
   return (
     <div className="w-full mt-[18px] md:mt-6 max-md:bg-bg-mobile-primary max-md:border-y max-md:border-y-accent-border max-md:py-4 max-md:shadow-sm">
       <div className="w-full flex justify-start items-center gap-1 max-md:px-4">
@@ -165,30 +172,44 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
           >
             {/* Tab header */}
             <div className="w-full flex flex-col">
-              <div className="flex justify-start items-center gap-2">
-                <RiBookMarkedFill size={18} className="text-accent-icon" />
+              <div className="flex justify-start items-center ">
+                <RiBookMarkedFill
+                  size={18}
+                  className="text-accent-icon min-w-[18px] mr-1"
+                />
                 <Link
                   href={tab.linkTab}
                   className="w-auto text-sm font-semibold hover:underline overflow-hidden text-nowrap"
                 >
-                  {tab.title.substring(0, 49)}
+                  {tab.title.substring(0, 45)}
                 </Link>
 
-                <div className="border border-accent-border rounded-full p-1">
-                  <p className="text-[11.9px] font-semibold text-accent-icon leading-none">
-                    Public
-                  </p>
+                <div className="flex items-center">
+                  <span className="max-md:hidden mr-2 text-sm font-semibold text-text-link">
+                    {tab.title.length > 45 && "..."}
+                  </span>
+                  <div className="border border-accent-border rounded-full p-1">
+                    <p className="text-[11.9px] font-semibold text-accent-icon leading-none">
+                      Public
+                    </p>
+                  </div>
                 </div>
               </div>
               {/* Tab decription */}
               <p className="text-xs text-text-secondary my-2">
-                {tab.description.substring(0, 150)}
+                {truncateText(tab.description, 140)}
               </p>
             </div>
 
             {/* Tab footer */}
             <div className="flex justify-start items-center gap-2">
-              <span className="w-[12px] h-[12px] bg-accent-active rounded-full"></span>
+              <span
+                className={`w-[12px] h-[12px] rounded-full ${
+                  tab.category === "/writings"
+                    ? "bg-[#0969da]"
+                    : "bg-accent-active"
+                }`}
+              ></span>
               <Link
                 href={tab.linkCategory}
                 className="text-xs text-text-secondary hover:underline leading-none"
@@ -217,7 +238,7 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
                 </div>
                 {/* Tab description */}
                 <p className="text-xs text-text-secondary my-2">
-                  {tab.description.substring(0, 40)}
+                  {truncateText(tab.description, 40)}
                 </p>
               </div>
 
