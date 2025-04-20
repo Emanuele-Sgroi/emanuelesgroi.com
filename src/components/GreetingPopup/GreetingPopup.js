@@ -31,12 +31,12 @@ const GreetingPopup = () => {
         const delayPopup = setTimeout(() => {
           setPopupOn(true);
           window.sessionStorage.setItem("hasShownGreetingPopup", "true");
-        }, 3000);
+        }, 4000);
         return () => clearTimeout(delayPopup);
       } else {
         const delayFloater = setTimeout(() => {
           setCanShowFloater(true);
-        }, 3000);
+        }, 4000);
         return () => clearTimeout(delayFloater);
       }
     }
@@ -48,7 +48,7 @@ const GreetingPopup = () => {
       const delayClose = setTimeout(() => {
         setPopupOn(false);
         setCanShowFloater(true);
-      }, 1500);
+      }, 100);
 
       return () => clearTimeout(delayClose);
     }
