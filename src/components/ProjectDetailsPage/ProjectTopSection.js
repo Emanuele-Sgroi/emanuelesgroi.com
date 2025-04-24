@@ -39,7 +39,7 @@ const linkName = process.env.NEXT_PUBLIC_BASE_URL;
  * - isClient: Boolean indicating whether the component is rendered on the client side.
  */
 
-const ProjectTopSection = ({ project, isClient }) => {
+const ProjectTopSection = ({ project, isClient, t }) => {
   const { authorImage, projectTitle, smallDescription } = project;
   const pathname = usePathname();
   const postUrl = `${linkName}${pathname}`;
@@ -62,10 +62,10 @@ const ProjectTopSection = ({ project, isClient }) => {
     navigator.clipboard
       .writeText(postUrl)
       .then(() => {
-        toast("Link Copied");
+        toast(t.copyLinkSuccess);
       })
       .catch((err) => {
-        alert("Failed to copy. Sorry!");
+        alert(t.copyLinkFail);
         console.error("Failed to copy: ", err);
       });
   };
@@ -99,7 +99,7 @@ const ProjectTopSection = ({ project, isClient }) => {
                 isClient ? "" : "disable-transitions"
               }`}
             >
-              Go Back
+              {t.goBack}
             </span>
           </Link>
         )}
@@ -142,7 +142,7 @@ const ProjectTopSection = ({ project, isClient }) => {
                   isClient ? "" : "disable-transitions"
                 }`}
               >
-                Public
+                {t.public}
               </p>
             </div>
           </div>
@@ -158,7 +158,7 @@ const ProjectTopSection = ({ project, isClient }) => {
                   isClient ? "" : "disable-transitions"
                 }`}
               >
-                Share:
+                {t.share}
               </p>
               <div
                 className={` center max-md:justify-start gap-3 flex-wrap ${
@@ -249,7 +249,7 @@ const ProjectTopSection = ({ project, isClient }) => {
                       isClient ? "" : "disable-transitions"
                     }`}
                   >
-                    Copy link
+                    {t.copyLink}
                   </PopoverContent>
                 </Popover>
               </div>

@@ -34,7 +34,7 @@ import { getAssetUrl } from "@/utils/imageUtils";
  * - If it's a dissertation, it is marked with a crown emoji.
  */
 
-const Academic = ({ writingsContent }) => {
+const Academic = ({ writingsContent, t, language }) => {
   const {
     academicTitle,
     academicDescription,
@@ -65,6 +65,16 @@ const Academic = ({ writingsContent }) => {
             {academicDescription}
           </p>
           <p className="text-sm md:text-base text-red-600">{bewareText}</p>
+          {language === "it" && (
+            <>
+              <div className="w-full h-px bg-accent-border" />
+              <p>
+                <span className="text-amber-500 font-semibold">Nota:</span> Il
+                contenuto del PDF é disponibile soltanto in{" "}
+                <span className="font-semibold">Inglese</span>
+              </p>
+            </>
+          )}
         </div>
 
         {/* Pick year menu */}
@@ -178,7 +188,7 @@ const Academic = ({ writingsContent }) => {
                   download={`CS_${academicYear}_${module}_${title}_by_Emanuele_Sgroi`}
                   className="btn-primary mt-6 center text-center"
                 >
-                  📂 Download PDF
+                  {t.download}
                 </a>
 
                 {isDissertation && (

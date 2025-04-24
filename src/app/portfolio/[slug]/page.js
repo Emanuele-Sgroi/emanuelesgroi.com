@@ -1,9 +1,11 @@
+export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Loading, ErrorMessage } from "@/components";
 import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
 import { fetchProject, fetchProjectSlugs } from "@/utils/fetchCMSContent";
 import { getAssetUrl } from "@/utils/imageUtils";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
 // Generate static paths for project slugs
 export async function generateStaticParams() {
@@ -22,7 +24,9 @@ export async function generateStaticParams() {
 
 // Generate metadata dynamically based on the project details
 export async function generateMetadata({ params }) {
-  const { data: project, error } = await fetchProject(params.slug);
+  const lang = getCurrentLanguageServer();
+  const { data: project, error } = await fetchProject(params.slug, lang);
+  // const { data: project, error } = await fetchProject(params.slug);
 
   const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
 
@@ -65,8 +69,8 @@ export async function generateMetadata({ params }) {
 }
 
 // Fetch and display the project details
-async function ProjectContent({ slug }) {
-  const { data: project, error } = await fetchProject(slug);
+async function ProjectContent({ slug, lang }) {
+  const { data: project, error } = await fetchProject(slug, lang);
 
   if (error || !project) {
     console.error(`Error fetching project for slug: ${slug}`, error);
@@ -88,10 +92,11 @@ function ErrorBoundary({ children }) {
 
 // Main project details page component
 export default function Project({ params }) {
+  const lang = getCurrentLanguageServer();
   return (
     <Suspense fallback={<Loading />}>
       <ErrorBoundary>
-        <ProjectContent slug={params.slug} />
+        <ProjectContent slug={params.slug} lang={lang} />
       </ErrorBoundary>
     </Suspense>
   );

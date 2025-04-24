@@ -69,16 +69,29 @@ export const fetchWritingsContent = (lang) =>
 /*  Single‑entry helpers                                        */
 /* ------------------------------------------------------------ */
 export async function fetchProject(slug, lang = "en") {
-  const locale = getContentfulLocale(lang);
-
+  const locale = getContentfulLocale(lang); // "en-US" | "it-IT"
   try {
-    const res = await client.getEntries({
+    // 1. try in the selected locale
+    let res = await client.getEntries({
       content_type: "project",
       "fields.projectSlug": slug,
       locale,
       limit: 1,
     });
-    if (!res.items.length) return { data: null, error: "No project found" };
+
+    // 2. fallback to default locale if nothing found
+    if (!res.items.length && lang !== "en") {
+      res = await client.getEntries({
+        content_type: "project",
+        "fields.projectSlug": slug,
+        locale: "en-US",
+        limit: 1,
+      });
+    }
+
+    if (!res.items.length) {
+      return { data: null, error: "No project found" };
+    }
     return { data: res.items[0].fields, error: null };
   } catch (err) {
     console.error("Error fetching project:", err);

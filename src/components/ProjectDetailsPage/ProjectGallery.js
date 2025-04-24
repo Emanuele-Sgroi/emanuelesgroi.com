@@ -32,7 +32,7 @@ const breakpointColumns = {
  *   - `projectImages`: Array of image objects to be displayed.
  */
 
-const ProjectGallery = ({ project }) => {
+const ProjectGallery = ({ project, t }) => {
   const { projectTitle, hasMixedSideImages, isMobileOnly, projectImages } =
     project;
 
@@ -40,9 +40,7 @@ const ProjectGallery = ({ project }) => {
   if (!projectImages || projectImages.length === 0) {
     return (
       <div className="w-full center p-8">
-        <p className="text-text-secondary text-center">
-          No screenshots available
-        </p>
+        <p className="text-text-secondary text-center">{t.noScreenshots}</p>
       </div>
     );
   }

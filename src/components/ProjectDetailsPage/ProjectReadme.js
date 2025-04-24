@@ -38,7 +38,7 @@ import {
  *   - `languages`: JSON string or array listing the programming languages used.
  */
 
-const ProjectReadme = ({ project }) => {
+const ProjectReadme = ({ project, t }) => {
   const { readme, techStack, languages } = project;
 
   // Access the referenced project tech stack
@@ -275,7 +275,7 @@ const ProjectReadme = ({ project }) => {
       {documentToReactComponents(readme, options)}
       <div className="w-full mt-12">
         <h2 className=" text-2xl md:text-4xl text-text-primary leading-tight font-semibold mb-4">
-          How I built this project
+          {t.howIBuilt}
         </h2>
         <div className="w-full h-px bg-accent-border mb-5" />
         <ul className="flex flex-col justify-start items-start gap-4">
@@ -317,7 +317,7 @@ const ProjectReadme = ({ project }) => {
             )}
           <li>
             <h5 className=" text-lg md:text-xl text-text-primary leading-tight mb-3">
-              Languages
+              {t.languages}
             </h5>
             <div className="w-full flex flex-col gap-2">
               {parsedLanguages.map((lang, index) => (

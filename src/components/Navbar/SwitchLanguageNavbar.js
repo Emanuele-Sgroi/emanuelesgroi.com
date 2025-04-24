@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -23,6 +23,10 @@ const SwitchLanguageNavbar = () => {
     { id: "en", label: "EN", full: "English" },
     { id: "it", label: "IT", full: "Italiano" },
   ];
+
+  useEffect(() => {
+    setSelectedLang(null);
+  }, [language]);
 
   const currentLang = selectedLang || language;
   const currentOption = options.find((opt) => opt.id === currentLang);
