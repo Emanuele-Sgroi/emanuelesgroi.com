@@ -13,8 +13,6 @@ import { defaultMetadata } from "@/config/metadata";
 //import { cookies } from "next/headers";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
-import TestLanguages from "@/components/TestLanguages";
-
 // Set default metadata for all pages
 export const metadata = defaultMetadata;
 

@@ -2,7 +2,13 @@
 
 import { createContext, useState, useEffect, useContext } from "react";
 
-const LanguageContext = createContext(null);
+//const LanguageContext = createContext(null);
+const defaultCtx = {
+  language: "en",
+  /* eslint-disable @typescript-eslint/no-empty-function */
+  switchLanguage: () => {},
+};
+const LanguageContext = createContext(defaultCtx);
 export const useLanguage = () => useContext(LanguageContext);
 
 export const LanguageProvider = ({ initialLanguage = "en", children }) => {
