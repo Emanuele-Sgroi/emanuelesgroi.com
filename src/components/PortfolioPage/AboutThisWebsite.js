@@ -17,7 +17,7 @@ import { RiFolderInfoLine } from "react-icons/ri";
  * - portfolio: Object containing text content for the section.
  */
 
-const AboutThisWebsite = ({ portfolio }) => {
+const AboutThisWebsite = ({ portfolio, t }) => {
   const { aboutThisWebsiteTitle, aboutText1, aboutText2, aboutText3 } =
     portfolio;
   return (
@@ -56,7 +56,7 @@ const AboutThisWebsite = ({ portfolio }) => {
         className="btn-primary max-md:!text-sm center gap-2 max-[320px]:mt-4 mt-2 lg:mt-0"
       >
         <RiFolderInfoLine size={18} className="max-[235px]:hidden" />
-        About this website
+        {t.about}
       </Link>
     </div>
   );

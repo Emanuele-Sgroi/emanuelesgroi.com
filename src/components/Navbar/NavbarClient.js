@@ -24,6 +24,8 @@ import {
   SwitchLanguageNavbar,
 } from "@/components";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
+import navbarTranslations from "@/translations/navbar";
 
 /**
  * NavbarClient Component
@@ -48,6 +50,10 @@ const NavbarClient = ({
   error,
 }) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  // translation
+  const { language } = useLanguage();
+  const t = navbarTranslations[language];
+
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
@@ -99,11 +105,12 @@ const NavbarClient = ({
               generalInfoContent={generalInfoContent}
               portfolioContent={portfolioContent}
               writingsContent={writingsContent}
+              t={t}
             />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <NavManuPilotLink />
+            <NavManuPilotLink t={t} />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <ToggleThemeButton onClick={toggleTheme} theme={theme} />
+            <ToggleThemeButton onClick={toggleTheme} theme={theme} t={t} />
             <SwitchLanguageNavbar />
 
             {/* Mobile only */}
@@ -112,6 +119,7 @@ const NavbarClient = ({
               error={error}
               onClick={toggleTheme}
               theme={theme}
+              t={t}
             />
           </div>
         </div>
@@ -132,7 +140,7 @@ const NavbarClient = ({
                 )}`}
               >
                 <RiHomeSmileLine size={18} className="text-accent-icon " />
-                Welcome
+                {t.links.welcome}
               </Link>
 
               <div
@@ -150,7 +158,7 @@ const NavbarClient = ({
                 )}`}
               >
                 <GoCodeSquare size={18} className="text-accent-icon " />
-                Portfolio
+                {t.links.portfolio}
               </Link>
               <div
                 className={getLinkClassDiv("/portfolio")}
@@ -163,11 +171,11 @@ const NavbarClient = ({
               <Link
                 href="/writings"
                 className={`relative center gap-1 text-text-primary hover-box ${getLinkClassText(
-                  "/portfolio"
+                  "/writings"
                 )}`}
               >
                 <FaRegBookmark size={18} className="text-accent-icon " />
-                Writings
+                {t.links.writings}
               </Link>
               <div
                 className={getLinkClassDiv("/writings")}
@@ -184,7 +192,7 @@ const NavbarClient = ({
                 )}`}
               >
                 <LuBrain size={18} className="text-accent-icon" />
-                Dev Quiz
+                {t.links.devQuiz}
               </Link>
               <div
                 className={getLinkClassDiv("/dev-quiz")}
@@ -201,7 +209,7 @@ const NavbarClient = ({
                 )}`}
               >
                 <GoCommentDiscussion size={18} className="text-accent-icon" />
-                Discussions
+                {t.links.discussions}
               </Link>
               <div
                 className={getLinkClassDiv("/discussions")}
@@ -218,7 +226,7 @@ const NavbarClient = ({
                 )}`}
               >
                 <GrContact size={18} className="text-accent-icon" />
-                Get in Touch
+                {t.links.contact}
               </Link>
               <div
                 className={getLinkClassDiv("/contact")}
@@ -250,7 +258,7 @@ const NavbarClient = ({
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <RiHomeSmileLine size={18} className="text-accent-icon " />
-                    Welcome
+                    {t.links.welcome}
                   </Link>
 
                   <div className={getLinkClassDivMobile("/")} />
@@ -266,7 +274,7 @@ const NavbarClient = ({
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <GoCodeSquare size={18} className="text-accent-icon " />
-                    Portfolio
+                    {t.links.portfolio}
                   </Link>
                   <div className={getLinkClassDivMobile("/portfolio")} />
                 </li>
@@ -281,7 +289,7 @@ const NavbarClient = ({
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <FaRegBookmark size={18} className="text-accent-icon " />
-                    Writings
+                    {t.links.writings}
                   </Link>
                   <div className={getLinkClassDivMobile("/writings")} />
                 </li>
@@ -296,7 +304,7 @@ const NavbarClient = ({
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <LuBrain size={18} className="text-accent-icon" />
-                    Dev Quiz
+                    {t.links.devQuiz}
                   </Link>
                   <div className={getLinkClassDivMobile("/dev-quiz")} />
                 </li>
@@ -314,7 +322,7 @@ const NavbarClient = ({
                       size={18}
                       className="text-accent-icon"
                     />
-                    Discussions
+                    {t.links.discussions}
                   </Link>
                   <div className={getLinkClassDivMobile("/discussions")} />
                 </li>
@@ -329,7 +337,7 @@ const NavbarClient = ({
                     onClick={() => setOpenSideMenu(false)}
                   >
                     <GrContact size={18} className="text-accent-icon" />
-                    Get in Touch
+                    {t.links.contact}
                   </Link>
                   <div className={getLinkClassDivMobile("/contact")} />
                 </li>

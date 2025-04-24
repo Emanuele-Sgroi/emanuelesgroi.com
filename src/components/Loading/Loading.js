@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
+import { useLanguage } from "@/context/LanguageContext";
+import globalsTranslation from "@/translations/globals";
 
 /**
  * Loading Component
@@ -10,6 +12,10 @@ import { images } from "@/utils/imageImport";
  */
 
 const Loading = () => {
+  // translation
+  const { language } = useLanguage();
+  const t = globalsTranslation[language];
+
   return (
     <div className="w-full center rh-flex-col rh-p-loading gap-4">
       {/* Image */}
@@ -22,7 +28,7 @@ const Loading = () => {
       />
       {/* Text */}
       <p className="text-base md:text-xl font-semibold text-center">
-        Please wait...
+        {t.loading}
       </p>
     </div>
   );

@@ -18,15 +18,15 @@ import NavbarClient from "./NavbarClient";
  * Asynchronous Component.
  */
 
-const Navbar = async () => {
+const Navbar = async ({ lang }) => {
   const { data: generalInfoContent, error: generalInfoError } =
-    await fetchGeneralInfoContent();
+    await fetchGeneralInfoContent(lang);
 
   const { data: portfolioContent, error: portfolioError } =
-    await fetchPortfolioContent();
+    await fetchPortfolioContent(lang);
 
   const { data: writingsContent, error: writingsError } =
-    await fetchWritingsContent();
+    await fetchWritingsContent(lang);
 
   const hasError = generalInfoError || portfolioError || writingsError;
 

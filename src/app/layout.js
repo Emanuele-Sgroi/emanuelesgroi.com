@@ -6,9 +6,12 @@ import "../styles/globals.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { ChatProvider } from "@/context/ChatProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
 import { Navbar, Footer, ChatWidget } from "@/components";
 import { ToastContainer } from "react-toastify";
 import { defaultMetadata } from "@/config/metadata";
+import { cookies } from "next/headers";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
 import TestLanguages from "@/components/TestLanguages";
 
@@ -24,20 +27,28 @@ const GreetingPopup = dynamic(
 );
 
 export default function RootLayout({ children }) {
+  const langFromServer = getCurrentLanguageServer();
+  const cookieStore = cookies();
+  const lang = cookieStore.get("preferredLanguage")?.value || "en";
   return (
-    <html lang="en" className="dark">
+    <html
+      lang={lang === "it" ? "it" : "en"}
+      translate={["en", "it"].includes(lang) ? "no" : undefined}
+      className="dark"
+    >
       <body>
         <ThemeProvider>
           <LanguageProvider>
-            <ToastContainer />
-            <ChatProvider>
-              <GreetingPopup />
-              <ChatWidget />
-              <Navbar />
-              {children}
-              <Footer />
-              <TestLanguages />
-            </ChatProvider>
+            <FullScreenSpinnerProvider>
+              <ToastContainer />
+              <ChatProvider>
+                <GreetingPopup />
+                <ChatWidget />
+                <Navbar lang={langFromServer} />
+                {children}
+                <Footer />
+              </ChatProvider>
+            </FullScreenSpinnerProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

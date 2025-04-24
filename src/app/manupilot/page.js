@@ -1,6 +1,7 @@
 import { fetchManuPilotContent } from "@/utils/fetchCMSContent";
 import ManuPilotPage from "@/pages/ManuPilotPage";
 import { metadataByPage, defaultMetadata } from "@/config/metadata";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
 // Generate metadata for SEO
 export const generateMetadata = () => ({
@@ -9,9 +10,11 @@ export const generateMetadata = () => ({
 });
 
 const ManuPilot = async () => {
+  const lang = getCurrentLanguageServer();
+
   //fetch data from CMS
   const { data: manuPilotContent, error: manuPilotError } =
-    await fetchManuPilotContent();
+    await fetchManuPilotContent(lang);
 
   const hasError = manuPilotError;
 

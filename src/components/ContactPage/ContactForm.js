@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -21,6 +21,8 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoLogoGithub } from "react-icons/io";
 import { FaLinkedin, FaInstagram, FaFacebook, FaDiscord } from "react-icons/fa";
 import { IoCopy } from "react-icons/io5";
+import { useLanguage } from "@/context/LanguageContext";
+import contactTranslations from "@/translations/contact";
 
 /**
  * ContactForm Component
@@ -33,14 +35,25 @@ import { IoCopy } from "react-icons/io5";
  * - Displaying social media links
  */
 
-// Define the form schema using Zod
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  email: z.string().email({ message: "Invalid email address" }),
-  message: z.string().min(1, { message: "Message is required" }),
-});
-
 const ContactForm = ({ generalInfo }) => {
+  // translation
+  const { language } = useLanguage();
+  const t = contactTranslations[language];
+
+  // Define the form schema using Zod
+  const formSchema = z.object({
+    name: z.string().min(1, { message: t.nameRequired }),
+    email: z.string().email({ message: t.emailNotVaild }),
+    message: z
+      .string()
+      .min(1, {
+        message:
+          language === "it"
+            ? "Il messaggio é obbligatorio"
+            : "Message is required",
+      }),
+  });
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Initialize the form with React Hook Form and Zod for validation
@@ -53,6 +66,10 @@ const ContactForm = ({ generalInfo }) => {
     },
   });
 
+  useEffect(() => {
+    form.clearErrors();
+  }, [language]);
+
   // Function to handle form submission
   const onSubmit = async (values) => {
     setIsLoading(true);
@@ -61,13 +78,13 @@ const ContactForm = ({ generalInfo }) => {
       // Call the sendEmail function from utils to send the form data
       const result = await sendEmail(values);
       if (result.status === 200) {
-        toast.success("Got your message. Thank you!");
+        toast.success(t.sentSuccess);
         form.reset(); // Clear form fields on success
       } else {
-        toast.error("Failed to send your message. Please try again.");
+        toast.error(t.sentFail);
       }
     } catch (error) {
-      toast.error("Failed to send your message. Please try again.");
+      toast.error(t.sentFail);
     } finally {
       setIsLoading(false);
     }
@@ -80,10 +97,10 @@ const ContactForm = ({ generalInfo }) => {
     navigator.clipboard
       .writeText(copiedText)
       .then(() => {
-        toast("Copied to clipboard.");
+        toast(t.copySuccess);
       })
       .catch((err) => {
-        alert("Failed to copy. Sorry!");
+        alert(t.copyFail);
         console.error("Failed to copy: ", err);
       });
   };
@@ -94,7 +111,7 @@ const ContactForm = ({ generalInfo }) => {
       <div className="md:hidden main-container">
         <div className="borded-container">
           <div className="w-full  mb-4 border-b border-accent-border pb-1 max-md:px-4">
-            <h4 className="font-semibold max-md:text-xl">Connect With Me:</h4>
+            <h4 className="font-semibold max-md:text-xl">{t.mobileTitle}</h4>
           </div>
           {/* Social Media Links */}
           <div className="w-full flex flex-col gap-4 px-4">
@@ -175,14 +192,20 @@ const ContactForm = ({ generalInfo }) => {
                       <FormControl>
                         {field.name === "message" ? (
                           <Textarea
-                            placeholder="Your message"
+                            placeholder={t.yourMessage}
                             {...field}
                             rows={8}
                             className="contact-input"
                           />
                         ) : (
                           <Input
-                            placeholder={`Your ${field.name}`}
+                            placeholder={
+                              field.name === "name"
+                                ? `${t.your} ${t.name}`
+                                : field.name === "email"
+                                ? `${t.your} ${t.emailAddress}`
+                                : t.yourMessage
+                            }
                             {...field}
                             className="contact-input"
                           />
@@ -200,7 +223,7 @@ const ContactForm = ({ generalInfo }) => {
                   disabled={isLoading}
                   className="w-[124px] !bg-accent-extra !text-white font-semibold"
                 >
-                  {isLoading ? "Sending..." : "Send Message"}
+                  {isLoading ? t.sending : t.send}
                 </Button>
               </div>
             </form>
@@ -211,10 +234,10 @@ const ContactForm = ({ generalInfo }) => {
               <span>
                 <FaArrowLeftLong size={18} className="text-accent-icon" />
               </span>{" "}
-              Alternatively, you can contact me on my socials
+              {t.alternative}
             </p>
             <p className="md:hidden text-sm">
-              Or contact me directly via email:{" "}
+              {t.viaEmail}{" "}
               <a href={`mailto:${generalInfo?.email}`}>{generalInfo?.email}</a>
             </p>
           </div>

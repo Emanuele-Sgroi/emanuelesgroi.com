@@ -2,38 +2,43 @@
 
 import { createContext, useState, useEffect, useContext } from "react";
 
-// Create context
-const LanguageContext = createContext();
-
-// Custom hook for using language context
+const LanguageContext = createContext(null);
 export const useLanguage = () => useContext(LanguageContext);
 
-// Provider component
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en"); // default
+  const [language, setLanguage] = useState("en");
 
   useEffect(() => {
-    // Try from localStorage first
-    const storedLang = localStorage.getItem("preferredLanguage");
+    const stored = localStorage.getItem("preferredLanguage");
 
-    if (storedLang) {
-      setLanguage(storedLang);
+    if (stored) {
+      setLanguage(stored);
     } else {
-      // Auto detect browser language
-      const browserLang = navigator.language.slice(0, 2);
-      const supportedLangs = ["en", "it"]; // to simplify since my website only supports 2 languages
-      const detectedLang = supportedLangs.includes(browserLang)
-        ? browserLang
-        : "en"; // fallback to English
-      setLanguage(detectedLang);
-      localStorage.setItem("preferredLanguage", detectedLang); // Update local storage
+      const browser = navigator.language.slice(0, 2);
+      const supported = ["en", "it"];
+      const detected = supported.includes(browser) ? browser : "en";
+      setLanguage(detected);
+      localStorage.setItem("preferredLanguage", detected);
+      document.cookie = `preferredLanguage=${detected}; path=/`;
     }
   }, []);
 
-  // Change language and persist
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === "preferredLanguage" && e.newValue) {
+        //setLanguage(e.newValue);
+        setTimeout(() => setLanguage(e.newValue), 100);
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
   const switchLanguage = (lang) => {
-    setLanguage(lang);
+    if (lang === language) return; // nothing to do
+    setTimeout(() => setLanguage(lang), 100); // update React state
     localStorage.setItem("preferredLanguage", lang);
+    document.cookie = `preferredLanguage=${lang}; path=/`;
   };
 
   return (

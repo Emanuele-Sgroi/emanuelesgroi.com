@@ -19,7 +19,7 @@ import { ImEye } from "react-icons/im";
  * - selectedTag: String representing the selected technology filter.
  */
 
-const GridLayout = ({ portfolio, selectedTag }) => {
+const GridLayout = ({ portfolio, selectedTag, t }) => {
   // Access the referenced projects
   const projectsRef = portfolio?.projects?.map((project) => project.fields);
 
@@ -57,6 +57,7 @@ const GridLayout = ({ portfolio, selectedTag }) => {
             demoLink={demoLink}
             codeLink={codeLink}
             mainImage={mainImage}
+            t={t}
           />
         );
       })}
@@ -95,6 +96,7 @@ const ProjectCard = ({
   codeLink,
   mainImage,
   key,
+  t,
 }) => {
   return (
     <div
@@ -154,16 +156,16 @@ const ProjectCard = ({
               className="max-[265px]:hidden text-text-secondary hover:text-text-link hover:underline text-xs flex items-center gap-1 "
             >
               <ImEye size={18} />
-              Demo
+              {t.demo}
             </Link>
           ) : (
             <div className="max-[265px]:hidden relative w-fit group/item">
               <p className="text-text-secondary text-xs flex items-center gap-1 opacity-50 cursor-not-allowed ">
                 <ImEye size={18} />
-                Demo
+                {t.demo}
               </p>
               <span className="absolute -bottom-6 left-1/2 tranform -translate-x-1/2 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300">
-                Demo not available for this project
+                {t.demoNotAvailable}
               </span>
             </div>
           )}
@@ -176,16 +178,16 @@ const ProjectCard = ({
               className="max-[265px]:hidden text-text-secondary hover:text-text-link hover:underline text-xs flex items-center gap-1 "
             >
               <IoLogoGithub size={18} />
-              Code
+              {t.code}
             </Link>
           ) : (
             <div className="max-[265px]:hidden relative w-fit group/item">
               <p className="text-text-secondary text-xs flex items-center gap-1 opacity-50 cursor-not-allowed ">
                 <IoLogoGithub size={18} />
-                Code
+                {t.code}
               </p>
               <span className="absolute -bottom-6 left-1/2 tranform -translate-x-1/2 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300">
-                Source code not available for this project
+                {t.codeNotAvailable}
               </span>
             </div>
           )}

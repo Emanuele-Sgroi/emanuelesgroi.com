@@ -1,13 +1,20 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
 import { metadataByPage } from "@/config/metadata";
+import { useLanguage } from "@/context/LanguageContext";
+import globalsTranslation from "@/translations/globals";
 
 // Generate metadata for SEO
 export const metadata = metadataByPage["/not-found"];
 
 const NotFound = () => {
-  // Return simple UI for 404 Not Found
+  // translation
+  const { language } = useLanguage();
+  const t = globalsTranslation[language];
+
   return (
     <div className="w-full center rh-flex-col rh-p-loading gap-4">
       <div className="center border-2 border-accent-border rounded-full overflow-hidden">
@@ -20,9 +27,11 @@ const NotFound = () => {
         />
       </div>
       <div className="center flex-col gap-2">
-        <h1 className="text-center font-black text-[80px]">404</h1>
+        <h1 className="text-center font-black text-[80px]">
+          {t.notFound.code}
+        </h1>
         <p className="md:text-xl font-semibold text-center bg-bg-button px-4 py-1 rounded-full">
-          This is not the web page you are looking for.
+          {t.notFound.message}
         </p>
       </div>
     </div>

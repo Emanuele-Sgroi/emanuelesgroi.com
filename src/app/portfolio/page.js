@@ -4,6 +4,7 @@ import {
 } from "@/utils/fetchCMSContent";
 import PortfolioPage from "@/pages/PortfolioPage";
 import { metadataByPage, defaultMetadata } from "@/config/metadata";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
 // Generate metadata for SEO
 export const generateMetadata = () => ({
@@ -12,11 +13,13 @@ export const generateMetadata = () => ({
 });
 
 const Portfolio = async () => {
+  const lang = getCurrentLanguageServer();
+
   // Fetch data from CMS
   const { data: portfolioContent, error: portfolioError } =
-    await fetchPortfolioContent();
+    await fetchPortfolioContent(lang);
   const { data: generalInfoContent, error: generalInfoError } =
-    await fetchGeneralInfoContent();
+    await fetchGeneralInfoContent(lang);
 
   const hasError = portfolioError || generalInfoError;
 

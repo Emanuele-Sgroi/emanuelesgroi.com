@@ -28,7 +28,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
  * - Hides the component when already on the ManuPilot page.
  */
 
-const NavManuPilotLink = () => {
+const NavManuPilotLink = ({ t }) => {
   const pathname = usePathname();
   const { openChat } = useChat();
   const [open, setOpen] = useState(false);
@@ -86,7 +86,7 @@ const NavManuPilotLink = () => {
             isManupilot && "!hidden"
           }`}
         >
-          <p className="text-xs">Quick Chat with ManuPilot</p>
+          <p className="text-xs">{t.tooltips.quickChat}</p>
         </PopoverContent>
       </Popover>
 
@@ -113,7 +113,7 @@ const NavManuPilotLink = () => {
             isManupilot && "!hidden"
           }`}
         >
-          <p className="text-xs">Immersive conversation with ManuPilot</p>
+          <p className="text-xs">{t.tooltips.immersive}</p>
         </PopoverContent>
       </Popover>
     </div>

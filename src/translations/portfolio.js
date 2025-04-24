@@ -1,0 +1,38 @@
+const portfolioTranslations = {
+  en: {
+    list: "list",
+    grid: "grid",
+    layout: "Layout",
+    random: "Random",
+    askManupilot: "Ask ManuPilot",
+    filter: "Filter by Tag",
+    placeholder: "Search tags",
+    noFound: "No tag found.",
+    all: "All",
+    public: "Public",
+    demo: "Demo",
+    code: "Code",
+    demoNotAvailable: "Demo not available for this project",
+    codeNotAvailable: "Source code not available for this project",
+    about: "About this website",
+  },
+  it: {
+    list: "Lista",
+    grid: "Griglia",
+    layout: "Layout",
+    random: "Casuale",
+    askManupilot: "Chiedi a ManuPilot",
+    filter: "Filtra per tag",
+    placeholder: "Cerca tag",
+    noFound: "Nessun tag trovato.",
+    all: "Tutti",
+    public: "Pubblico",
+    demo: "Demo",
+    code: "Codice",
+    demoNotAvailable: "Demo non disponibile per questo progetto",
+    codeNotAvailable: "Codice non disponibile per questo progetto",
+    about: "Info sul sito",
+  },
+};
+
+export default portfolioTranslations;

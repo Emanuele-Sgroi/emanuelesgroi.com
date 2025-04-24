@@ -56,6 +56,7 @@ const NavMobileSideProfile = ({
   theme,
   generalInfoContent,
   error,
+  t,
 }) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -78,7 +79,7 @@ const NavMobileSideProfile = ({
         <SheetContent className="!bg-bg-primary !border-accent-border md:hidden overflow-y-auto thin-scrollbar">
           <SheetHeader>
             <SheetDescription>
-              <div className="text-red-500">Failed to load...</div>
+              <div className="text-red-500">{t.sideMenu.loadfail}</div>
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
@@ -103,10 +104,10 @@ const NavMobileSideProfile = ({
     navigator.clipboard
       .writeText(copiedText)
       .then(() => {
-        toast("Copied to clipboard.");
+        toast(t.sideMenu.copySuccess);
       })
       .catch((err) => {
-        alert("Failed to copy. Sorry!");
+        alert(t.sideMenu.copyFail);
         console.error("Failed to copy: ", err);
       });
   };
@@ -159,13 +160,13 @@ const NavMobileSideProfile = ({
                 </div>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <div className="text-xs">Settings</div>
+                  <div className="text-xs">{t.sideMenu.settings}</div>
                 </div>
                 {/* Switch theme */}
-                <ToggleThemeMobile onClick={onClick} theme={theme} />
+                <ToggleThemeMobile onClick={onClick} theme={theme} t={t} />
                 <SwitchLanguageSidebar />
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <div className="text-xs">Explore</div>
+                  <div className="text-xs">{t.sideMenu.explore}</div>
                 </div>
                 <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
                   {/* Welcome */}
@@ -179,7 +180,8 @@ const NavMobileSideProfile = ({
                         size={18}
                         className="text-accent-icon "
                       />
-                      Welcome <span className={getLinkClassDivMobile("/")} />
+                      {t.links.welcome}{" "}
+                      <span className={getLinkClassDivMobile("/")} />
                     </Link>
                   </li>
 
@@ -191,7 +193,7 @@ const NavMobileSideProfile = ({
                       onClick={() => setOpen(false)}
                     >
                       <GoCodeSquare size={18} className="text-accent-icon " />
-                      Portfolio{" "}
+                      {t.links.portfolio}{" "}
                       <span className={getLinkClassDivMobile("/portfolio")} />
                     </Link>
                   </li>
@@ -204,7 +206,7 @@ const NavMobileSideProfile = ({
                       onClick={() => setOpen(false)}
                     >
                       <FaRegBookmark size={18} className="text-accent-icon " />
-                      Writings{" "}
+                      {t.links.writings}{" "}
                       <span className={getLinkClassDivMobile("/writings")} />
                     </Link>
                   </li>
@@ -217,14 +219,14 @@ const NavMobileSideProfile = ({
                       onClick={() => setOpen(false)}
                     >
                       <GoCopilot size={18} className="text-accent-icon" />
-                      ManuPilot
+                      {t.links.manuPilot}
                       <span
                         className={`${getLinkClassDivMobile(
                           "/manupilot"
                         )} ml-1`}
                       />
                       <span className="absolute right-4 px-1 rounded-full border border-text-primary text-xs text-text-primary font-semibold">
-                        AI Chat
+                        {t.sideMenu.aiChat}
                       </span>
                     </Link>
                   </li>
@@ -237,7 +239,7 @@ const NavMobileSideProfile = ({
                       onClick={() => setOpen(false)}
                     >
                       <LuBrain size={18} className="text-accent-icon" />
-                      Dev Quiz{" "}
+                      {t.links.devQuiz}{" "}
                       <span className={getLinkClassDivMobile("/dev-quiz")} />
                     </Link>
                   </li>
@@ -253,7 +255,7 @@ const NavMobileSideProfile = ({
                         size={18}
                         className="text-accent-icon"
                       />
-                      Discussions{" "}
+                      {t.links.discussions}{" "}
                       <span className={getLinkClassDivMobile("/discussions")} />
                     </Link>
                   </li>
@@ -266,7 +268,7 @@ const NavMobileSideProfile = ({
                       onClick={() => setOpen(false)}
                     >
                       <GrContact size={18} className="text-accent-icon" />
-                      Get in Touch{" "}
+                      {t.links.contact}{" "}
                       <span className={getLinkClassDivMobile("/contact")} />
                     </Link>
                   </li>
@@ -275,7 +277,7 @@ const NavMobileSideProfile = ({
                 {/* Contacts */}
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <div className="text-xs">Connect with me</div>
+                  <div className="text-xs">{t.sideMenu.connect}</div>
                 </div>
 
                 <ul className="w-full flex flex-col justify-start items-start gap-1 mt-1">
@@ -357,14 +359,14 @@ const NavMobileSideProfile = ({
                       className="w-full relative flex items-center justify-start gap-1 text-text-primary rounded-md p-2 md:hover:bg-bg-button"
                     >
                       <CgFileDocument size={18} className="text-accent-icon" />
-                      Resume
+                      {t.links.resume}
                       <IoMdDownload size={18} className="text-text-primary" />
                     </a>
                   </li>
                 </ul>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">
-                  <div className="text-xs">Other</div>
+                  <div className="text-xs">{t.sideMenu.other}</div>
                 </div>
                 <div className="w-full relative center gap-2 mt-1">
                   <Link
@@ -373,17 +375,16 @@ const NavMobileSideProfile = ({
                     onClick={() => setOpen(false)}
                   >
                     <RiFolderInfoLine size={18} className="text-accent-icon" />
-                    About this Website
+                    {t.links.about}
                     <span
                       className={getLinkClassDivMobile("/about-this-website")}
                     />
                   </Link>
                 </div>
 
-                <div className="my-4 w-full h-px bg-accent-border" />
-                <div className="text-xs text-left text-accent-extra">
-                  One day, I&apos;ll keep adding features to make this site look
-                  even more GitHub-like. For now, enjoy it just as it is! 😄🚀✨
+                <div className="md:hidden my-4 w-full h-px bg-accent-border" />
+                <div className="md:hidden text-xs text-left text-accent-extra">
+                  {t.sideMenu.sentence}
                 </div>
               </div>
             </SheetDescription>
@@ -396,13 +397,13 @@ const NavMobileSideProfile = ({
 
 export default NavMobileSideProfile;
 
-const ToggleThemeMobile = ({ onClick, theme }) => {
+const ToggleThemeMobile = ({ onClick, theme, t }) => {
   return (
     <div className=" w-full flex justify-start items-center gap-1 mt-4">
       <button onClick={onClick} className="relative center outline-none">
         <span className="center gap-1 mr-2">
           <FaSun size={18} className="max-sm:w-[16px] max-sm:h-[16px]" />{" "}
-          <span className="max-[288px]:hidden">Light</span>
+          <span className="max-[288px]:hidden">{t.sideMenu.light}</span>
         </span>
         <div
           className={`px-1 rounded-full w-[44px] h-[24px] border border-accent-border flex items-center ${
@@ -417,7 +418,7 @@ const ToggleThemeMobile = ({ onClick, theme }) => {
             size={18}
             className="max-sm:w-[16px] max-sm:h-[16px]"
           />{" "}
-          <span className="max-[288px]:hidden">Dark</span>
+          <span className="max-[288px]:hidden">{t.sideMenu.dark}</span>
         </span>
       </button>
     </div>

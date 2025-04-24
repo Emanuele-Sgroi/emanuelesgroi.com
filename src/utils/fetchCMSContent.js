@@ -1,176 +1,140 @@
+// utils/fetchCMSContent.js
 import client from "@/utils/contentfulClient";
+import { getContentfulLocale } from "@/utils/getContentfulLocale";
 
-/**
- * Fetches data from Contentful based on content type
- */
-async function fetchContentfulData(contentType, errorMessage) {
+/* ------------------------------------------------------------ */
+/*  Core helper                                                 */
+/* ------------------------------------------------------------ */
+async function fetchContentfulData(contentType, errorMessage, lang) {
   try {
+    const locale = getContentfulLocale(lang); // "en-US" | "it-IT"
+
     const response = await client.getEntries({
       content_type: contentType,
+      locale,
       limit: 1,
     });
 
-    if (response.items.length > 0) {
+    if (response.items.length) {
       return { data: response.items[0].fields, error: null };
-    } else {
-      return { data: null, error: errorMessage };
     }
-  } catch (error) {
-    console.error(errorMessage, error);
+    return { data: null, error: errorMessage };
+  } catch (err) {
+    console.error(errorMessage, err);
     return { data: null, error: errorMessage };
   }
 }
 
-/**
- * Fetches General Info Content from Contentful
- */
-export async function fetchGeneralInfoContent() {
-  return fetchContentfulData(
+/* ------------------------------------------------------------ */
+/*  Page‑level wrappers                                         */
+/* ------------------------------------------------------------ */
+export const fetchGeneralInfoContent = (lang) =>
+  fetchContentfulData(
     "generalInfo",
-    "Error fetching General Info Content"
+    "Error fetching General Info Content",
+    lang
   );
-}
-
-/**
- * Fetches Discussion Page Content from Contentful
- */
-export async function fetchDiscussionContent() {
-  return fetchContentfulData(
+export const fetchDiscussionContent = (lang) =>
+  fetchContentfulData(
     "discussionPage",
-    "Error fetching Discussion Page Content"
+    "Error fetching Discussion Page Content",
+    lang
   );
-}
-
-/**
- * Fetches ManuPilot Page Content from Contentful
- */
-export async function fetchManuPilotContent() {
-  return fetchContentfulData(
+export const fetchManuPilotContent = (lang) =>
+  fetchContentfulData(
     "manuPilotPage",
-    "Error fetching ManuPilot Page Content"
+    "Error fetching ManuPilot Page Content",
+    lang
   );
-}
-
-/**
- * Fetches Portfolio Page Content from Contentful
- */
-export async function fetchPortfolioContent() {
-  return fetchContentfulData(
+export const fetchPortfolioContent = (lang) =>
+  fetchContentfulData(
     "portfolioPage",
-    "Error fetching Portfolio Page Content"
+    "Error fetching Portfolio Page Content",
+    lang
   );
-}
-
-/**
- * Fetches Welcome Page Content from Contentful
- */
-export async function fetchWelcomeContent() {
-  return fetchContentfulData(
+export const fetchWelcomeContent = (lang) =>
+  fetchContentfulData(
     "welcomePage",
-    "Error fetching Welcome Page Content"
+    "Error fetching Welcome Page Content",
+    lang
   );
-}
-
-/**
- * Fetches Writing Page Content from Contentful
- */
-export async function fetchWritingsContent() {
-  return fetchContentfulData(
+export const fetchWritingsContent = (lang) =>
+  fetchContentfulData(
     "writingPage",
-    "Error fetching Writing Page Content"
+    "Error fetching Writing Page Content",
+    lang
   );
-}
 
-/**
- * Fetches a single project by slug
- */
-export async function fetchProject(slug) {
+/* ------------------------------------------------------------ */
+/*  Single‑entry helpers                                        */
+/* ------------------------------------------------------------ */
+export async function fetchProject(slug, lang = "en") {
+  const locale = getContentfulLocale(lang);
+
   try {
-    const response = await client.getEntries({
+    const res = await client.getEntries({
       content_type: "project",
       "fields.projectSlug": slug,
+      locale,
       limit: 1,
     });
-
-    if (!response.items.length) {
-      return { data: null, error: "No project found" };
-    }
-
-    return { data: response.items[0].fields, error: null };
-  } catch (error) {
-    console.error("Error fetching project:", error);
+    if (!res.items.length) return { data: null, error: "No project found" };
+    return { data: res.items[0].fields, error: null };
+  } catch (err) {
+    console.error("Error fetching project:", err);
     return { data: null, error: "Error fetching project" };
   }
 }
 
-/**
- * Fetches all project slugs
- */
 export async function fetchProjectSlugs() {
   try {
-    const response = await client.getEntries({
+    const res = await client.getEntries({
       content_type: "project",
       select: "fields.projectSlug",
     });
+    if (!res.items.length) return { data: [], error: "No project slugs found" };
 
-    if (!response.items.length) {
-      return { data: [], error: "No project slugs found" };
-    }
-
-    const slugs = response.items
-      .map((item) => item.fields?.projectSlug)
-      .filter(Boolean);
+    const slugs = res.items.map((i) => i.fields?.projectSlug).filter(Boolean);
 
     return { data: slugs, error: null };
-  } catch (error) {
-    console.error("Error fetching project slugs:", error);
+  } catch (err) {
+    console.error("Error fetching project slugs:", err);
     return { data: [], error: "Error fetching project slugs" };
   }
 }
 
-/**
- * Fetches a single blog post by slug
- */
-export async function fetchBlogPost(slug) {
+export async function fetchBlogPost(slug, lang = "en") {
+  const locale = getContentfulLocale(lang);
+
   try {
-    const response = await client.getEntries({
+    const res = await client.getEntries({
       content_type: "blogPost",
       "fields.postSlug": slug,
+      locale,
       limit: 1,
     });
-
-    if (!response.items.length) {
-      return { data: null, error: "No blog post found" };
-    }
-
-    return { data: response.items[0].fields, error: null };
-  } catch (error) {
-    console.error("Error fetching blog post:", error);
+    if (!res.items.length) return { data: null, error: "No blog post found" };
+    return { data: res.items[0].fields, error: null };
+  } catch (err) {
+    console.error("Error fetching blog post:", err);
     return { data: null, error: "Error fetching blog post" };
   }
 }
 
-/**
- * Fetches all blog post slugs
- */
 export async function fetchBlogPostSlugs() {
   try {
-    const response = await client.getEntries({
+    const res = await client.getEntries({
       content_type: "blogPost",
       select: "fields.postSlug",
     });
-
-    if (!response.items.length) {
+    if (!res.items.length)
       return { data: [], error: "No blog post slugs found" };
-    }
 
-    const slugs = response.items
-      .map((item) => item.fields?.postSlug)
-      .filter(Boolean);
+    const slugs = res.items.map((i) => i.fields?.postSlug).filter(Boolean);
 
     return { data: slugs, error: null };
-  } catch (error) {
-    console.error("Error fetching blog post slugs:", error);
+  } catch (err) {
+    console.error("Error fetching blog post slugs:", err);
     return { data: [], error: "Error fetching blog post slugs" };
   }
 }

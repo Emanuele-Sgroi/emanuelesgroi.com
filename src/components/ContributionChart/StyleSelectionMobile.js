@@ -22,6 +22,7 @@ import { IoMdPlay } from "react-icons/io";
  */
 
 const StyleSelectionMobile = ({
+  t,
   allStyles,
   chartStyle,
   setChartStyle,
@@ -39,7 +40,7 @@ const StyleSelectionMobile = ({
           aria-expanded={open}
         >
           <div className="center gap-2 bg-bg-button px-2 py-1 rounded-md">
-            <p className="text-sm">Graph style</p>
+            <p className="text-sm">{t.chart.styleTitle}</p>
             <IoMdPlay size={14} className="text-text-primary" />
             {/* Display the active style */}
             {selectedStyle.id !== "emoji" ? (

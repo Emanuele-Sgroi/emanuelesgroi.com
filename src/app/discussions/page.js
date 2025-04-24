@@ -4,6 +4,7 @@ import {
 } from "@/utils/fetchCMSContent";
 import DiscussionsPage from "@/pages/DiscussionsPage";
 import { metadataByPage, defaultMetadata } from "@/config/metadata";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 
 // Generate metadata for SEO
 export const generateMetadata = () => ({
@@ -12,11 +13,13 @@ export const generateMetadata = () => ({
 });
 
 const Discussions = async () => {
+  const lang = getCurrentLanguageServer();
+
   // Fetch data From CMS
   const { data: discussionContent, error: discussionError } =
-    await fetchDiscussionContent();
+    await fetchDiscussionContent(lang);
   const { data: generalInfoContent, error: generalInfoError } =
-    await fetchGeneralInfoContent();
+    await fetchGeneralInfoContent(lang);
 
   const hasError = discussionError || generalInfoError;
 
