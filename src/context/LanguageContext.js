@@ -5,7 +5,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 //const LanguageContext = createContext(null);
 const defaultCtx = {
   language: "en",
-  /* eslint-disable @typescript-eslint/no-empty-function */
+  /* eslint-disable no-empty-function */
   switchLanguage: () => {},
 };
 const LanguageContext = createContext(defaultCtx);
