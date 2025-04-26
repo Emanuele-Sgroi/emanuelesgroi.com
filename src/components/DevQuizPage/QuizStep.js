@@ -38,7 +38,7 @@ import ThemeContext from "@/context/ThemeProvider";
  * - shuffleArray: Function to shuffle question options.
  */
 
-const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
+const QuizStep = ({ questions, onCancel, onComplete, shuffleArray, t }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -142,12 +142,13 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
         elapsedTime={elapsedTime}
         currentIndex={currentIndex}
         questions={questions}
+        t={t}
       />
 
       <div className="max-md:px-4 w-full flex items-start flex-col gap-6">
         <div className="w-full -mt-4 flex flex-col justify-start items-start gap-2">
           <p className="text-xs text-text-secondary">
-            Topic: <span>{currentQuestion?.topic}</span>
+            {t.quiz.topic} <span>{currentQuestion?.topic}</span>
           </p>
           <h3 className="text-lg font-semibold">{currentQuestion?.question}</h3>
           <div className="w-full">
@@ -212,8 +213,8 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
               }`}
             >
               {selectedAnswers[currentIndex].text === currentQuestion?.answer
-                ? "Correct! "
-                : "Incorrect. "}
+                ? t.quiz.correct
+                : t.quiz.incorrect}
             </p>
             <p className=" text-text-primary text-left">
               {currentQuestion?.explanation?.text}
@@ -237,6 +238,7 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
         showNavigationWarning={showNavigationWarning}
         handleNavigationCancel={handleNavigationCancel}
         handleNavigationConfirm={handleNavigationConfirm}
+        t={t}
       />
 
       <QuizFooter
@@ -245,6 +247,7 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
         selectedAnswers={selectedAnswers}
         currentIndex={currentIndex}
         questions={questions}
+        t={t}
       />
     </>
   );
@@ -252,12 +255,12 @@ const QuizStep = ({ questions, onCancel, onComplete, shuffleArray }) => {
 
 export default QuizStep;
 
-const QuizHeader = ({ currentIndex, questions, elapsedTime }) => {
+const QuizHeader = ({ currentIndex, questions, elapsedTime, t }) => {
   return (
     <div className="max-md:px-4 w-full flex justify-between pb-4 border-b border-accent-border mb-4">
       <p className="text-text-primary text-lg">
-        Question <span className="font-bold">{currentIndex + 1}</span> of{" "}
-        <span className="font-bold">{questions.length}</span>
+        {t.quiz.question} <span className="font-bold">{currentIndex + 1}</span>{" "}
+        {t.quiz.of} <span className="font-bold">{questions.length}</span>
       </p>
       <p className="text-sm text-text-secondary">
         {String(Math.floor(elapsedTime / 3600)).padStart(2, "0")}:
@@ -274,25 +277,28 @@ const QuizFooter = ({
   selectedAnswers,
   currentIndex,
   questions,
+  t,
 }) => (
   <div className="max-md:px-4 w-full center gap-6 mt-6">
     {/* Quit Button with Alert Dialog */}
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button className="btn-secondary !bg-transparent !text-text-primary hover:!bg-bg-hover !px-4 !py-[7px]">
-          Quit
+          {t.quiz.quit}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Quit Quiz</AlertDialogTitle>
+          <AlertDialogTitle>{t.quiz.quitQuiz}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to quit the quiz?
+            {t.quiz.areYouSureToQuit}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onCancel}>Quit</AlertDialogAction>
+          <AlertDialogCancel>{t.quiz.cancel}</AlertDialogCancel>
+          <AlertDialogAction onClick={onCancel}>
+            {t.quiz.quit}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -302,7 +308,7 @@ const QuizFooter = ({
       className="btn-primary !bg-accent-extra !text-white"
       disabled={!selectedAnswers[currentIndex]}
     >
-      {currentIndex === questions.length - 1 ? "Finish" : "Next"}
+      {currentIndex === questions.length - 1 ? t.quiz.finish : t.quiz.next}
     </Button>
   </div>
 );
@@ -311,21 +317,22 @@ const NavigationWarning = ({
   showNavigationWarning,
   handleNavigationCancel,
   handleNavigationConfirm,
+  t,
 }) => (
   <AlertDialog open={showNavigationWarning}>
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>Leave Quiz</AlertDialogTitle>
+        <AlertDialogTitle>{t.quiz.leaveQuiz}</AlertDialogTitle>
         <AlertDialogDescription>
-          Are you sure you want to leave the quiz?
+          {t.quiz.areYouSureToLeave}
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel onClick={handleNavigationCancel}>
-          Cancel
+          {t.quiz.cancel}
         </AlertDialogCancel>
         <AlertDialogAction onClick={handleNavigationConfirm}>
-          Leave
+          {t.quiz.leave}
         </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>

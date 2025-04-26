@@ -24,6 +24,8 @@ const SelectNumberStep = ({
   onCancel,
   onNext,
   onPrevious,
+  t,
+  language,
 }) => {
   const [questionCounts, setQuestionCounts] = useState(
     selectedQuestions.reduce((acc, topic) => {
@@ -57,7 +59,7 @@ const SelectNumberStep = ({
     <>
       <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
         <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
-          How many questions?
+          {t.selectNumber.title}
         </h2>
       </div>
 
@@ -93,29 +95,35 @@ const SelectNumberStep = ({
       </div>
 
       <p className="text-lg font-semibold mt-6">
-        Total Questions:{" "}
+        {t.selectNumber.total}{" "}
         <span className="text-accent-extra">{totalQuestions}</span>
       </p>
-
+      {language === "it" && (
+        <p className="text-sm text-center px-4">
+          <span className="text-amber-500 font-semibold">Nota:</span> le domande
+          del quiz sono in Inglese; puoi farle tradurre dal browser, ma meglio
+          leggerle in originale.
+        </p>
+      )}
       <div className="flex gap-4 mt-4 max-md:px-4">
         <button
           onClick={onCancel}
           className="btn-secondary !px-[12px] !py-[6px]"
         >
-          Cancel
+          {t.selectNumber.cancel}
         </button>
         <button
           onClick={onPrevious}
           className="btn-secondary !px-[12px] !py-[6px]"
         >
-          Previous
+          {t.selectNumber.previous}
         </button>
         <Button
           onClick={handleNext}
           className="btn-primary !bg-accent-extra !text-white"
           disabled={totalQuestions < 1}
         >
-          Start Quiz
+          {t.selectNumber.startButton}
         </Button>
       </div>
     </>

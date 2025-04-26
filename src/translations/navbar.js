@@ -18,8 +18,8 @@ const navbarTranslations = {
     tooltips: {
       quickChat: "Quick chat with ManuPilot",
       immersive: "Immersive conversation with ManuPilot",
-      light: "Light mode",
-      dark: "Dark Mode",
+      light: "Switch to light mode",
+      dark: "Switch to dark Mode",
     },
     sideMenu: {
       light: "Light",
@@ -78,8 +78,8 @@ const navbarTranslations = {
     tooltips: {
       quickChat: "Chat Veloce con ManuPilot",
       immersive: "Chat immersiva con ManuPilot",
-      light: "Tema Chiaro",
-      dark: "Tema Scuro",
+      light: "Cambia il tema",
+      dark: "Cambia il tema",
     },
     sideMenu: {
       light: "Chiaro",

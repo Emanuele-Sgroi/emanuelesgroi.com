@@ -18,47 +18,47 @@ import { MdOutlineNavigateNext } from "react-icons/md";
  * - A button link to the section
  */
 
-const PageSuggestionsSection = () => {
+const PageSuggestionsSection = ({ t }) => {
   const suggestions = [
     {
-      title: "Portfolio",
-      description: "A collection of projects I've worked on",
+      title: t.suggestions.portfolio.title,
+      description: t.suggestions.portfolio.description,
       link: "/portfolio",
-      linkName: "Browse projects",
-      icon: <GoCodeSquare size={22} className="text-cyan-500 " />,
+      linkName: t.suggestions.portfolio.linkName,
+      icon: <GoCodeSquare size={22} className="text-cyan-500" />,
     },
     {
-      title: "ManuPilot",
-      description:
-        "A personalised AI-powered assistant inspired by GitHub Copilot",
+      title: t.suggestions.manupilot.title,
+      description: t.suggestions.manupilot.description,
       link: "/manupilot",
-      linkName: "Use the AI",
+      linkName: t.suggestions.manupilot.linkName,
       icon: (
         <GoCopilot size={22} className="text-[#006d32] dark:text-[#39d353]" />
       ),
     },
     {
-      title: "Dev Quiz",
-      description: "Challenge yourself with questions across different topics",
+      title: t.suggestions.devquiz.title,
+      description: t.suggestions.devquiz.description,
       link: "/dev-quiz",
-      linkName: "Take the quiz",
+      linkName: t.suggestions.devquiz.linkName,
       icon: <LuBrain size={22} className="text-[#f44336]" />,
     },
     {
-      title: "Discussions",
-      description: "Have something to say? Join the discussion!",
+      title: t.suggestions.discussions.title,
+      description: t.suggestions.discussions.description,
       link: "/discussions",
-      linkName: "Join now",
+      linkName: t.suggestions.discussions.linkName,
       icon: <GoCommentDiscussion size={22} className="text-[#8f6bb5]" />,
     },
   ];
+
   return (
     <div className="w-full center max-[500px]:px-4 px-6 pt-12 md:pt-20 pb-12 max-md:pb-32">
       <div className="w-full max-w-[1232px] flex flex-col items-start justify-start">
         {/* Suggestions */}
         <div className="w-full">
           <h3 className="text-text-primary text-left poppins-bold text-xl sm:text-3xl">
-            Explore More from My Website
+            {t.suggestions.explore}
           </h3>
           <div className="w-full h-[2px] bg-accent-border mt-3 mb-6"></div>
           {/* Show suggestions */}

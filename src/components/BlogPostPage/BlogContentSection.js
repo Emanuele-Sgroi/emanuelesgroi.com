@@ -20,7 +20,7 @@ import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
  * - Tags associated with the post
  */
 
-const BlogContentSection = ({ blogPost }) => {
+const BlogContentSection = ({ blogPost, t }) => {
   const { tags, author, imageAuthor, blogContent } = blogPost;
   const [activeSection, setActiveSection] = useState(null);
   const headingsRef = useRef([]);
@@ -330,7 +330,7 @@ const BlogContentSection = ({ blogPost }) => {
           <div className="md:hidden w-full mb-8 border-b border-accent-border pb-4">
             <div className="w-full">
               <h4 className="text-xl poppins-semibold mb-2">
-                Table of Contents
+                {t.tableOfContents}
               </h4>
             </div>
             <ul className="w-full space-y-2 mt-5">
@@ -375,7 +375,7 @@ const BlogContentSection = ({ blogPost }) => {
           {/* Author Section */}
           <div className="w-full flex flex-col mt-8 md:mt-12">
             <h3 className="text-text-primary text-left poppins-bold text-xl sm:text-3xl">
-              Written by
+              {t.writtenBy}
             </h3>
             <div className="w-full h-[2px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mt-3"></div>
             <div className="flex items-center gap-4 mt-6">
@@ -392,7 +392,7 @@ const BlogContentSection = ({ blogPost }) => {
               <div className="flex flex-col">
                 <h4 className="poppins-semibold text-xl">{author}</h4>
                 <p className="text-text-secondary poppins-regular max-[500px]:text-xs text-sm">
-                  Inspired by GitHub
+                  {t.inspired}
                 </p>
               </div>
             </div>
@@ -424,7 +424,7 @@ const BlogContentSection = ({ blogPost }) => {
           <div className="sticky top-6 w-full">
             <div className="w-full">
               <h4 className="text-lg poppins-semibold mb-2">
-                Table of Contents
+                {t.tableOfContents}
               </h4>
               <div className="h-[2px] w-full bg-accent-border" />
             </div>
