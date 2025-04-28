@@ -51,6 +51,8 @@ export default function ChatInput({
   droppedFile,
   setDroppedFile,
   switchToGeneralChat,
+  t,
+  language,
 }) {
   // Context for chat messages
   const { messages, setMessages } = useChat();
@@ -97,12 +99,12 @@ export default function ChatInput({
 
     // Validate extension
     if (!allowedExtensions.includes(`.${ext}`)) {
-      setErrorMessage("This file type is not supported.");
+      setErrorMessage(t.fileNotSupported);
       return;
     }
     // Validate size
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setErrorMessage("File exceeds 2 MB limit.");
+      setErrorMessage(t.fileTooBig);
       return;
     }
 
@@ -150,7 +152,7 @@ export default function ChatInput({
 
     reader.onerror = () => {
       setIsFileLoading(false);
-      setErrorMessage("Failed to read the file.");
+      setErrorMessage(t.readFail);
       setSelectedFile(null);
     };
 
@@ -180,7 +182,9 @@ export default function ChatInput({
         content: `
           ${aiInstructions.trim()}
           The user highlighted the project "${activeChat.project.projectName}". 
-          Please focus on that project context in your responses. 
+          Please focus on that project context in your responses. Current language: ${
+            language === "it" ? "Italian" : "English"
+          }.
         `,
       };
     } else {
@@ -188,7 +192,9 @@ export default function ChatInput({
         role: "system",
         content: `
           ${aiInstructions.trim()}
-          No specific project was highlighted, so this is a general conversation.
+          No specific project was highlighted, so this is a general conversation. Current language: ${
+            language === "it" ? "Italian" : "English"
+          }.
         `,
       };
     }
@@ -265,7 +271,7 @@ export default function ChatInput({
       if (!response.ok) {
         const errText = await response.text().catch(() => "");
         console.error("Error response text:", errText);
-        setError("There was an error generating a response.");
+        setError(t.errorGenerating);
         setIsThinking(false);
         return;
       }
@@ -318,7 +324,7 @@ export default function ChatInput({
         // Non-streaming fallback
         const data = await response.json();
         if (data.error) {
-          setError(data.error || "Error generating response.");
+          setError(data.error || t.errorGenerating);
         } else {
           const newAssistantMsg = {
             role: "assistant",
@@ -329,7 +335,7 @@ export default function ChatInput({
       }
     } catch (err) {
       console.error("API error:", err);
-      setError("There was an error generating a response.");
+      setError(t.errorGenerating);
     } finally {
       setIsThinking(false);
     }
@@ -403,12 +409,12 @@ export default function ChatInput({
     const ext = file.name.split(".").pop().toLowerCase();
     if (!allowedExtensions.includes(`.${ext}`)) {
       setPendingFile(null);
-      setPendingError("This file type is not supported.");
+      setPendingError(t.fileNotSupported);
       return;
     }
     if (file.size > MAX_FILE_SIZE_BYTES) {
       setPendingFile(null);
-      setPendingError("File exceeds 2 MB limit.");
+      setPendingError(t.fileTooBig);
       return;
     }
 
@@ -522,7 +528,7 @@ export default function ChatInput({
                     <PopoverContent
                       className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
                     >
-                      <p className="text-xs">Remove topic</p>
+                      <p className="text-xs">{t.removeTopic}</p>
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -578,7 +584,7 @@ export default function ChatInput({
                       </div>
                       <div className="flex flex-col">
                         <p className="text-text-primary font-bold text-sm animate-pulse duration-700">
-                          Uploading file
+                          {t.uploadingFile}
                         </p>
                         <p className="text-text-secondary text-sm">...</p>
                       </div>
@@ -590,7 +596,7 @@ export default function ChatInput({
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask ManuPilot"
+                    placeholder={t.askManupilot}
                     className="w-full h-auto min-h-[10px] max-h-[200px] resize-none overflow-auto
                      bg-transparent border-none placeholder:text-text-secondary rounded-2xl
                      focus:outline-none focus:ring-0
@@ -670,7 +676,7 @@ export default function ChatInput({
         ) : (
           <div className="center flex-col gap-2">
             <p className="text-sm text-red-600 text-center">
-              There was an error generating a response
+              {t.errorGenerating}
             </p>
             <button
               onClick={handleRegenerate}
@@ -680,7 +686,7 @@ export default function ChatInput({
                 size={18}
                 className="text-white dark:text-gray-800"
               />
-              Regenerate
+              {t.regenerate}
             </button>
           </div>
         )}
@@ -688,10 +694,8 @@ export default function ChatInput({
       <Dialog open={openAttachDialog} onOpenChange={setOpenAttachDialog}>
         <DialogContent className="z-[999999]">
           <DialogHeader>
-            <DialogTitle>Attach a File</DialogTitle>
-            <DialogDescription>
-              Upload a text or code file to share with ManuPilot.
-            </DialogDescription>
+            <DialogTitle>{t.attachAFile}</DialogTitle>
+            <DialogDescription>{t.uploadAndShare}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 my-2">
             <div className="flex flex-col gap-2 items-start">
@@ -712,13 +716,13 @@ export default function ChatInput({
                 disabled={!pendingFile}
                 className="px-4 py-2 text-sm font-medium text-text-primary bg-bg-button rounded-md hover:bg-bg-hover disabled:hover:bg-bg-button disabled:opacity-50"
               >
-                Upload
+                {t.upload}
               </button>
               <button
                 onClick={() => setOpenAttachDialog(false)}
                 className="px-4 py-2 text-sm font-medium text-text-primary rounded-md border border-accent-border"
               >
-                Cancel
+                {t.cancel}
               </button>
             </div>
           </div>

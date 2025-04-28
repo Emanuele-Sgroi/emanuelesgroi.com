@@ -69,7 +69,13 @@ const customComponents = {
  * - setReplies: Function to update replies state
  */
 
-const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
+const CommentContainer = ({
+  authorPicture,
+  comment,
+  replies,
+  setReplies,
+  t,
+}) => {
   const [likes, setLikes] = useState(comment?.reactions?.likes || 0); // Separate state for likes
   const [reactions, setReactions] = useState(comment?.reactions || {});
   const [userReactions, setUserReactions] = useState({});
@@ -203,7 +209,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
       });
 
       if (!response.ok) {
-        toast.error("Failed to post your reply. Please try again later.");
+        toast.error(t.submitReplyFail);
         throw new Error("Failed to save the reply.");
       }
 
@@ -212,10 +218,10 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
       const savedReply = await response.json();
       setReplies((prevReplies) => [...prevReplies, savedReply]);
       console.log("Reply saved successfully");
-      toast.success("Your reply has been published!");
+      toast.success(t.submitReplySuccess);
     } catch (error) {
       console.error("Error saving reply:", error);
-      toast.error("Failed to post your reply. Please try again later.");
+      toast.error(t.submitReplyFail);
     }
   };
 
@@ -246,7 +252,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
           </p>
           {comment.isAuthor && (
             <p className="text-xs px-2 py-[1px] rounded-full border border-accent-icon text-accent-icon">
-              Author
+              {t.author}
             </p>
           )}
         </div>
@@ -319,7 +325,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
           </div>
           {/* show replies number */}
           <p className="text-xs text-accent-icon">
-            {replies.length} {replies.length === 1 ? "reply" : "replies"}
+            {replies.length} {replies.length === 1 ? t.reply : t.replies}
           </p>
         </div>
       </div>
@@ -337,6 +343,7 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
                 emojis={emojis}
                 updateReactionsInDB={updateReactionsInDB}
                 authorPicture={authorPicture}
+                t={t}
               />
             ))}
         </div>
@@ -344,11 +351,12 @@ const CommentContainer = ({ authorPicture, comment, replies, setReplies }) => {
       {/* Reply input container */}
       <div className="w-full center p-2 bg-bg-mobile-primary md:bg-bg-hover border-t border-accent-border rounded-b-md">
         <CommentInput
-          placeholder="Write a reply"
+          placeholder={t.placeholderReply}
           parentId={comment.id}
           onSubmit={handleReplySubmit}
           showToggle={true}
           isReply={true}
+          t={t}
         />
       </div>
     </div>

@@ -8,6 +8,8 @@ import AttachFileOverlay from "@/components/ManuPilotPage/AttachFileOverlay";
 import { useManuPilotContent } from "@/hooks/useManuPilotContent";
 import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 import { ToastContainer, toast } from "react-toastify";
+import { useLanguage } from "@/context/LanguageContext";
+import chatWidgetTranslations from "@/translations/chatWidget";
 
 /**
  * ChatWidget Component
@@ -19,10 +21,14 @@ import { ToastContainer, toast } from "react-toastify";
  * - Switching between general and project-specific chat
  */
 
-export default function ChatWidget() {
+export default function ChatWidget({ portfolioContent, hasError }) {
+  // translation
+  const { language } = useLanguage();
+  const t = chatWidgetTranslations[language];
+
   const { isOpen, closeChat } = useChat();
-  const { portfolioContent, isPortfolioLoading, isPortfolioError } =
-    usePortfolioContent();
+  // const { portfolioContent, isPortfolioLoading, isPortfolioError } =
+  //   usePortfolioContent();
   const { isManuPilotError, isManuPilotLoading, manuPilotContent } =
     useManuPilotContent();
   const pathname = usePathname();
@@ -79,6 +85,44 @@ export default function ChatWidget() {
     }
   }, [pathname, portfolioContent, activeChat, userSetGeneralChat]);
 
+  /**
+   * 🔄 Keep the selected project in sync when the language changes.
+   *    If either the title *or* the list of questions differs, refresh state.
+   */
+  useEffect(() => {
+    if (activeChat?.type !== "project" || !portfolioContent?.projects?.length)
+      return;
+
+    const projectsRef = portfolioContent.projects.map((p) => p.fields);
+    const found = projectsRef.find(
+      (p) =>
+        p.projectTitle === activeChat.project.projectName ||
+        p.projectSlug?.toLowerCase() ===
+          activeChat.project.projectSlug?.toLowerCase()
+    );
+
+    if (!found) return;
+
+    const newQuestions = found.aiQuestions || [];
+    const newTitle = found.projectTitle;
+
+    const sameTitle = newTitle === activeChat.project.projectName;
+    const sameQuestions =
+      JSON.stringify(newQuestions) ===
+      JSON.stringify(activeChat.project.questions);
+
+    if (!sameTitle || !sameQuestions) {
+      setActiveChat({
+        type: "project",
+        project: {
+          projectName: newTitle,
+          projectSlug: found.projectSlug, // keep a stable identifier
+          questions: newQuestions,
+        },
+      });
+    }
+  }, [portfolioContent, language]);
+
   // Function to switch to General Chat manually
   const switchToGeneralChat = () => {
     setUserSetGeneralChat(true); // Mark that user manually switched
@@ -131,12 +175,12 @@ export default function ChatWidget() {
       const ext = file.name.split(".").pop().toLowerCase();
 
       if (!allowedExtensions.includes(`.${ext}`)) {
-        toast.error("This file type is not supported.");
+        toast.error(t.fileNotSupported);
         return;
       }
 
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        toast.error("File exceeds 2 MB limit.");
+        toast.error(t.fileTooBig);
         return;
       }
 
@@ -178,7 +222,8 @@ export default function ChatWidget() {
           setActiveChat={setActiveChat}
           setError={setError}
           portfolioContent={portfolioContent}
-          isPortfolioError={isPortfolioError}
+          isPortfolioError={hasError}
+          t={t}
         />
 
         {/* Chat Body */}
@@ -186,8 +231,9 @@ export default function ChatWidget() {
           activeChat={activeChat}
           setActiveChat={setActiveChat}
           portfolioContent={portfolioContent}
-          isPortfolioLoading={isPortfolioLoading}
-          isPortfolioError={isPortfolioError}
+          //  isPortfolioLoading={isPortfolioLoading}
+          isPortfolioLoading={!portfolioContent}
+          isPortfolioError={hasError}
           manuPilotContent={manuPilotContent}
           isManuPilotError={isManuPilotError}
           isManuPilotLoading={isManuPilotLoading}
@@ -196,10 +242,12 @@ export default function ChatWidget() {
           droppedFile={droppedFile}
           setDroppedFile={setDroppedFile}
           switchToGeneralChat={switchToGeneralChat}
+          t={t}
+          language={language}
         />
       </div>
       {/* Drag & Drop Overlay */}
-      <AttachFileOverlay isDraggingFile={isDraggingFile} />
+      <AttachFileOverlay isDraggingFile={isDraggingFile} t={t} />
     </>
   );
 }

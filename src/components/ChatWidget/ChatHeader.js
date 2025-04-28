@@ -58,6 +58,7 @@ export default function ChatHeader({
   setError,
   portfolioContent,
   isPortfolioError,
+  t,
 }) {
   const { messages, setMessages } = useChat();
   const isMobile = useIsMobile();
@@ -140,7 +141,7 @@ export default function ChatHeader({
   return (
     <>
       <div className="border-b border-accent-border flex justify-between items-center py-2 pr-2 pl-4">
-        <h2 className="text-sm font-semibold">Quick chat</h2>
+        <h2 className="text-sm font-semibold">{t.quickChat}</h2>
         <div className="h-full flex items-center gap-2">
           {activeChat && messages.length < 1 && (
             <>
@@ -159,7 +160,7 @@ export default function ChatHeader({
                 <PopoverContent
                   className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
                 >
-                  <p className="text-xs">Start a new conversation</p>
+                  <p className="text-xs">{t.restart}</p>
                 </PopoverContent>
               </Popover>
             </>
@@ -184,7 +185,7 @@ export default function ChatHeader({
                 <PopoverContent
                   className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
                 >
-                  <p className="text-xs">View projects list</p>
+                  <p className="text-xs">{t.viewProjects}</p>
                 </PopoverContent>
               </Popover>
               <div className="bg-accent-border h-[25px] w-px mx-1"></div>
@@ -208,7 +209,7 @@ export default function ChatHeader({
                 <PopoverContent
                   className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
                 >
-                  <p className="text-xs">Start a new conversation</p>
+                  <p className="text-xs">{t.restart}</p>
                 </PopoverContent>
               </Popover>
               <div className="bg-accent-border h-[25px] w-px mx-1"></div>
@@ -230,7 +231,7 @@ export default function ChatHeader({
             <PopoverContent
               className={`absolute -right-3 w-max p-1 bg-bg-button border-accent-border z-[9991]`}
             >
-              <p className="text-xs">Close chat</p>
+              <p className="text-xs">{t.close}</p>
             </PopoverContent>
           </Popover>
         </div>
@@ -240,15 +241,15 @@ export default function ChatHeader({
       <Dialog open={openProjectsDialog} onOpenChange={setOpenProjectsDialog}>
         <DialogContent className="!bg-bg-secondary !z-[999999]">
           <DialogHeader>
-            <DialogTitle>Attach a Project</DialogTitle>
+            <DialogTitle>{t.attachProject}</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-4 my-2">
             {/* Project List */}
             <Command className="!h-fit border border-accent-border bg-bg-primary !rounded-t-md  !pb-0">
-              <CommandInput placeholder="Search a project to attach" />
+              <CommandInput placeholder={t.searchAProjectToAttach} />
               {!isPortfolioError ? (
                 <CommandList className="bg-bg-tertiary">
-                  <CommandEmpty>No results found.</CommandEmpty>
+                  <CommandEmpty>{t.noResults}</CommandEmpty>
                   <CommandGroup
                     heading="Portfolio"
                     className="!max-h-[160px] !overflow-y-auto thin-scrollbar !bg-bg-tertiary !pb-1"
@@ -301,10 +302,7 @@ export default function ChatHeader({
                 </CommandList>
               ) : (
                 <div className="bg-bg-tertiary min-h-[120px] p-4">
-                  <p className="text-sm text-red-600">
-                    Couldn&apos;t load the projects here. Start a general
-                    purpose chat.
-                  </p>
+                  <p className="text-sm text-red-600">{t.errorLoading}</p>
                 </div>
               )}
             </Command>
@@ -313,7 +311,7 @@ export default function ChatHeader({
                 onClick={() => setOpenProjectsDialog(false)}
                 className="px-4 py-2 text-sm font-medium text-text-primary rounded-md border border-accent-border"
               >
-                Cancel
+                {t.cancel}
               </button>
             </div>
           </div>
@@ -325,16 +323,15 @@ export default function ChatHeader({
       <AlertDialog open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
         <AlertDialogContent className="!z-[999999999999]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t.alertDialogTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              Your current conversation with ManuPilot will be lost and cannot
-              be recovered.
+              {t.alertDialogDescription}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t.cancel}</AlertDialogCancel>
             <AlertDialogAction onClick={handleNewConversation}>
-              I&apos;m sure
+              {t.alertDialogButton}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

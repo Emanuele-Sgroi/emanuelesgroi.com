@@ -9,12 +9,18 @@ import {
   DiscussionSideBar,
   FixedBar,
 } from "@/components";
+import { useLanguage } from "@/context/LanguageContext";
+import discussionsTranslations from "@/translations/discussions";
 
 /**
  * Discussions Page
  * Simulates user discussions with a comment section and a sidebar.
  */
 const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
+  // translation
+  const { language } = useLanguage();
+  const t = discussionsTranslations[language];
+
   // State for handling loading, errors, and comments
   const [loading, setLoading] = useState(true);
   const [dbError, setDbError] = useState(false);
@@ -63,6 +69,7 @@ const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
         discussionContent={discussionContent}
         generalInfoContent={generalInfoContent}
         comments={normalComments}
+        t={t}
       />
       <section className="with-top_header max-md:gap-4">
         {/* Page Header */}
@@ -70,11 +77,14 @@ const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
         {/*  Main content with comments and sidebar */}
         <div className="with-side-bar">
           <CommentsSection
+            discussionContent={discussionContent}
             generalInfoContent={generalInfoContent}
             topComment={topComment}
             normalComments={normalComments}
+            t={t}
+            language={language}
           />
-          <DiscussionSideBar />
+          <DiscussionSideBar t={t} />
         </div>
       </section>
     </>

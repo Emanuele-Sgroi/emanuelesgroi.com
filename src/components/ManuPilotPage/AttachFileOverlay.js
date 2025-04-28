@@ -13,7 +13,7 @@ import { images } from "@/utils/imageImport";
  * - isDraggingFile: Boolean indicating whether a file is being dragged.
  */
 
-const AttachFileOverlay = ({ isDraggingFile }) => {
+const AttachFileOverlay = ({ isDraggingFile, t }) => {
   if (isDraggingFile) {
     return (
       <div className="h-svh w-full fixed top-0 left-0 center flex-col gap-3 bg-bg-hover opacity-85 z-[9999999]">
@@ -24,8 +24,8 @@ const AttachFileOverlay = ({ isDraggingFile }) => {
           className="h-[100px] w-auto object-contain"
           priority
         />
-        <h1 className="font-bold">Add this file</h1>
-        <p className="text-center">Add a txt or code file to this chat</p>
+        <h1 className="font-bold">{t.addFile}</h1>
+        <p className="text-center">{t.addFileLong}</p>
       </div>
     );
   } else {

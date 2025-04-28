@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import ChatWidget from "./ChatWidget";
+import { fetchPortfolioContent } from "@/utils/fetchCMSContent";
 
 /**
  * ChatWidgetWrapper Component
@@ -15,16 +14,17 @@ import ChatWidget from "./ChatWidget";
  * - isCmsError: Flag indicating if there was an error fetching CMS content.
  */
 
-export default function ChatWidgetWrapper({
-  manuPilotContent,
-  portfolioContent,
-  isCmsError,
-}) {
+const ChatWidgetWrapper = async ({ manuPilotContent, isCmsError, lang }) => {
+  const { data: portfolioContent, error: portfolioError } =
+    await fetchPortfolioContent(lang);
+  const hasError = isCmsError || portfolioError;
   return (
     <ChatWidget
       manuPilotContent={manuPilotContent}
       portfolioContent={portfolioContent}
-      isCmsError={isCmsError}
+      hasError={hasError}
     />
   );
-}
+};
+
+export default ChatWidgetWrapper;

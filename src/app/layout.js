@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import { ChatProvider } from "@/context/ChatProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
-import { Navbar, Footer, ChatWidget } from "@/components";
+import { Navbar, Footer, ChatWidget, ChatWidgetWrapper } from "@/components";
 import { ToastContainer } from "react-toastify";
 import { defaultMetadata } from "@/config/metadata";
 //import { cookies } from "next/headers";
@@ -39,7 +39,8 @@ export default function RootLayout({ children }) {
               <ToastContainer />
               <ChatProvider>
                 <GreetingPopup />
-                <ChatWidget />
+                {/* <ChatWidget lang={lang} /> */}
+                <ChatWidgetWrapper lang={lang} />
                 <Navbar lang={lang} />
                 {children}
                 <Footer />

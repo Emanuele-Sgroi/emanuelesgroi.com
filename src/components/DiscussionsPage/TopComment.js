@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/popover";
 import { FaRegSmile } from "react-icons/fa";
 import { CodeBlock } from "@/components";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 
 /**
  * Predefined emoji reactions available for comments
@@ -65,7 +67,13 @@ const customComponents = {
  * - topComment: Object containing comment details (id, name, content, reactions, etc.).
  */
 
-const TopComment = ({ profilePicture, topComment }) => {
+const TopComment = ({
+  discussionContent,
+  profilePicture,
+  topComment,
+  t,
+  language,
+}) => {
   // State for managing likes and reactions
   const [likes, setLikes] = useState(topComment?.reactions?.likes || 0); // Separate state for likes
   const [reactions, setReactions] = useState(topComment?.reactions || {});
@@ -161,7 +169,7 @@ const TopComment = ({ profilePicture, topComment }) => {
       );
     }
   };
-
+  console.log(discussionContent);
   return (
     <div className="w-full p-4 flex flex-col gap-4 md:border max-md:border-b max-md:border-t border-accent-border md:rounded-md max-md:bg-bg-mobile-primary">
       <div className="flex items-center gap-2 flex-wrap">
@@ -190,9 +198,18 @@ const TopComment = ({ profilePicture, topComment }) => {
       </div>
       <div className="w-full">
         {/* Render markdown content */}
-        <ReactMarkdown components={customComponents}>
-          {topComment?.content}
-        </ReactMarkdown>
+        {language === "it" ? (
+          <>
+            {documentToReactComponents(
+              discussionContent?.topComment,
+              customComponents
+            )}
+          </>
+        ) : (
+          <ReactMarkdown components={customComponents}>
+            {topComment?.content}
+          </ReactMarkdown>
+        )}
       </div>
       <div className="flex gap-2 items-center flex-wrap">
         {/* Likes button */}

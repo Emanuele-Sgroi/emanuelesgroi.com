@@ -54,7 +54,8 @@ export async function POST(req) {
 
     // Request OpenAI chat completion with streaming enabled
     const chatCompletion = await openai.chat.completions.create({
-      model: "chatgpt-4o-latest",
+      //model: "chatgpt-4o-latest",
+      model: "gpt-4o-mini",
       messages,
       stream: true, // Enables response streaming
     });
