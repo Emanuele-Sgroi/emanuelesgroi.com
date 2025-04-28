@@ -50,7 +50,7 @@ const discussionsTranslations = {
       days: "days",
       ago: "ago",
       hours: "h",
-      weeksAbbrev: "w",
+      weeks: "w",
     },
   },
 

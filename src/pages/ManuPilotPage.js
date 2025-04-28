@@ -21,6 +21,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ToastContainer, toast } from "react-toastify";
+import { useLanguage } from "@/context/LanguageContext";
+import manuPilotTranslations from "@/translations/manuPilot";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB file limits
 
@@ -126,6 +128,10 @@ const allowedExtensions = [
  * - Supports file uploads & chat streaming
  */
 const ManuPilotPage = ({ manuPilotContent, isError }) => {
+  // Translation
+  const { language } = useLanguage();
+  const t = manuPilotTranslations[language];
+
   const router = useRouter();
   const originalPushRef = useRef(router.push);
   const [conversation, setConversation] = useState([]);
@@ -187,12 +193,12 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       const ext = file.name.split(".").pop().toLowerCase();
 
       if (!allowedExtensions.includes(`.${ext}`)) {
-        toast.error("This file type is not supported.");
+        toast.error(t.fileNotSupported);
         return;
       }
 
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        toast.error("File exceeds 2 MB limit.");
+        toast.error(t.fileTooBig);
         return;
       }
 
@@ -265,7 +271,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         console.error("Error response text:", errText);
         setError({
           type: "chat",
-          message: "There was an error generating a response.",
+          message: t.errorGenerating,
         });
         return;
       }
@@ -334,7 +340,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
           console.error("API error:", data.error);
           setError({
             type: "chat",
-            message: data.error || "There was an error generating a response.",
+            message: data.error || t.errorGenerating,
           });
           return;
         }
@@ -351,8 +357,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       console.error("API error:", error);
       setError({
         type: "system",
-        message:
-          "ManuPilot is experiencing an issue. Please try regenerating your response. If the problem persists, try again later.",
+        message: t.errorGeneratingLong,
       });
     } finally {
       setIsThinking(false);
@@ -391,12 +396,14 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       <ManuPilotHeader
         onClickReset={handleResetConversation}
         conversation={conversation}
+        t={t}
       />
       <ManuPilotBody
         conversation={conversation}
         isThinking={isThinking}
         loading={loading}
         handleSendMessage={handleSendMessage}
+        t={t}
       />
       <ManuPilotInput
         loading={loading}
@@ -405,6 +412,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         clearError={clearError}
         droppedFile={droppedFile}
         setDroppedFile={setDroppedFile}
+        t={t}
       />
       <NavigationWarningDialog
         showNavigationWarning={showNavigationWarning}
@@ -412,9 +420,10 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         pendingUrl={pendingUrl}
         originalPushRef={originalPushRef}
         router={router}
+        t={t}
       />
 
-      <AttachFileOverlay isDraggingFile={isDraggingFile} />
+      <AttachFileOverlay isDraggingFile={isDraggingFile} t={t} />
     </div>
   );
 };
@@ -475,6 +484,7 @@ function NavigationWarningDialog({
   pendingUrl,
   originalPushRef,
   router,
+  t,
 }) {
   const handleNavigationConfirm = () => {
     if (pendingUrl) pendingUrl();
@@ -494,18 +504,17 @@ function NavigationWarningDialog({
     <AlertDialog open={showNavigationWarning}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to leave?</AlertDialogTitle>
+          <AlertDialogTitle>{t.alertDialogTitle}</AlertDialogTitle>
           <AlertDialogDescription>
-            Your current conversation with ManuPilot will be lost and cannot be
-            recovered.
+            {t.alertDialogDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleNavigationCancel}>
-            Stay
+            {t.stay}
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleNavigationConfirm}>
-            Leave
+            {t.alertDialogButton}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

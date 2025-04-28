@@ -212,6 +212,7 @@ const CommentsSection = ({
                 replies={commentReplies}
                 setReplies={setReplies}
                 t={t}
+                language={language}
               />
             );
           })}

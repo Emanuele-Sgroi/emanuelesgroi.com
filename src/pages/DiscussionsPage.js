@@ -70,6 +70,7 @@ const DiscussionsPage = ({ discussionContent, generalInfoContent, error }) => {
         generalInfoContent={generalInfoContent}
         comments={normalComments}
         t={t}
+        language={language}
       />
       <section className="with-top_header max-md:gap-4">
         {/* Page Header */}

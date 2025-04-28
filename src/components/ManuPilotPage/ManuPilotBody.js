@@ -163,6 +163,7 @@ const ManuPilotBody = ({
   loading,
   handleSendMessage,
   isThinking,
+  t,
 }) => {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
@@ -247,7 +248,7 @@ const ManuPilotBody = ({
           className="text-other-chart-orange4 max-[322px]:hidden"
         />
       ),
-      label: "Tell me more about Emanuele Sgroi",
+      label: t.suggestions.tellMeMore,
     },
     {
       icon: (
@@ -256,7 +257,7 @@ const ManuPilotBody = ({
           className="text-other-chart-green3 max-[322px]:hidden"
         />
       ),
-      label: "Show me Emanuele's Projects?",
+      label: t.suggestions.showProjects,
     },
     {
       icon: (
@@ -265,7 +266,7 @@ const ManuPilotBody = ({
           className="text-other-chart-purple4 max-[322px]:hidden"
         />
       ),
-      label: "How does ManuPilot work?",
+      label: t.suggestions.howWork,
     },
     {
       icon: (
@@ -274,7 +275,7 @@ const ManuPilotBody = ({
           className="text-other-chart-blue4 max-[322px]:hidden"
         />
       ),
-      label: "Explain React hooks to me",
+      label: t.suggestions.hooks,
     },
     {
       icon: (
@@ -283,7 +284,7 @@ const ManuPilotBody = ({
           className="text-accent-icon max-[322px]:hidden"
         />
       ),
-      label: "Can you review my code?",
+      label: t.suggestions.code,
     },
     {
       icon: (
@@ -292,7 +293,7 @@ const ManuPilotBody = ({
           className="text-other-chart-yellow4 dark:text-other-chart-yellow1 max-[322px]:hidden"
         />
       ),
-      label: "Generate a project idea",
+      label: t.suggestions.idea,
     },
   ];
 
@@ -403,9 +404,7 @@ const ManuPilotBody = ({
             {loading && isThinking && (
               <div className="flex justify-start items-center gap-4 my-4">
                 <GoCopilot size={20} className="text-accent-icon" />
-                <div className="manupilot-shimmer">
-                  ManuPilot is thinking...
-                </div>
+                <div className="manupilot-shimmer">{t.thinking}</div>
               </div>
             )}
           </div>
@@ -435,7 +434,7 @@ const ManuPilotBody = ({
             })}
           </div>
           <p className="text-xs text-text-secondary mt-[-24px] text-center">
-            ManuPilot uses AI. Check for mistakes.
+            {t.advice}
           </p>
         </div>
       )}

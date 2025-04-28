@@ -193,7 +193,7 @@ const TopComment = ({
           {topComment.name}
         </p>
         <p className="text-accent-icon text-sm">
-          {formatRelativeDate(topComment.createdAt)}
+          {formatRelativeDate(topComment.createdAt, language)}
         </p>
       </div>
       <div className="w-full">

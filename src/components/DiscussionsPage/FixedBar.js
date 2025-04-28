@@ -19,7 +19,13 @@ import { IoCaretUp, IoCaretDown } from "react-icons/io5";
  * - generalInfoContent: Object containing general user information, including profile picture.
  */
 
-const FixedBar = ({ discussionContent, comments, generalInfoContent, t }) => {
+const FixedBar = ({
+  discussionContent,
+  comments,
+  generalInfoContent,
+  t,
+  language,
+}) => {
   // Retrieve image URLs from content
   const profilePictureUrl = generalInfoContent?.profilePicture
     ? getAssetUrl(generalInfoContent?.profilePicture)
@@ -121,7 +127,7 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent, t }) => {
             </p>
             <p className="text-accent-icon text-xs center gap-[6px] max-[388px]:gap-3px min-[201px]:ml-2">
               <span className="max-[250px]:hidden">
-                {formatRelativeDate(topComment.createdAt)}
+                {formatRelativeDate(topComment.createdAt, language)}
               </span>
               <GoDotFill
                 size={3}

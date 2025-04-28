@@ -1,12 +1,16 @@
-// util function for data formatting, right now used only in the discussion page
-
-import { useLanguage } from "@/context/LanguageContext";
 import discussionsTranslations from "@/translations/discussions";
 
-export const formatRelativeDate = (dateString) => {
-  // translation
-  const { language } = useLanguage();
-  const t = discussionsTranslations[language].time;
+/**
+ * Formats a date string into a relative time (e.g., "2 minutes ago").
+ *
+ * @param {string} dateString - The date to format.
+ * @param {string} language - Current language ('en' or 'it').
+ * @returns {string} - Formatted relative time string.
+ */
+export const formatRelativeDate = (dateString, language = "en") => {
+  const t =
+    discussionsTranslations[language]?.time ||
+    discussionsTranslations["en"].time;
 
   const now = new Date();
   const givenDate = new Date(dateString);

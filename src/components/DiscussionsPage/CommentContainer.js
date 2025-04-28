@@ -75,6 +75,7 @@ const CommentContainer = ({
   replies,
   setReplies,
   t,
+  language,
 }) => {
   const [likes, setLikes] = useState(comment?.reactions?.likes || 0); // Separate state for likes
   const [reactions, setReactions] = useState(comment?.reactions || {});
@@ -248,7 +249,7 @@ const CommentContainer = ({
             {comment.name}
           </p>
           <p className="text-accent-icon text-sm">
-            {formatRelativeDate(comment.createdAt)}
+            {formatRelativeDate(comment.createdAt, language)}
           </p>
           {comment.isAuthor && (
             <p className="text-xs px-2 py-[1px] rounded-full border border-accent-icon text-accent-icon">
@@ -344,6 +345,7 @@ const CommentContainer = ({
                 updateReactionsInDB={updateReactionsInDB}
                 authorPicture={authorPicture}
                 t={t}
+                language={language}
               />
             ))}
         </div>
