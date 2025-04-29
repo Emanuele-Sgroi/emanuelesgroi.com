@@ -6,7 +6,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { FiArrowLeftCircle } from "react-icons/fi";
 
-const SiteDocTopSection = () => {
+const SiteDocTopSection = ({ t }) => {
   const router = useRouter();
   return (
     <div className="relative w-full overflow-hidden p-4 lg:p-6 border-b border-accent-border">
@@ -15,10 +15,10 @@ const SiteDocTopSection = () => {
           onClick={() => router.back()}
           className="flex items-center gap-2 text-sm text-accent-icon font-medium hover:text-text-link hover:underline"
         >
-          <FiArrowLeftCircle size={16} /> Go Back
+          <FiArrowLeftCircle size={16} /> {t.goBack}
         </button>
 
-        <h2 className="text-xl font-bold">About this website</h2>
+        <h2 className="text-xl font-bold">{t.about}</h2>
       </div>
     </div>
   );

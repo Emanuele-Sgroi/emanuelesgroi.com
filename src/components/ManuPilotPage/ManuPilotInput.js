@@ -66,6 +66,7 @@ const ManuPilotInput = ({
   const [fileLoadingProgress, setFileLoadingProgress] = useState(0);
   const [showBadge, setShowBadge] = useState(false);
   const textAreaRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -433,7 +434,7 @@ const ManuPilotInput = ({
             <DialogDescription>{t.uploadAndShare}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 my-2">
-            <div className="flex flex-col gap-2 items-start">
+            {/* <div className="flex flex-col gap-2 items-start">
               <input
                 id="fileUpload"
                 type="file"
@@ -441,6 +442,40 @@ const ManuPilotInput = ({
                 onChange={handleFileChange}
                 className="flex flex-col w-full text-sm text-text-secondary cursor-pointer focus:outline-none focus:ring-0"
               />
+              {pendingError && (
+                <p className="text-red-600 text-sm">{pendingError}</p>
+              )}
+            </div> */}
+            <div className="flex flex-col gap-2 items-start">
+              {/* Hidden file input */}
+              <input
+                id="fileUpload"
+                type="file"
+                accept={allowedExtensions.join(",")}
+                onChange={handleFileChange}
+                className="hidden"
+                ref={fileInputRef}
+              />
+
+              <div className="flex items-center gap-4 flex-wrap">
+                {/* Custom upload button */}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="btn-secondary text-sm"
+                >
+                  {t.attachFileButton}
+                </button>
+
+                {/* Show selected file name  */}
+                {pendingFile && (
+                  <p className="text-sm text-accent-extra">
+                    {pendingFile.name}
+                  </p>
+                )}
+              </div>
+
+              {/* Error message */}
               {pendingError && (
                 <p className="text-red-600 text-sm">{pendingError}</p>
               )}

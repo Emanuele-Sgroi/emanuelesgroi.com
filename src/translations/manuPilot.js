@@ -28,6 +28,7 @@ const manuPilotTranslations = {
     addFile: "Add this file",
     addFileLong: "Add a txt or code file to this chat",
     send: "Send now",
+    attachFileButton: "Attach a File",
     suggestions: {
       tellMeMore: "Tell me more about Emanuele Sgroi",
       showProjects: "Show me Emanuele's Projects?",
@@ -70,6 +71,7 @@ const manuPilotTranslations = {
     addFile: "Aggiungi questo file",
     addFileLong: "Aggiungi un file di testo o codice a questa chat",
     send: "Invia",
+    attachFileButton: "Carica un File",
     suggestions: {
       tellMeMore: "Parlami di più di Emanuele Sgroi",
       showProjects: "Mostrami i progetti di Emanuele",

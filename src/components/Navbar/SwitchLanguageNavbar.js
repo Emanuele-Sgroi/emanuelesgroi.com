@@ -10,7 +10,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useFullScreenSpinner } from "@/context/FullScreenSpinnerContext";
 
-const SwitchLanguageNavbar = () => {
+const SwitchLanguageNavbar = ({ isSiteDoc }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { setIsFullScreenSpinner } = useFullScreenSpinner();
@@ -62,7 +62,11 @@ const SwitchLanguageNavbar = () => {
         </button>
       </PopoverTrigger>
 
-      <PopoverContent className="max-[400px]:hidden w-fit p-2 bg-bg-button border-accent-border">
+      <PopoverContent
+        className={`max-[400px]:hidden w-fit p-2 bg-bg-button border-accent-border ${
+          isSiteDoc && "z-[9999]"
+        }`}
+      >
         {options.map((option) => (
           <div
             key={option.id}

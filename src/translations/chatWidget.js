@@ -35,6 +35,7 @@ const chatWidgetTranslations = {
     addFileLong: "Add a txt or code file to this chat",
     searchAProject: "Search a project to chat about",
     searchAProjectToAttach: "Search a project to attach",
+    attachFileButton: "Attach a File",
   },
 
   /* ───────────────────────── ITALIAN ───────────────────────── */
@@ -76,6 +77,7 @@ const chatWidgetTranslations = {
     addFileLong: "Aggiungi un file txt o di codice a questa chat",
     searchAProject: "Cerca un progetto di cui parlare",
     searchAProjectToAttach: "Cerca un progetto da allegare",
+    attachFileButton: "Carica un File",
   },
 };
 

@@ -3,14 +3,17 @@ import {
   fetchGeneralInfoContent,
 } from "@/utils/fetchCMSContent";
 import PortfolioPage from "@/pages/PortfolioPage";
-import { metadataByPage, defaultMetadata } from "@/config/metadata";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
+import { getDefaultMetadata, getMetadataByPage } from "@/config/metadata";
 
 // Generate metadata for SEO
-export const generateMetadata = () => ({
-  ...defaultMetadata,
-  ...metadataByPage["/portfolio"],
-});
+export const generateMetadata = () => {
+  const lang = getCurrentLanguageServer();
+  return {
+    ...getDefaultMetadata(lang),
+    ...getMetadataByPage("/portfolio", lang),
+  };
+};
 
 const Portfolio = async () => {
   const lang = getCurrentLanguageServer();

@@ -61,7 +61,6 @@ const NavbarClient = ({
   const isBlogPost = pathname.startsWith("/writings/");
   const isProjectDetails = pathname.startsWith("/portfolio/");
   const isSiteDoc = pathname === "/about-this-website";
-  const isMobile = useIsMobile();
 
   const getLinkClassDiv = (path) => {
     return pathname === path
@@ -90,7 +89,7 @@ const NavbarClient = ({
     <>
       <nav
         className={`w-full ${
-          isSiteDoc ? "fixed top-0 left-0 z-[999]" : "relative"
+          isSiteDoc ? "fixed top-0 left-0 !z-[999]" : "relative"
         } max-sm:px-4`}
       >
         {/* Top part */}
@@ -108,10 +107,17 @@ const NavbarClient = ({
               t={t}
             />
             <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <NavManuPilotLink t={t} />
-            <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
-            <ToggleThemeButton onClick={toggleTheme} theme={theme} t={t} />
-            <SwitchLanguageNavbar />
+            <NavManuPilotLink t={t} isSiteDoc={isSiteDoc} />
+            {!isManuPilotPage && (
+              <div className="max-md:hidden w-px h-[20px] bg-accent-border " />
+            )}
+            <ToggleThemeButton
+              onClick={toggleTheme}
+              theme={theme}
+              t={t}
+              isSiteDoc={isSiteDoc}
+            />
+            <SwitchLanguageNavbar isSiteDoc={isSiteDoc} />
 
             {/* Mobile only */}
             <NavMobileSideProfile

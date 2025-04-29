@@ -6,6 +6,7 @@ import ProjectDetailsPage from "@/pages/ProjectDetailsPage";
 import { fetchProject, fetchProjectSlugs } from "@/utils/fetchCMSContent";
 import { getAssetUrl } from "@/utils/imageUtils";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
+import metadataFallbacks from "@/translations/metadataFallbacks";
 
 // Generate static paths for project slugs
 export async function generateStaticParams() {
@@ -24,17 +25,19 @@ export async function generateStaticParams() {
 
 // Generate metadata dynamically based on the project details
 export async function generateMetadata({ params }) {
-  const lang = getCurrentLanguageServer();
+  const lang = "en"; // ❗ Force English fallback, or default
   const { data: project, error } = await fetchProject(params.slug, lang);
-  // const { data: project, error } = await fetchProject(params.slug);
 
   const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
 
   if (error || !project) {
+    const fallback =
+      metadataFallbacks[lang]?.projectNotFound ||
+      metadataFallbacks.en.projectNotFound;
     return {
       metadataBase,
-      title: "Project Not Found | Emanuele Sgroi",
-      description: "Oops! This page doesn't exist.",
+      title: fallback.title,
+      description: fallback.description,
     };
   }
 
@@ -53,7 +56,7 @@ export async function generateMetadata({ params }) {
       "Software Engineer",
     ],
     openGraph: {
-      title: project.postTitle || "Project Details | Emanuele Sgroi",
+      title: project.projectTitle || "Project Details | Emanuele Sgroi",
       description: project.smallDescription || "Check this project.",
       url: `${process.env.NEXT_PUBLIC_BASE_URL}portfolio/${params.slug}`,
       type: "website",

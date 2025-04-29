@@ -23,7 +23,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
  * - theme: String indicating the current theme ("light" or "dark").
  */
 
-const ToggleThemeButton = ({ onClick, theme, t }) => {
+const ToggleThemeButton = ({ onClick, theme, t, isSiteDoc }) => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
 
@@ -57,7 +57,11 @@ const ToggleThemeButton = ({ onClick, theme, t }) => {
             )}
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-fit p-1 bg-bg-button border-accent-border">
+        <PopoverContent
+          className={`w-fit p-1 bg-bg-button border-accent-border ${
+            isSiteDoc && "z-[9999]"
+          }`}
+        >
           <p className="text-xs">
             {theme !== "light" ? t.tooltips.light : t.tooltips.dark}
           </p>

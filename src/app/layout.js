@@ -9,12 +9,13 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
 import { Navbar, Footer, ChatWidget, ChatWidgetWrapper } from "@/components";
 import { ToastContainer } from "react-toastify";
-import { defaultMetadata } from "@/config/metadata";
+//import { defaultMetadata } from "@/config/metadata";
 //import { cookies } from "next/headers";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
+import { getDefaultMetadata } from "@/config/metadata";
 
 // Set default metadata for all pages
-export const metadata = defaultMetadata;
+export const metadata = getDefaultMetadata(getCurrentLanguageServer());
 
 // Lazy load the greeting popup (disabled for SSR)
 const GreetingPopup = dynamic(
