@@ -40,7 +40,7 @@ import {
  * - conversation: Array representing the current chat messages
  */
 
-const ManuPilotHeader = ({ onClickReset, conversation, t }) => {
+const ManuPilotHeader = ({ onClickReset, conversation, t, reachedLimit }) => {
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   return (
@@ -52,7 +52,7 @@ const ManuPilotHeader = ({ onClickReset, conversation, t }) => {
               onClick={() => {
                 setOpenAlertDialog(true);
               }}
-              disabled={conversation.length < 1}
+              disabled={conversation.length < 1 || reachedLimit}
               className="absolute left-6 p-1 sm:p-2 bg-bg-button hover:bg-bg-hover border border-accent-border cursor-pointer rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
             >
               <BiEdit size={18} className="text-accent-icon" />

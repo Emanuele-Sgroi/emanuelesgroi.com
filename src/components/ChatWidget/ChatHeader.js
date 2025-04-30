@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/command";
 import { useChat } from "@/context/ChatProvider";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useQuota } from "@/context/QuotaProvider";
 
 /**
  * ChatHeader Component
@@ -60,6 +61,11 @@ export default function ChatHeader({
   isPortfolioError,
   t,
 }) {
+  // Quota
+  const { remaining, secondsLeft } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
+
   const { messages, setMessages } = useChat();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
@@ -152,7 +158,8 @@ export default function ChatHeader({
                     onMouseEnter={handleMouseEnterNew}
                     onMouseLeave={handleMouseLeaveNew}
                     aria-expanded={openNew}
-                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2"
+                    disabled={reachedLimit}
+                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2 disabled:opacity-50 disabled:hover:bg-transparent"
                   >
                     <AiOutlinePlus size={18} className="text-accent-icon" />
                   </button>
@@ -177,7 +184,8 @@ export default function ChatHeader({
                     onClick={() => {
                       setOpenProjectsDialog(true);
                     }}
-                    className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2`}
+                    disabled={reachedLimit}
+                    className={`relative w-[32px] h-[32px]  center rounded-md hover:bg-bg-hover2 disabled:opacity-50 disabled:hover:bg-transparent`}
                   >
                     <IoCodeSharp size={18} className="text-accent-icon" />
                   </button>
@@ -201,7 +209,8 @@ export default function ChatHeader({
                     onMouseEnter={handleMouseEnterNew}
                     onMouseLeave={handleMouseLeaveNew}
                     aria-expanded={openNew}
-                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2"
+                    disabled={reachedLimit}
+                    className="relative w-[32px] h-[32px] center rounded-md hover:bg-bg-hover2 disabled:opacity-50 disabled:hover:bg-transparent"
                   >
                     <AiOutlinePlus size={18} className="text-accent-icon" />
                   </button>

@@ -23,6 +23,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { useLanguage } from "@/context/LanguageContext";
 import manuPilotTranslations from "@/translations/manuPilot";
+import { useQuota } from "@/context/QuotaProvider";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB file limits
 
@@ -131,6 +132,11 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
   // Translation
   const { language } = useLanguage();
   const t = manuPilotTranslations[language];
+
+  // Quota
+  const { remaining, secondsLeft, updateFromHeaders } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
 
   const router = useRouter();
   const originalPushRef = useRef(router.push);
@@ -264,6 +270,8 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         body: JSON.stringify({ messages: messagesForApi }),
         signal: newAbortController.signal,
       });
+      // tell the provider what the server sent back
+      updateFromHeaders(response.headers);
 
       if (!response.ok) {
         // handle error
@@ -397,6 +405,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         onClickReset={handleResetConversation}
         conversation={conversation}
         t={t}
+        reachedLimit={reachedLimit}
       />
       <ManuPilotBody
         conversation={conversation}
@@ -404,16 +413,30 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         loading={loading}
         handleSendMessage={handleSendMessage}
         t={t}
+        reachedLimit={reachedLimit}
       />
-      <ManuPilotInput
-        loading={loading}
-        handleSendMessage={handleSendMessage}
-        error={error}
-        clearError={clearError}
-        droppedFile={droppedFile}
-        setDroppedFile={setDroppedFile}
-        t={t}
-      />
+      {!reachedLimit && (
+        <ManuPilotInput
+          loading={loading}
+          handleSendMessage={handleSendMessage}
+          error={error}
+          clearError={clearError}
+          droppedFile={droppedFile}
+          setDroppedFile={setDroppedFile}
+          t={t}
+        />
+      )}
+      {reachedLimit && (
+        <div className="w-full flex justify-center px-4 pb-2 pt-4 sm:pb-4 center flex-col gap-4">
+          <p>{t.reachedLimit}</p>
+          {secondsLeft > 0 && (
+            <p>
+              {t.tryAgainIn} {Math.floor(secondsLeft / 60)}:
+              {(secondsLeft % 60).toString().padStart(2, "0")}
+            </p>
+          )}
+        </div>
+      )}
       <NavigationWarningDialog
         showNavigationWarning={showNavigationWarning}
         setShowNavigationWarning={setShowNavigationWarning}

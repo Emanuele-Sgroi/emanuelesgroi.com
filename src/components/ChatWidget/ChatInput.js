@@ -28,7 +28,7 @@ import {
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { allowedExtensions } from "@/utils/allowedExtensions";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
+import { useQuota } from "@/context/QuotaProvider";
 /**
  * ChatInput Component
  *
@@ -56,6 +56,11 @@ export default function ChatInput({
 }) {
   // Context for chat messages
   const { messages, setMessages } = useChat();
+
+  // quota
+  const { remaining, secondsLeft, updateFromHeaders } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
 
   // State for user input
   const [inputValue, setInputValue] = useState("");
@@ -268,6 +273,9 @@ export default function ChatInput({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: messagesForApi }),
       });
+
+      // tell the provider what the server sent back
+      updateFromHeaders(response.headers);
 
       if (!response.ok) {
         const errText = await response.text().catch(() => "");
@@ -622,7 +630,7 @@ export default function ChatInput({
                       <TooltipTrigger asChild>
                         <button
                           onClick={() => setOpenAttachDialog(true)}
-                          disabled={isFileLoading}
+                          disabled={isFileLoading || reachedLimit}
                           className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:opacity-50 disabled:hover:bg-transparent max-md:hover:bg-transparent"
                         >
                           <GrAttachment
@@ -654,7 +662,7 @@ export default function ChatInput({
                               }
                             }
                           }}
-                          disabled={isThinking}
+                          disabled={isThinking || reachedLimit}
                           className="sm:p-1 flex items-center rounded-sm hover:bg-bg-hover disabled:hover:bg-transparent disabled:opacity-50 max-md:hover:bg-transparent"
                         >
                           <VscSend size={20} className="text-accent-icon" />
@@ -679,16 +687,18 @@ export default function ChatInput({
             <p className="text-sm text-red-600 text-center">
               {t.errorGenerating}
             </p>
-            <button
-              onClick={handleRegenerate}
-              className="center gap-2 px-2 py-1 rounded-full bg-gray-800 dark:bg-text-primary text-white dark:text-gray-800 text-sm font-semibold"
-            >
-              <AiOutlineRedo
-                size={18}
-                className="text-white dark:text-gray-800"
-              />
-              {t.regenerate}
-            </button>
+            {!reachedLimit && (
+              <button
+                onClick={handleRegenerate}
+                className="center gap-2 px-2 py-1 rounded-full bg-gray-800 dark:bg-text-primary text-white dark:text-gray-800 text-sm font-semibold"
+              >
+                <AiOutlineRedo
+                  size={18}
+                  className="text-white dark:text-gray-800"
+                />
+                {t.regenerate}
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -699,18 +709,6 @@ export default function ChatInput({
             <DialogDescription>{t.uploadAndShare}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 my-2">
-            {/* <div className="flex flex-col gap-2 items-start">
-              <input
-                id="fileUpload"
-                type="file"
-                accept={allowedExtensions.join(",")}
-                onChange={handleFileChange}
-                className="flex flex-col w-full text-sm text-text-secondary cursor-pointer focus:outline-none focus:ring-0"
-              />
-              {pendingError && (
-                <p className="text-red-600 text-sm">{pendingError}</p>
-              )}
-            </div> */}
             <div className="flex flex-col gap-2 items-start">
               {/* Hidden file input */}
               <input

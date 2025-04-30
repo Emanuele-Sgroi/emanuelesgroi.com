@@ -6,7 +6,6 @@ import { ChatHeader, ChatBody } from "@/components";
 import { allowedExtensions } from "@/utils/allowedExtensions";
 import AttachFileOverlay from "@/components/ManuPilotPage/AttachFileOverlay";
 import { useManuPilotContent } from "@/hooks/useManuPilotContent";
-import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 import { ToastContainer, toast } from "react-toastify";
 import { useLanguage } from "@/context/LanguageContext";
 import chatWidgetTranslations from "@/translations/chatWidget";
@@ -86,7 +85,7 @@ export default function ChatWidget({ portfolioContent, hasError }) {
   }, [pathname, portfolioContent, activeChat, userSetGeneralChat]);
 
   /**
-   * 🔄 Keep the selected project in sync when the language changes.
+   *  Keep the selected project in sync when the language changes.
    *    If either the title *or* the list of questions differs, refresh state.
    */
   useEffect(() => {

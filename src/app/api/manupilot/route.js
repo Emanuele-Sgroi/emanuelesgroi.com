@@ -1,129 +1,240 @@
-// API route for OpenAI (ManuPilot AI)
-// Supports streaming responses & token count limit enforcement
+// // API route for OpenAI (ManuPilot AI)
+// // Supports streaming responses & token count limit enforcement
+
+// export const runtime = "nodejs";
+
+// import OpenAI from "openai";
+
+// // Initialize OpenAI client with API key from environment variables
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+
+// const MAX_TOKENS_FOR_PROMPT = 100000; // Token limit before triggering summarization
+
+// export async function POST(req) {
+//   try {
+//     const { messages } = await req.json();
+
+//     if (!messages || !Array.isArray(messages)) {
+//       return new Response(
+//         JSON.stringify({ error: "Messages must be provided as an array" }),
+//         { status: 400 }
+//       );
+//     }
+
+//     // Check token usage before sending the request
+//     const tokenCount = approximateTokenCount(messages);
+
+//     if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
+//       // If token count exceeds the limit, request summarization
+//       const summarizeResponse = await fetch(
+//         `${process.env.NEXT_PUBLIC_BASE_URL}/api/manupilot-summarize`,
+//         {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify({ messages }),
+//         }
+//       );
+
+//       if (!summarizeResponse.ok) {
+//         const errorData = await summarizeResponse.json();
+//         return new Response(
+//           JSON.stringify({ error: errorData.error || "Summarization failed" }),
+//           { status: summarizeResponse.status }
+//         );
+//       }
+
+//       // Return summarized content
+//       const summarizedData = await summarizeResponse.json();
+//       return new Response(JSON.stringify(summarizedData), {
+//         status: 200,
+//       });
+//     }
+
+//     // Request OpenAI chat completion with streaming enabled
+//     const chatCompletion = await openai.chat.completions.create({
+//       //model: "chatgpt-4o-latest",
+//       model: "gpt-4o-mini",
+//       messages,
+//       stream: true, // Enables response streaming
+//     });
+
+//     // Setup streaming response
+//     const encoder = new TextEncoder();
+//     const stream = new ReadableStream({
+//       async start(controller) {
+//         try {
+//           // for-await loop to grab each chunk
+//           for await (const part of chatCompletion) {
+//             // Each part has .choices[n].delta.content (or empty string)
+//             const chunk = part.choices?.[0]?.delta?.content || "";
+//             if (chunk) {
+//               // Enqueue it to the stream
+//               controller.enqueue(encoder.encode(chunk));
+//             }
+//           }
+//         } catch (err) {
+//           console.error("Stream error:", err);
+//           controller.error(err);
+//         } finally {
+//           controller.close();
+//         }
+//       },
+//     });
+
+//     // Return the Stream response
+//     return new Response(stream, {
+//       headers: {
+//         // text/plain means "raw text streaming"
+//         "Content-Type": "text/plain; charset=utf-8",
+//         "Cache-Control": "no-cache, no-transform",
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error with OpenAI API:", error);
+
+//     // Handle OpenAI API-specific errors
+//     if (error instanceof OpenAI.APIError) {
+//       return new Response(
+//         JSON.stringify({
+//           status: error.status,
+//           message: error.message,
+//           code: error.code,
+//           type: error.type,
+//         }),
+//         { status: error.status || 500 }
+//       );
+//     }
+
+//     // Generic error response
+//     return new Response(
+//       JSON.stringify({ error: "An error occurred", details: error.message }),
+//       { status: 500 }
+//     );
+//   }
+// }
+
+// /**
+//  * Approximate token count for messages (4 characters ≈ 1 token)
+//  */
+// function approximateTokenCount(messages) {
+//   let totalChars = 0;
+//   for (const msg of messages) {
+//     if (msg?.content) {
+//       totalChars += msg.content.length;
+//     }
+//   }
+//   return Math.floor(totalChars / 4);
+// }
+
+// ManuPilot AI route
+// ────────────────────────────────────────────────────────────────
+// 1. 30-messages / 2-hour quota  (checkAndCount)
+// 2. Token-limit + summarisation fallback
+// 3. Streaming response with quota headers
+// ----------------------------------------------------------------
 
 export const runtime = "nodejs";
 
 import OpenAI from "openai";
+import { checkAndCount } from "@/utils/quota";
 
-// Initialize OpenAI client with API key from environment variables
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const MAX_TOKENS_FOR_PROMPT = 100_000; // summarise threshold
 
-const MAX_TOKENS_FOR_PROMPT = 100000; // Token limit before triggering summarization
+/* rough 1 token ≈ 4 chars */
+const approxTokens = (msgs = []) =>
+  Math.floor(msgs.reduce((sum, m) => sum + (m?.content?.length || 0), 0) / 4);
 
 export async function POST(req) {
+  /* ── Parse body early ─────────────────────────────────────── */
+  let body;
   try {
-    const { messages } = await req.json();
+    body = await req.json();
+  } catch {
+    return json({ error: "Invalid JSON" }, 400);
+  }
+  const { messages } = body;
+  if (!Array.isArray(messages)) {
+    return json({ error: "messages must be an array" }, 400);
+  }
 
-    if (!messages || !Array.isArray(messages)) {
-      return new Response(
-        JSON.stringify({ error: "Messages must be provided as an array" }),
-        { status: 400 }
-      );
-    }
-
-    // Check token usage before sending the request
-    const tokenCount = approximateTokenCount(messages);
-
-    if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
-      // If token count exceeds the limit, request summarization
-      const summarizeResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/manupilot-summarize`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages }),
-        }
-      );
-
-      if (!summarizeResponse.ok) {
-        const errorData = await summarizeResponse.json();
-        return new Response(
-          JSON.stringify({ error: errorData.error || "Summarization failed" }),
-          { status: summarizeResponse.status }
-        );
-      }
-
-      // Return summarized content
-      const summarizedData = await summarizeResponse.json();
-      return new Response(JSON.stringify(summarizedData), {
-        status: 200,
-      });
-    }
-
-    // Request OpenAI chat completion with streaming enabled
-    const chatCompletion = await openai.chat.completions.create({
-      //model: "chatgpt-4o-latest",
-      model: "gpt-4o-mini",
-      messages,
-      stream: true, // Enables response streaming
-    });
-
-    // Setup streaming response
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          // for-await loop to grab each chunk
-          for await (const part of chatCompletion) {
-            // Each part has .choices[n].delta.content (or empty string)
-            const chunk = part.choices?.[0]?.delta?.content || "";
-            if (chunk) {
-              // Enqueue it to the stream
-              controller.enqueue(encoder.encode(chunk));
-            }
-          }
-        } catch (err) {
-          console.error("Stream error:", err);
-          controller.error(err);
-        } finally {
-          controller.close();
-        }
+  /* ── Quota check (increments counter on success) ─────────── */
+  const quota = await checkAndCount();
+  if (!quota.allowed) {
+    return json(
+      {
+        error: "Quota exceeded – come back later.",
+        resetAt: quota.resetAt.toISOString(),
       },
-    });
-
-    // Return the Stream response
-    return new Response(stream, {
-      headers: {
-        // text/plain means "raw text streaming"
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache, no-transform",
-      },
-    });
-  } catch (error) {
-    console.error("Error with OpenAI API:", error);
-
-    // Handle OpenAI API-specific errors
-    if (error instanceof OpenAI.APIError) {
-      return new Response(
-        JSON.stringify({
-          status: error.status,
-          message: error.message,
-          code: error.code,
-          type: error.type,
-        }),
-        { status: error.status || 500 }
-      );
-    }
-
-    // Generic error response
-    return new Response(
-      JSON.stringify({ error: "An error occurred", details: error.message }),
-      { status: 500 }
+      429,
+      quota
     );
   }
+
+  /* ── Summarisation shortcut if >100 k tokens ─────────────── */
+  const tokenCount = approxTokens(messages);
+  if (tokenCount > MAX_TOKENS_FOR_PROMPT) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/manupilot-summarize`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages }),
+      }
+    );
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return json(
+        { error: data.error || "Summarisation failed" },
+        res.status,
+        quota
+      );
+    }
+    return json(data, 200, quota); // { role, content }
+  }
+
+  /* ── Normal streaming request to OpenAI ──────────────────── */
+  const chat = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages,
+    stream: true,
+  });
+
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const part of chat) {
+          const chunk = part.choices?.[0]?.delta?.content || "";
+          if (chunk) controller.enqueue(encoder.encode(chunk));
+        }
+      } catch (e) {
+        controller.error(e);
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+      "X-Quota-Remaining": String(quota.remaining),
+      "X-Quota-Reset": quota.resetAt.toISOString(),
+    },
+  });
 }
 
-/**
- * Approximate token count for messages (4 characters ≈ 1 token)
- */
-function approximateTokenCount(messages) {
-  let totalChars = 0;
-  for (const msg of messages) {
-    if (msg?.content) {
-      totalChars += msg.content.length;
-    }
+/* helper */
+function json(obj, status = 200, quota = null) {
+  const headers = { "Content-Type": "application/json" };
+  if (quota) {
+    headers["X-Quota-Remaining"] = String(quota.remaining);
+    headers["X-Quota-Reset"] = quota.resetAt.toISOString();
   }
-  return Math.floor(totalChars / 4);
+  return new Response(JSON.stringify(obj), { status, headers });
 }

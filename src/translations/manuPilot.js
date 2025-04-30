@@ -29,6 +29,8 @@ const manuPilotTranslations = {
     addFileLong: "Add a txt or code file to this chat",
     send: "Send now",
     attachFileButton: "Attach a File",
+    reachedLimit: "You’ve reached your usage limit.",
+    tryAgainIn: "Try again in",
     suggestions: {
       tellMeMore: "Tell me more about Emanuele Sgroi",
       showProjects: "Show me Emanuele's Projects?",
@@ -72,6 +74,8 @@ const manuPilotTranslations = {
     addFileLong: "Aggiungi un file di testo o codice a questa chat",
     send: "Invia",
     attachFileButton: "Carica un File",
+    reachedLimit: "Hai raggiunto il limite di utilizzo.",
+    tryAgainIn: "Riprova tra",
     suggestions: {
       tellMeMore: "Parlami di più di Emanuele Sgroi",
       showProjects: "Mostrami i progetti di Emanuele",

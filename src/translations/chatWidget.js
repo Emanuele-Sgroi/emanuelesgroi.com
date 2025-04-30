@@ -36,6 +36,8 @@ const chatWidgetTranslations = {
     searchAProject: "Search a project to chat about",
     searchAProjectToAttach: "Search a project to attach",
     attachFileButton: "Attach a File",
+    reachedLimit: "You’ve reached your usage limit.",
+    tryAgainIn: "Try again in",
   },
 
   /* ───────────────────────── ITALIAN ───────────────────────── */
@@ -78,6 +80,8 @@ const chatWidgetTranslations = {
     searchAProject: "Cerca un progetto di cui parlare",
     searchAProjectToAttach: "Cerca un progetto da allegare",
     attachFileButton: "Carica un File",
+    reachedLimit: "Hai raggiunto il limite di utilizzo.",
+    tryAgainIn: "Riprova tra",
   },
 };
 

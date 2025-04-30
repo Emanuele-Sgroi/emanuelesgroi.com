@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import QuotaProvider from "@/context/QuotaProvider";
 import { ChatProvider } from "@/context/ChatProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
@@ -38,14 +39,16 @@ export default function RootLayout({ children }) {
           <LanguageProvider initialLanguage={lang}>
             <FullScreenSpinnerProvider>
               <ToastContainer />
-              <ChatProvider>
-                <GreetingPopup />
-                {/* <ChatWidget lang={lang} /> */}
-                <ChatWidgetWrapper lang={lang} />
-                <Navbar lang={lang} />
-                {children}
-                <Footer />
-              </ChatProvider>
+              <QuotaProvider>
+                <ChatProvider>
+                  <GreetingPopup />
+                  {/* <ChatWidget lang={lang} /> */}
+                  <ChatWidgetWrapper lang={lang} />
+                  <Navbar lang={lang} />
+                  {children}
+                  <Footer />
+                </ChatProvider>
+              </QuotaProvider>
             </FullScreenSpinnerProvider>
           </LanguageProvider>
         </ThemeProvider>

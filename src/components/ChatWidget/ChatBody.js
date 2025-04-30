@@ -21,6 +21,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ChatCodeBlock from "./ChatCodeBlock";
+import { useQuota } from "@/context/QuotaProvider";
 
 const customComponents = {
   hr: () => <hr className="border-accent-border my-2" />,
@@ -138,6 +139,11 @@ export default function ChatBody({
   );
 
   const { messages } = useChat(); // get the messages from context
+
+  // Quota
+  const { remaining, secondsLeft, updateFromHeaders } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
 
   // State for AI processing, scrolling, and UI behavior
   const [isThinking, setIsThinking] = useState(false);
@@ -374,6 +380,19 @@ export default function ChatBody({
             t={t}
             language={language}
           />
+        </div>
+      )}
+
+      {/* Use has reached the limit */}
+      {reachedLimit && (
+        <div className="w-full h-full center flex-col gap-4 absolute bg-[rgba(255,255,255,0.90)] dark:bg-[rgba(13,17,23,0.90)] z-[999] md:rounded-b-xl">
+          <p>{t.reachedLimit}</p>
+          {secondsLeft > 0 && (
+            <p>
+              {t.tryAgainIn} {Math.floor(secondsLeft / 60)}:
+              {(secondsLeft % 60).toString().padStart(2, "0")}
+            </p>
+          )}
         </div>
       )}
     </div>

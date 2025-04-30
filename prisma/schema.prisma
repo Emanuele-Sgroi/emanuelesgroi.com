@@ -24,3 +24,14 @@ model Comment {
 }
 
 
+// For ManuPilot Usage
+
+model ManuUsage {
+  id           Int      @id @default(autoincrement())
+  /** anonymous id (signed cookie or fallback hash) */
+  userId       String   @unique
+  /** rolling-window start (UTC)              */
+  windowStart  DateTime
+  /** messages sent since windowStart         */
+  messageCount Int      @default(0)
+}

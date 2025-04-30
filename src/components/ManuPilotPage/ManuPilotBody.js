@@ -164,6 +164,7 @@ const ManuPilotBody = ({
   handleSendMessage,
   isThinking,
   t,
+  reachedLimit,
 }) => {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
@@ -425,7 +426,8 @@ const ManuPilotBody = ({
                 <button
                   key={idx}
                   onClick={() => handleSendMessage({ text: label })}
-                  className={`flex items-center gap-2 py-2 px-4 max-[350px]:px-2 max-[350px]:py-1 rounded-full border border-accent-border hover:bg-bg-hover text-text-primary text-sm max-[350px]:text-xs ${styleClasses}`}
+                  className={`flex items-center gap-2 py-2 px-4 max-[350px]:px-2 max-[350px]:py-1 rounded-full border border-accent-border hover:bg-bg-hover disabled:bg-transparent disabled:opacity-50 text-text-primary text-sm max-[350px]:text-xs ${styleClasses}`}
+                  disabled={reachedLimit}
                 >
                   {icon}
                   {label}
