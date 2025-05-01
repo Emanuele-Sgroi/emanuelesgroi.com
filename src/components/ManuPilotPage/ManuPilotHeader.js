@@ -40,7 +40,7 @@ import {
  * - conversation: Array representing the current chat messages
  */
 
-const ManuPilotHeader = ({ onClickReset, conversation }) => {
+const ManuPilotHeader = ({ onClickReset, conversation, t, reachedLimit }) => {
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   return (
@@ -52,7 +52,7 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
               onClick={() => {
                 setOpenAlertDialog(true);
               }}
-              disabled={conversation.length < 1}
+              disabled={conversation.length < 1 || reachedLimit}
               className="absolute left-6 p-1 sm:p-2 bg-bg-button hover:bg-bg-hover border border-accent-border cursor-pointer rounded-md disabled:hover:bg-bg-button disabled:opacity-50"
             >
               <BiEdit size={18} className="text-accent-icon" />
@@ -62,7 +62,7 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
             disabled={conversation.length < 1}
             className="max-md:!hidden"
           >
-            <p className="text-xs">Reset conversation</p>
+            <p className="text-xs">{t.reset}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -70,17 +70,16 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
       <AlertDialog open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want to Reset the chat?
-            </AlertDialogTitle>
+            <AlertDialogTitle>{t.alertResetTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              Your current conversation with ManuPilot will be lost and cannot
-              be recovered.
+              {t.alertResetDescription}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={onClickReset}>Reset</AlertDialogAction>
+            <AlertDialogCancel>{t.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={onClickReset}>
+              {t.alertResetButton}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -113,7 +112,7 @@ const ManuPilotHeader = ({ onClickReset, conversation }) => {
                 </div>
               </div>
               <p className="text-xs sm:text-sm text-text-primary  mt-2 sm:mt-4">
-                There are currently no other models to choose from.
+                {t.noModels}
               </p>
             </div>
           </PopoverContent>

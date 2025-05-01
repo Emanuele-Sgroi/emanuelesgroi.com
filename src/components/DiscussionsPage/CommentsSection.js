@@ -20,9 +20,12 @@ import { TopComment, CommentContainer, CommentInput } from "@/components";
  */
 
 const CommentsSection = ({
+  discussionContent,
   generalInfoContent,
   topComment,
   normalComments,
+  t,
+  language,
 }) => {
   // Retrieve image URLs from content
   const profilePictureUrl = generalInfoContent?.profilePicture
@@ -106,24 +109,30 @@ const CommentsSection = ({
       });
 
       if (!response.ok) {
-        toast.error("Failed to post your comment. Please try again later.");
+        toast.error(t.submitFail);
         throw new Error("Failed to save the comment.");
       }
 
       const savedComment = await response.json(); // Get the saved comment from the backend
 
       setComments((prevComments) => [...prevComments, savedComment]);
-      toast.success("Your comment has been posted!");
+      toast.success(t.submitSuccess);
     } catch (error) {
       console.error("Error saving comment:", error);
-      toast.error("Failed to post your comment. Please try again later.");
+      toast.error(t.submitFail);
     }
   };
 
   return (
     <div className="w-full max-[915px]:max-w-full min-[916px]:max-w-[660px] lg:max-w-[750px] xl:max-w-[905px] flex flex-col">
       {/* Display top comment */}
-      <TopComment profilePicture={profilePictureUrl} topComment={topComment} />
+      <TopComment
+        discussionContent={discussionContent}
+        profilePicture={profilePictureUrl}
+        topComment={topComment}
+        t={t}
+        language={language}
+      />
 
       {/* Display comment count and sorting menu */}
       {comments.length > 0 ? (
@@ -132,14 +141,14 @@ const CommentsSection = ({
           <p className="center text-text-primary gap-1 flex-wrap">
             <span className="font-semibold">
               {comments.filter((comment) => comment.parentId === null).length}{" "}
-              Comment
               {comments.filter((comment) => comment.parentId === null)
-                .length !== 1 && "s"}
+                .length !== 1
+                ? t.comments
+                : t.comment}
             </span>{" "}
             <GoDotFill size={5} className="text-text-primary" />{" "}
             <span>
-              {replies.length} Repl
-              {replies.length !== 1 ? "ies" : "y"}
+              {replies.length} {replies.length !== 1 ? t.replies : t.reply}
             </span>
           </p>
 
@@ -153,7 +162,7 @@ const CommentsSection = ({
                   : ""
               }`}
             >
-              Oldest
+              {t.oldest}
               {sortOrder === "top" && (
                 <div className="absolute right-[-1px] h-[18px] w-px bg-accent-icon" />
               )}
@@ -166,7 +175,7 @@ const CommentsSection = ({
                   : ""
               }`}
             >
-              Newest
+              {t.newest}
             </button>
             <button
               onClick={() => handleSortChange("top")}
@@ -176,7 +185,7 @@ const CommentsSection = ({
                   : ""
               }`}
             >
-              Top
+              {t.popular}
               {sortOrder === "oldest" && (
                 <div className="absolute left-[-1px] h-[18px] w-px bg-accent-icon" />
               )}
@@ -184,9 +193,7 @@ const CommentsSection = ({
           </div>
         </div>
       ) : (
-        <p className=" text-text-secondary text-center my-4">
-          There are no comments in this discussion.
-        </p>
+        <p className=" text-text-secondary text-center my-4">{t.noComments}</p>
       )}
 
       {comments.length > 0 && (
@@ -204,6 +211,8 @@ const CommentsSection = ({
                 comment={comment}
                 replies={commentReplies}
                 setReplies={setReplies}
+                t={t}
+                language={language}
               />
             );
           })}
@@ -211,7 +220,7 @@ const CommentsSection = ({
       )}
       <div className="w-full flex flex-col mt-6 md:mt-4">
         <div className="max-md:hidden w-full h-[2px] bg-accent-border mb-4" />
-        <h5 className="font-semibold max-md:px-4">Add a comment</h5>
+        <h5 className="font-semibold max-md:px-4">{t.add}</h5>
         {/* Normal comments input */}
         <div className="mt-4 max-md:p-2 max-md:bg-bg-mobile-primary max-md:border-b max-md:border-t border-accent-border">
           <CommentInput
@@ -220,13 +229,12 @@ const CommentsSection = ({
             onSubmit={handleCommentSubmit}
             showToggle={false}
             isReply={false}
+            t={t}
           />
         </div>
         <div className="flex items-center gap-1 mt-4 max-md:px-4 flex-wrap">
           <RiErrorWarningLine size={16} className="text-accent-icon" />
-          <p className="text-sm text-text-secondary">
-            Comments deemed inappropriate or disrespectful will be removed.
-          </p>
+          <p className="text-sm text-text-secondary">{t.warning}</p>
         </div>
       </div>
     </div>

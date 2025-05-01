@@ -21,6 +21,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ToastContainer, toast } from "react-toastify";
+import { useLanguage } from "@/context/LanguageContext";
+import manuPilotTranslations from "@/translations/manuPilot";
+import { useQuota } from "@/context/QuotaProvider";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB file limits
 
@@ -126,6 +129,15 @@ const allowedExtensions = [
  * - Supports file uploads & chat streaming
  */
 const ManuPilotPage = ({ manuPilotContent, isError }) => {
+  // Translation
+  const { language } = useLanguage();
+  const t = manuPilotTranslations[language];
+
+  // Quota
+  const { remaining, secondsLeft, updateFromHeaders } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
+
   const router = useRouter();
   const originalPushRef = useRef(router.push);
   const [conversation, setConversation] = useState([]);
@@ -187,12 +199,12 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       const ext = file.name.split(".").pop().toLowerCase();
 
       if (!allowedExtensions.includes(`.${ext}`)) {
-        toast.error("This file type is not supported.");
+        toast.error(t.fileNotSupported);
         return;
       }
 
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        toast.error("File exceeds 2 MB limit.");
+        toast.error(t.fileTooBig);
         return;
       }
 
@@ -258,6 +270,8 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         body: JSON.stringify({ messages: messagesForApi }),
         signal: newAbortController.signal,
       });
+      // tell the provider what the server sent back
+      updateFromHeaders(response.headers);
 
       if (!response.ok) {
         // handle error
@@ -265,7 +279,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
         console.error("Error response text:", errText);
         setError({
           type: "chat",
-          message: "There was an error generating a response.",
+          message: t.errorGenerating,
         });
         return;
       }
@@ -334,7 +348,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
           console.error("API error:", data.error);
           setError({
             type: "chat",
-            message: data.error || "There was an error generating a response.",
+            message: data.error || t.errorGenerating,
           });
           return;
         }
@@ -351,8 +365,7 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       console.error("API error:", error);
       setError({
         type: "system",
-        message:
-          "ManuPilot is experiencing an issue. Please try regenerating your response. If the problem persists, try again later.",
+        message: t.errorGeneratingLong,
       });
     } finally {
       setIsThinking(false);
@@ -391,30 +404,49 @@ const ManuPilotPage = ({ manuPilotContent, isError }) => {
       <ManuPilotHeader
         onClickReset={handleResetConversation}
         conversation={conversation}
+        t={t}
+        reachedLimit={reachedLimit}
       />
       <ManuPilotBody
         conversation={conversation}
         isThinking={isThinking}
         loading={loading}
         handleSendMessage={handleSendMessage}
+        t={t}
+        reachedLimit={reachedLimit}
       />
-      <ManuPilotInput
-        loading={loading}
-        handleSendMessage={handleSendMessage}
-        error={error}
-        clearError={clearError}
-        droppedFile={droppedFile}
-        setDroppedFile={setDroppedFile}
-      />
+      {!reachedLimit && (
+        <ManuPilotInput
+          loading={loading}
+          handleSendMessage={handleSendMessage}
+          error={error}
+          clearError={clearError}
+          droppedFile={droppedFile}
+          setDroppedFile={setDroppedFile}
+          t={t}
+        />
+      )}
+      {reachedLimit && (
+        <div className="w-full flex justify-center px-4 pb-2 pt-4 sm:pb-4 center flex-col gap-4">
+          <p>{t.reachedLimit}</p>
+          {secondsLeft > 0 && (
+            <p>
+              {t.tryAgainIn} {Math.floor(secondsLeft / 60)}:
+              {(secondsLeft % 60).toString().padStart(2, "0")}
+            </p>
+          )}
+        </div>
+      )}
       <NavigationWarningDialog
         showNavigationWarning={showNavigationWarning}
         setShowNavigationWarning={setShowNavigationWarning}
         pendingUrl={pendingUrl}
         originalPushRef={originalPushRef}
         router={router}
+        t={t}
       />
 
-      <AttachFileOverlay isDraggingFile={isDraggingFile} />
+      <AttachFileOverlay isDraggingFile={isDraggingFile} t={t} />
     </div>
   );
 };
@@ -475,6 +507,7 @@ function NavigationWarningDialog({
   pendingUrl,
   originalPushRef,
   router,
+  t,
 }) {
   const handleNavigationConfirm = () => {
     if (pendingUrl) pendingUrl();
@@ -494,18 +527,17 @@ function NavigationWarningDialog({
     <AlertDialog open={showNavigationWarning}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to leave?</AlertDialogTitle>
+          <AlertDialogTitle>{t.alertDialogTitle}</AlertDialogTitle>
           <AlertDialogDescription>
-            Your current conversation with ManuPilot will be lost and cannot be
-            recovered.
+            {t.alertDialogDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleNavigationCancel}>
-            Stay
+            {t.stay}
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleNavigationConfirm}>
-            Leave
+            {t.alertDialogButton}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

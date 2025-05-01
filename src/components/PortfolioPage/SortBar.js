@@ -47,6 +47,7 @@ const SortBar = ({
   setActiveLayout,
   selectedTag,
   setSelectedTag,
+  t,
 }) => {
   const router = useRouter();
   const { openChat } = useChat();
@@ -56,12 +57,23 @@ const SortBar = ({
   const projectsRef = portfolio?.projects?.map((project) => project.fields);
 
   // Extract and deduplicate tags
+  // const uniqueTags = Array.from(
+  //   new Set(projectsRef?.flatMap((project) => project.techTags) || [])
+  // ).map((tag) => ({
+  //   value: tag.toLowerCase().replace(/\s+/g, "-"), // Convert to lowercase with hyphens
+  //   label: tag, // Keep the original name
+  // }));
+
+  // Extract, dedupe and alphabetically sort tags
   const uniqueTags = Array.from(
     new Set(projectsRef?.flatMap((project) => project.techTags) || [])
-  ).map((tag) => ({
-    value: tag.toLowerCase().replace(/\s+/g, "-"), // Convert to lowercase with hyphens
-    label: tag, // Keep the original name
-  }));
+  )
+    // sort the raw tag strings (before mapping to objects)
+    .sort((a, b) => a.localeCompare(b))
+    .map((tag) => ({
+      value: tag.toLowerCase().replace(/\s+/g, "-"),
+      label: tag,
+    }));
 
   // Handle random project redirection
   const handleRandomProject = () => {
@@ -79,7 +91,7 @@ const SortBar = ({
     <div className="w-full flex max-[1195px]:flex-col max-[1195px]:items-start items-center max-[335px]:gap-3 gap-4 border-b border-accent-border  pb-6 md:pb-4 max-md:px-6 max-md:pt-6 max-md:bg-bg-mobile-primary">
       <div className="max-[935px]:w-full flex items-center max-[935px]:justify-between max-[335px]:gap-3 gap-4 flex-wrap">
         <div className="center gap-2">
-          <p className="max-md:text-sm">Layout:</p>
+          <p className="max-md:text-sm">{t.layout}</p>
           <div className="flex items-center gap-2 rounded-md ">
             <button
               onClick={() => setActiveLayout("list")}
@@ -97,7 +109,9 @@ const SortBar = ({
                     : "text-text-secondary dark:text-accent-icon"
                 }`}
               />
-              <span className="max-[375px]:hidden max-md:text-sm">List</span>
+              <span className="max-[375px]:hidden max-md:text-sm">
+                {t.list}
+              </span>
             </button>
             <button
               onClick={() => setActiveLayout("grid")}
@@ -115,7 +129,9 @@ const SortBar = ({
                     : "text-text-secondary dark:text-accent-icon"
                 }`}
               />
-              <span className="max-[375px]:hidden max-md:text-sm">Grid</span>
+              <span className="max-[375px]:hidden max-md:text-sm">
+                {t.grid}
+              </span>
             </button>
           </div>
         </div>
@@ -126,12 +142,12 @@ const SortBar = ({
             className="max-[552px]:w-full max-[552px]:!justify-center center gap-2 btn-tertiary !text-sm md:!text-base !font-semibold"
           >
             <FaRandom size={16} />
-            Random
+            {t.random}
           </button>
           {/* ManuPilot Button */}
           <button className="max-[552px]:w-full center gap-2 btn-primary !text-sm md:!text-base !font-semibold">
             <GoCopilot size={16} />
-            Ask ManuPilot
+            {t.askManupilot}
           </button>
         </div>
       </div>
@@ -163,15 +179,15 @@ const SortBar = ({
               >
                 {selectedTag
                   ? uniqueTags.find((tag) => tag.value === selectedTag)?.label
-                  : "Filter by Tag"}
+                  : t.filter}
                 <GoTriangleDown size={18} className="text-accent-icon mt-1" />
               </button>
             </PopoverTrigger>
             <PopoverContent className="max-w-full flex-1 p-0 !bg-bg-tertiary !border-accent-border thin-scrollbar">
               <Command>
-                <CommandInput placeholder="Search tags" />
+                <CommandInput placeholder={t.placeholder} />
                 <CommandList>
-                  <CommandEmpty>No tag found.</CommandEmpty>
+                  <CommandEmpty>{t.noFound}</CommandEmpty>
                   <CommandGroup className="!p-0">
                     <CommandItem
                       key="all"
@@ -189,7 +205,7 @@ const SortBar = ({
                             !selectedTag ? "visible" : "invisible"
                           }`}
                         />
-                        All
+                        {t.all}
                       </span>
                       <div className="group/edit invisible group-hover/item:visible absolute top-0 left-0 w-full h-full !bg-bg-hover dark:!bg-bg-hover2 !z-10" />
                     </CommandItem>
@@ -231,7 +247,7 @@ const SortBar = ({
             className="center gap-2 btn-tertiary !text-base !font-semibold"
           >
             <FaRandom size={16} />
-            Random
+            {t.random}
           </button>
           {/* ManuPilot Button */}
           <button
@@ -239,7 +255,7 @@ const SortBar = ({
             className="center gap-2 btn-primary ! !text-base !font-semibold"
           >
             <GoCopilot size={16} />
-            Ask ManuPilot
+            {t.askManupilot}
           </button>
         </div>
       </div>

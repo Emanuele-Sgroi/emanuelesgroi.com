@@ -18,7 +18,7 @@ import React, { useState, useEffect } from "react";
  * - Styled with GitHub-inspired labels for profile views.
  */
 
-const ProfileViews = () => {
+const ProfileViews = ({ t }) => {
   // Start with a default value (e.g., 9)
   const [views, setViews] = useState(9);
   const [targetNumber, setTargetNumber] = useState(9);
@@ -74,7 +74,7 @@ const ProfileViews = () => {
       <div className=" center">
         <div className="bg-accent-icon pl-2 pr-1 py-1 rounded-s-sm ">
           <p className="text-xs text-white leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.90)]">
-            Profile views
+            {t.views}
           </p>
         </div>
         <div className="bg-[#0969da] pl-1 pr-2 py-1 rounded-e-sm">

@@ -30,6 +30,7 @@ const QuizResult = ({
   elapsedTime,
   onRestart,
   onLeave,
+  t,
 }) => {
   const finalPercentage = ((correctAnswers / totalQuestions) * 100).toFixed(1);
   const [displayPercentage, setDisplayPercentage] = useState(0);
@@ -79,12 +80,12 @@ const QuizResult = ({
     <>
       <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
         <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
-          Your Results
+          {t.result.title}
         </h2>
       </div>
       {/* Selected Topics */}
       <div className="max-md:px-4 w-full center flex-col gap-2">
-        <p className="text-text-secondary">Topics</p>
+        <p className="text-text-secondary">{t.result.topic}</p>
         <ul className="center gap-2 flex-wrap">
           {selectedTopics.map((topic, index) => (
             <li key={index} className="tag-primary">
@@ -120,13 +121,13 @@ const QuizResult = ({
       {/* Score */}
       <div className="max-md:px-4">
         <h3 className="text-xl text-center font-normal text-text-primary -mt-2">
-          <span className="font-bold">{correctAnswers}</span> out of{" "}
+          <span className="font-bold">{correctAnswers}</span> {t.result.outOf}{" "}
           <span className="font-bold">{totalQuestions}</span>
         </h3>
       </div>
       {/* Time Taken */}
       <div className="max-md:px-4 center flex-col">
-        <p className="text-text-secondary text-center">Time Taken</p>
+        <p className="text-text-secondary text-center">{t.result.time}</p>
         <p className="text-text-primary text-center">
           {formatElapsedTime(elapsedTime)}
         </p>
@@ -138,13 +139,13 @@ const QuizResult = ({
           onClick={onLeave}
           className="btn-secondary !px-[12px] !py-[6px]"
         >
-          Leave Quiz
+          {t.result.leave}
         </button>
         <Button
           onClick={onRestart}
           className="btn-primary !bg-accent-extra !text-white"
         >
-          Start Over
+          {t.result.restart}
         </Button>
       </div>
     </>

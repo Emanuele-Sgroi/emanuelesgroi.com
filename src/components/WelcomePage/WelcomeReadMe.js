@@ -8,6 +8,8 @@ import { RiBookMarkedFill } from "react-icons/ri";
 import { VscPinned } from "react-icons/vsc";
 import { ContributionChart } from "@/components";
 import ProfileViews from "./ProfileViews";
+import { useLanguage } from "@/context/LanguageContext";
+import welcomeTranslation from "@/translations/welcome";
 
 /**
  * WelcomeReadMe Component
@@ -37,6 +39,10 @@ import ProfileViews from "./ProfileViews";
  */
 
 const WelcomeReadMe = ({ welcome }) => {
+  // translation
+  const { language } = useLanguage();
+  const t = welcomeTranslation[language];
+
   const {
     readmeTitle,
     welcomeTitle,
@@ -97,12 +103,12 @@ const WelcomeReadMe = ({ welcome }) => {
         <div className="w-full center mt-8 max-md:px-4">
           <p className="text-sm">{exploreText}</p>
         </div>
-        <ProfileViews />
+        <ProfileViews t={t} />
       </div>
       {/* Pinned tabs */}
-      <PinnedTabs title={pinnedTitle} pinnedTabs={pinnedTabsRef} />
+      <PinnedTabs t={t} title={pinnedTitle} pinnedTabs={pinnedTabsRef} />
       {/*Contribution chart */}
-      <ContributionChart word={chartWord.toUpperCase()} />
+      <ContributionChart t={t} word={chartWord.toUpperCase()} />
     </div>
   );
 };
@@ -147,7 +153,7 @@ const ReadmeTitle = ({ title }) => {
   );
 };
 
-const PinnedTabs = ({ title, pinnedTabs }) => {
+const PinnedTabs = ({ t, title, pinnedTabs }) => {
   const truncateText = (text, max) => {
     if (text.length > max) {
       return text.substring(0, max) + "...";
@@ -190,7 +196,7 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
                   </span>
                   <div className="border border-accent-border rounded-full p-1">
                     <p className="text-[11.9px] font-semibold text-accent-icon leading-none">
-                      Public
+                      {t.public}
                     </p>
                   </div>
                 </div>
@@ -228,7 +234,7 @@ const PinnedTabs = ({ title, pinnedTabs }) => {
               <div className="w-full flex flex-col">
                 <div className="w-fit border border-accent-border rounded-full p-1 mb-2">
                   <p className="text-[11.5px] font-semibold text-accent-icon leading-none">
-                    Public
+                    {t.public}
                   </p>
                 </div>
                 <div className="flex justify-start items-center gap-2">

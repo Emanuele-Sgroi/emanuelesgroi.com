@@ -62,7 +62,7 @@ const customComponents = {
  * - authorPicture: URL of the author's profile picture.
  */
 
-const ReplyContainer = ({ reply, emojis, authorPicture }) => {
+const ReplyContainer = ({ reply, emojis, authorPicture, t, language }) => {
   // State for storing reactions and user-specific reactions
   const [reactions, setReactions] = useState(reply?.reactions || {});
   const [userReactions, setUserReactions] = useState({});
@@ -178,11 +178,11 @@ const ReplyContainer = ({ reply, emojis, authorPicture }) => {
               {reply.name}
             </p>
             <p className="text-accent-icon text-sm">
-              {formatRelativeDate(reply.createdAt)}
+              {formatRelativeDate(reply.createdAt, language)}
             </p>
             {reply.isAuthor && (
               <p className="text-xs px-2 py-[1px] rounded-full border border-accent-icon text-accent-icon">
-                Author
+                {t.author}
               </p>
             )}
           </div>

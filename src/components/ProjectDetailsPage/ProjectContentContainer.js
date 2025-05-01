@@ -25,7 +25,7 @@ import { ProjectReadme, ProjectGallery } from "@/components";
  * - project: Object containing project details such as demo link, source code link, and readme content.
  */
 
-const ProjectContentContainer = ({ project }) => {
+const ProjectContentContainer = ({ project, t }) => {
   const { demoLink, codeLink, readme } = project;
   const [activeTab, setActiveTab] = useState("readme");
 
@@ -53,7 +53,7 @@ const ProjectContentContainer = ({ project }) => {
             className="btn-primary !bg-[#0969da] max-sm:!text-sm center gap-2"
           >
             <SiKdenlive size={18} />
-            View Demo
+            {t.demo}
           </Link>
         ) : (
           <div className="relative w-fit group/item">
@@ -61,10 +61,10 @@ const ProjectContentContainer = ({ project }) => {
               className="btn-primary !bg-[#0969da] max-sm:!text-sm !opacity-60"
               disabled
             >
-              View Demo
+              {t.demo}
             </button>
             <span className="absolute -bottom-6 left-0 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300 z-[999]">
-              Demo not available for this project
+              {t.demoNotAvailable}
             </span>
           </div>
         )}
@@ -76,7 +76,7 @@ const ProjectContentContainer = ({ project }) => {
             className="btn-primary !bg-[#238636] max-sm:!text-sm center gap-2"
           >
             <IoCode size={18} />
-            Source Code
+            {t.code}
           </Link>
         ) : (
           <div className="relative w-fit group/item">
@@ -84,10 +84,10 @@ const ProjectContentContainer = ({ project }) => {
               className="btn-primary max-sm:!text-sm !bg-[#238636] opacity-60"
               disabled
             >
-              Source Code
+              {t.code}
             </button>
             <span className="absolute -bottom-6 right-0 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300 z-[999]">
-              Source code not available for this project
+              {t.codeNotAvailable}
             </span>
           </div>
         )}
@@ -136,9 +136,9 @@ const ProjectContentContainer = ({ project }) => {
           </div>
         </div>
         {activeTab === "readme" ? (
-          <ProjectReadme project={project} />
+          <ProjectReadme project={project} t={t} />
         ) : (
-          <ProjectGallery project={project} />
+          <ProjectGallery project={project} t={t} />
         )}
       </div>
     </div>

@@ -54,6 +54,7 @@ const NavSearchBar = ({
   generalInfoContent,
   portfolioContent,
   writingsContent,
+  t,
 }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -101,42 +102,42 @@ const NavSearchBar = ({
   const pages = [
     {
       icon: <RiHomeSmileLine size={18} className="text-accent-icon" />,
-      name: "Welcome",
+      name: t.links.welcome,
       path: "/",
     },
     {
       icon: <GoCodeSquare size={18} className="text-accent-icon" />,
-      name: "Portfolio",
+      name: t.links.portfolio,
       path: "/portfolio",
     },
     {
       icon: <FaRegBookmark size={18} className="text-accent-icon" />,
-      name: "Writings",
+      name: t.links.writings,
       path: "/writings",
     },
     {
       icon: <LuBrain size={18} className="text-accent-icon" />,
-      name: "Dev Quiz",
+      name: t.links.devQuiz,
       path: "/dev-quiz",
     },
     {
       icon: <GoCommentDiscussion size={18} className="text-accent-icon" />,
-      name: "Discussions",
+      name: t.links.discussions,
       path: "/discussions",
     },
     {
       icon: <GoCopilot size={18} className="text-accent-icon" />,
-      name: "ManuPilot",
+      name: t.links.manuPilot,
       path: "/manupilot",
     },
     {
       icon: <GrContact size={18} className="text-accent-icon" />,
-      name: "Get in Touch",
+      name: t.links.contact,
       path: "/contact",
     },
     {
       icon: <RiFolderInfoLine size={18} className="text-accent-icon" />,
-      name: "About this Website",
+      name: t.links.about,
       path: "/about-this-website",
     },
   ];
@@ -144,19 +145,19 @@ const NavSearchBar = ({
   const otherLinks = [
     {
       icon: <RiFileListLine size={18} className="text-accent-icon" />,
-      name: "Site Map XML",
+      name: t.searchFeature.links.sitemap,
       path: "/sitemap.xml",
-      label: "Open",
+      label: t.searchFeature.labels.open,
     },
-    {
-      icon: <IoMdDownload size={18} className="text-accent-icon" />,
-      name: "Resume",
-      path: generalInfoContent?.resume
-        ? getAssetUrl(generalInfoContent.resume)
-        : "#",
-      label: "Download",
-      download: true,
-    },
+    // {
+    //   icon: <IoMdDownload size={18} className="text-accent-icon" />,
+    //   name: t.links.resume,
+    //   path: generalInfoContent?.resume
+    //     ? getAssetUrl(generalInfoContent.resume)
+    //     : "#",
+    //   label: t.searchFeature.labels.download,
+    //   download: true,
+    // },
   ];
 
   const truncateText = (text, maxLength) => {
@@ -174,11 +175,11 @@ const NavSearchBar = ({
         >
           <HiOutlineSearch size={18} className="text-accent-icon" />
           <p className="max-sm:hidden text-sm flex items-center gap-1 text-accent-icon">
-            Type
+            {t.searchBarPlaceholder.part1}
             <span>
               <LuSquareSlash size={18} />
             </span>
-            to search
+            {t.searchBarPlaceholder.part2}
           </p>
         </button>
       </DialogTrigger>
@@ -194,7 +195,7 @@ const NavSearchBar = ({
               }`}
             >
               <CommandInput
-                placeholder="Search this website..."
+                placeholder={t.searchFeature.placeholder}
                 autoFocus
                 className="!w-full !rounded-md !pr-8"
                 value={searchValue}
@@ -212,9 +213,9 @@ const NavSearchBar = ({
               )}
             </div>
             <CommandList className="!h-full !max-h-full !overflow-y-auto thin-scrollbar">
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t.searchFeature.noResults}</CommandEmpty>
               <CommandGroup
-                heading="Projects"
+                heading={t.searchFeature.titles.projects}
                 className="w-full !bg-transparent !border-b !border-accent-border"
               >
                 {projectsRef?.map((project, index) => {
@@ -248,14 +249,14 @@ const NavSearchBar = ({
                         </p>
                       </span>
                       <span className="text-text-secondary max-md:hidden">
-                        Jump to
+                        {t.searchFeature.labels.jump}
                       </span>
                     </CommandItem>
                   );
                 })}
               </CommandGroup>
               <CommandGroup
-                heading="Blog Posts"
+                heading={t.searchFeature.titles.blog}
                 className="w-full !bg-transparent !border-b !border-accent-border"
               >
                 {blogPostsRef?.map((post, index) => {
@@ -289,7 +290,7 @@ const NavSearchBar = ({
                         </p>
                       </span>
                       <span className="text-text-secondary max-md:hidden">
-                        Read it
+                        {t.searchFeature.labels.read}
                       </span>
                     </CommandItem>
                   );
@@ -297,7 +298,7 @@ const NavSearchBar = ({
               </CommandGroup>
               {!isManupilot && (
                 <CommandGroup
-                  heading="ManuPilot"
+                  heading={t.searchFeature.titles.manupilot}
                   className="w-full !bg-transparent !border-b !border-accent-border"
                 >
                   <CommandItem
@@ -313,11 +314,11 @@ const NavSearchBar = ({
                         className="text-accent-icon"
                       />
                       <p className="text-sm tracking-tight text-text-primary">
-                        Immersive
+                        {t.searchFeature.links.immersive}
                       </p>
                     </span>
                     <span className="text-text-secondary max-md:hidden">
-                      Start conversation
+                      {t.searchFeature.labels.chat}
                     </span>
                   </CommandItem>
                   <CommandItem
@@ -330,17 +331,17 @@ const NavSearchBar = ({
                     <span className="flex items-center gap-2">
                       <GoCopilot size={18} className="text-accent-icon" />
                       <p className="text-sm tracking-tight text-text-primary">
-                        Quick Chat
+                        {t.searchFeature.links.quickChat}
                       </p>
                     </span>
                     <span className="text-text-secondary max-md:hidden">
-                      Start conversation
+                      {t.searchFeature.labels.chat}
                     </span>
                   </CommandItem>
                 </CommandGroup>
               )}
               <CommandGroup
-                heading="Academic Papers"
+                heading={t.searchFeature.titles.papers}
                 className="w-full !bg-transparent !border-b !border-accent-border"
               >
                 {academicPapers?.map((paper, index) => {
@@ -373,7 +374,7 @@ const NavSearchBar = ({
                 })}
               </CommandGroup>
               <CommandGroup
-                heading="Pages"
+                heading={t.searchFeature.titles.pages}
                 className="w-full !bg-transparents !border-b !border-accent-border"
               >
                 {pages.map((page) => (
@@ -390,7 +391,7 @@ const NavSearchBar = ({
                       {page.name}
                     </span>
                     <span className="text-text-secondary max-md:hidden">
-                      Visit
+                      {t.searchFeature.labels.visit}
                     </span>
                   </CommandItem>
                 ))}

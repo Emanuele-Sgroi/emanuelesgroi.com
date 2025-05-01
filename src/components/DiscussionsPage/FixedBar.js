@@ -19,7 +19,13 @@ import { IoCaretUp, IoCaretDown } from "react-icons/io5";
  * - generalInfoContent: Object containing general user information, including profile picture.
  */
 
-const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
+const FixedBar = ({
+  discussionContent,
+  comments,
+  generalInfoContent,
+  t,
+  language,
+}) => {
   // Retrieve image URLs from content
   const profilePictureUrl = generalInfoContent?.profilePicture
     ? getAssetUrl(generalInfoContent?.profilePicture)
@@ -121,7 +127,7 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
             </p>
             <p className="text-accent-icon text-xs center gap-[6px] max-[388px]:gap-3px min-[201px]:ml-2">
               <span className="max-[250px]:hidden">
-                {formatRelativeDate(topComment.createdAt)}
+                {formatRelativeDate(topComment.createdAt, language)}
               </span>
               <GoDotFill
                 size={3}
@@ -130,23 +136,26 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
               <span className="max-[388px]:hidden">
                 {comments.filter((comment) => comment.parentId === null)
                   .length - 1}{" "}
-                Comment
                 {comments.filter((comment) => comment.parentId === null)
-                  .length !== 1 && "s"}
+                  .length !== 1
+                  ? t.comments
+                  : t.comment}
               </span>
               <span className="min-[389px]:hidden">
-                {comments.filter((comment) => comment.parentId === null).length}{" "}
-                Com.
+                {comments.filter((comment) => comment.parentId === null)
+                  .length - 1}{" "}
+                {t.abbreviatedComment}
               </span>
               <GoDotFill
                 size={3}
                 className="text-accent-icon max-[388px]:hidden"
               />
               <span className="max-[388px]:hidden">
-                {replies.length} Repl
-                {replies.length !== 1 ? "ies" : "y"}
+                {replies.length} {t.replies}
               </span>
-              <span className="min-[389px]:hidden">{replies.length} Rep.</span>
+              <span className="min-[389px]:hidden">
+                {replies.length} {t.abbreviatedReply}
+              </span>
             </p>
           </div>
         </div>
@@ -156,16 +165,16 @@ const FixedBar = ({ discussionContent, comments, generalInfoContent }) => {
             onClick={scrollToBottom}
             className="center gap-1 text-xs text-accent-icon hover:underline"
           >
-            <span className="max-[595px]:hidden">Go to</span>{" "}
-            <span className="max-[302px]:hidden">Bottom</span>{" "}
+            <span className="max-[595px]:hidden">{t.goTo}</span>{" "}
+            <span className="max-[302px]:hidden">{t.bottom}</span>{" "}
             <IoCaretDown className="max-[302px]:text-xl" />
           </button>
           <button
             onClick={scrollToTop}
             className="center gap-1 text-xs text-accent-icon hover:underline"
           >
-            <span className="max-[595px]:hidden">Return to</span>{" "}
-            <span className="max-[302px]:hidden">Top</span>
+            <span className="max-[595px]:hidden">{t.returnTo}</span>{" "}
+            <span className="max-[302px]:hidden">{t.top}</span>
             <IoCaretUp className="max-[302px]:text-xl" />
           </button>
         </div>

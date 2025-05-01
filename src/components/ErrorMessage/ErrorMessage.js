@@ -1,6 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { images } from "@/utils/imageImport";
+import { useLanguage } from "@/context/LanguageContext";
+import globalsTranslation from "@/translations/globals";
 
 /**
  * ErrorMessage Component
@@ -11,6 +15,10 @@ import { images } from "@/utils/imageImport";
  */
 
 const ErrorMessage = () => {
+  // translation
+  const { language } = useLanguage();
+  const t = globalsTranslation[language];
+
   return (
     <div className="w-full center rh-flex-col rh-p-loading gap-4">
       <Image
@@ -21,8 +29,8 @@ const ErrorMessage = () => {
         className="w-auto h-[120px] md:h-[180px]"
       />
       <h5 className="text-base md:text-xl text-red-500 center flex-col text-center">
-        <span>Oops! Something went wrong.</span>Please refresh the page or try
-        again later.
+        <span>{t.error.title}</span>
+        {t.error.description}
       </h5>
     </div>
   );

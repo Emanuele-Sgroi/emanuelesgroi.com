@@ -13,7 +13,7 @@ import { getAssetUrl } from "@/utils/imageUtils";
  * - The main featured image.
  */
 
-const BlogPostTopSection = ({ blogPost }) => {
+const BlogPostTopSection = ({ blogPost, t }) => {
   const { postTitle, smallDescription, mainImage } = blogPost;
   return (
     <div className="relative w-full center max-[500px]:px-4 px-6 overflow-hidden max-md:bg-bg-mobile-primary">
@@ -23,7 +23,7 @@ const BlogPostTopSection = ({ blogPost }) => {
           href="/writings"
           className="flex items-center gap-2 poppins-medium text-accent-icon font-medium hover:text-text-link hover:underline"
         >
-          <FiArrowLeftCircle size={20} /> Go Back
+          <FiArrowLeftCircle size={20} /> {t.goBack}
         </Link>
 
         {/* Title and subtitle */}

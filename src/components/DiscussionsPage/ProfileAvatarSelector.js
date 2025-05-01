@@ -43,6 +43,7 @@ const ProfileAvatarSelector = ({
   setName,
   avatarType,
   setAvatarType,
+  t,
 }) => {
   const avatarUrl = name
     ? `${DICEBEAR_BASE_URL}/${avatarType}/svg?seed=${encodeURIComponent(
@@ -79,14 +80,14 @@ const ProfileAvatarSelector = ({
             htmlFor="name"
             className="block text-sm font-medium text-text-primary"
           >
-            Your Name
+            {t.yourName}
           </label>
           <input
             id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Type your name..."
+            placeholder={t.yourNamePlaceholder}
             className="w-full p-2 border border-accent-border rounded-md text-sm text-text-primary bg-bg-primary focus:outline-none"
           />
         </div>
@@ -97,7 +98,7 @@ const ProfileAvatarSelector = ({
             htmlFor="avatarType"
             className="block text-sm font-medium text-text-primary"
           >
-            Avatar Style
+            {t.avatarStyle}
           </label>
           <Select
             onValueChange={(value) => setAvatarType(value)}

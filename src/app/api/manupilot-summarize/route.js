@@ -42,7 +42,8 @@ export async function POST(req) {
 
       // Generate AI response with the summarized conversation
       const chatCompletion = await openai.chat.completions.create({
-        model: "chatgpt-4o-latest",
+        //  model: "chatgpt-4o-latest",
+        model: "gpt-4o-mini",
         messages: shortened,
       });
       return new Response(JSON.stringify(chatCompletion.choices[0].message), {
@@ -51,7 +52,8 @@ export async function POST(req) {
     } else {
       // If token count is within limits, proceed normally
       const chatCompletion = await openai.chat.completions.create({
-        model: "chatgpt-4o-latest",
+        // model: "chatgpt-4o-latest",
+        model: "gpt-4o-mini",
         messages,
       });
       return new Response(JSON.stringify(chatCompletion.choices[0].message), {
@@ -85,7 +87,7 @@ export async function POST(req) {
  * This prevents hitting token limits while maintaining context.
  */
 function summarizeIfNeeded(messages) {
-  return messages.slice(-20);
+  return messages.slice(-8);
 }
 
 /**

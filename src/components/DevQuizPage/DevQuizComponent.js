@@ -20,101 +20,8 @@ import {
   databaseQuestions,
   cloudQuestions,
 } from "@/utils/devQuizQuestions"; // import all topics created in /utils/devQuizQuestions.js
-
-// Group all topics
-const topics = [
-  {
-    name: "Core Concepts",
-    description:
-      "Essential fundamentals including OOP, Data Structures, Algorithms, and problem-solving patterns.",
-    key: "CoreConcepts",
-    questions: coreConceptsQuestions,
-  },
-  {
-    name: "JavaScript",
-    description:
-      "Deep dive into the language itself: syntax, types, closures, prototypes, and more.",
-    key: "JavaScript",
-    questions: javascriptQuestions,
-  },
-  {
-    name: "TypeScript",
-    description:
-      "Covers static typing, interfaces, generics, compiler options, and advanced TS features.",
-    key: "TypeScript",
-    questions: typeScriptQuestions,
-  },
-  {
-    name: "Node.js",
-    description:
-      "Focus on the runtime environment: event loop, FS module, middleware, async patterns, etc.",
-    key: "NodeJS",
-    questions: nodeJsQuestions,
-  },
-  {
-    name: "Database",
-    description:
-      "SQL vs. NoSQL, indexing, normalization, transactions, and practical query examples.",
-    key: "Database",
-    questions: databaseQuestions,
-  },
-  {
-    name: "Cloud",
-    description:
-      "Cloud services overview (AWS, Azure, GCP), deployments, IaC, serverless, scaling, and more.",
-    key: "Cloud",
-    questions: cloudQuestions,
-  },
-  {
-    name: "HTML",
-    description:
-      "Semantic tags, forms, accessibility, responsive design, and HTML5 APIs.",
-    key: "HTML",
-    questions: htmlQuestions,
-  },
-  {
-    name: "CSS",
-    description:
-      "Styling techniques, layouts (Flexbox/Grid), responsiveness, preprocessors, performance, etc.",
-    key: "CSS",
-    questions: cssQuestions,
-  },
-  {
-    name: "React",
-    description:
-      "Covers React Hooks, Virtual DOM, lifecycle, state management, and ecosystem best practices.",
-    key: "React",
-    questions: reactQuestions,
-  },
-  {
-    name: "Next.js",
-    description:
-      "Server-side rendering (SSR), static site generation (SSG), routing, API routes, and optimizations.",
-    key: "NextJS",
-    questions: nextQuestions,
-  },
-  {
-    name: "React Native",
-    description:
-      "Mobile development with React. Components, styling, navigation, and platform APIs.",
-    key: "ReactNative",
-    questions: reactNativeQuestions,
-  },
-  {
-    name: "API",
-    description:
-      "HTTP methods, REST principles, authentication (JWT), GraphQL, error handling, and best practices.",
-    key: "API",
-    questions: apiQuestions,
-  },
-  {
-    name: "Blockchain",
-    description:
-      "Consensus mechanisms, smart contracts, dApp development, security, and real-world blockchain use cases.",
-    key: "Blockchain",
-    questions: blockchainQuestions,
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import devQuizTranslations from "@/translations/devQuiz";
 
 /**
  * DevQuizComponent
@@ -125,10 +32,96 @@ const topics = [
  */
 
 const DevQuizComponent = () => {
+  // translation
+  const { language } = useLanguage();
+  const t = devQuizTranslations[language];
+
   const [quizStep, setQuizStep] = useState("welcome"); // Controls quiz steps
   const [selectedTopics, setSelectedTopics] = useState([]); // Tracks topics selected by the user
   const [selectedQuestions, setSelectedQuestions] = useState([]); // Tracks final question counts
   const [quizResult, setQuizResult] = useState(null);
+
+  // Group all topics
+  const topics = [
+    {
+      name: t.chooseTopic.topics.coreConcepts.name,
+      description: t.chooseTopic.topics.coreConcepts.description,
+      key: "CoreConcepts",
+      questions: coreConceptsQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.javascript.name,
+      description: t.chooseTopic.topics.javascript.description,
+      key: "JavaScript",
+      questions: javascriptQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.typescript.name,
+      description: t.chooseTopic.topics.typescript.description,
+      key: "TypeScript",
+      questions: typeScriptQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.node.name,
+      description: t.chooseTopic.topics.node.description,
+      key: "NodeJS",
+      questions: nodeJsQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.database.name,
+      description: t.chooseTopic.topics.database.description,
+      key: "Database",
+      questions: databaseQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.cloud.name,
+      description: t.chooseTopic.topics.cloud.description,
+      key: "Cloud",
+      questions: cloudQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.html.name,
+      description: t.chooseTopic.topics.html.description,
+      key: "HTML",
+      questions: htmlQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.css.name,
+      description: t.chooseTopic.topics.css.description,
+      key: "CSS",
+      questions: cssQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.react.name,
+      description: t.chooseTopic.topics.react.description,
+      key: "React",
+      questions: reactQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.next.name,
+      description: t.chooseTopic.topics.next.description,
+      key: "NextJS",
+      questions: nextQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.reactnative.name,
+      description: t.chooseTopic.topics.reactnative.description,
+      key: "ReactNative",
+      questions: reactNativeQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.api.name,
+      description: t.chooseTopic.topics.api.description,
+      key: "API",
+      questions: apiQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.blockchain.name,
+      description: t.chooseTopic.topics.blockchain.description,
+      key: "Blockchain",
+      questions: blockchainQuestions,
+    },
+  ];
 
   // Shuffle questions to make them random
   const shuffleArray = (array) => {
@@ -195,7 +188,11 @@ const DevQuizComponent = () => {
         >
           {/* Welcome Step */}
           {quizStep === "welcome" && (
-            <WelcomeStep onStartQuiz={handleStartQuiz} />
+            <WelcomeStep
+              onStartQuiz={handleStartQuiz}
+              t={t}
+              language={language}
+            />
           )}
           {/* Choose Topics Step */}
           {quizStep === "chooseTopic" && (
@@ -203,6 +200,8 @@ const DevQuizComponent = () => {
               topics={topics}
               onCancel={handleCancelQuiz}
               onTopicsSelected={handleTopicsSelected}
+              t={t}
+              language={language}
             />
           )}
           {/* Select Number of Questions Step */}
@@ -212,6 +211,8 @@ const DevQuizComponent = () => {
               onCancel={handleCancelQuiz}
               onNext={handleQuestionNumbersSelected}
               onPrevious={() => setQuizStep("chooseTopic")}
+              t={t}
+              language={language}
             />
           )}
           {/* Quiz Step */}
@@ -225,6 +226,7 @@ const DevQuizComponent = () => {
               onCancel={() => setQuizStep("welcome")}
               onComplete={handleQuizComplete}
               shuffleArray={shuffleArray}
+              t={t}
             />
           )}
           {/* Result step */}
@@ -236,6 +238,7 @@ const DevQuizComponent = () => {
               elapsedTime={quizResult.elapsedTime}
               onRestart={() => setQuizStep("chooseTopic")}
               onLeave={() => setQuizStep("welcome")}
+              t={t}
             />
           )}
         </div>

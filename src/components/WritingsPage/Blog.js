@@ -35,7 +35,7 @@ const POSTS_PER_PAGE = 6;
  * - Disables navigation buttons when at the first or last page.
  */
 
-const Blog = ({ writingsContent }) => {
+const Blog = ({ writingsContent, t }) => {
   const { blogTitle, blogPosts } = writingsContent;
 
   // Access the referenced blog posts
@@ -166,7 +166,7 @@ const Blog = ({ writingsContent }) => {
         {currentPage === totalPages && (
           <div className="w-full center mt-8">
             <p className="uppercase sm:text-lg font-bold text-text-secondary text-center ">
-              More posts coming soon
+              {t.moreComing}
             </p>
           </div>
         )}
@@ -184,7 +184,7 @@ const Blog = ({ writingsContent }) => {
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >
-              ← Prev
+              {t.previous}
             </button>
 
             {/* Page Numbers */}
@@ -214,7 +214,7 @@ const Blog = ({ writingsContent }) => {
               }
               disabled={currentPage === totalPages}
             >
-              Next →
+              {t.next}
             </button>
           </div>
         )}

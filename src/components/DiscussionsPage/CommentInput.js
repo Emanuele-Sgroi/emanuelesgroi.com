@@ -66,6 +66,7 @@ const CommentInput = ({
   showToggle = true,
   isReply = false,
   parentId,
+  t,
 }) => {
   // State for managing input visibility
   const [inputVisible, setInputVisible] = useState(!showToggle);
@@ -199,6 +200,7 @@ const CommentInput = ({
             setName={setName}
             avatarType={avatarType}
             setAvatarType={setAvatarType}
+            t={t}
           />
           {/* Input text container */}
           <div className="flex flex-col border border-accent-border rounded-md p bg-bg-primary">
@@ -213,7 +215,7 @@ const CommentInput = ({
                       : "text-text-secondary"
                   }`}
                 >
-                  Write
+                  {t.write}
                 </button>
                 <button
                   onClick={() => setActiveTab("preview")}
@@ -223,7 +225,7 @@ const CommentInput = ({
                       : "text-text-secondary"
                   }`}
                 >
-                  Preview
+                  {t.preview}
                 </button>
               </div>
               {activeTab === "write" && (
@@ -343,13 +345,13 @@ const CommentInput = ({
                     className="w-fit flex items-center gap-1 text-xs font-semibold text-text-primary my-2 hover:bg-bg-button p-2 rounded-md"
                   >
                     <FaMarkdown size={16} className="text-accent-icon" />{" "}
-                    Markdown is supported
+                    {t.markdownSupported}
                   </a>
                 </div>
               ) : (
                 <div className="w-full py-2 text-sm bg-bg-primary text-text-primary">
                   <ReactMarkdown components={customComponents}>
-                    {inputValue || "Nothing to preview"}
+                    {inputValue || t.noPreview}
                   </ReactMarkdown>
                 </div>
               )}
@@ -362,7 +364,7 @@ const CommentInput = ({
                 onClick={() => setInputVisible(false)}
                 className="btn-primary !text-text-primary !bg-bg-button !border !border-accent-border"
               >
-                Cancel
+                {t.cancel}
               </button>
             )}
             <button
@@ -374,7 +376,7 @@ const CommentInput = ({
                   : "btn-primary"
               }`}
             >
-              {isReply ? "Reply" : "Comment"}
+              {isReply ? t.submitReply : t.submitComment}
             </button>
           </div>
         </div>

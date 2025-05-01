@@ -16,7 +16,7 @@ import StyleSelectionMobile from "./StyleSelectionMobile";
  * - Handling chart styles
  */
 
-const ContributionChart = ({ word }) => {
+const ContributionChart = ({ word, t }) => {
   // Constants for grid dimensions (52 weeks, 7 days per week)
   const WEEKS = 52;
   const DAYS = 7;
@@ -147,7 +147,7 @@ const ContributionChart = ({ word }) => {
 
     // Set error message if there were invalid characters
     if (filteredValue.length < value.length) {
-      setErrorMessage("Only letters and numbers please");
+      setErrorMessage(t.errorInput);
     } else {
       setErrorMessage("");
     }
@@ -157,7 +157,7 @@ const ContributionChart = ({ word }) => {
 
     // Limit to MAX_CHARACTERS
     if (nonSpaceChars.length > MAX_CHARACTERS) {
-      setErrorMessage(`Max ${MAX_CHARACTERS} characters`);
+      setErrorMessage(`${t.chart.max} ${MAX_CHARACTERS} ${t.chart.characters}`);
       // Truncate
       let excessChars = nonSpaceChars.length - MAX_CHARACTERS;
       let truncatedValue = filteredValue;
@@ -286,19 +286,19 @@ const ContributionChart = ({ word }) => {
       <div className="temp-width flex flex-col">
         {/* Chart header */}
         <div className="mb-2 flex flex-col">
-          <p className="mb-2">Type below to generate a personalised graph</p>
+          <p className="mb-2">{t.chart.title}</p>
           {/* Input field */}
           <div className="mb-2">
             <input
               type="text"
               value={inputText}
               onChange={handleInputChange}
-              placeholder="Type something"
+              placeholder={t.chart.placeholder}
               className="border border-accent-border rounded-md p-2 w-full text-text-primary bg-transparent focus:outline-none max-md:bg-bg-button"
             />
             <div className="flex justify-between mt-1">
               <span className="max-sm:hidden text-sm text-text-secondary">
-                {remainingChars}/{MAX_CHARACTERS} characters remaining
+                {remainingChars}/{MAX_CHARACTERS} {t.chart.remaining}
               </span>
               <span className="sm:hidden text-sm text-text-secondary">
                 {remainingChars}/{MAX_CHARACTERS}
@@ -316,18 +316,18 @@ const ContributionChart = ({ word }) => {
               {/* Top labels for months */}
               <div className="months-row mb-2">
                 {[
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
+                  t.chart.january,
+                  t.chart.february,
+                  t.chart.march,
+                  t.chart.april,
+                  t.chart.may,
+                  t.chart.june,
+                  t.chart.july,
+                  t.chart.august,
+                  t.chart.september,
+                  t.chart.october,
+                  t.chart.november,
+                  t.chart.december,
                 ].map((month, index) => (
                   <div key={index} className="month">
                     {month}
@@ -338,11 +338,13 @@ const ContributionChart = ({ word }) => {
               <div className="w-full flex">
                 {/* Left labels for weekdays */}
                 <div className="weekdays-column">
-                  {["Mon", "Wed", "Fri"].map((day, index) => (
-                    <div key={index} className="weekday">
-                      {day}
-                    </div>
-                  ))}
+                  {[t.chart.monday, t.chart.wednesday, t.chart.friday].map(
+                    (day, index) => (
+                      <div key={index} className="weekday">
+                        {day}
+                      </div>
+                    )
+                  )}
                 </div>
 
                 {/* Grid of squares */}
@@ -410,7 +412,7 @@ const ContributionChart = ({ word }) => {
               const arr = {"[" + inputArray.join(", ") + "];"}
             </p>
             <div className="center gap-1">
-              <p className="text-xs text-text-secondary">Less</p>
+              <p className="text-xs text-text-secondary">{t.chart.less}</p>
               {/* Inactive square representation */}
               {chartStyle !== "emoji" ? (
                 <div
@@ -441,7 +443,7 @@ const ContributionChart = ({ word }) => {
                       {emoji}
                     </div>
                   ))}
-              <p className="text-xs text-text-secondary">More</p>
+              <p className="text-xs text-text-secondary">{t.chart.more}</p>
             </div>
           </div>
         </div>
@@ -482,6 +484,7 @@ const ContributionChart = ({ word }) => {
 
       {/* Select styles - Mobile */}
       <StyleSelectionMobile
+        t={t}
         allStyles={allStyles}
         chartStyle={chartStyle}
         setChartStyle={setChartStyle}

@@ -17,7 +17,7 @@ import { ImEye } from "react-icons/im";
  * - selectedTag: String representing the selected technology filter.
  */
 
-const ListLayout = ({ portfolio, selectedTag }) => {
+const ListLayout = ({ portfolio, selectedTag, t }) => {
   // Access the referenced projects
   const projectsRef = portfolio?.projects?.map((project) => project.fields);
 
@@ -60,7 +60,7 @@ const ListLayout = ({ portfolio, selectedTag }) => {
                   </Link>
                 </span>
                 <span className="max-md:hidden border border-accent-border rounded-full px-[5px] py-[3px] text-[11.9px] font-semibold text-accent-icon leading-none">
-                  Public
+                  {t.public}
                 </span>
               </h4>
               <p className="text-sm text-text-secondary mt-1 mb-2 pr-6">
@@ -81,16 +81,16 @@ const ListLayout = ({ portfolio, selectedTag }) => {
                     className="max-[265px]:hidden text-text-secondary hover:text-text-link hover:underline text-xs flex items-center gap-1 ml-4"
                   >
                     <ImEye size={18} />
-                    Demo
+                    {t.demo}
                   </Link>
                 ) : (
                   <div className="max-[265px]:hidden relative w-fit group/item">
                     <p className="text-text-secondary text-xs flex items-center gap-1 opacity-50 cursor-not-allowed ml-4">
                       <ImEye size={18} />
-                      Demo
+                      {t.demo}
                     </p>
                     <span className="absolute -bottom-5 left-0 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300">
-                      Demo not available for this project
+                      {t.demoNotAvailable}
                     </span>
                   </div>
                 )}
@@ -103,16 +103,16 @@ const ListLayout = ({ portfolio, selectedTag }) => {
                     className="max-[265px]:hidden text-text-secondary hover:text-text-link hover:underline text-xs flex items-center gap-1 ml-4"
                   >
                     <IoLogoGithub size={18} />
-                    Code
+                    {t.code}
                   </Link>
                 ) : (
                   <div className="max-[265px]:hidden relative w-fit group/item">
                     <p className="text-text-secondary text-xs flex items-center gap-1 opacity-50 cursor-not-allowed ml-4">
                       <IoLogoGithub size={18} />
-                      Code
+                      {t.code}
                     </p>
                     <span className="absolute -bottom-5 right-0 rounded-md px-[3px] py-[1px] border border-accent-border bg-bg-button text-[11px] text-text-secondary text-nowrap invisible group-hover/item:visible opacity-0 group-hover/item:opacity-100 translate-y-6 group-hover/item:translate-y-0 transition-all duration-300">
-                      Source code not available for this project
+                      {t.codeNotAvailable}
                     </span>
                   </div>
                 )}

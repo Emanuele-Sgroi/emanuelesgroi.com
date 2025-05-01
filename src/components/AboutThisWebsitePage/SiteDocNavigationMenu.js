@@ -16,17 +16,20 @@ import {
 } from "@/components/ui/sheet";
 import { RiMenuLine } from "react-icons/ri";
 
-const SiteDocNavigationMenu = () => {
+const SiteDocNavigationMenu = ({ t }) => {
+  const menuTitles = t.navigationMenu.titles;
+  const menuLinks = t.navigationMenu.links;
+
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <aside className="max-sm:hidden w-[230px] lg:w-[300px] 2xl:w-[400px] min-h-[calc(100vh-76px)] max-h-[calc(100vh-76px)] sticky top-[76px]  !bg-transparent border-r  border-l border-accent-border ">
-        <SiteDocTopSection />
+        <SiteDocTopSection t={t} />
         <nav className="relative w-full h-[calc(100vh-192px)] !bg-transparent !border-none p-4 lg:!p-6 !overflow-y-auto thin-scrollbar">
           {/* Section Titles (Non-clickable) */}
           <p className="text-text-secondary !text-sm font-semibold mb-2">
-            1. Introduction
+            1. {menuTitles.introduction}
           </p>
           <ul className="mb-4">
             <li className="px-2 flex items-center">
@@ -39,7 +42,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Why I Built This
+                {menuLinks.whyBuilt}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -52,13 +55,13 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Key Technologies
+                {menuLinks.technologiesUsed}
               </ScrollLink>
             </li>
           </ul>
 
           <p className="text-text-secondary !text-sm font-semibold mb-2">
-            2. Design & UI
+            2. {menuTitles.design}
           </p>
           <ul className="mb-4">
             <li className="px-2 flex items-center">
@@ -71,7 +74,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                GitHub-Style Inspiration
+                {menuLinks.githubStyle}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -84,7 +87,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Extracting GitHub&apos;s UI Elements
+                {menuLinks.extractingUI}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -97,7 +100,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Dark Mode
+                {menuLinks.darkMode}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -110,13 +113,13 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Responsiveness
+                {menuLinks.responsiveness}
               </ScrollLink>
             </li>
           </ul>
 
           <p className="text-text-secondary !text-sm font-semibold mb-2">
-            3. Tech Stack
+            3. {menuTitles.techStack}
           </p>
           <ul className="mb-4">
             <li className="px-2 flex items-center">
@@ -129,7 +132,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Next.js
+                {menuLinks.nextjs}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -142,7 +145,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Tailwind CSS & Plain CSS
+                {menuLinks.tailwind}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -155,7 +158,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Contentful as a CMS
+                {menuLinks.contentful}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -168,7 +171,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Prisma & Supabase
+                {menuLinks.prisma}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -181,7 +184,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                AI Integration
+                {menuLinks.aiIntegration}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -194,13 +197,13 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                UI Frameworks
+                {menuLinks.uiFrameworks}
               </ScrollLink>
             </li>
           </ul>
 
           <p className="text-text-secondary !text-sm font-semibold mb-2">
-            4. Features Breakdown
+            4. {menuTitles.features}
           </p>
           <ul className="mb-4">
             <li className="px-2 flex items-center">
@@ -213,7 +216,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Welcome
+                {menuLinks.welcome}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -226,7 +229,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Portfolio
+                {menuLinks.portfolio}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -239,7 +242,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Writings
+                {menuLinks.writings}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -252,7 +255,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Dev Quiz
+                {menuLinks.devQuiz}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -265,7 +268,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Discussion
+                {menuLinks.discussion}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -278,7 +281,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Contacts
+                {menuLinks.contacts}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -291,13 +294,27 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                ManuPilot AI
+                {menuLinks.manupilot}
+              </ScrollLink>
+            </li>
+
+            <li className="px-2 flex items-center">
+              <ScrollLink
+                to="languages"
+                smooth={false}
+                duration={900}
+                spy={true}
+                offset={-80}
+                activeClass="!bg-bg-button"
+                className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
+              >
+                {menuLinks.languages}
               </ScrollLink>
             </li>
           </ul>
 
           <p className="text-text-secondary !text-sm font-semibold mb-2">
-            5. Deployment & Future Plans
+            5. {menuTitles.deployment}
           </p>
           <ul className="">
             <li className="px-2 flex items-center">
@@ -310,7 +327,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                Hosting & CI/CD
+                {menuLinks.hosting}
               </ScrollLink>
             </li>
             <li className="px-2 flex items-center">
@@ -323,7 +340,7 @@ const SiteDocNavigationMenu = () => {
                 activeClass="!bg-bg-button"
                 className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
               >
-                What&apos;s Next?
+                {menuLinks.futurePlans}
               </ScrollLink>
             </li>
           </ul>
@@ -335,7 +352,9 @@ const SiteDocNavigationMenu = () => {
           <SheetTrigger asChild>
             <div className="sm:hidden  flex items-center gap-2">
               <RiMenuLine size={20} className="text-accent-icon" />{" "}
-              <p className="text-sm text-accent-icon">Navigation Menu</p>
+              <p className="text-sm text-accent-icon">
+                {t.navigationMenu.mobileButton}
+              </p>
             </div>
           </SheetTrigger>
           <SheetContent
@@ -347,7 +366,7 @@ const SiteDocNavigationMenu = () => {
                 <nav className="!bg-transparent !border-none">
                   {/* Section Titles (Non-clickable) */}
                   <p className="text-text-secondary !text-sm font-semibold mb-2">
-                    1. Introduction
+                    1. {menuTitles.introduction}
                   </p>
                   <ul className="mb-4">
                     <li className="px-2 flex items-center">
@@ -361,7 +380,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Why I Built This
+                        {menuLinks.whyBuilt}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -375,13 +394,13 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Key Technologies
+                        {menuLinks.technologiesUsed}
                       </ScrollLink>
                     </li>
                   </ul>
 
                   <p className="text-text-secondary !text-sm font-semibold mb-2">
-                    2. Design & UI
+                    2. {menuTitles.design}
                   </p>
                   <ul className="mb-4">
                     <li className="px-2 flex items-center">
@@ -395,7 +414,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        GitHub-Style Inspiration
+                        {menuLinks.githubStyle}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -409,7 +428,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Extracting GitHub&apos;s UI Elements
+                        {menuLinks.extractingUI}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -423,7 +442,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Dark Mode
+                        {menuLinks.darkMode}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -437,13 +456,13 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Responsiveness
+                        {menuLinks.responsiveness}
                       </ScrollLink>
                     </li>
                   </ul>
 
                   <p className="text-text-secondary !text-sm font-semibold mb-2">
-                    3. Tech Stack
+                    3. {menuTitles.techStack}
                   </p>
                   <ul className="mb-4">
                     <li className="px-2 flex items-center">
@@ -457,7 +476,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Next.js
+                        {menuLinks.nextjs}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -471,7 +490,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Tailwind CSS & Plain CSS
+                        {menuLinks.tailwind}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -485,7 +504,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Contentful as a CMS
+                        {menuLinks.contentful}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -499,7 +518,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Prisma & Supabase
+                        {menuLinks.prisma}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -513,7 +532,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        AI Integration
+                        {menuLinks.aiIntegration}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -527,13 +546,13 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        UI Frameworks
+                        {menuLinks.uiFrameworks}
                       </ScrollLink>
                     </li>
                   </ul>
 
                   <p className="text-text-secondary !text-sm font-semibold mb-2">
-                    4. Features Breakdown
+                    4. {menuTitles.features}
                   </p>
                   <ul className="mb-4">
                     <li className="px-2 flex items-center">
@@ -547,7 +566,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Welcome
+                        {menuLinks.welcome}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -561,7 +580,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Portfolio
+                        {menuLinks.portfolio}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -575,7 +594,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Writings
+                        {menuLinks.writings}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -589,7 +608,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Dev Quiz
+                        {menuLinks.devQuiz}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -603,7 +622,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Discussion
+                        {menuLinks.discussion}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -617,7 +636,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Contacts
+                        {menuLinks.contacts}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -631,13 +650,27 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        ManuPilot AI
+                        {menuLinks.manupilot}
+                      </ScrollLink>
+                    </li>
+                    <li className="px-2 flex items-center">
+                      <ScrollLink
+                        to="languages"
+                        smooth={false}
+                        onClick={() => setOpen(false)}
+                        duration={1500}
+                        spy={true}
+                        offset={-116}
+                        activeClass="!bg-bg-button"
+                        className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
+                      >
+                        {menuLinks.languages}
                       </ScrollLink>
                     </li>
                   </ul>
 
                   <p className="text-text-secondary !text-sm font-semibold mb-2">
-                    5. Deployment & Future Plans
+                    5. {menuTitles.deployment}
                   </p>
                   <ul className="">
                     <li className="px-2 flex items-center">
@@ -651,7 +684,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        Hosting & CI/CD
+                        {menuLinks.hosting}
                       </ScrollLink>
                     </li>
                     <li className="px-2 flex items-center">
@@ -665,7 +698,7 @@ const SiteDocNavigationMenu = () => {
                         activeClass="!bg-bg-button"
                         className="flex-1 cursor-pointer text-text-primary px-2 py-2 hover:bg-bg-hover2 rounded-lg"
                       >
-                        What&apos;s Next?
+                        {menuLinks.futurePlans}
                       </ScrollLink>
                     </li>
                   </ul>

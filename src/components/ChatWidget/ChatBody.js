@@ -21,6 +21,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ChatCodeBlock from "./ChatCodeBlock";
+import { useQuota } from "@/context/QuotaProvider";
 
 const customComponents = {
   hr: () => <hr className="border-accent-border my-2" />,
@@ -129,6 +130,8 @@ export default function ChatBody({
   droppedFile,
   setDroppedFile,
   switchToGeneralChat,
+  t,
+  language,
 }) {
   // Access the referenced projects
   const projectsRef = portfolioContent?.projects?.map(
@@ -136,6 +139,11 @@ export default function ChatBody({
   );
 
   const { messages } = useChat(); // get the messages from context
+
+  // Quota
+  const { remaining, secondsLeft, updateFromHeaders } = useQuota();
+  const reachedLimit =
+    remaining <= 0 && secondsLeft !== null && secondsLeft > 0;
 
   // State for AI processing, scrolling, and UI behavior
   const [isThinking, setIsThinking] = useState(false);
@@ -205,8 +213,8 @@ export default function ChatBody({
           className="w-auto h-[100px]"
         />
         <h5 className="text-base  text-red-500 center flex-col text-center">
-          <span>Sorry, the chat isn&apos;t available at the moment.</span>Please
-          try again soon.
+          <span>{t.chatUnavailable}</span>
+          {t.tryAgain}
         </h5>
       </div>
     );
@@ -223,11 +231,10 @@ export default function ChatBody({
             <GoCopilot size={40} className="manupilot-rotate-animation z-10" />
           </div>
           <h1 className="text-xl font-semibold text-center my-2">
-            Ask ManuPilot
+            {t.askManupilot}
           </h1>
           <p className="text-sm text-text-secondary text-center mb-4 max-w-[400px] md:max-w-full">
-            Select one of my projects to get started. Ask questions about the
-            project to get answers quickly and learn your way around.
+            {t.welcomeSentence}
           </p>
           {/* Loading State */}
           {isPortfolioLoading || !portfolioContent ? (
@@ -238,10 +245,10 @@ export default function ChatBody({
             <div className="w-full max-w-[600px] md:max-w-full mt-6 md:mt-0">
               {/* Project List */}
               <Command className="!h-fit border border-accent-border bg-bg-primary !rounded-t-md !rounded-b-none !pb-0 ">
-                <CommandInput placeholder="Search a project to chat about " />
+                <CommandInput placeholder={t.searchAProject} />
                 {!isPortfolioError ? (
                   <CommandList className="bg-bg-tertiary ">
-                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandEmpty>{t.noResults}</CommandEmpty>
                     <CommandGroup
                       heading="Portfolio"
                       className="!max-h-[160px] !overflow-y-auto thin-scrollbar !bg-bg-tertiary "
@@ -294,10 +301,7 @@ export default function ChatBody({
                   </CommandList>
                 ) : (
                   <div className="bg-bg-tertiary min-h-[120px] p-4">
-                    <p className="text-sm text-red-600">
-                      Couldn&apos;t load the projects here. Start a general
-                      purpose chat.
-                    </p>
+                    <p className="text-sm text-red-600">{t.errorLoading}</p>
                   </div>
                 )}
               </Command>
@@ -309,7 +313,7 @@ export default function ChatBody({
                   className="w-full flex gap-1 items-center justify-between rounded-md hover:bg-bg-hover dark:hover:bg-bg-hover2 p-1 "
                 >
                   <div className="relative flex items-center gap-2 z-20 ">
-                    <p className="text-sm ">General purpose chat</p>
+                    <p className="text-sm ">{t.generalButton}</p>
                   </div>
                   <FiArrowRight
                     size={16}
@@ -327,7 +331,7 @@ export default function ChatBody({
         <div className="flex flex-col w-full h-full">
           {/* Note at the top */}
           <p className="text-center text-xs text-text-secondary pb-1">
-            ManuPilot uses AI. Check for mistakes.
+            {t.advice}
           </p>
 
           {/* Scrollable Messages Container */}
@@ -356,9 +360,7 @@ export default function ChatBody({
             {isThinking && (
               <div className="flex justify-start items-center gap-4 my-4">
                 <GoCopilot size={20} className="text-accent-icon" />
-                <div className="manupilot-shimmer !text-sm">
-                  ManuPilot is thinking...
-                </div>
+                <div className="manupilot-shimmer !text-sm">{t.thinking}</div>
               </div>
             )}
           </div>
@@ -375,7 +377,22 @@ export default function ChatBody({
             droppedFile={droppedFile}
             setDroppedFile={setDroppedFile}
             switchToGeneralChat={switchToGeneralChat}
+            t={t}
+            language={language}
           />
+        </div>
+      )}
+
+      {/* Use has reached the limit */}
+      {reachedLimit && (
+        <div className="w-full h-full center flex-col gap-4 absolute bg-[rgba(255,255,255,0.90)] dark:bg-[rgba(13,17,23,0.90)] z-[999] md:rounded-b-xl">
+          <p>{t.reachedLimit}</p>
+          {secondsLeft > 0 && (
+            <p>
+              {t.tryAgainIn} {Math.floor(secondsLeft / 60)}:
+              {(secondsLeft % 60).toString().padStart(2, "0")}
+            </p>
+          )}
         </div>
       )}
     </div>

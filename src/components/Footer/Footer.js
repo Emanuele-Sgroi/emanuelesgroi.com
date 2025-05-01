@@ -1,7 +1,10 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
+import footerTranslations from "@/translations/footer";
 
 /**
  * Footer Component
@@ -11,6 +14,10 @@ import { usePathname } from "next/navigation";
  */
 
 const Footer = () => {
+  // translation
+  const { language } = useLanguage();
+  const t = footerTranslations[language];
+
   const pathname = usePathname();
   const isManuPilotPage = pathname === "/manupilot";
   const isSiteDoc = pathname === "/about-this-website";
@@ -28,7 +35,7 @@ const Footer = () => {
             href="/contact"
             className="text-center text-xs text-text-secondary hover:text-accent-extra"
           >
-            Contact
+            {t.contact}
           </Link>
 
           <Link
@@ -42,7 +49,7 @@ const Footer = () => {
             href="/about-this-website"
             className="text-center text-xs text-text-secondary hover:text-accent-extra"
           >
-            About this website
+            {t.about}
           </Link>
 
           <Link
@@ -50,7 +57,7 @@ const Footer = () => {
             target="_blank"
             className="text-center text-xs text-text-secondary hover:text-accent-extra "
           >
-            Give it a star
+            {t.star}
           </Link>
         </div>
 
@@ -62,7 +69,7 @@ const Footer = () => {
             E
           </Link>
           <p className="text-xs text-center text-text-secondary ">
-            &copy; {currentYear} Made by{" "}
+            &copy; {currentYear} {t.madeBY}{" "}
             <span className="font-semibold">Emanuele Sgroi</span>
           </p>
         </div>

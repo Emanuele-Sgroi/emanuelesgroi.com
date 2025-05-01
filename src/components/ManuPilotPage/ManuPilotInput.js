@@ -50,6 +50,7 @@ const ManuPilotInput = ({
   clearError,
   droppedFile,
   setDroppedFile,
+  t,
 }) => {
   const isMobile = useIsMobile();
   const [openAttachDialog, setOpenAttachDialog] = useState(false);
@@ -65,6 +66,7 @@ const ManuPilotInput = ({
   const [fileLoadingProgress, setFileLoadingProgress] = useState(0);
   const [showBadge, setShowBadge] = useState(false);
   const textAreaRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -80,12 +82,12 @@ const ManuPilotInput = ({
 
     // Validate extension
     if (!allowedExtensions.includes(`.${ext}`)) {
-      setErrorMessage("This file type is not supported.");
+      setErrorMessage(t.fileNotSupported);
       return;
     }
     // Validate size
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setErrorMessage("File exceeds 2 MB limit.");
+      setErrorMessage(t.fileTooBig);
       return;
     }
 
@@ -133,7 +135,7 @@ const ManuPilotInput = ({
 
     reader.onerror = () => {
       setIsFileLoading(false);
-      setErrorMessage("Failed to read the file.");
+      setErrorMessage(t.readFail);
       setSelectedFile(null);
     };
 
@@ -217,12 +219,12 @@ const ManuPilotInput = ({
     const ext = file.name.split(".").pop().toLowerCase();
     if (!allowedExtensions.includes(`.${ext}`)) {
       setPendingFile(null);
-      setPendingError("This file type is not supported.");
+      setPendingError(t.fileNotSupported);
       return;
     }
     if (file.size > MAX_FILE_SIZE_BYTES) {
       setPendingFile(null);
-      setPendingError("File exceeds 2 MB limit.");
+      setPendingError(t.fileTooBig);
       return;
     }
 
@@ -307,7 +309,7 @@ const ManuPilotInput = ({
                   </div>
                   <div className="flex flex-col">
                     <p className="text-text-primary font-bold text-sm animate-pulse duration-700">
-                      Uploading file
+                      {t.uploadingFile}
                     </p>
                     <p className="text-text-secondary text-sm">...</p>
                   </div>
@@ -350,7 +352,7 @@ const ManuPilotInput = ({
                   </TooltipTrigger>
                   <TooltipContent className="max-md:hidden">
                     <p className="text-xs">
-                      Attach code or txt file{" "}
+                      {t.attachAFile}{" "}
                       <span className="px-1 rounded-sm bg-bg-button">^⇧@</span>
                     </p>
                   </TooltipContent>
@@ -370,7 +372,7 @@ const ManuPilotInput = ({
                   </TooltipTrigger>
                   <TooltipContent className="max-md:hidden">
                     <p className="text-xs">
-                      Send now{" "}
+                      {t.send}{" "}
                       <span className="px-1 rounded-sm bg-bg-button">⏎</span>
                     </p>
                   </TooltipContent>
@@ -397,7 +399,7 @@ const ManuPilotInput = ({
                     size={21}
                     className="text-white dark:text-gray-800"
                   />
-                  Regenerate
+                  {t.regenerate}
                 </button>
               </div>
             ) : (
@@ -417,7 +419,7 @@ const ManuPilotInput = ({
                     size={21}
                     className="text-white dark:text-gray-800"
                   />
-                  Regenerate
+                  {t.regenerate}
                 </button>
               </div>
             )}
@@ -428,13 +430,11 @@ const ManuPilotInput = ({
       <Dialog open={openAttachDialog} onOpenChange={setOpenAttachDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Attach a File</DialogTitle>
-            <DialogDescription>
-              Upload a text or code file to share with ManuPilot.
-            </DialogDescription>
+            <DialogTitle>{t.attachAFile}</DialogTitle>
+            <DialogDescription>{t.uploadAndShare}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 my-2">
-            <div className="flex flex-col gap-2 items-start">
+            {/* <div className="flex flex-col gap-2 items-start">
               <input
                 id="fileUpload"
                 type="file"
@@ -445,6 +445,40 @@ const ManuPilotInput = ({
               {pendingError && (
                 <p className="text-red-600 text-sm">{pendingError}</p>
               )}
+            </div> */}
+            <div className="flex flex-col gap-2 items-start">
+              {/* Hidden file input */}
+              <input
+                id="fileUpload"
+                type="file"
+                accept={allowedExtensions.join(",")}
+                onChange={handleFileChange}
+                className="hidden"
+                ref={fileInputRef}
+              />
+
+              <div className="flex items-center gap-4 flex-wrap">
+                {/* Custom upload button */}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="btn-secondary text-sm"
+                >
+                  {t.attachFileButton}
+                </button>
+
+                {/* Show selected file name  */}
+                {pendingFile && (
+                  <p className="text-sm text-accent-extra">
+                    {pendingFile.name}
+                  </p>
+                )}
+              </div>
+
+              {/* Error message */}
+              {pendingError && (
+                <p className="text-red-600 text-sm">{pendingError}</p>
+              )}
             </div>
             <div className="flex gap-2 justify-end mt-4">
               <button
@@ -452,13 +486,13 @@ const ManuPilotInput = ({
                 disabled={!pendingFile}
                 className="px-4 py-2 text-sm font-medium text-text-primary bg-bg-button rounded-md hover:bg-bg-hover disabled:hover:bg-bg-button disabled:opacity-50"
               >
-                Upload
+                {t.upload}
               </button>
               <button
                 onClick={() => setOpenAttachDialog(false)}
                 className="px-4 py-2 text-sm font-medium text-text-primary rounded-md border border-accent-border"
               >
-                Cancel
+                {t.cancel}
               </button>
             </div>
           </div>

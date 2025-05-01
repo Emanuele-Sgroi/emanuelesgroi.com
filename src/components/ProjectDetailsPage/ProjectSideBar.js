@@ -31,7 +31,7 @@ import { IoCodeDownloadSharp } from "react-icons/io5";
  *   - `languages`: JSON string or array containing programming language distribution details.
  */
 
-const ProjectSideBar = ({ project }) => {
+const ProjectSideBar = ({ project, t, language }) => {
   const {
     smallDescription,
     techTagsBulk,
@@ -42,6 +42,15 @@ const ProjectSideBar = ({ project }) => {
   } = project;
 
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const itLabels = {
+    "Frameworks & Libraries": "Frameworks & Librerie",
+    "Styling & UI": "Stilizzazione & UI",
+    "Databases & Backend Services": "Database & Servizi Backend",
+    "CMS & APIs": "CMS & APIs",
+    "Hosting & Deployment": "Hosting & Distribuzione",
+    "Developer Tools & Misc": "Strumenti Dev e Varie",
+  };
 
   // Access the referenced project tech stack
   const techStackRef = techStack?.map((tech) => tech.fields);
@@ -97,7 +106,7 @@ const ProjectSideBar = ({ project }) => {
     `}
       >
         {/* Small description */}
-        <p className="font-semibold">About</p>
+        <p className="font-semibold">{t.about}</p>
         <p>{smallDescription}</p>
         {/* Tags */}
         <div className="flex flex-wrap gap-1">
@@ -124,7 +133,7 @@ const ProjectSideBar = ({ project }) => {
                 />
               )}
             </span>
-            Designed
+            {t.designed}
           </p>
           <p className="flex items-center text-sm text-text-secondary gap-2">
             <span>
@@ -140,15 +149,14 @@ const ProjectSideBar = ({ project }) => {
                 />
               )}
             </span>
-            Developed
+            {t.developed}
           </p>
         </div>
 
         {/* Development summary */}
 
         <div className="w-full border-b border-accent-border pb-4">
-          <h2 className="text-base font-semibold mb-3">Development Summary</h2>
-
+          <h2 className="text-base font-semibold mb-3">{t.devSummary}</h2>
           <ul className="flex flex-col justify-start items-start gap-2">
             {categorizedTechStack &&
               Object.entries(categorizedTechStack).map(
@@ -161,7 +169,10 @@ const ProjectSideBar = ({ project }) => {
                           className="text-[#3fb950]"
                         />
                       </span>
-                      {category}
+                      {/* {category} */}
+                      {language === "it"
+                        ? itLabels[category] ?? category
+                        : category}
                     </p>
                     <div className="flex flex-wrap gap-1 mt-1 ml-[27px]">
                       {technologies.map((tech, index) => (
@@ -184,7 +195,7 @@ const ProjectSideBar = ({ project }) => {
 
         {/* Languages */}
         <div className="w-full">
-          <h2 className="text-base font-semibold mb-3">Languages</h2>
+          <h2 className="text-base font-semibold mb-3">{t.languages}</h2>
           <div className="w-full h-[8px] center gap-[2px] rounded-full overflow-hidden mb-2">
             {parsedLanguages.map((lang, index) => (
               <div
@@ -226,7 +237,7 @@ const ProjectSideBar = ({ project }) => {
           className="text-sm font-semibold text-text-link"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? "Collapse" : "Expand"}
+          {isExpanded ? t.collapse : t.expand}
         </button>
       </div>
     </div>

@@ -26,7 +26,7 @@ const linkName = process.env.NEXT_PUBLIC_BASE_URL;
  * - Includes a copy-to-clipboard button with a tooltip.
  */
 
-const BlogInfoAndShareSection = ({ blogPost }) => {
+const BlogInfoAndShareSection = ({ blogPost, t }) => {
   const { author, datePosted, timeReading, postTitle, smallDescription } =
     blogPost;
 
@@ -53,10 +53,10 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
     navigator.clipboard
       .writeText(postUrl)
       .then(() => {
-        toast("Link Copied");
+        toast(t.copyLinkSuccess);
       })
       .catch((err) => {
-        alert("Failed to copy. Sorry!");
+        alert(t.copyLinkFail);
         console.error("Failed to copy: ", err);
       });
   };
@@ -85,7 +85,7 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
           </div>
           {/* Social Share Section */}
           <div className="center max-[430px]:flex-col max-[430px]:items-start  gap-3">
-            <p className="poppins-regular text-sm">Share:</p>
+            <p className="poppins-regular text-sm">{t.share}</p>
             <div className="center gap-3 max-[430px]:flex-wrap max-[430px]:justify-start">
               {/* Twitter / X */}
               <Link
@@ -157,7 +157,7 @@ const BlogInfoAndShareSection = ({ blogPost }) => {
                   onMouseLeave={handleMouseLeave}
                   className="max-md:hidden w-fit p-1 bg-bg-button border-accent-border text-xs"
                 >
-                  Copy link
+                  {t.copyLink}
                 </PopoverContent>
               </Popover>
             </div>

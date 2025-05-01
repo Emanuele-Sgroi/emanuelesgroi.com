@@ -5,6 +5,8 @@ import Image from "next/image";
 import { images } from "@/utils/imageImport";
 import { RiCloseLargeLine } from "react-icons/ri";
 import ChatFloater from "../ChatWidget/ChatFloater";
+import { useLanguage } from "@/context/LanguageContext";
+import globalsTranslation from "@/translations/globals";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +19,10 @@ export const dynamic = "force-dynamic";
  */
 
 const GreetingPopup = () => {
+  // translation
+  const { language } = useLanguage();
+  const t = globalsTranslation[language];
+
   const [popupOn, setPopupOn] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [canShowFloater, setCanShowFloater] = useState(false);
@@ -118,19 +124,16 @@ const GreetingPopup = () => {
             {/* Text Container */}
             <div className="w-full center flex-col p-4 sm:p-6">
               <h4 className="text-center text-black text-lg sm:text-2xl font-bold mb-4">
-                Hey there! 👋
+                {t.greeting.title}
               </h4>
               <p className="text-center text-sm sm:text-base text-black mb-4 sm:mb-8">
-                Welcome to my GitHub inspired portfolio! This is not just a
-                regular dev site. I&apos;ve added some extra features to make it
-                more interactive and fun. Take a look around, check out my
-                projects, or even chat with ManuPilot. Hope you enjoy it! 🚀
+                {t.greeting.description}
               </p>
               <button
                 onClick={() => setIsClosing(true)}
                 className="btn-primary"
               >
-                Let&apos;s go
+                {t.greeting.button}
               </button>
             </div>
           </div>

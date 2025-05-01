@@ -4,13 +4,19 @@ import "react-toastify/dist/ReactToastify.css";
 import "@theme-toggles/react/css/Lightbulb.css";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import QuotaProvider from "@/context/QuotaProvider";
 import { ChatProvider } from "@/context/ChatProvider";
-import { Navbar, Footer, ChatWidget } from "@/components";
+import { LanguageProvider } from "@/context/LanguageContext";
+import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
+import { Navbar, Footer, ChatWidget, ChatWidgetWrapper } from "@/components";
 import { ToastContainer } from "react-toastify";
-import { defaultMetadata } from "@/config/metadata";
+//import { defaultMetadata } from "@/config/metadata";
+//import { cookies } from "next/headers";
+import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
+import { getDefaultMetadata } from "@/config/metadata";
 
 // Set default metadata for all pages
-export const metadata = defaultMetadata;
+export const metadata = getDefaultMetadata(getCurrentLanguageServer());
 
 // Lazy load the greeting popup (disabled for SSR)
 const GreetingPopup = dynamic(
@@ -21,18 +27,30 @@ const GreetingPopup = dynamic(
 );
 
 export default function RootLayout({ children }) {
+  const lang = getCurrentLanguageServer(); // "en" | "it"
   return (
-    <html lang="en" className="dark">
+    <html
+      lang={lang === "it" ? "it" : "en"}
+      translate={["en", "it"].includes(lang) ? "no" : undefined}
+      className="dark"
+    >
       <body>
         <ThemeProvider>
-          <ToastContainer />
-          <ChatProvider>
-            <GreetingPopup />
-            <ChatWidget />
-            <Navbar />
-            {children}
-            <Footer />
-          </ChatProvider>
+          <LanguageProvider initialLanguage={lang}>
+            <FullScreenSpinnerProvider>
+              <ToastContainer />
+              <QuotaProvider>
+                <ChatProvider>
+                  <GreetingPopup />
+                  {/* <ChatWidget lang={lang} /> */}
+                  <ChatWidgetWrapper lang={lang} />
+                  <Navbar lang={lang} />
+                  {children}
+                  <Footer />
+                </ChatProvider>
+              </QuotaProvider>
+            </FullScreenSpinnerProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

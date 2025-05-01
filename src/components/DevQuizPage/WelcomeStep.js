@@ -13,32 +13,36 @@ import React from "react";
  * - onStartQuiz: Function to initiate the quiz.
  */
 
-const WelcomeStep = ({ onStartQuiz }) => (
+const WelcomeStep = ({ onStartQuiz, t, language }) => (
   <>
     <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
       <h1 className="font-semibold  max-[375px]:text-[24px] text-center">
-        Welcome to Dev Quiz
+        {t.welcome.title}
       </h1>
     </div>
     <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
-      As developers, there&apos;s always a ton to keep in mind. Like any skill,
-      memory needs regular practice. I&apos;ve always enjoyed using quizzes and
-      flashcards to sharpen my brain for those tricky concepts, so I went ahead
-      and built my own.
+      {t.welcome.friendlySentence}
     </p>
     <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
-      No difficulty levels here! questions are pulled at random, mixing
-      everything from beginner to advanced.
+      {t.welcome.noDifficultySentence}
     </p>
     <p className="max-md:px-4 text-center text-text-secondary text-base md:text-lg">
-      Have Fun 💪
+      {t.welcome.haveFun} 💪
     </p>
     <p className="max-md:px-4 text-center text-text-primary text-xs sm:text-sm mb-4">
-      Pick a topic <span className="text-accent-extra">&gt;</span> Set the
-      number of questions <span className="text-accent-extra">&gt;</span> START
+      {t.welcome.pickTopic} <span className="text-accent-extra">&gt;</span>{" "}
+      {t.welcome.setNumber} <span className="text-accent-extra">&gt;</span>{" "}
+      {t.welcome.start}
     </p>
+    {language === "it" && (
+      <p className="mb-6 text-sm text-center px-4">
+        <span className="text-amber-500 font-semibold">Nota:</span> le domande
+        del quiz sono in Inglese; puoi farle tradurre dal browser, ma meglio
+        leggerle in originale.
+      </p>
+    )}
     <button onClick={onStartQuiz} className="btn-primary">
-      Start Quiz
+      {t.welcome.startButton}
     </button>
   </>
 );

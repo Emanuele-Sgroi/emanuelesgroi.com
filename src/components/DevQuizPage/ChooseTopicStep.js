@@ -15,7 +15,13 @@ import { Button } from "@/components/ui/button";
  * - onTopicsSelected: Function to pass selected topics to the parent component.
  */
 
-const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
+const ChooseTopicStep = ({
+  topics,
+  onCancel,
+  onTopicsSelected,
+  t,
+  language,
+}) => {
   // Initialize state with all topics pre-selected
   const [selectedTopics, setSelectedTopics] = useState(
     topics.reduce((acc, topic) => {
@@ -50,7 +56,7 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
       {/* Header */}
       <div className="w-full center pb-3 md:pb-4 border-b border-accent-border mb-4">
         <h2 className="font-semibold  max-[375px]:text-[24px] text-center">
-          Choose Your Topic
+          {t.chooseTopic.title}
         </h2>
       </div>
       {/* Topic Selection Form */}
@@ -78,31 +84,37 @@ const ChooseTopicStep = ({ topics, onCancel, onTopicsSelected }) => {
       {/* Selection Status */}
       {Object.values(selectedTopics).filter(Boolean).length < 1 ? (
         <p className="text-center max-md:px-4 font-semibold text-red-500">
-          Please select at least one topic.
+          {t.chooseTopic.error}
         </p>
       ) : (
         <p className="text-center max-md:px-4 font-semibold">
-          Selected Topics:{" "}
+          {t.chooseTopic.selected}{" "}
           <span className="text-accent-extra font-bold">
             {Object.values(selectedTopics).filter(Boolean).length}
           </span>
         </p>
       )}
-
+      {language === "it" && (
+        <p className="text-sm text-center px-4">
+          <span className="text-amber-500 font-semibold">Nota:</span> le domande
+          del quiz sono in Inglese; puoi farle tradurre dal browser, ma meglio
+          leggerle in originale.
+        </p>
+      )}
       {/* Action Buttons */}
       <div className="flex gap-4 mt-4 max-md:px-4">
         <button
           onClick={onCancel}
           className="btn-secondary !px-[12px] !py-[6px]"
         >
-          Cancel
+          {t.chooseTopic.cancel}
         </button>
         <Button
           onClick={handleSubmit}
           className="btn-primary !bg-accent-extra !text-white"
           disabled={Object.values(selectedTopics).filter(Boolean).length < 1}
         >
-          Next
+          {t.chooseTopic.nextButton}
         </Button>
       </div>
     </>

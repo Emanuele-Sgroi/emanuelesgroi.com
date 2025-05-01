@@ -7,7 +7,8 @@ import {
   GridLayout,
   AboutThisWebsite,
 } from "@/components";
-
+import { useLanguage } from "@/context/LanguageContext";
+import portfolioTranslations from "@/translations/portfolio";
 /**
  * PortfolioContainer Component
  *
@@ -21,6 +22,10 @@ import {
  */
 
 const PortfolioContainer = ({ portfolio }) => {
+  // translation
+  const { language } = useLanguage();
+  const t = portfolioTranslations[language];
+
   const [activeLayout, setActiveLayout] = useState("list");
   const [selectedTag, setSelectedTag] = useState("");
 
@@ -32,13 +37,14 @@ const PortfolioContainer = ({ portfolio }) => {
         setActiveLayout={setActiveLayout}
         selectedTag={selectedTag}
         setSelectedTag={setSelectedTag}
+        t={t}
       />
       {activeLayout === "list" ? (
-        <ListLayout portfolio={portfolio} selectedTag={selectedTag} />
+        <ListLayout portfolio={portfolio} selectedTag={selectedTag} t={t} />
       ) : (
-        <GridLayout portfolio={portfolio} selectedTag={selectedTag} />
+        <GridLayout portfolio={portfolio} selectedTag={selectedTag} t={t} />
       )}
-      <AboutThisWebsite portfolio={portfolio} />
+      <AboutThisWebsite portfolio={portfolio} t={t} />
     </div>
   );
 };

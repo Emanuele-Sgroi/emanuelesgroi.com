@@ -18,6 +18,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { images } from "@/utils/imageImport";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useLanguage } from "@/context/LanguageContext";
+import globalsTranslation from "@/translations/globals";
 
 /**
  * ProfileBar Component
@@ -30,6 +32,10 @@ import { useIsMobile } from "@/hooks/useIsMobile";
  */
 
 const ProfileBar = ({ generalInfo }) => {
+  // translation
+  const { language } = useLanguage();
+  const t = globalsTranslation[language];
+
   const [showCopy, setShowCopy] = useState(false);
   const isMobile = useIsMobile();
   const [showManuPilotBadge, setShowManuPilotBadge] = useState(true);
@@ -73,10 +79,10 @@ const ProfileBar = ({ generalInfo }) => {
     navigator.clipboard
       .writeText(copiedText)
       .then(() => {
-        toast("Copied to clipboard.");
+        toast(t.profileBar.copySuccess);
       })
       .catch((err) => {
-        alert("Failed to copy. Sorry!");
+        alert(t.profileBar.copyFail);
         console.error("Failed to copy: ", err);
       });
   };
@@ -191,27 +197,27 @@ const ProfileBar = ({ generalInfo }) => {
               onMouseLeave={handleMouseLeave}
               className="max-md:hidden w-fit p-1 bg-bg-button border-accent-border text-xs"
             >
-              Copy
+              {t.profileBar.copy}
             </PopoverContent>
           </Popover>
         </div>
       </div>
 
-      <div className="max-md:hidden mt-4 flex flex-col items-start gap-2">
+      {/* <div className="max-md:hidden mt-4 flex flex-col items-start gap-2">
         <div className="flex items-center gap-2">
           <CgFileDocument size={18} className="text-accent-icon" />
           <a
             href={`${getAssetUrl(generalInfo?.resume)}`}
             target="_blank"
             rel="noopener noreferrer"
-            download="Emanuele-Sgroi-Resume.pdf"
+            download={t.profileBar.downloadResume}
             className="text-text-primary hover:text-text-link hover:underline center gap-2"
           >
-            Resume
+            {t.profileBar.resume}
             <IoMdDownload size={18} className="text-text-primary" />
           </a>
         </div>
-      </div>
+      </div> */}
 
       <div className="max-md:hidden w-full h-px my-4 bg-accent-border" />
 
@@ -237,10 +243,12 @@ const ProfileBar = ({ generalInfo }) => {
               loading="eager" // Load image immediately (for essential visuals)
             />
             <div className="absolute left-0">
-              <h2 className=" font-bold text-base">Discover</h2>
-              <h2 className="font-bold">ManuPilot</h2>
+              <h2 className=" font-bold text-base">
+                {t.profileBar.manupilot.discover}
+              </h2>
+              <h2 className="font-bold">{t.profileBar.manupilot.manupilot}</h2>
               <p className="text-sm mt-2 text-text-secondary">
-                Inspired by GitHub Copilot
+                {t.profileBar.manupilot.inspired}
               </p>
             </div>
           </div>
@@ -248,7 +256,7 @@ const ProfileBar = ({ generalInfo }) => {
             href={"/manupilot"}
             className="!w-full rounded-full px-2 py-1 bg-white text-black text-sm mt-6 center font-bold hover:bg-accent-extra hover:text-white transition-all"
           >
-            Open ManuPilot
+            {t.profileBar.manupilot.button}
           </Link>
           <button onClick={handleCloseBadge} className="absolute top-1 right-1">
             <IoCloseSharp size={18} className="text-text-primary" />
@@ -257,8 +265,7 @@ const ProfileBar = ({ generalInfo }) => {
       )}
 
       <p className="max-md:hidden text-sm text-accent-extra">
-        One day, I&apos;ll keep adding features to make this site look even more
-        GitHub-like. For now, enjoy it just as it is! 😄🚀✨
+        {t.profileBar.sentence}
       </p>
     </div>
   );
