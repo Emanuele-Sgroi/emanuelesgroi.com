@@ -67,38 +67,26 @@ All portfolio content (projects, writings, ManuPilot prompts) is managed in Cont
 ### Welcome
 
 ![Welcome](./public/screenshots/home.png)
-![Welcome2](./public/screenshots/home2.png)
-![Welcome3](./public/screenshots/home3.png)
-![Welcome4](./public/screenshots/home4.png)
-![Welcome5](./public/screenshots/home5.png)
 
 ### Portfolio
 
 ![Portfolio](./public/screenshots/portfolio.png)
-![Portfolio2](./public/screenshots/portfolio2.png)
 
 ### Project Details
 
 ![Project](./public/screenshots/details.png)
-![Project](./public/screenshots/details2.png)
 
 ### Writings
 
 ![Writings](./public/screenshots/writings.png)
-![Writings2](./public/screenshots/writings2.png)
 
 ### Blog Post
 
 ![Blog](./public/screenshots/blog.png)
-![Blog2](./public/screenshots/blog2.png)
 
 ### Dev-Quiz
 
 ![Dev-Quiz](./public/screenshots/quiz.png)
-![Dev-Quiz2](./public/screenshots/quiz2.png)
-![Dev-Quiz3](./public/screenshots/quiz3.png)
-![Dev-Quiz4](./public/screenshots/quiz4.png)
-![Dev-Quiz5](./public/screenshots/quiz5.png)
 
 ### Discussions
 
@@ -111,18 +99,12 @@ All portfolio content (projects, writings, ManuPilot prompts) is managed in Cont
 ### ManuPilot Page
 
 ![ManuPilot](./public/screenshots/manupilot.png)
-![ManuPilot2](./public/screenshots/manupilot2.png)
 
 ### Quick Chat Widget
 
 ![Quick Chat](./public/screenshots/chat.png)
-![Quick Chat2](./public/screenshots/chat2.png)
 
-### Search
-
-![Search](./public/screenshots/search.png)
-
-\*_ AND MORE_
+I couldn't upload too many screenshots here to avoid this readme to look too crowded. Please visit the website for a full view: https://www.emanuelesgroi.com/
 
 ---
 
@@ -135,7 +117,7 @@ All portfolio content (projects, writings, ManuPilot prompts) is managed in Cont
 - **OpenAI GPT-4** – ManuPilot chat (streaming + summarization)
 - **React Context** – chat & quota state management
 
-And more. See the ![package.json](./package.json)
+And more. See the [package.json](./package.json)
 
 ---
 
@@ -223,7 +205,7 @@ You are free to use or adapt this code for your own portfolio/website — provid
 1. Remove all references to “Emanuele Sgroi” (name, branding, screenshots)
 2. Credit the original author (e.g. in your own README or footer)
 
-See ![LICENSE](./LICENSE) for full text.
+See [LICENSE](./LICENSE) for full text.
 
 ---
 
