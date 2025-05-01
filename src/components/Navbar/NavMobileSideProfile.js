@@ -350,7 +350,7 @@ const NavMobileSideProfile = ({
                         )}
                     </button>
                   </li>
-                  <li className="w-full relative center gap-2">
+                  {/* <li className="w-full relative center gap-2">
                     <a
                       href={`${getAssetUrl(generalInfoContent?.resume)}`}
                       target="_blank"
@@ -362,7 +362,7 @@ const NavMobileSideProfile = ({
                       {t.links.resume}
                       <IoMdDownload size={18} className="text-text-primary" />
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
 
                 <div className="w-full text-left mt-6 border-b border-b-accent-border pb-1">

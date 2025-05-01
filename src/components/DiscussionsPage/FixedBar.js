@@ -151,8 +151,7 @@ const FixedBar = ({
                 className="text-accent-icon max-[388px]:hidden"
               />
               <span className="max-[388px]:hidden">
-                {replies.length}
-                {replies.length !== 1 ? t.reply : t.replies}
+                {replies.length} {t.replies}
               </span>
               <span className="min-[389px]:hidden">
                 {replies.length} {t.abbreviatedReply}

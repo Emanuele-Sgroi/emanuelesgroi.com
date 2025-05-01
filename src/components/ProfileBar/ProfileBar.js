@@ -203,7 +203,7 @@ const ProfileBar = ({ generalInfo }) => {
         </div>
       </div>
 
-      <div className="max-md:hidden mt-4 flex flex-col items-start gap-2">
+      {/* <div className="max-md:hidden mt-4 flex flex-col items-start gap-2">
         <div className="flex items-center gap-2">
           <CgFileDocument size={18} className="text-accent-icon" />
           <a
@@ -217,7 +217,7 @@ const ProfileBar = ({ generalInfo }) => {
             <IoMdDownload size={18} className="text-text-primary" />
           </a>
         </div>
-      </div>
+      </div> */}
 
       <div className="max-md:hidden w-full h-px my-4 bg-accent-border" />
 

@@ -149,15 +149,15 @@ const NavSearchBar = ({
       path: "/sitemap.xml",
       label: t.searchFeature.labels.open,
     },
-    {
-      icon: <IoMdDownload size={18} className="text-accent-icon" />,
-      name: t.links.resume,
-      path: generalInfoContent?.resume
-        ? getAssetUrl(generalInfoContent.resume)
-        : "#",
-      label: t.searchFeature.labels.download,
-      download: true,
-    },
+    // {
+    //   icon: <IoMdDownload size={18} className="text-accent-icon" />,
+    //   name: t.links.resume,
+    //   path: generalInfoContent?.resume
+    //     ? getAssetUrl(generalInfoContent.resume)
+    //     : "#",
+    //   label: t.searchFeature.labels.download,
+    //   download: true,
+    // },
   ];
 
   const truncateText = (text, maxLength) => {
