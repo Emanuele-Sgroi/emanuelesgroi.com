@@ -12,7 +12,7 @@ const projectDetailsTranslations = {
     codeNotAvailable: "Source code not available for this project",
     about: "About",
     designed: "Designed",
-    developed: "developed",
+    developed: "Developed",
     devSummary: "Development Summary",
     languages: "Languages",
     howIBuilt: "How I built this project",
