@@ -1,0 +1,31 @@
+# Custom Portfolio License (CPL) v1.0
+
+Copyright (c) 2025 Emanuele Sgroi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Code"), to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Code, subject to the following conditions:
+
+1. **License Inclusion**  
+   Redistributions of the Code, in source or binary form, must include this LICENSE file intact.
+
+2. **Removal of Personal References**  
+   Any deployment or public use of the Code (e.g., on a website or application) must remove all personal references to the original author, including but not limited to the name "Emanuele Sgroi", personal website URLs, and branding assets.
+
+3. **Attribution Requirement**  
+   In lieu of personal references, recipients must include a visible credit statement in an appropriate location (for example, in a README, credits page, or code comments) stating:
+
+   > "Based on code by Emanuele Sgroi"  
+   > Optionally, include a link to the original repository or portfolio:  
+   > https://github.com/Emanuele-Sgroi/emanuelesgroi.com > https://www.emanuelesgroi.com/
+
+4. **No Endorsement**  
+   This license does not grant permission to use the trade names, trademarks, service marks, or product names of the author, except as required for reasonable and customary use in describing the origin of the Code.
+
+5. **Disclaimer of Warranty**  
+   THE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+
+6. **Limitations of Liability**  
+   In no event shall the author be liable for any special, incidental, indirect, or consequential damages whatsoever (including, without limitation, damages for loss of profits, business interruption, or loss of information) arising out of the use of or inability to use the Code, even if the author has been advised of the possibility of such damages.
+
+---
+
+**By using or distributing this Code, you agree to abide by the terms of this Custom Portfolio License.**
