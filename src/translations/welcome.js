@@ -2,6 +2,7 @@ const welcomeTranslation = {
   en: {
     public: "Public",
     views: "Profile views",
+    contact: "Get in Touch",
     chart: {
       errorInput: "Only letters and numbers please",
       max: "Max",
@@ -31,6 +32,7 @@ const welcomeTranslation = {
   it: {
     public: "Pubblico",
     views: "Visite profilo",
+    contact: "Contattami",
     chart: {
       errorInput: "Solo lettere e numeri, per favore",
       max: "Max",
