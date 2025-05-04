@@ -75,7 +75,13 @@ const WelcomeReadMe = ({ welcome }) => {
         <div className="w-full center mt-6 max-md:px-4">
           <p className="font-semibold text-[17.5px]">{aboutText}</p>
         </div>
-        <div className="w-full mt-8 mb-4 border-b border-accent-border pb-1 max-md:px-4">
+        {/* Contact CTA */}
+        <div className="w-full flex items-center justify-start mt-6 max-md:px-4">
+          <Link href="/contact" className="btn-primary">
+            {t.contact}
+          </Link>
+        </div>
+        <div className="w-full mt-6 mb-4 border-b border-accent-border pb-1 max-md:px-4">
           <h4 className="font-semibold max-[375px]:text-[20px]">
             {stackTitle}
           </h4>
