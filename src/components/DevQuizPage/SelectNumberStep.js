@@ -78,7 +78,7 @@ const SelectNumberStep = ({
             <div className="flex justify-between items-center">
               <p className="font-medium">{topic.name}</p>
               <p className="text-sm text-text-secondary">
-                {questionCounts[topic.name]} / {topic.questions.length}
+                {questionCounts[topic.name]} / {topic.questions.length || 0}
               </p>
             </div>
             <Slider
