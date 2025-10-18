@@ -92,6 +92,11 @@ const devQuizTranslations = {
           description:
             "C# language features, OOP, LINQ, async/await, collections, modern features",
         },
+        dotnet: {
+          name: ".NET",
+          description:
+            ".NET Core/5+, ASP.NET Core, Entity Framework, Blazor, SignalR, middleware",
+        },
       },
     },
 
@@ -223,6 +228,11 @@ const devQuizTranslations = {
           name: "C#",
           description:
             "Funzionalità del linguaggio C#, OOP, LINQ, async/await, collezioni, funzionalità moderne",
+        },
+        dotnet: {
+          name: ".NET",
+          description:
+            ".NET Core/5+, ASP.NET Core, Entity Framework, Blazor, SignalR, middleware",
         },
       },
     },

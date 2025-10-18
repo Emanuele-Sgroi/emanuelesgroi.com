@@ -20,6 +20,7 @@ import {
   databaseQuestions,
   cloudQuestions,
   csharpQuestions,
+  dotnetQuestions,
 } from "@/utils/devQuizQuestions";
 import { useLanguage } from "@/context/LanguageContext";
 import devQuizTranslations from "@/translations/devQuiz";
@@ -127,6 +128,12 @@ const DevQuizComponent = () => {
       description: t.chooseTopic.topics.csharp.description,
       key: "C#",
       questions: csharpQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.dotnet.name,
+      description: t.chooseTopic.topics.dotnet.description,
+      key: ".Net",
+      questions: dotnetQuestions,
     },
   ];
 
