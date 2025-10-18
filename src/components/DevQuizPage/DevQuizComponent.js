@@ -19,6 +19,7 @@ import {
   blockchainQuestions,
   databaseQuestions,
   cloudQuestions,
+  csharpQuestions,
 } from "@/utils/devQuizQuestions";
 import { useLanguage } from "@/context/LanguageContext";
 import devQuizTranslations from "@/translations/devQuiz";
@@ -120,6 +121,12 @@ const DevQuizComponent = () => {
       description: t.chooseTopic.topics.blockchain.description,
       key: "Blockchain",
       questions: blockchainQuestions,
+    },
+    {
+      name: t.chooseTopic.topics.csharp.name,
+      description: t.chooseTopic.topics.csharp.description,
+      key: "C#",
+      questions: csharpQuestions,
     },
   ];
 
