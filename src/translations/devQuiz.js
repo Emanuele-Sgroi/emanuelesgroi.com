@@ -87,6 +87,11 @@ const devQuizTranslations = {
           description:
             "Consensus mechanisms, smart contracts, dApp development, security, and real-world blockchain use cases.",
         },
+        csharp: {
+          name: "C#",
+          description:
+            "C# language features, OOP, LINQ, async/await, collections, modern features",
+        },
       },
     },
 
@@ -213,6 +218,11 @@ const devQuizTranslations = {
           name: "Blockchain",
           description:
             "Meccanismi di consenso, smart contract, sviluppo dApp, sicurezza e casi d’uso reali della blockchain.",
+        },
+        csharp: {
+          name: "C#",
+          description:
+            "Funzionalità del linguaggio C#, OOP, LINQ, async/await, collezioni, funzionalità moderne",
         },
       },
     },

@@ -13,3 +13,4 @@ export { nextQuestions } from "./nextjs";
 export { reactNativeQuestions } from "./reactNative";
 export { apiQuestions } from "./api";
 export { blockchainQuestions } from "./blockchain";
+export { csharpQuestions } from "./csharp";
