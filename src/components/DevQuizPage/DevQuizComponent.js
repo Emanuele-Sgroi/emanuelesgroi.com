@@ -19,7 +19,7 @@ import {
   blockchainQuestions,
   databaseQuestions,
   cloudQuestions,
-} from "@/utils/devQuizQuestions"; // import all topics created in /utils/devQuizQuestions.js
+} from "@/utils/devQuizQuestions";
 import { useLanguage } from "@/context/LanguageContext";
 import devQuizTranslations from "@/translations/devQuiz";
 
@@ -138,11 +138,11 @@ const DevQuizComponent = () => {
   const handleCancelQuiz = () => setQuizStep("welcome");
 
   const handleTopicsSelected = (selectedKeys) => {
-    console.log("Selected Keys:", selectedKeys); // Debugging
+    //console.log("Selected Keys:", selectedKeys); // Debugging
     const topicsWithQuestions = topics.filter((topic) =>
       selectedKeys.includes(topic.key)
     );
-    console.log("Topics With Questions:", topicsWithQuestions); // Debugging
+    //console.log("Topics With Questions:", topicsWithQuestions); // Debugging
     setSelectedTopics(topicsWithQuestions);
     setQuizStep("selectNumber");
   };
