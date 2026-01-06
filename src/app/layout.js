@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 //import { cookies } from "next/headers";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 import { getDefaultMetadata } from "@/config/metadata";
+import { Analytics } from "@vercel/analytics/next";
 
 // Set default metadata for all pages
 export const metadata = getDefaultMetadata(getCurrentLanguageServer());
@@ -52,6 +53,7 @@ export default function RootLayout({ children }) {
             </FullScreenSpinnerProvider>
           </LanguageProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
