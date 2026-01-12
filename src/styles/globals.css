@@ -1104,6 +1104,13 @@ html::-webkit-scrollbar-thumb:active {
   );
 }
 
+/* -----------------STYLES FOR reCAPTCHA--------------------- */
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ------------------------------ STYLES IMPORTED AUTOMATICALLY BY TAILWIND --------------------------------------------*/
 
 @layer utilities {
