@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRecaptcha } from "@/hooks/useRecaptcha";
 import {
   Form,
   FormField,
@@ -40,21 +41,24 @@ const ContactForm = ({ generalInfo }) => {
   const { language } = useLanguage();
   const t = contactTranslations[language];
 
+  const { executeRecaptcha } = useRecaptcha(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+  );
+
   // Define the form schema using Zod
   const formSchema = z.object({
     name: z.string().min(1, { message: t.nameRequired }),
     email: z.string().email({ message: t.emailNotVaild }),
-    message: z
-      .string()
-      .min(1, {
-        message:
-          language === "it"
-            ? "Il messaggio é obbligatorio"
-            : "Message is required",
-      }),
+    message: z.string().min(1, {
+      message:
+        language === "it"
+          ? "Il messaggio é obbligatorio"
+          : "Message is required",
+    }),
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   // Initialize the form with React Hook Form and Zod for validation
   const form = useForm({
@@ -72,21 +76,34 @@ const ContactForm = ({ generalInfo }) => {
 
   // Function to handle form submission
   const onSubmit = async (values) => {
-    setIsLoading(true);
+    setIsVerifying(true);
 
     try {
-      // Call the sendEmail function from utils to send the form data
-      const result = await sendEmail(values);
+      // Execute reCAPTCHA
+      const tokenPromise = executeRecaptcha("contact_form");
+
+      // Minimum delay for showing human veryfication message
+      const delayPromise = new Promise((resolve) => setTimeout(resolve, 800));
+      const [token] = await Promise.all([tokenPromise, delayPromise]);
+
+      setIsVerifying(false);
+      setIsLoading(true);
+
+      // Send email with reCAPTCHA token
+      const result = await sendEmail({ ...values, recaptchaToken: token });
+
       if (result.status === 200) {
         toast.success(t.sentSuccess);
-        form.reset(); // Clear form fields on success
+        form.reset();
       } else {
         toast.error(t.sentFail);
       }
     } catch (error) {
+      console.error("Error:", error);
       toast.error(t.sentFail);
     } finally {
       setIsLoading(false);
+      setIsVerifying(false);
     }
   };
 
@@ -216,15 +233,49 @@ const ContactForm = ({ generalInfo }) => {
                   )}
                 />
               ))}
-              <div className="w-full">
+              <div className="w-full flex items-center gap-4 flex-wrap">
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-[124px] !bg-accent-extra !text-white font-semibold"
+                  disabled={isLoading || isVerifying}
+                  className="w-auto px-6 !bg-accent-extra !text-white font-semibold"
                 >
-                  {isLoading ? t.sending : t.send}
+                  {isVerifying
+                    ? t.verifyingHuman
+                    : isLoading
+                    ? t.sending
+                    : t.send}
                 </Button>
+                <p className="text-xs text-text-secondary">
+                  {t.protectedBy}{" "}
+                  <a
+                    href="https://www.google.com/recaptcha/about/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-xs text-text-link"
+                  >
+                    reCAPTCHA
+                  </a>{" "}
+                  (
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-xs text-accent-extra"
+                  >
+                    {t.privacy}
+                  </a>
+                  {", "}
+                  <a
+                    href="https://policies.google.com/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-xs text-accent-extra"
+                  >
+                    {t.terms}
+                  </a>
+                  )
+                </p>
               </div>
             </form>
           </Form>

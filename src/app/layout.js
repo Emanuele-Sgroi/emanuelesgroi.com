@@ -8,10 +8,14 @@ import QuotaProvider from "@/context/QuotaProvider";
 import { ChatProvider } from "@/context/ChatProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { FullScreenSpinnerProvider } from "@/context/FullScreenSpinnerContext";
-import { Navbar, Footer, ChatWidget, ChatWidgetWrapper } from "@/components";
+import {
+  Navbar,
+  Footer,
+  ChatWidget,
+  ChatWidgetWrapper,
+  RecaptchaProvider,
+} from "@/components";
 import { ToastContainer } from "react-toastify";
-//import { defaultMetadata } from "@/config/metadata";
-//import { cookies } from "next/headers";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 import { getDefaultMetadata } from "@/config/metadata";
 import { Analytics } from "@vercel/analytics/next";

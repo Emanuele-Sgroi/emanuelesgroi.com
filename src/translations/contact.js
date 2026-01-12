@@ -18,6 +18,10 @@ const contactTranslations = {
     send: "Send Message",
     alternative: "Alternatively, you can contact me on my socials",
     viaEmail: "Or contact me directly via email:",
+    verifyingHuman: "Verifying you're human...",
+    protectedBy: "Protected by",
+    privacy: "Privacy",
+    terms: "Terms",
   },
   it: {
     nameRequired: "Il nome è obbligatorio",
@@ -38,6 +42,10 @@ const contactTranslations = {
     send: "Invia messaggio",
     alternative: "In alternativa, puoi contattarmi sui miei social",
     viaEmail: "Oppure contattami direttamente via email:",
+    verifyingHuman: "Sto verificando che sei umano...",
+    protectedBy: "Protetto da",
+    privacy: "Privacy",
+    terms: "Termini",
   },
 };
 
