@@ -896,19 +896,20 @@ blockquote {
 }
 
 /* WebKit browsers */
-.thin-scrollbar::-webkit-scrollbar .medium-scrollbar::-webkit-scrollbar {
+.thin-scrollbar::-webkit-scrollbar,
+.medium-scrollbar::-webkit-scrollbar {
   width: 4px; /* Width of the scrollbar */
   height: 4px; /* Height of the scrollbar */
 }
 
-.thin-scrollbar::-webkit-scrollbar-thumb
-  .medium-scrollbar::-webkit-scrollbar-thumb {
+.thin-scrollbar::-webkit-scrollbar-thumb,
+.medium-scrollbar::-webkit-scrollbar-thumb {
   background-color: var(--accent-border); /* Scrollbar thumb color */
   border-radius: 3px; /* Scrollbar thumb roundness */
 }
 
-.thin-scrollbar::-webkit-scrollbar-track
-  .medium-scrollbar::-webkit-scrollbar-track {
+.thin-scrollbar::-webkit-scrollbar-track,
+.medium-scrollbar::-webkit-scrollbar-track {
   background: transparent; /* Scrollbar track color */
 }
 
@@ -943,7 +944,7 @@ html::-webkit-scrollbar-thumb:active {
   display: block;
   background-size: 10px;
   background-repeat: no-repeat;
-  height: 14px; /* Ensure it's not collapsed */
+  height: 14px;
   width: 16px;
 }
 

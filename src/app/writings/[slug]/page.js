@@ -33,8 +33,12 @@ export async function generateStaticParams() {
 /*  Metadata (unchanged, but uses lang for the post)                  */
 /* ------------------------------------------------------------------ */
 export async function generateMetadata({ params }) {
-  const lang = "en"; // ❗ Force English fallback, or default
-  const { data: blogPost, error } = await fetchBlogPost(params.slug, lang);
+  const resolvedParams = await params;
+  const lang = "en"; // Force English fallback, or default
+  const { data: blogPost, error } = await fetchBlogPost(
+    resolvedParams.slug,
+    lang
+  );
 
   const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
 
@@ -64,7 +68,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: blogPost.postTitle ?? "Blog Post | Emanuele Sgroi",
       description: blogPost.smallDescription ?? "Read this blog post.",
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}writings/${params.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}writings/${resolvedParams.slug}`,
       type: "article",
       images: [{ url: ogImage }],
     },
@@ -120,13 +124,14 @@ function ErrorBoundary({ children }) {
 /* ------------------------------------------------------------------ */
 /*  Page wrapper with Suspense                                        */
 /* ------------------------------------------------------------------ */
-export default function BlogPost({ params }) {
-  const lang = getCurrentLanguageServer();
+export default async function BlogPost({ params }) {
+  const resolvedParams = await params;
+  const lang = await getCurrentLanguageServer();
 
   return (
     <Suspense fallback={<Loading />}>
       <ErrorBoundary>
-        <BlogPostContent slug={params.slug} lang={lang} />
+        <BlogPostContent slug={resolvedParams.slug} lang={lang} />
       </ErrorBoundary>
     </Suspense>
   );

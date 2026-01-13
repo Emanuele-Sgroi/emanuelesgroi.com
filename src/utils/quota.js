@@ -13,7 +13,7 @@ const WINDOW_MS = 3 * 60 * 60 * 1000; // 3 hours rolling window
  *  – adds that many messages to the user’s counter.
  * ---------------------------------------------------------------- */
 export async function checkAndCount(increment = 1) {
-  const userId = getUserIdServer();
+  const userId = await getUserIdServer();
   const now = new Date();
 
   // Ensure a row exists

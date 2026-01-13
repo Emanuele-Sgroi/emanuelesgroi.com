@@ -19,20 +19,24 @@ import { ToastContainer } from "react-toastify";
 import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 import { getDefaultMetadata } from "@/config/metadata";
 import { Analytics } from "@vercel/analytics/next";
+import GreetingPopup from "@/components/GreetingPopup/GreetingPopup";
 
 // Set default metadata for all pages
-export const metadata = getDefaultMetadata(getCurrentLanguageServer());
+export async function generateMetadata() {
+  const lang = await getCurrentLanguageServer();
+  return getDefaultMetadata(lang);
+}
 
 // Lazy load the greeting popup (disabled for SSR)
-const GreetingPopup = dynamic(
-  () => import("@/components/GreetingPopup/GreetingPopup"),
-  {
-    ssr: false,
-  }
-);
+// const GreetingPopup = dynamic(
+//   () => import("@/components/GreetingPopup/GreetingPopup"),
+//   {
+//     ssr: false,
+//   }
+// );
 
-export default function RootLayout({ children }) {
-  const lang = getCurrentLanguageServer(); // "en" | "it"
+export default async function RootLayout({ children }) {
+  const lang = await getCurrentLanguageServer(); // "en" | "it"
   return (
     <html
       lang={lang === "it" ? "it" : "en"}

@@ -11,6 +11,7 @@ function sign(value) {
     crypto.createHmac("sha256", COOKIE_SECRET).update(value).digest("base64url")
   );
 }
+
 function unsign(raw) {
   const [val, sig] = raw.split(".");
   if (!val || !sig) return null;
@@ -24,10 +25,11 @@ function unsign(raw) {
 }
 
 /** Returns stable anonymous id & sets cookie if missing */
-export function getUserIdServer() {
+export async function getUserIdServer() {
   /* try signed cookie ─────────────────────────────── */
   try {
-    const raw = cookies().get(COOKIE_NAME)?.value;
+    const cookieStore = await cookies();
+    const raw = cookieStore.get(COOKIE_NAME)?.value;
     if (raw) {
       const ok = unsign(raw);
       if (ok) return ok;
@@ -40,9 +42,11 @@ export function getUserIdServer() {
   let ip = "";
   let ua = "";
   try {
-    ip = headers().get("x-forwarded-for")?.split(",")[0] || "";
-    ua = headers().get("user-agent") || "";
+    const headersList = await headers();
+    ip = headersList.get("x-forwarded-for")?.split(",")[0] || "";
+    ua = headersList.get("user-agent") || "";
   } catch (_) {}
+
   const fallback = crypto
     .createHash("sha256")
     .update(ip + ua)
@@ -50,7 +54,8 @@ export function getUserIdServer() {
 
   /* set cookie if we are inside a route handler */
   try {
-    cookies().set({
+    const cookieStore = await cookies();
+    cookieStore.set({
       name: COOKIE_NAME,
       value: sign(fallback),
       httpOnly: true,

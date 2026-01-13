@@ -4,8 +4,8 @@ import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 import { getDefaultMetadata, getMetadataByPage } from "@/config/metadata";
 
 // Generate metadata for SEO
-export const generateMetadata = () => {
-  const lang = getCurrentLanguageServer();
+export const generateMetadata = async () => {
+  const lang = await getCurrentLanguageServer();
   return {
     ...getDefaultMetadata(lang),
     ...getMetadataByPage("/dev-quiz", lang),
@@ -13,7 +13,7 @@ export const generateMetadata = () => {
 };
 
 const DevQuiz = async () => {
-  const lang = getCurrentLanguageServer();
+  const lang = await getCurrentLanguageServer();
 
   //Fetch data from CMS
   const { data: generalInfoContent, error: generalInfoError } =
