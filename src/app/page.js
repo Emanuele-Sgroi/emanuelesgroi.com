@@ -7,8 +7,8 @@ import { getCurrentLanguageServer } from "@/utils/getCurrentLanguageServer";
 import { getDefaultMetadata, getMetadataByPage } from "@/config/metadata";
 
 // Generate metadata for SEO
-export const generateMetadata = () => {
-  const lang = getCurrentLanguageServer();
+export const generateMetadata = async () => {
+  const lang = await getCurrentLanguageServer();
   return {
     ...getDefaultMetadata(lang),
     ...getMetadataByPage("/", lang),
@@ -16,7 +16,7 @@ export const generateMetadata = () => {
 };
 
 const Welcome = async () => {
-  const lang = getCurrentLanguageServer();
+  const lang = await getCurrentLanguageServer();
 
   // Fetch Data from CMS
   const { data: welcomeContent, error: welcomeError } =

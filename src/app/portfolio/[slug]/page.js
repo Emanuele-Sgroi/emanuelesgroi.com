@@ -25,8 +25,12 @@ export async function generateStaticParams() {
 
 // Generate metadata dynamically based on the project details
 export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
   const lang = "en"; // ❗ Force English fallback, or default
-  const { data: project, error } = await fetchProject(params.slug, lang);
+  const { data: project, error } = await fetchProject(
+    resolvedParams.slug,
+    lang
+  );
 
   const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL);
 
@@ -58,7 +62,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: project.projectTitle || "Project Details | Emanuele Sgroi",
       description: project.smallDescription || "Check this project.",
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}portfolio/${params.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}portfolio/${resolvedParams.slug}`,
       type: "website",
       images: [{ url: ogImage }],
     },
@@ -94,12 +98,13 @@ function ErrorBoundary({ children }) {
 }
 
 // Main project details page component
-export default function Project({ params }) {
-  const lang = getCurrentLanguageServer();
+export default async function Project({ params }) {
+  const resolvedParams = await params;
+  const lang = await getCurrentLanguageServer();
   return (
     <Suspense fallback={<Loading />}>
       <ErrorBoundary>
-        <ProjectContent slug={params.slug} lang={lang} />
+        <ProjectContent slug={resolvedParams.slug} lang={lang} />
       </ErrorBoundary>
     </Suspense>
   );

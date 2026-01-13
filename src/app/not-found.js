@@ -3,7 +3,7 @@ import { getMetadataByPage } from "@/config/metadata";
 import NotFoundClient from "@/components/NotFound/NotFoundClient";
 
 export async function generateMetadata() {
-  const lang = getCurrentLanguageServer();
+  const lang = await getCurrentLanguageServer();
   return getMetadataByPage("/not-found", lang);
 }
 
